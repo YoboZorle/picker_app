@@ -30,6 +30,7 @@ dependencies:
   cupertino_icons: ^1.0.0
 
   flare_flutter: ^2.0.6
+  country_code_picker: ^1.1.7
 
 dev_dependencies:
   flutter_test:

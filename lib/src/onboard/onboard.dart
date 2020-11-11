@@ -1,6 +1,7 @@
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:pickrr_app/src/anim/show_up_animation.dart';
+import 'package:pickrr_app/src/auth/phone_login.dart';
 import 'package:pickrr_app/src/values/values.dart';
 
 class Onboard extends StatelessWidget {
@@ -104,7 +105,10 @@ class Onboard extends StatelessWidget {
                                   ),
                                 ),
                                 onTap: () {
-                                  Navigator.pushNamed(context, '/PhoneLogin');
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => PhoneLogin()),
+                                  );
                                 },
                               ),
                               delay: delayAmount + 2300,
