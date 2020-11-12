@@ -54,16 +54,15 @@ class _HomeState extends State<Home> {
                       ],
                     ),
                   ),
+
                   Container(
-                    height: MediaQuery.of(context).size.height / 2.1,
-                    width: MediaQuery.of(context).size.width,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      boxShadow: [
-                        Shadows.primaryShadow,
-                      ],
-                    ),
-                    child: Expanded(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        boxShadow: [
+                          Shadows.primaryShadow,
+                        ],
+                      ),
+                      width: MediaQuery.of(context).size.width,
                       child: Column(
                         children: [
                           Container(
@@ -74,56 +73,12 @@ class _HomeState extends State<Home> {
                                 color: Colors.grey[300],
                                 borderRadius: BorderRadius.circular(16)),
                           ),
-                          Container(
-                            alignment: Alignment.centerLeft,
-                            margin: EdgeInsets.only(left: 20),
-                            child: Text(
-                              "Glad to meet you!",
-                              textAlign: TextAlign.left,
-                              style: TextStyle(
-                                fontSize: 14.5,
-                                fontFamily: "Ubuntu",
-                                color: AppColors.primaryText,
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                          ),
-                          Container(
-                            alignment: Alignment.centerLeft,
-                            margin: EdgeInsets.only(left: 20),
-                            child: new Text(
-                              "Want to make deliveries?",
-                              maxLines: 1,
-                              textAlign: TextAlign.left,
-                              style: TextStyle(
-                                  fontSize: 20.0,
-                                  fontFamily: "Ubuntu",
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w700,
-                                  height: 1.35),
-                            ),
-                          ),
-                          Container(
-                              height: 0.8,
-                              margin: EdgeInsets.only(top: 10, bottom: 15),
-                              width: MediaQuery.of(context).size.width,
-                              color: Colors.grey[300]),
                           ListTile(
                             leading: Icon(
                               Icons.location_on_rounded,
                               color: Colors.grey[500],
                             ),
-                            title: Text(
-                              "From where?",
-                              textAlign: TextAlign.left,
-                              style: TextStyle(
-                                fontSize: 20.0,
-                                fontFamily: "Ubuntu",
-                                fontWeight: FontWeight.w500,
-                                height: 1.6,
-                              ),
-                            ),
-                            subtitle: TextField(
+                            title: TextField(
                                 decoration: InputDecoration(
                                     hintText: "Input pickup location...")),
                             contentPadding: EdgeInsets.only(left: 20),
@@ -138,23 +93,12 @@ class _HomeState extends State<Home> {
                                 color: Colors.grey[500],
                               ),
                             ),
-                            title: Text(
-                              "To where?",
-                              textAlign: TextAlign.left,
-                              style: TextStyle(
-                                fontSize: 20.0,
-                                fontFamily: "Ubuntu",
-                                fontWeight: FontWeight.w500,
-                                height: 1.6,
-                              ),
-                            ),
-                            subtitle: TextField(
+                            title: TextField(
                                 decoration: InputDecoration(
                                     hintText: "Input destination location...")),
                             contentPadding: EdgeInsets.only(left: 20),
                             dense: true,
                           ),
-                          Expanded(child: SizedBox()),
                           Hero(
                             tag: "btn",
                             flightShuttleBuilder: _flightShuttleBuilder,
@@ -163,7 +107,7 @@ class _HomeState extends State<Home> {
                                   height: 50,
                                   alignment: Alignment.center,
                                   margin: EdgeInsets.only(
-                                      bottom: 18, left: 25, right: 25),
+                                      bottom: 18, left: 25, right: 25, top: 25),
                                   decoration: BoxDecoration(
                                     color: AppColors.primaryText,
                                     boxShadow: [Shadows.secondaryShadow],
@@ -186,9 +130,143 @@ class _HomeState extends State<Home> {
                             ),
                           ),
                         ],
-                      ),
-                    ),
-                  ),
+                      )),
+
+                  // Container(
+                  //   height: MediaQuery.of(context).size.height / 2.1,
+                  //   width: MediaQuery.of(context).size.width,
+                  //   decoration: BoxDecoration(
+                  //     color: Colors.white,
+                  //     boxShadow: [
+                  //       Shadows.primaryShadow,
+                  //     ],
+                  //   ),
+                  //   child: Expanded(
+                  //     child: Column(
+                  //       children: [
+                  //         Container(
+                  //           height: 8,
+                  //           width: 60,
+                  //           margin: EdgeInsets.only(top: 15, bottom: 15),
+                  //           decoration: BoxDecoration(
+                  //               color: Colors.grey[300],
+                  //               borderRadius: BorderRadius.circular(16)),
+                  //         ),
+                  //         Container(
+                  //           alignment: Alignment.centerLeft,
+                  //           margin: EdgeInsets.only(left: 20),
+                  //           child: Text(
+                  //             "Glad to meet you!",
+                  //             textAlign: TextAlign.left,
+                  //             style: TextStyle(
+                  //               fontSize: 14.5,
+                  //               fontFamily: "Ubuntu",
+                  //               color: AppColors.primaryText,
+                  //               fontWeight: FontWeight.w400,
+                  //             ),
+                  //           ),
+                  //         ),
+                  //         Container(
+                  //           alignment: Alignment.centerLeft,
+                  //           margin: EdgeInsets.only(left: 20),
+                  //           child: new Text(
+                  //             "Want to make deliveries?",
+                  //             maxLines: 1,
+                  //             textAlign: TextAlign.left,
+                  //             style: TextStyle(
+                  //                 fontSize: 20.0,
+                  //                 fontFamily: "Ubuntu",
+                  //                 color: Colors.black,
+                  //                 fontWeight: FontWeight.w700,
+                  //                 height: 1.35),
+                  //           ),
+                  //         ),
+                  //         Container(
+                  //             height: 0.8,
+                  //             margin: EdgeInsets.only(top: 10, bottom: 15),
+                  //             width: MediaQuery.of(context).size.width,
+                  //             color: Colors.grey[300]),
+                  //         ListTile(
+                  //           leading: Icon(
+                  //             Icons.location_on_rounded,
+                  //             color: Colors.grey[500],
+                  //           ),
+                  //           title: Text(
+                  //             "From where?",
+                  //             textAlign: TextAlign.left,
+                  //             style: TextStyle(
+                  //               fontSize: 20.0,
+                  //               fontFamily: "Ubuntu",
+                  //               fontWeight: FontWeight.w500,
+                  //               height: 1.6,
+                  //             ),
+                  //           ),
+                  //           subtitle: TextField(
+                  //               decoration: InputDecoration(
+                  //                   hintText: "Input pickup location...")),
+                  //           contentPadding: EdgeInsets.only(left: 20),
+                  //           dense: true,
+                  //         ),
+                  //         SizedBox(height: 10),
+                  //         ListTile(
+                  //           leading: Transform.rotate(
+                  //             angle: 120,
+                  //             child: Icon(
+                  //               Icons.navigation_rounded,
+                  //               color: Colors.grey[500],
+                  //             ),
+                  //           ),
+                  //           title: Text(
+                  //             "To where?",
+                  //             textAlign: TextAlign.left,
+                  //             style: TextStyle(
+                  //               fontSize: 20.0,
+                  //               fontFamily: "Ubuntu",
+                  //               fontWeight: FontWeight.w500,
+                  //               height: 1.6,
+                  //             ),
+                  //           ),
+                  //           subtitle: TextField(
+                  //               decoration: InputDecoration(
+                  //                   hintText: "Input destination location...")),
+                  //           contentPadding: EdgeInsets.only(left: 20),
+                  //           dense: true,
+                  //         ),
+                  //         Expanded(child: SizedBox()),
+                  //         Hero(
+                  //           tag: "btn",
+                  //           flightShuttleBuilder: _flightShuttleBuilder,
+                  //           child: GestureDetector(
+                  //             child: Container(
+                  //                 height: 50,
+                  //                 alignment: Alignment.center,
+                  //                 margin: EdgeInsets.only(
+                  //                     bottom: 18, left: 25, right: 25),
+                  //                 decoration: BoxDecoration(
+                  //                   color: AppColors.primaryText,
+                  //                   boxShadow: [Shadows.secondaryShadow],
+                  //                   borderRadius: Radii.kRoundpxRadius,
+                  //                 ),
+                  //                 child: Text('FIND RIDER',
+                  //                     style: TextStyle(
+                  //                         fontSize: 16,
+                  //                         fontFamily: 'Ubuntu',
+                  //                         color: Colors.white,
+                  //                         fontWeight: FontWeight.w500))),
+                  //             onTap: () {
+                  //               Navigator.push(
+                  //                 context,
+                  //                 MaterialPageRoute(
+                  //                     builder: (context) =>
+                  //                         OTPVerification(authId: null)),
+                  //               );
+                  //             },
+                  //           ),
+                  //         ),
+                  //       ],
+                  //     ),
+                  //   ),
+                  // ),
                 ],
               ),
             )));

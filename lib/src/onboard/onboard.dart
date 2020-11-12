@@ -25,8 +25,8 @@ class Onboard extends StatelessWidget {
                 right: 0,
                 child: Align(
                   child: Container(
-                    // color: Colors.black12,
-                      height: MediaQuery.of(context).size.height / 3,
+                      // color: Colors.black12,
+                      height: MediaQuery.of(context).size.height / 2,
                       width: MediaQuery.of(context).size.width,
                       margin: EdgeInsets.only(left: 30, bottom: 30, right: 30),
                       child: Column(
