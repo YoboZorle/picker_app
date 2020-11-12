@@ -4,6 +4,8 @@ import 'package:flutter/services.dart';
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:pickrr_app/src/values/values.dart';
 
+import 'otp_verification.dart';
+
 class PhoneLogin extends StatefulWidget {
   @override
   _PhoneLoginState createState() => _PhoneLoginState();
@@ -302,25 +304,32 @@ class _PhoneLoginState extends State<PhoneLogin> with TickerProviderStateMixin {
     margin: EdgeInsets.only(top: 7, bottom: 7),
     child: Column(
       children: <Widget>[
-        SizedBox(
-          height: 46,
-          width: MediaQuery.of(context).size.width / 1.1,
-          child: FlatButton(
-            splashColor: Colors.grey[200],
-            shape: new RoundedRectangleBorder(
-              borderRadius: new BorderRadius.circular(25.0),
+      SizedBox(
+            height: 46,
+            width: MediaQuery.of(context).size.width / 1.1,
+            child: FlatButton(
+              splashColor: Colors.grey[200],
+              shape: new RoundedRectangleBorder(
+                borderRadius: new BorderRadius.circular(25.0),
+              ),
+              onPressed: (){
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => OTPVerification(_callingCode, _phoneController.text)),
+                );
+              },
+              color: AppColors.primaryText,
+              child: Text("Send code",
+                  style: TextStyle(
+                      fontFamily: 'Ubuntu',
+                      fontWeight: FontWeight.w600,
+                      color: Colors.white,
+                      fontSize: 16,
+                      height: 1.4)),
             ),
-            onPressed: (){},
-            color: AppColors.primaryText,
-            child: Text("Send code",
-                style: TextStyle(
-                    fontFamily: 'Ubuntu',
-                    fontWeight: FontWeight.w600,
-                    color: Colors.white,
-                    fontSize: 16,
-                    height: 1.4)),
           ),
-        ),
+
+
         SizedBox(height: 15),
       ],
     ),
