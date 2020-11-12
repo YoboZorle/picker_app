@@ -315,7 +315,7 @@ class _PhoneLoginState extends State<PhoneLogin> with TickerProviderStateMixin {
               onPressed: (){
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => OTPVerification(_callingCode, _phoneController.text)),
+                  MaterialPageRoute(builder: (context) => OTPVerification()),
                 );
               },
               color: AppColors.primaryText,

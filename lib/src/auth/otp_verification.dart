@@ -1,204 +1,150 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:pickrr_app/src/utils/pinput/pin_put.dart';
 import 'package:pickrr_app/src/values/values.dart';
+import 'package:pin_view/pin_view.dart';
 
+class OTPVerification extends StatelessWidget {
+  String _poseGirl = "pose";
+  String _authId;
 
-class OTPVerification extends StatefulWidget {
-  final String phone;
-  final String callingCode;
-
-  OTPVerification(this.callingCode, this.phone);
-
-  @override
-  _OTPVerificationState createState() => _OTPVerificationState();
-}
-
-class _OTPVerificationState extends State<OTPVerification> {
-  final TextEditingController _pinPutController = TextEditingController();
-  final FocusNode _pinPutFocusNode = FocusNode();
-  final PageController _pageController = PageController(initialPage: 0);
-  int _pageIndex = 0;
-  String securedPhoneNumber;
-
-  @override
-  void initState() {
-    super.initState();
-    _pinPutFocusNode.requestFocus();
-    // securedPhoneNumber = widget.phone.replaceAll(RegExp(r'.(?=.{4})'), '*');
+  OTPVerification({@required authId}){
+    this._authId = authId;
   }
 
-  @override
-  void dispose() {
-    _pinPutFocusNode.dispose();
-    super.dispose();
-  }
+  final SmsListener smsListener = SmsListener(
+      from: '6505551212', //sms phone number
+      formatBody: (String body) {
+        String codeRaw = body.split(": ")[1]; //seperator befpre pin
+        List<String> code = codeRaw.split("-");
+        return code.join();
+      });
 
-  Widget onlySelectedBorderPinPut() {
-    BoxDecoration pinPutDecoration = BoxDecoration(
-      color: Color.fromRGBO(235, 236, 237, 1),
-      borderRadius: BorderRadius.circular(5),
-    );
-    return PinPut(
-      fieldsCount: 5,
-      textStyle:
-      TextStyle(fontSize: 25, fontFamily: 'Ubuntu', color: Colors.black),
-      eachFieldWidth: 40,
-      eachFieldHeight: 50,
-      onSubmit: (String pin) => (pin),
-      focusNode: _pinPutFocusNode,
-      autofocus: true,
-      controller: _pinPutController,
-      submittedFieldDecoration: pinPutDecoration,
-      selectedFieldDecoration: pinPutDecoration.copyWith(
-          color: Colors.white,
-          border: Border.all(
-            width: 1.5,
-            color: AppColors.primaryText,
-          )),
-      followingFieldDecoration: pinPutDecoration,
-      pinAnimationType: PinAnimationType.slide,
-    );
+  Widget pinViewWithSms(BuildContext context) {
+    return PinView(
+        count: 5,
+        autoFocusFirstField: false,
+        enabled: true,
+        sms: smsListener,
+        submit: (String pin) {
+          showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                    title: Text("Pin received successfully."),
+                    content: Text("Entered pin is: $pin"));
+              });
+        });
   }
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> _pinPuts = [
-      onlySelectedBorderPinPut(),
-    ];
-
-    List<Color> _bgColors = [
-      Colors.white,
-      Color.fromRGBO(43, 36, 198, 1),
-      Colors.white,
-      Color.fromRGBO(75, 83, 214, 1),
-      Color.fromRGBO(43, 46, 66, 1),
-    ];
-
     return new Scaffold(
-        body: GestureDetector(
-          onTap: () {
-            FocusScope.of(context).requestFocus(new FocusNode());
-          },
-          child: Stack(fit: StackFit.passthrough, children: <Widget>[
-            AnimatedContainer(
-              color: _bgColors[_pageIndex],
-              duration: Duration(milliseconds: 200),
-              padding: EdgeInsets.all(40),
-              child: PageView(
-                scrollDirection: Axis.vertical,
-                controller: _pageController,
-                onPageChanged: (index) {
-                  setState(() {
-                    _pageIndex = index;
-                  });
-                },
-                children: _pinPuts.map((p) {
-                  return FractionallySizedBox(
-                    heightFactor: 1,
-                    child: Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            SizedBox(height: 50),
-                            Container(
-                              margin: EdgeInsets.only(bottom: 15),
-                              child: Text(
-                                'Enter your\nverification code',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontSize: 22,
-                                  fontFamily: 'Ubuntu',
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w700,
-                                  height: 1.2,
-                                ),
-                              ),
-                            ),
-                            bodyOTP(),
-                            Container(
-                                margin: EdgeInsets.symmetric(horizontal: 15), child: p),
-                          ],
-                        )),
-                  );
-                }).toList(),
-              ),
-            ),
-            resendOTP(),
-          ]),
-        ));
+        backgroundColor: Colors.white,
+        body: Column(children: <Widget>[
+          Expanded(
+            child: new Container(
+                margin: EdgeInsets.only(top: 50),
+                child: Stack(children: <Widget>[
+                  SafeArea(
+                      child: ListView(children: <Widget>[
+                        hintText(),
+                        SizedBox(height: 8),
+                        Text('Input the verification code sent to $_authId',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 15.7,
+                              fontFamily: 'Ubuntu',
+                              color: Colors.black,
+                              fontWeight: FontWeight.w400,
+                              height: 1.3,
+                            )),
+                        Container(
+                            alignment: Alignment.center,
+                            margin:
+                            EdgeInsets.only(left: 50, right: 50, top: 25),
+                            child: pinViewWithSms(context)),
+                        SizedBox(height: 25),
+                        Text('I didn\'t receive a magic code!',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 15.7,
+                              fontFamily: 'Ubuntu',
+                              color: Colors.black,
+                              fontWeight: FontWeight.w400,
+                              height: 1.3,
+                            )),
+                        SizedBox(height: 4),
+                        Center(
+                            child: RichText(
+                              text: TextSpan(
+                                  text: '',
+                                  style: TextStyle(color: Colors.black, fontSize: 15),
+                                  children: <TextSpan>[
+                                    TextSpan(
+                                        text: 'Send again',
+                                        style: TextStyle(
+                                            fontSize: 15,
+                                            fontFamily: 'Ubuntu',
+                                            color: AppColors.primaryText,
+                                            fontWeight: FontWeight.w500,
+                                            height: 1.3),
+                                        recognizer: TapGestureRecognizer()
+                                          ..onTap = () {}),
+                                  ]),
+                            )),
+                        SizedBox(height: 10),
+                      ])),
+                ])),
+          ),
+          proceedBtn(context),
+        ]));
   }
 
-  bodyOTP() => Container(
-    margin: EdgeInsets.only(bottom: 30),
-    child: RichText(
-      textAlign: TextAlign.center,
-      text: TextSpan(
-          text: 'We sent a verification code to ',
-          style: TextStyle(
-            fontSize: 15,
-            fontFamily: 'Ubuntu',
-            color: Colors.black,
-            fontWeight: FontWeight.w500,
-            height: 1.2,
-          ),
-          children: <TextSpan>[
-            TextSpan(
-              // text: '+${widget.callingCode}',
-              style: TextStyle(
-                fontSize: 15,
-                fontFamily: 'Ubuntu',
-                color: Colors.black,
-                fontWeight: FontWeight.w500,
-                height: 1.2,
-              ),
+  proceedBtn(BuildContext context) => Container(
+    margin: EdgeInsets.only(top: 7, bottom: 7),
+    child: Column(
+      children: <Widget>[
+        SizedBox(
+          height: 46,
+          width: MediaQuery.of(context).size.width / 1.1,
+          child: FlatButton(
+            splashColor: Colors.grey[200],
+            color: AppColors.primaryText,
+            shape: new RoundedRectangleBorder(
+              borderRadius: new BorderRadius.circular(25.0),
             ),
-            TextSpan(
-              text: securedPhoneNumber,
-              style: TextStyle(
-                fontSize: 15,
-                fontFamily: 'Ubuntu',
-                color: Colors.black,
-                fontWeight: FontWeight.w500,
-                height: 1.2,
-              ),
-            )
-          ]),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => OTPVerification()),
+              );
+            },
+            child: Text("Verify code",
+                style: TextStyle(
+                    fontFamily: 'Ubuntu',
+                    fontWeight: FontWeight.w600,
+                    color: Colors.white,
+                    fontSize: 16,
+                    height: 1.4)),
+          ),
+        ),
+        SizedBox(height: 15),
+      ],
     ),
   );
 
-  resendOTP() => Positioned(
-      bottom: 0,
-      left: 0,
-      right: 0,
-      child: Container(
-        margin: EdgeInsets.only(bottom: 8),
-        child: RichText(
-          textAlign: TextAlign.center,
-          text: TextSpan(
-              text: 'Did not receive code?',
-              style: TextStyle(
-                fontSize: 15,
-                fontFamily: 'Ubuntu',
-                color: Colors.black,
-                fontWeight: FontWeight.w400,
-                height: 1.2,
-              ),
-              children: <TextSpan>[
-                TextSpan(
-                    text: ' Send again',
-                    style: TextStyle(
-                      fontSize: 15,
-                      fontFamily: 'Ubuntu',
-                      color: AppColors.primaryText,
-                      fontWeight: FontWeight.w500,
-                      height: 1.2,
-                    ),
-                    recognizer: TapGestureRecognizer()
-                      ..onTap = () {})
-              ]),
-        ),
-      ));
+  hintText() => Container(
+    margin: EdgeInsets.only(top: 20),
+    child: Text(
+      'Pickrr Activation Code',
+      textAlign: TextAlign.center,
+      style: TextStyle(
+        fontSize: 24,
+        fontFamily: 'Ubuntu',
+        color: Colors.black,
+        fontWeight: FontWeight.w800,
+        height: 1.2,
+      ),
+    ),
+  );
 }

@@ -31,6 +31,7 @@ dependencies:
 
   flare_flutter: ^2.0.6
   country_code_picker: ^1.1.7
+  pin_view: ^1.0.1
 
 dev_dependencies:
   flutter_test:
