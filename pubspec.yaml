@@ -36,6 +36,7 @@ dependencies:
   flutter_signin_button: ^1.1.0
   google_maps_flutter: ^0.5.30
   location: ^3.0.2
+  flutter_svg: ^0.19.0
 
 dev_dependencies:
   flutter_test:
@@ -56,6 +57,7 @@ flutter:
     - assets/flare/splash_kargo_bg.flr
     - assets/fonts/
     - assets/images/
+    - assets/svg/
 
   fonts:
     - family: Ubuntu
