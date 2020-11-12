@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:pickrr_app/src/values/values.dart';
 import 'package:pin_view/pin_view.dart';
 
+import 'complete_profile_form.dart';
+
 class OTPVerification extends StatelessWidget {
   String _poseGirl = "pose";
   String _authId;
@@ -40,64 +42,69 @@ class OTPVerification extends StatelessWidget {
   Widget build(BuildContext context) {
     return new Scaffold(
         backgroundColor: Colors.white,
-        body: Column(children: <Widget>[
-          Expanded(
-            child: new Container(
-                margin: EdgeInsets.only(top: 50),
-                child: Stack(children: <Widget>[
-                  SafeArea(
-                      child: ListView(children: <Widget>[
-                        hintText(),
-                        SizedBox(height: 8),
-                        Text('Input the verification code sent to $_authId',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: 15.7,
-                              fontFamily: 'Ubuntu',
-                              color: Colors.black,
-                              fontWeight: FontWeight.w400,
-                              height: 1.3,
-                            )),
-                        Container(
-                            alignment: Alignment.center,
-                            margin:
-                            EdgeInsets.only(left: 50, right: 50, top: 25),
-                            child: pinViewWithSms(context)),
-                        SizedBox(height: 25),
-                        Text('I didn\'t receive a magic code!',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: 15.7,
-                              fontFamily: 'Ubuntu',
-                              color: Colors.black,
-                              fontWeight: FontWeight.w400,
-                              height: 1.3,
-                            )),
-                        SizedBox(height: 4),
-                        Center(
-                            child: RichText(
-                              text: TextSpan(
-                                  text: '',
-                                  style: TextStyle(color: Colors.black, fontSize: 15),
-                                  children: <TextSpan>[
-                                    TextSpan(
-                                        text: 'Send again',
-                                        style: TextStyle(
-                                            fontSize: 15,
-                                            fontFamily: 'Ubuntu',
-                                            color: AppColors.primaryText,
-                                            fontWeight: FontWeight.w500,
-                                            height: 1.3),
-                                        recognizer: TapGestureRecognizer()
-                                          ..onTap = () {}),
-                                  ]),
-                            )),
-                        SizedBox(height: 10),
-                      ])),
-                ])),
-          ),
-          proceedBtn(context),
-        ]));
+        body: GestureDetector(
+          onTap: () {
+            FocusScope.of(context).requestFocus(new FocusNode());
+          },
+          child: Column(children: <Widget>[
+            Expanded(
+              child: new Container(
+                  margin: EdgeInsets.only(top: 50),
+                  child: Stack(children: <Widget>[
+                    SafeArea(
+                        child: ListView(children: <Widget>[
+                          hintText(),
+                          SizedBox(height: 8),
+                          Text('Input the verification code sent to $_authId',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 15.7,
+                                fontFamily: 'Ubuntu',
+                                color: Colors.black,
+                                fontWeight: FontWeight.w400,
+                                height: 1.3,
+                              )),
+                          Container(
+                              alignment: Alignment.center,
+                              margin:
+                              EdgeInsets.only(left: 50, right: 50, top: 25),
+                              child: pinViewWithSms(context)),
+                          SizedBox(height: 25),
+                          Text('I didn\'t receive a magic code!',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 15.7,
+                                fontFamily: 'Ubuntu',
+                                color: Colors.black,
+                                fontWeight: FontWeight.w400,
+                                height: 1.3,
+                              )),
+                          SizedBox(height: 4),
+                          Center(
+                              child: RichText(
+                                text: TextSpan(
+                                    text: '',
+                                    style: TextStyle(color: Colors.black, fontSize: 15),
+                                    children: <TextSpan>[
+                                      TextSpan(
+                                          text: 'Send again',
+                                          style: TextStyle(
+                                              fontSize: 15,
+                                              fontFamily: 'Ubuntu',
+                                              color: AppColors.primaryText,
+                                              fontWeight: FontWeight.w500,
+                                              height: 1.3),
+                                          recognizer: TapGestureRecognizer()
+                                            ..onTap = () {}),
+                                    ]),
+                              )),
+                          SizedBox(height: 10),
+                        ])),
+                  ])),
+            ),
+            proceedBtn(context),
+          ]),
+        ));
   }
 
   proceedBtn(BuildContext context) => Container(
@@ -116,7 +123,7 @@ class OTPVerification extends StatelessWidget {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => OTPVerification()),
+                MaterialPageRoute(builder: (context) => CompleteProfileForm()),
               );
             },
             child: Text("Verify code",

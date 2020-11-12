@@ -32,6 +32,8 @@ dependencies:
   flare_flutter: ^2.0.6
   country_code_picker: ^1.1.7
   pin_view: ^1.0.1
+  image_picker: ^0.6.7+12
+  flutter_signin_button: ^1.1.0
 
 dev_dependencies:
   flutter_test:
@@ -51,6 +53,7 @@ flutter:
   assets:
     - assets/flare/splash_kargo_bg.flr
     - assets/fonts/
+    - assets/images/
 
   fonts:
     - family: Ubuntu
