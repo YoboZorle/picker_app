@@ -28,7 +28,7 @@ class CustomerAppBar extends StatelessWidget {
                             padding: const EdgeInsets.all(8.0),
                             child: Icon(
                               Icons.menu_sharp,
-                              size: 25,
+                              size: 23,
                             ),
                           )),
                     ),
@@ -39,7 +39,7 @@ class CustomerAppBar extends StatelessWidget {
               ),
               GestureDetector(
                 child: Container(
-                    height: 43,
+                    height: 42,
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
                       color: AppColors.primaryText,
@@ -50,7 +50,7 @@ class CustomerAppBar extends StatelessWidget {
                       children: [
                         SizedBox(width: 15),
                         SvgPicture.asset('assets/svg/kargo_bike.svg',
-                            height: 24, semanticsLabel: 'Bike Icon'),
+                            height: 22, semanticsLabel: 'Bike Icon'),
                         SizedBox(width: 8),
                         Text('Become a rider',
                             style: TextStyle(
