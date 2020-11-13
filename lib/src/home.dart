@@ -5,6 +5,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:pickrr_app/src/auth/otp_verification.dart';
 import 'package:pickrr_app/src/user/custom_appbar.dart';
 import 'package:pickrr_app/src/user/user_drawer.dart';
+import 'package:pickrr_app/src/user/user_order.dart';
 import 'package:pickrr_app/src/values/values.dart';
 
 class Home extends StatefulWidget {
@@ -35,19 +36,23 @@ class _HomeState extends State<Home> {
                   Expanded(
                     child: Stack(
                       children: [
-                        GoogleMap(
-                          initialCameraPosition: CameraPosition(
-                            target: _mainLocation,
-                            zoom: 15.6,
+                        Hero(
+                          tag: 'map',
+                          flightShuttleBuilder: _flightShuttleBuilder,
+                          child: GoogleMap(
+                            initialCameraPosition: CameraPosition(
+                              target: _mainLocation,
+                              zoom: 15.6,
+                            ),
+                            markers: this.myMarker(),
+                            mapType: MapType.normal,
+                            zoomControlsEnabled: false,
+                            onMapCreated: (controller) {
+                              setState(() {
+                                myMapController = controller;
+                              });
+                            },
                           ),
-                          markers: this.myMarker(),
-                          mapType: MapType.normal,
-                          zoomControlsEnabled: false,
-                          onMapCreated: (controller) {
-                            setState(() {
-                              myMapController = controller;
-                            });
-                          },
                         ),
                         CustomerAppBar(),
                         Positioned(bottom: 0, right: 0, child: notifPanel())
@@ -183,7 +188,7 @@ class _HomeState extends State<Home> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          OTPVerification(authId: null)),
+                                          UserOrder()),
                                 );
                               },
                             ),
