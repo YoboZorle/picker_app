@@ -48,6 +48,29 @@ class _ReviewOrderState extends State<ReviewOrder> {
                     ListView(
                               physics: const BouncingScrollPhysics(),
                               children: <Widget>[
+                            Row(
+                              children: [
+                                GestureDetector(
+                                  child: Container(
+                                    alignment: Alignment.centerLeft,
+                                    padding: const EdgeInsets.only(left: 15.0),
+                                    height: 30,
+                                    width: 80,
+                                    child: Text(
+                                      'Skip',
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontFamily: 'Ubuntu',
+                                        color: AppColors.primaryText,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                  ),
+                                  onTap: () {},
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 25),
                             Text(
                               'Transaction ID: 87AGB346',
                               textAlign: TextAlign.center,
