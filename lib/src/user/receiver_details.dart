@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
+import 'package:pickrr_app/src/user/review_order.dart';
 import 'package:pickrr_app/src/values/values.dart';
 
 class UserDetails extends StatefulWidget {
@@ -39,6 +40,7 @@ class _UserDetailsState extends State<UserDetails> {
                     ),
                     markers: this.myMarker(),
                     mapType: MapType.normal,
+                    myLocationButtonEnabled: false,
                     zoomControlsEnabled: false,
                     onMapCreated: (controller) {
                       setState(() {
@@ -184,7 +186,7 @@ class _UserDetailsState extends State<UserDetails> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => UserDetails()),
+                              builder: (context) => ReviewOrder()),
                         );
                       },
                     ),

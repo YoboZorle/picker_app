@@ -46,6 +46,7 @@ class _HomeState extends State<Home> {
                             ),
                             markers: this.myMarker(),
                             mapType: MapType.normal,
+                            myLocationButtonEnabled: false,
                             zoomControlsEnabled: false,
                             onMapCreated: (controller) {
                               setState(() {

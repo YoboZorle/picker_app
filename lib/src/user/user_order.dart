@@ -42,6 +42,7 @@ class _UserOrderState extends State<UserOrder> {
                     markers: this.myMarker(),
                     mapType: MapType.normal,
                     zoomControlsEnabled: false,
+                    myLocationButtonEnabled: false,
                     onMapCreated: (controller) {
                       setState(() {
                         myMapController = controller;

@@ -10,6 +10,8 @@ PODS:
     - GoogleMaps/Base
   - image_picker (0.0.1):
     - Flutter
+  - location (0.0.1):
+    - Flutter
   - sms (0.0.1):
     - Flutter
 
@@ -17,6 +19,7 @@ DEPENDENCIES:
   - Flutter (from `Flutter`)
   - google_maps_flutter (from `.symlinks/plugins/google_maps_flutter/ios`)
   - image_picker (from `.symlinks/plugins/image_picker/ios`)
+  - location (from `.symlinks/plugins/location/ios`)
   - sms (from `.symlinks/plugins/sms/ios`)
 
 SPEC REPOS:
@@ -30,6 +33,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/google_maps_flutter/ios"
   image_picker:
     :path: ".symlinks/plugins/image_picker/ios"
+  location:
+    :path: ".symlinks/plugins/location/ios"
   sms:
     :path: ".symlinks/plugins/sms/ios"
 
@@ -38,6 +43,7 @@ SPEC CHECKSUMS:
   google_maps_flutter: c7f9c73576de1fbe152a227bfd6e6c4ae8088619
   GoogleMaps: 4b5346bddfe6911bb89155d43c903020170523ac
   image_picker: 9c3312491f862b28d21ecd8fdf0ee14e601b3f09
+  location: 3a2eed4dd2fab25e7b7baf2a9efefe82b512d740
   sms: 1e6c3082da09f2a4961d61bc254cc86865993ffd
 
 PODFILE CHECKSUM: aafe91acc616949ddb318b77800a7f51bffa2a4c
