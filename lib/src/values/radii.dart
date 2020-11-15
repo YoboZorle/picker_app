@@ -25,4 +25,10 @@ class Radii {
       topLeft: Radius.circular(25),
       bottomLeft: Radius.circular(25),
       bottomRight: Radius.circular(25));
+
+  static const BorderRadiusGeometry kRoundpxRadius8 = BorderRadius.only(
+      topRight: Radius.circular(0),
+      topLeft: Radius.circular(0),
+      bottomLeft: Radius.circular(0),
+      bottomRight: Radius.circular(0));
 }

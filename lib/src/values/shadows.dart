@@ -28,4 +28,10 @@ class Shadows {
     offset: Offset(-5, 7),
     blurRadius: 8,
   );
+
+  static const BoxShadow secondaryShadow8 = BoxShadow(
+    color:  Color.fromARGB(30, 0, 0, 0),
+    offset: Offset(-8, 20),
+    blurRadius: 15,
+  );
 }
