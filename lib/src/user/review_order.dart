@@ -26,10 +26,10 @@ class _ReviewOrderState extends State<ReviewOrder> {
             title: Text(
               'Complete Order',
               style: TextStyle(
-                fontSize: 18,
+                fontSize: 17,
                 fontFamily: 'Ubuntu',
                 color: Colors.black,
-                fontWeight: FontWeight.w700,
+                fontWeight: FontWeight.w800,
               ),
             ),
             leading: IconButton(
@@ -49,12 +49,12 @@ class _ReviewOrderState extends State<ReviewOrder> {
               child: Column(children: <Widget>[
                 Expanded(
                   child: new Container(
-                      margin: EdgeInsets.only(top: 5, right: 20, left: 20),
+                      margin: EdgeInsets.only(top: 5),
                       child: Stack(children: <Widget>[
                         ListView(
                             physics: const BouncingScrollPhysics(),
                             children: <Widget>[
-                              SizedBox(height: 20),
+                              SizedBox(height: 15),
                               Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: <Widget>[
@@ -79,15 +79,18 @@ class _ReviewOrderState extends State<ReviewOrder> {
                                       ),
                                     )
                                   ]),
-                              SizedBox(height: 30),
-                              Text(
-                                'Receiver\'s Details',
-                                textAlign: TextAlign.left,
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontFamily: 'Ubuntu',
-                                  color: Colors.green,
-                                  fontWeight: FontWeight.w600,
+                              SizedBox(height: 25),
+                              Container(
+                                padding: EdgeInsets.only(left: 20),
+                                child: Text(
+                                  'Receiver\'s Details',
+                                  textAlign: TextAlign.left,
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontFamily: 'Ubuntu',
+                                    color: Colors.green,
+                                    fontWeight: FontWeight.w600,
+                                  ),
                                 ),
                               ),
                               Container(
@@ -96,7 +99,7 @@ class _ReviewOrderState extends State<ReviewOrder> {
                                   boxShadow: [Shadows.secondaryShadow8],
                                   borderRadius: Radii.kRoundpxRadius8,
                                 ),
-                                padding: EdgeInsets.all(15),
+                                padding: EdgeInsets.only(left: 20, bottom: 10, right: 20),
                                 child: ListTile(
                                   title: RichText(
                                     text: TextSpan(
@@ -174,14 +177,17 @@ class _ReviewOrderState extends State<ReviewOrder> {
                               ),
                               SizedBox(height: 40),
 
-                              Text(
-                                'Sender\'s Details',
-                                textAlign: TextAlign.left,
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontFamily: 'Ubuntu',
-                                  color: Colors.red,
-                                  fontWeight: FontWeight.w600,
+                              Container(
+                                padding: EdgeInsets.only(left: 20),
+                                child: Text(
+                                  'Sender\'s Details',
+                                  textAlign: TextAlign.left,
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontFamily: 'Ubuntu',
+                                    color: Colors.red,
+                                    fontWeight: FontWeight.w600,
+                                  ),
                                 ),
                               ),
                               Container(
@@ -190,7 +196,7 @@ class _ReviewOrderState extends State<ReviewOrder> {
                                   boxShadow: [Shadows.secondaryShadow8],
                                   borderRadius: Radii.kRoundpxRadius8,
                                 ),
-                                padding: EdgeInsets.all(15),
+                                padding: EdgeInsets.only(left: 20, bottom: 10, right: 20),
                                 child: ListTile(
                                   title: RichText(
                                     text: TextSpan(
@@ -267,96 +273,108 @@ class _ReviewOrderState extends State<ReviewOrder> {
                                 ),
                               ),
                               SizedBox(height: 25),
-                              Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    Text(
-                                      'Estimated Delivery Time:',
-                                      textAlign: TextAlign.left,
-                                      style: TextStyle(
-                                        fontSize: 15,
-                                        fontFamily: 'Ubuntu',
-                                        color: Colors.black87,
-                                        fontWeight: FontWeight.w400,
+                              Container(
+                                padding: EdgeInsets.only(left: 20, right: 20),
+                                child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: <Widget>[
+                                      Text(
+                                        'Estimated Delivery Time:',
+                                        textAlign: TextAlign.left,
+                                        style: TextStyle(
+                                          fontSize: 15,
+                                          fontFamily: 'Ubuntu',
+                                          color: Colors.black87,
+                                          fontWeight: FontWeight.w400,
+                                        ),
                                       ),
-                                    ),
-                                    Text(
-                                      '33 mins',
-                                      textAlign: TextAlign.left,
-                                      style: TextStyle(
-                                        fontSize: 15,
-                                        fontFamily: 'Ubuntu',
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    )
-                                  ]),
+                                      Text(
+                                        '33 mins',
+                                        textAlign: TextAlign.left,
+                                        style: TextStyle(
+                                          fontSize: 15,
+                                          fontFamily: 'Ubuntu',
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      )
+                                    ]),
+                              ),
                               SizedBox(height: 20),
-                              Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    Text(
-                                      'Distance in Kilometers:',
-                                      textAlign: TextAlign.left,
-                                      style: TextStyle(
-                                        fontSize: 15,
-                                        fontFamily: 'Ubuntu',
-                                        color: Colors.black87,
-                                        fontWeight: FontWeight.w400,
+                              Container(
+                                padding: EdgeInsets.only(left: 20, right: 20),
+                                child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: <Widget>[
+                                      Text(
+                                        'Distance in Kilometers:',
+                                        textAlign: TextAlign.left,
+                                        style: TextStyle(
+                                          fontSize: 15,
+                                          fontFamily: 'Ubuntu',
+                                          color: Colors.black87,
+                                          fontWeight: FontWeight.w400,
+                                        ),
                                       ),
-                                    ),
-                                    Text(
-                                      '6km',
-                                      textAlign: TextAlign.left,
-                                      style: TextStyle(
-                                        fontSize: 15,
-                                        fontFamily: 'Ubuntu',
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    )
-                                  ]),
-                              SizedBox(height: 30),
-                              DottedLine(
-                                direction: Axis.horizontal,
-                                lineLength: double.infinity,
-                                lineThickness: 0.8,
-                                dashLength: 5.0,
-                                dashColor: Colors.grey,
-                                dashRadius: 0.0,
-                                dashGapLength: 5.0,
-                                dashGapColor: Colors.transparent,
-                                dashGapRadius: 0.0,
+                                      Text(
+                                        '6km',
+                                        textAlign: TextAlign.left,
+                                        style: TextStyle(
+                                          fontSize: 15,
+                                          fontFamily: 'Ubuntu',
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      )
+                                    ]),
                               ),
                               SizedBox(height: 30),
-                              Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    Text(
-                                      'Total Delivery Cost:',
-                                      textAlign: TextAlign.left,
-                                      style: TextStyle(
-                                        fontSize: 15,
-                                        fontFamily: 'Ubuntu',
-                                        color: Colors.black87,
-                                        fontWeight: FontWeight.w400,
+                              Container(
+                                padding: EdgeInsets.only(left: 20, right: 20),
+                                child: DottedLine(
+                                  direction: Axis.horizontal,
+                                  lineLength: double.infinity,
+                                  lineThickness: 0.8,
+                                  dashLength: 5.0,
+                                  dashColor: Colors.grey,
+                                  dashRadius: 0.0,
+                                  dashGapLength: 5.0,
+                                  dashGapColor: Colors.transparent,
+                                  dashGapRadius: 0.0,
+                                ),
+                              ),
+                              SizedBox(height: 30),
+                              Container(
+                                padding: EdgeInsets.only(left: 20, right: 20),
+                                child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: <Widget>[
+                                      Text(
+                                        'Total Delivery Cost:',
+                                        textAlign: TextAlign.left,
+                                        style: TextStyle(
+                                          fontSize: 15,
+                                          fontFamily: 'Ubuntu',
+                                          color: Colors.black87,
+                                          fontWeight: FontWeight.w400,
+                                        ),
                                       ),
-                                    ),
-                                    new Text(
-                                      currencyFormatter.format(amount),
-                                      maxLines: 1,
-                                      textAlign: TextAlign.left,
-                                      style: TextStyle(
-                                          fontSize: 18.0,
-                                          fontFamily: "Roboto",
-                                          color: AppColors.primaryText,
-                                          fontWeight: FontWeight.w700,
-                                          height: 1.35),
-                                    ),
-                                  ]),
+                                      new Text(
+                                        currencyFormatter.format(amount),
+                                        maxLines: 1,
+                                        textAlign: TextAlign.left,
+                                        style: TextStyle(
+                                            fontSize: 18.0,
+                                            fontFamily: "Roboto",
+                                            color: AppColors.primaryText,
+                                            fontWeight: FontWeight.w700,
+                                            height: 1.35),
+                                      ),
+                                    ]),
+                              ),
                             ]),
                       ])),
                 ),

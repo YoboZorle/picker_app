@@ -96,11 +96,11 @@ class _PhoneLoginState extends State<PhoneLogin> with TickerProviderStateMixin {
                           terms(),
                           SizedBox(height: 25),
                           Container(
-                              height: 55,
+                              height: 47,
                               margin: EdgeInsets.only(left: 20, right: 20, bottom: 20),
                               color: Colors.grey[200],
                               child: fullName()),
-                          Container(height: 55,
+                          Container(height: 47,
                               margin: EdgeInsets.only(left: 20, right: 20, bottom: 20),
                               color: Colors.grey[200],
                               child: phoneInput()),
@@ -110,7 +110,7 @@ class _PhoneLoginState extends State<PhoneLogin> with TickerProviderStateMixin {
                                 'An SMS code will be sent to you\nto verify your number',
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
-                                  fontSize: 15,
+                                  fontSize: 14,
                                   fontFamily: 'Ubuntu',
                                   color: Colors.grey,
                                   fontWeight: FontWeight.w400,
@@ -148,7 +148,7 @@ class _PhoneLoginState extends State<PhoneLogin> with TickerProviderStateMixin {
               showCountryOnly: true,
               alignLeft: true,
               textStyle: TextStyle(
-                  fontSize: 20.0,
+                  fontSize: 18.0,
                   fontFamily: 'Ubuntu',
                   color: Colors.black,
                   fontWeight: FontWeight.w400),
@@ -166,14 +166,14 @@ class _PhoneLoginState extends State<PhoneLogin> with TickerProviderStateMixin {
               ],
               controller: _phoneController,
               style: TextStyle(
-                  fontSize: 20.0,
+                  fontSize: 18.0,
                   fontFamily: 'Ubuntu',
                   color: Colors.black,
                   fontWeight: FontWeight.w400),
               decoration: InputDecoration(
                 hintText: 'Mobile number',
                 hintStyle: TextStyle(
-                    fontSize: 25.0,
+                    fontSize: 18.0,
                     fontFamily: 'Ubuntu',
                     color: Colors.grey,
                     fontWeight: FontWeight.w400),
@@ -221,14 +221,14 @@ class _PhoneLoginState extends State<PhoneLogin> with TickerProviderStateMixin {
               cursorColor: AppColors.primaryText,
               controller: _fnameController,
               style: TextStyle(
-                  fontSize: 20.0,
+                  fontSize: 18.0,
                   fontFamily: 'Ubuntu',
                   color: Colors.black,
                   fontWeight: FontWeight.w400),
               decoration: InputDecoration(
                 hintText: 'Enter full name',
                 hintStyle: TextStyle(
-                    fontSize: 20.0,
+                    fontSize: 18.0,
                     fontFamily: 'Ubuntu',
                     color: Colors.grey,
                     fontWeight: FontWeight.w400),

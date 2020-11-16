@@ -111,10 +111,10 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
                                       SizedBox(height: 18),
                                       Text('Upload photo',
                                           style: TextStyle(
-                                            fontSize: 15,
+                                            fontSize: 14,
                                             fontFamily: 'Ubuntu',
                                             color: Colors.grey,
-                                            fontWeight: FontWeight.w500,
+                                            fontWeight: FontWeight.w400,
                                           )),
                                     ],
                                   )),
@@ -122,7 +122,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
                             SizedBox(height: 25),
                             Container(
                                 alignment: Alignment.center,
-                                height: 55,
+                                height: 47,
                                 margin: EdgeInsets.only(
                                     left: 20, right: 20, bottom: 10),
                                 color: Colors.grey[200],
@@ -134,7 +134,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
                                       fontFamily: 'Ubuntu',
                                       fontWeight: FontWeight.w400,
                                       color: Colors.grey,
-                                      fontSize: 14)),
+                                      fontSize: 13)),
                             ),
                             SizedBox(height: 30),
                             Container(
@@ -233,14 +233,14 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
                   cursorColor: AppColors.primaryText,
                   controller: _emailController,
                   style: TextStyle(
-                      fontSize: 20.0,
+                      fontSize: 18.0,
                       fontFamily: 'Ubuntu',
                       color: Colors.black,
                       fontWeight: FontWeight.w400),
                   decoration: InputDecoration(
                     hintText: 'Input email',
                     hintStyle: TextStyle(
-                        fontSize: 20.0,
+                        fontSize: 18.0,
                         fontFamily: 'Ubuntu',
                         color: Colors.grey,
                         fontWeight: FontWeight.w400),

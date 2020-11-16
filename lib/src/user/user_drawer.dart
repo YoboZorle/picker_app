@@ -34,7 +34,8 @@ class _UserDrawerState extends State<UserDrawer> {
               style: TextStyle(
                   fontWeight: FontWeight.w400,
                   fontFamily: "Ubuntu",
-                  fontSize: 15),
+                  height: 1.5,
+                  fontSize: 14),
             ),
           ),
           Container(
@@ -123,7 +124,7 @@ class _UserDrawerState extends State<UserDrawer> {
                     fontWeight: FontWeight.w400,
                     fontFamily: "Ubuntu",
                     color: Colors.grey[200],
-                    fontSize: 15),
+                    fontSize: 13),
               ),
               trailing: Icon(Icons.arrow_forward_ios,
                   size: 17, color: Colors.grey[200]),

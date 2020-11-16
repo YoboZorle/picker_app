@@ -50,11 +50,11 @@ class CustomerAppBar extends StatelessWidget {
                       children: [
                         SizedBox(width: 15),
                         SvgPicture.asset('assets/svg/kargo_bike.svg',
-                            height: 22, semanticsLabel: 'Bike Icon'),
+                            height: 20, semanticsLabel: 'Bike Icon'),
                         SizedBox(width: 8),
                         Text('Become a rider',
                             style: TextStyle(
-                                fontSize: 15,
+                                fontSize: 14,
                                 fontFamily: 'Ubuntu',
                                 color: Colors.white,
                                 fontWeight: FontWeight.w400)),
