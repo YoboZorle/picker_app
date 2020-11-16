@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pickrr_app/src/auth/otp_verification.dart';
+import 'package:pickrr_app/src/driver/driver_tabs.dart';
+import 'package:pickrr_app/src/user/track_deliveries/track_deliveries.dart';
 import 'package:pickrr_app/src/values/values.dart';
 
 class UserDrawer extends StatefulWidget {
@@ -51,7 +53,12 @@ class _UserDrawerState extends State<UserDrawer> {
             ),
             leading: Icon(Icons.track_changes),
             dense: false,
-            onTap: () {},
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => TrackRides()),
+              );
+            },
           ),
           ListTile(
             title: Text(
@@ -112,7 +119,7 @@ class _UserDrawerState extends State<UserDrawer> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => OTPVerification(authId: null)),
+                  MaterialPageRoute(builder: (context) => DriverTabs()),
                 );
               },
             ),

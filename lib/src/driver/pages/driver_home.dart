@@ -4,7 +4,10 @@ import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:lite_rolling_switch/lite_rolling_switch.dart';
 import 'package:pickrr_app/src/values/values.dart';
+
+import '../../home.dart';
 
 class DriverHome extends StatefulWidget {
   @override
@@ -106,7 +109,7 @@ class _DriverHomeState extends State<DriverHome> {
                 margin: EdgeInsets.only(bottom: 40),
                 child: ListTile(
                   title: Text(
-                    'Become a rider',
+                    'Back to user',
                     style: TextStyle(
                         fontWeight: FontWeight.w500,
                         fontFamily: "Ubuntu",
@@ -114,7 +117,7 @@ class _DriverHomeState extends State<DriverHome> {
                         fontSize: 16),
                   ),
                   subtitle: Text(
-                    'Earn money on your schedule',
+                    'Go back to ordering rides',
                     style: TextStyle(
                         fontWeight: FontWeight.w400,
                         fontFamily: "Ubuntu",
@@ -123,6 +126,12 @@ class _DriverHomeState extends State<DriverHome> {
                   ),
                   trailing: Icon(Icons.arrow_forward_ios,
                       size: 17, color: Colors.grey[200]),
+                  onTap: (){
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Home()),
+                    );
+                  },
                 ),
               )
             ]),
@@ -353,20 +362,21 @@ class CustomerAppBar extends StatelessWidget {
                   }),
               Row(
                 children: [
-                  // ToggleSwitch(
-                  //   minWidth: 90.0,
-                  //   minHeight: 30.0,
-                  //   fontSize: 15.0,
-                  //   initialLabelIndex: 0,
-                  //   activeBgColor: Colors.green,
-                  //   activeFgColor: Colors.white,
-                  //   inactiveBgColor: Colors.grey[200],
-                  //   inactiveFgColor: Colors.grey[900],
-                  //   labels: ['Online', 'Offline'],
-                  //   onToggle: (index) {
-                  //     print('switched to: $index');
-                  //   },
-                  // ),
+                 SizedBox(height: 45,
+                   child: LiteRollingSwitch(
+                        value: true,
+                        textOn: 'Online',
+                        textOff: 'Offline',
+                        colorOn: Colors.green,
+                        colorOff: Colors.grey[400],
+                        iconOn: Icons.lightbulb_outline,
+                        iconOff: Icons.power_settings_new,
+                        onChanged: (bool state) {
+                          print('turned ${(state) ? 'on' : 'off'}');
+                        },
+                      ),
+                 ),
+
                 ],
               ),
             ],
