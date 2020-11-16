@@ -126,7 +126,7 @@ class _DriverHomeState extends State<DriverHome> {
                   ),
                   trailing: Icon(Icons.arrow_forward_ios,
                       size: 17, color: Colors.grey[200]),
-                  onTap: (){
+                  onTap: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => Home()),
@@ -138,183 +138,186 @@ class _DriverHomeState extends State<DriverHome> {
           ),
         ),
       ),
-      body: Stack(
-        children: <Widget>[
-          GoogleMap(
-            mapType: MapType.normal,
-            initialCameraPosition: _kGooglePlex,
-            myLocationEnabled: true,
-            onMapCreated: (GoogleMapController controller) {
-              _controller.complete(controller);
-            },
-          ),
-          CustomHeader(),
-          Positioned(
-            bottom: 0,
-            child: Column(
-              children: [
-                notifPanel(),
-                Container(
-                  height: MediaQuery.of(context).size.height / 2.6,
-                  width: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    boxShadow: [
-                      Shadows.primaryShadow,
-                    ],
-                  ),
-                  child: Expanded(
-                    child: Column(
-                      children: [
-                        Container(
-                          height: 8,
-                          width: 60,
-                          margin: EdgeInsets.only(top: 15, bottom: 15),
-                          decoration: BoxDecoration(
-                              color: Colors.grey[300],
-                              borderRadius: BorderRadius.circular(16)),
-                        ),
-                        Row(mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            SizedBox(width: 20),
-                            new Text(
-                              "New pickup available!",
-                              maxLines: 1,
-                              textAlign: TextAlign.left,
-                              style: TextStyle(
-                                  fontSize: 20.0,
-                                  fontFamily: "Ubuntu",
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w700,
-                                  height: 1.6),
-                            ),
-                          ],
-                        ),
-                        Container(
-                            height: 0.8,
-                            margin: EdgeInsets.only(top: 10, bottom: 15),
-                            width: MediaQuery.of(context).size.width,
-                            color: Colors.grey[300]),
-                        ListTile(
-                          leading: CircleAvatar(
-                              radius: 30,
-                              backgroundImage: NetworkImage(
-                                  "https://i.pinimg.com/originals/f5/1b/e3/f51be323ae96b07a34a5f858402ae040.jpg")),
-                          title: Text(
-                            "Amaka Johnson",
-                            textAlign: TextAlign.left,
-                            style: TextStyle(
-                              fontSize: 18.0,
-                              fontFamily: "Ubuntu",
-                              fontWeight: FontWeight.w500,
-                              height: 1.6,
-                            ),
-                          ),
-                          subtitle: Text(
-                            "107 Victoria Street, Port harcourt",
-                            maxLines: 2,
-                            textAlign: TextAlign.left,
-                            style: TextStyle(
-                              fontSize: 16.0,
-                              fontFamily: "Ubuntu",
-                              fontWeight: FontWeight.w400,
-                              height: 1.4,
-                            ),
-                          ),
-                          isThreeLine: true,
-                          contentPadding: EdgeInsets.only(left: 20),
-                          dense: true,
-                        ),
-                        Expanded(child: SizedBox()),
-                        Container(
-                            height: 50,
-                            alignment: Alignment.center,
-                            margin: EdgeInsets.only(
-                                bottom: 15, left: 25, right: 25),
-                            decoration: BoxDecoration(
-                              color: AppColors.primaryText,
-                              boxShadow: [Shadows.secondaryShadow],
-                              borderRadius: Radii.kRoundpxRadius,
-                            ),
-                            child: Text('Accept',
-                                style: TextStyle(
-                                    fontSize: 16,
-                                    fontFamily: 'Ubuntu',
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w500))),
-                        Container(
-                            height: 30,
-                            alignment: Alignment.center,
-                            margin: EdgeInsets.only(
-                                bottom: 25, left: 25, right: 25),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: Radii.kRoundpxRadius,
-                            ),
-                            child: Text('Decline',
-                                style: TextStyle(
-                                    fontSize: 16,
-                                    fontFamily: 'Ubuntu',
-                                    color: AppColors.primaryText,
-                                    fontWeight: FontWeight.w500))),
+      body: SafeArea(
+        child: Stack(
+          children: <Widget>[
+            GoogleMap(
+              mapType: MapType.normal,
+              initialCameraPosition: _kGooglePlex,
+              myLocationEnabled: true,
+              onMapCreated: (GoogleMapController controller) {
+                _controller.complete(controller);
+              },
+            ),
+            CustomHeader(),
+            Positioned(
+              bottom: 0,
+              child: Column(
+                children: [
+                  notifPanel(),
+                  Container(
+                    height: MediaQuery.of(context).size.height / 2.6,
+                    width: MediaQuery.of(context).size.width,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      boxShadow: [
+                        Shadows.primaryShadow,
                       ],
                     ),
+                    child: Expanded(
+                      child: Column(
+                        children: [
+                          Container(
+                            height: 8,
+                            width: 60,
+                            margin: EdgeInsets.only(top: 15, bottom: 15),
+                            decoration: BoxDecoration(
+                                color: Colors.grey[300],
+                                borderRadius: BorderRadius.circular(16)),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              SizedBox(width: 20),
+                              new Text(
+                                "New pickup available!",
+                                maxLines: 1,
+                                textAlign: TextAlign.left,
+                                style: TextStyle(
+                                    fontSize: 20.0,
+                                    fontFamily: "Ubuntu",
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w700,
+                                    height: 1.6),
+                              ),
+                            ],
+                          ),
+                          Container(
+                              height: 0.8,
+                              margin: EdgeInsets.only(top: 10, bottom: 15),
+                              width: MediaQuery.of(context).size.width,
+                              color: Colors.grey[300]),
+                          ListTile(
+                            leading: CircleAvatar(
+                                radius: 30,
+                                backgroundImage: NetworkImage(
+                                    "https://i.pinimg.com/originals/f5/1b/e3/f51be323ae96b07a34a5f858402ae040.jpg")),
+                            title: Text(
+                              "Amaka Johnson",
+                              textAlign: TextAlign.left,
+                              style: TextStyle(
+                                fontSize: 18.0,
+                                fontFamily: "Ubuntu",
+                                fontWeight: FontWeight.w500,
+                                height: 1.6,
+                              ),
+                            ),
+                            subtitle: Text(
+                              "107 Victoria Street, Port harcourt",
+                              maxLines: 2,
+                              textAlign: TextAlign.left,
+                              style: TextStyle(
+                                fontSize: 16.0,
+                                fontFamily: "Ubuntu",
+                                fontWeight: FontWeight.w400,
+                                height: 1.4,
+                              ),
+                            ),
+                            isThreeLine: true,
+                            contentPadding: EdgeInsets.only(left: 20),
+                            dense: true,
+                          ),
+                          Expanded(child: SizedBox()),
+                          Container(
+                              height: 50,
+                              alignment: Alignment.center,
+                              margin: EdgeInsets.only(
+                                  bottom: 15, left: 25, right: 25),
+                              decoration: BoxDecoration(
+                                color: AppColors.primaryText,
+                                boxShadow: [Shadows.secondaryShadow],
+                                borderRadius: Radii.kRoundpxRadius,
+                              ),
+                              child: Text('Accept',
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontFamily: 'Ubuntu',
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w500))),
+                          Container(
+                              height: 30,
+                              alignment: Alignment.center,
+                              margin: EdgeInsets.only(
+                                  bottom: 25, left: 25, right: 25),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: Radii.kRoundpxRadius,
+                              ),
+                              child: Text('Decline',
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontFamily: 'Ubuntu',
+                                      color: AppColors.primaryText,
+                                      fontWeight: FontWeight.w500))),
+                        ],
+                      ),
+                    ),
                   ),
-                ),
-              ],
-            ),
-          )
-        ],
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
 
   Widget notifPanel() => Container(
-    width: MediaQuery.of(context).size.width,
-    child: Row(children: [
-      Expanded(child: SizedBox()),
-      Column(
-        children: [
-          Badge(
-            animationDuration: Duration(milliseconds: 700),
-            elevation: 0,
-            animationType: BadgeAnimationType.scale,
-            badgeContent: Padding(
-              padding: const EdgeInsets.all(2.0),
-              child: Text('9',
-                  style: TextStyle(
-                      fontSize: 15,
-                      fontFamily: "Ubuntu",
-                      color: Colors.white,
-                      fontWeight: FontWeight.w400)),
-            ),
-            child: Container(
-              width: 44,
-              height: 44,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: Colors.white,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black26,
-                    blurRadius: 12.0,
-                    offset: Offset(0.0, 5.0),
+        width: MediaQuery.of(context).size.width,
+        child: Row(children: [
+          Expanded(child: SizedBox()),
+          Column(
+            children: [
+              Badge(
+                animationDuration: Duration(milliseconds: 700),
+                elevation: 0,
+                animationType: BadgeAnimationType.scale,
+                badgeContent: Padding(
+                  padding: const EdgeInsets.all(2.0),
+                  child: Text('7',
+                      style: TextStyle(
+                          fontSize: 15,
+                          fontFamily: "Ubuntu",
+                          color: Colors.white,
+                          fontWeight: FontWeight.w400)),
+                ),
+                child: Container(
+                  width: 44,
+                  height: 44,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black26,
+                        blurRadius: 12.0,
+                        offset: Offset(0.0, 5.0),
+                      ),
+                    ],
                   ),
-                ],
+                  child: Padding(
+                    padding: const EdgeInsets.all(10.5),
+                    child: SvgPicture.asset('assets/svg/kargo_notif.svg',
+                        height: 25, semanticsLabel: 'Acme Logo'),
+                  ),
+                ),
               ),
-              child: Padding(
-                padding: const EdgeInsets.all(10.5),
-                child: SvgPicture.asset('assets/svg/kargo_notif.svg',
-                    height: 25, semanticsLabel: 'Acme Logo'),
-              ),
-            ),
+              SizedBox(height: 25),
+            ],
           ),
-          SizedBox(height: 25),
-        ],
-      ),
-      SizedBox(width: 15),
-    ]),
-  );
+          SizedBox(width: 15),
+        ]),
+      );
 }
 
 /// Search text field plus the horizontally scrolling categories below the text field
@@ -362,21 +365,21 @@ class CustomerAppBar extends StatelessWidget {
                   }),
               Row(
                 children: [
-                 SizedBox(height: 45,
-                   child: LiteRollingSwitch(
-                        value: true,
-                        textOn: 'Online',
-                        textOff: 'Offline',
-                        colorOn: Colors.green,
-                        colorOff: Colors.grey[400],
-                        iconOn: Icons.lightbulb_outline,
-                        iconOff: Icons.power_settings_new,
-                        onChanged: (bool state) {
-                          print('turned ${(state) ? 'on' : 'off'}');
-                        },
-                      ),
-                 ),
-
+                  SizedBox(
+                    height: 45,
+                    child: LiteRollingSwitch(
+                      value: true,
+                      textOn: 'Online',
+                      textOff: 'Offline',
+                      colorOn: Colors.green,
+                      colorOff: Colors.grey[400],
+                      iconOn: Icons.lightbulb_outline,
+                      iconOff: Icons.power_settings_new,
+                      onChanged: (bool state) {
+                        print('turned ${(state) ? 'on' : 'off'}');
+                      },
+                    ),
+                  ),
                 ],
               ),
             ],

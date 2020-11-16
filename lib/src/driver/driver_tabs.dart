@@ -81,7 +81,7 @@ class _DriverTabsState extends State<DriverTabs> {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: items,
       ),
-      color: Theme.of(context).primaryColor,
+      color: Colors.white,
     );
   }
 
