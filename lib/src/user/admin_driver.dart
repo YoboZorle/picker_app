@@ -1,9 +1,8 @@
+import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
-import 'package:pickrr_app/src/user/review_order.dart';
 import 'package:pickrr_app/src/values/values.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import '../home.dart';
 
@@ -19,6 +18,7 @@ class _AdminDriverState extends State<AdminDriver> {
   double amount = 500;
   final currencyFormatter =
   NumberFormat.currency(locale: 'en_US', symbol: '\u20a6');
+  final rider_flr = 'assets/flare/rider.flr';
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -106,10 +106,13 @@ class _AdminDriverState extends State<AdminDriver> {
                                     color: Colors.grey[300],
                                     borderRadius: BorderRadius.circular(16)),
                               ),
+                              Container(height: 200,
+                                child: new FlareActor(rider_flr,
+                                    alignment: Alignment.center, fit: BoxFit.contain, animation: 'RidertoStore'),
+                              ),
                               new Text(
-                                "Rider arrives in 2 mins",
-                                maxLines: 1,
-                                textAlign: TextAlign.left,
+                                "A driver will be assigned\nto you shortly...",
+                                textAlign: TextAlign.center,
                                 style: TextStyle(
                                     fontSize: 18.0,
                                     fontFamily: "Ubuntu",
@@ -118,126 +121,38 @@ class _AdminDriverState extends State<AdminDriver> {
                                     height: 1.35),
                               ),
                               SizedBox(height: 20),
-                              ListTile(
-                                trailing: Column(
-                                  children: [
-                                    Expanded(
-                                      child: Container(
-                                          width: 70.0,
-                                          height: 70.0,
-                                          margin: EdgeInsets.only(right: 15),
-                                          decoration: new BoxDecoration(
-                                              shape: BoxShape.circle,
-                                              image: new DecorationImage(
-                                                  fit: BoxFit.cover,
-                                                  image: NetworkImage(
-                                                      "https://monologueblogger.com/wp-content/uploads/2015/05/Brody-At-Dusk-Male-Drama-Monologue.jpg")))),
-                                    ),
-                                  ],
-                                ),
-                                title: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    RichText(
-                                      text: TextSpan(
-                                        children: [
-                                          TextSpan(
-                                            text: 'QLink bike ',
-                                            style: TextStyle(
-                                                fontSize: 15.0,
-                                                fontFamily: "Ubuntu",
-                                                color: Colors.grey[600],
-                                                fontWeight: FontWeight.w400,
-                                                height: 1.5),
-                                          ),
-                                          WidgetSpan(
-                                            child: Padding(
-                                              padding: const EdgeInsets.all(4.0),
-                                              child: Icon(Icons.circle,
-                                                  size: 8, color: Colors.grey),
-                                            ),
-                                          ),
-                                          TextSpan(
-                                            text: ' Plate Number: RV745T',
-                                            style: TextStyle(
-                                                fontSize: 15.0,
-                                                fontFamily: "Ubuntu",
-                                                color: Colors.grey[600],
-                                                fontWeight: FontWeight.w400,
-                                                height: 1.5),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    Text(
-                                      "87AGB346",
-                                      maxLines: 1,
-                                      textAlign: TextAlign.left,
-                                      style: TextStyle(
-                                          fontSize: 22.0,
-                                          fontFamily: "Ubuntu",
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.w800,
-                                          height: 1.6),
-                                    ),
-                                  ],
-                                ),
-                                subtitle: RichText(
-                                  text: TextSpan(
-                                      text: 'Your driver is ',
-                                      style: TextStyle(
-                                          fontSize: 16.0,
-                                          fontFamily: "Ubuntu",
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.w400,
-                                          height: 1.6),
-                                      children: <TextSpan>[
-                                        TextSpan(
-                                          text: 'Confidence Yobo',
-                                          style: TextStyle(
-                                              fontSize: 16.0,
-                                              fontFamily: "Ubuntu",
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.w500,
-                                              height: 1.6),
-                                        )
-                                      ]),
-                                ),
-                                contentPadding: EdgeInsets.only(left: 20),
-                                dense: true,
-                              ),
-                              Hero(
-                                tag: "btn",
-                                flightShuttleBuilder: _flightShuttleBuilder,
-                                child: GestureDetector(
-                                  child: Container(
-                                    height: 45,
-                                    alignment: Alignment.center,
-                                    margin: EdgeInsets.only(
-                                        bottom: 10, left: 25, right: 25, top: 30),
-                                    decoration: BoxDecoration(
-                                      color: AppColors.primaryText,
-                                      boxShadow: [Shadows.secondaryShadow],
-                                      borderRadius: Radii.kRoundpxRadius,
-                                    ),
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        Icon(Icons.phone_rounded,
-                                            color: Colors.white, size: 18),
-                                        SizedBox(width: 8),
-                                        Text('Call Driver',
-                                            style: TextStyle(
-                                                fontSize: 15,
-                                                fontFamily: 'Ubuntu',
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.w500)),
-                                      ],
-                                    ),
-                                  ),
-                                  onTap: () => launch("tel://08161654006"),
-                                ),
-                              ),
+                              // Hero(
+                              //   tag: "btn",
+                              //   flightShuttleBuilder: _flightShuttleBuilder,
+                              //   child: GestureDetector(
+                              //     child: Container(
+                              //       height: 45,
+                              //       alignment: Alignment.center,
+                              //       margin: EdgeInsets.only(
+                              //           bottom: 10, left: 25, right: 25, top: 30),
+                              //       decoration: BoxDecoration(
+                              //         color: AppColors.primaryText,
+                              //         boxShadow: [Shadows.secondaryShadow],
+                              //         borderRadius: Radii.kRoundpxRadius,
+                              //       ),
+                              //       child: Row(
+                              //         mainAxisAlignment: MainAxisAlignment.center,
+                              //         children: [
+                              //           Icon(Icons.phone_rounded,
+                              //               color: Colors.white, size: 18),
+                              //           SizedBox(width: 8),
+                              //           Text('Call Driver',
+                              //               style: TextStyle(
+                              //                   fontSize: 15,
+                              //                   fontFamily: 'Ubuntu',
+                              //                   color: Colors.white,
+                              //                   fontWeight: FontWeight.w500)),
+                              //         ],
+                              //       ),
+                              //     ),
+                              //     onTap: () => launch("tel://08161654006"),
+                              //   ),
+                              // ),
                               GestureDetector(
                                 child: Container(
                                   height: 45,

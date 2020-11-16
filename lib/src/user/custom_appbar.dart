@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:pickrr_app/src/auth/otp_verification.dart';
+import 'package:pickrr_app/src/driver/driver_onboard.dart';
 import 'package:pickrr_app/src/values/values.dart';
 
 class CustomerAppBar extends StatelessWidget {
@@ -64,7 +64,7 @@ class CustomerAppBar extends StatelessWidget {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => OTPVerification(authId: null)),
+                    MaterialPageRoute(builder: (context) => DriverBoard()),
                   );
                 },
               ),

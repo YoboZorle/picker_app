@@ -22,11 +22,11 @@ class _ReviewOrderState extends State<ReviewOrder> {
       child: new Scaffold(
           backgroundColor: Colors.white,
           appBar: AppBar(
-            centerTitle: false,
+            centerTitle: true,
             title: Text(
               'Complete Order',
               style: TextStyle(
-                fontSize: 17,
+                fontSize: 16,
                 fontFamily: 'Ubuntu',
                 color: Colors.black,
                 fontWeight: FontWeight.w800,
@@ -38,7 +38,7 @@ class _ReviewOrderState extends State<ReviewOrder> {
                 Navigator.pop(context);
               },
             ),
-            elevation: 0,
+            elevation: 0.5,
             backgroundColor: Colors.white,
           ),
           body: GestureDetector(
@@ -54,15 +54,16 @@ class _ReviewOrderState extends State<ReviewOrder> {
                         ListView(
                             physics: const BouncingScrollPhysics(),
                             children: <Widget>[
-                              SizedBox(height: 15),
+                              SizedBox(height: 10),
                               Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.start,
                                   children: <Widget>[
+                                    SizedBox(width: 20),
                                     Text(
                                       'Transaction ID: ',
                                       textAlign: TextAlign.left,
                                       style: TextStyle(
-                                        fontSize: 15,
+                                        fontSize: 14,
                                         fontFamily: 'Ubuntu',
                                         color: Colors.black87,
                                         fontWeight: FontWeight.w400,
@@ -72,21 +73,21 @@ class _ReviewOrderState extends State<ReviewOrder> {
                                       '87AGB346',
                                       textAlign: TextAlign.left,
                                       style: TextStyle(
-                                        fontSize: 15,
+                                        fontSize: 14,
                                         fontFamily: 'Ubuntu',
                                         color: Colors.black,
                                         fontWeight: FontWeight.w500,
                                       ),
                                     )
                                   ]),
-                              SizedBox(height: 25),
+                              SizedBox(height: 20),
                               Container(
                                 padding: EdgeInsets.only(left: 20),
                                 child: Text(
                                   'Receiver\'s Details',
                                   textAlign: TextAlign.left,
                                   style: TextStyle(
-                                    fontSize: 16,
+                                    fontSize: 13,
                                     fontFamily: 'Ubuntu',
                                     color: Colors.green,
                                     fontWeight: FontWeight.w600,
@@ -105,7 +106,7 @@ class _ReviewOrderState extends State<ReviewOrder> {
                                     text: TextSpan(
                                         text: 'Name: ',
                                         style: TextStyle(
-                                            fontSize: 16.0,
+                                            fontSize: 13.0,
                                             fontFamily: "Ubuntu",
                                             color: Colors.black87,
                                             fontWeight: FontWeight.w400,
@@ -114,7 +115,7 @@ class _ReviewOrderState extends State<ReviewOrder> {
                                           TextSpan(
                                             text: 'George Adowei',
                                             style: TextStyle(
-                                              fontSize: 15,
+                                              fontSize: 13,
                                               fontFamily: 'Ubuntu',
                                               color: Colors.black,
                                               fontWeight: FontWeight.w500,
@@ -128,19 +129,18 @@ class _ReviewOrderState extends State<ReviewOrder> {
                                     children: [
                                       RichText(
                                         text: TextSpan(
-                                            text: 'Address: ',
+                                            text: 'Phone: ',
                                             style: TextStyle(
-                                                fontSize: 16.0,
+                                                fontSize: 13.0,
                                                 fontFamily: "Ubuntu",
                                                 color: Colors.black87,
                                                 fontWeight: FontWeight.w400,
                                                 height: 1.6),
                                             children: <TextSpan>[
                                               TextSpan(
-                                                text:
-                                                    '7B Sani Abacha road, GRA Phase 3C, Port harcourt, Nigeria',
+                                                text: '08034233482',
                                                 style: TextStyle(
-                                                  fontSize: 15,
+                                                  fontSize: 13,
                                                   fontFamily: 'Ubuntu',
                                                   color: Colors.black,
                                                   fontWeight: FontWeight.w500,
@@ -150,18 +150,19 @@ class _ReviewOrderState extends State<ReviewOrder> {
                                       ),
                                       RichText(
                                         text: TextSpan(
-                                            text: 'Phone: ',
+                                            text: 'Address: ',
                                             style: TextStyle(
-                                                fontSize: 16.0,
+                                                fontSize: 13.0,
                                                 fontFamily: "Ubuntu",
                                                 color: Colors.black87,
                                                 fontWeight: FontWeight.w400,
                                                 height: 1.6),
                                             children: <TextSpan>[
                                               TextSpan(
-                                                text: '08034233482',
+                                                text:
+                                                    '7B Sani Abacha road, GRA Phase 3C, Port harcourt, Nigeria',
                                                 style: TextStyle(
-                                                  fontSize: 15,
+                                                  fontSize: 13,
                                                   fontFamily: 'Ubuntu',
                                                   color: Colors.black,
                                                   fontWeight: FontWeight.w500,
@@ -169,21 +170,21 @@ class _ReviewOrderState extends State<ReviewOrder> {
                                               )
                                             ]),
                                       ),
+
                                     ],
                                   ),
                                   contentPadding: EdgeInsets.all(0),
                                   dense: true,
                                 ),
                               ),
-                              SizedBox(height: 40),
-
+                              SizedBox(height: 20),
                               Container(
                                 padding: EdgeInsets.only(left: 20),
                                 child: Text(
                                   'Sender\'s Details',
                                   textAlign: TextAlign.left,
                                   style: TextStyle(
-                                    fontSize: 16,
+                                    fontSize: 13,
                                     fontFamily: 'Ubuntu',
                                     color: Colors.red,
                                     fontWeight: FontWeight.w600,
@@ -202,7 +203,7 @@ class _ReviewOrderState extends State<ReviewOrder> {
                                     text: TextSpan(
                                         text: 'Name: ',
                                         style: TextStyle(
-                                            fontSize: 16.0,
+                                            fontSize: 13.0,
                                             fontFamily: "Ubuntu",
                                             color: Colors.black87,
                                             fontWeight: FontWeight.w400,
@@ -211,7 +212,7 @@ class _ReviewOrderState extends State<ReviewOrder> {
                                           TextSpan(
                                             text: 'Blessing Christopher',
                                             style: TextStyle(
-                                              fontSize: 15,
+                                              fontSize: 13,
                                               fontFamily: 'Ubuntu',
                                               color: Colors.black,
                                               fontWeight: FontWeight.w500,
@@ -223,21 +224,21 @@ class _ReviewOrderState extends State<ReviewOrder> {
                                     crossAxisAlignment:
                                     CrossAxisAlignment.start,
                                     children: [
+
                                       RichText(
                                         text: TextSpan(
-                                            text: 'Address: ',
+                                            text: 'Phone: ',
                                             style: TextStyle(
-                                                fontSize: 16.0,
+                                                fontSize: 13.0,
                                                 fontFamily: "Ubuntu",
                                                 color: Colors.black87,
                                                 fontWeight: FontWeight.w400,
                                                 height: 1.6),
                                             children: <TextSpan>[
                                               TextSpan(
-                                                text:
-                                                '49 Nembe street, Borikiri, Port harcourt, Nigeria',
+                                                text: '09074222382',
                                                 style: TextStyle(
-                                                  fontSize: 15,
+                                                  fontSize: 13,
                                                   fontFamily: 'Ubuntu',
                                                   color: Colors.black,
                                                   fontWeight: FontWeight.w500,
@@ -247,18 +248,19 @@ class _ReviewOrderState extends State<ReviewOrder> {
                                       ),
                                       RichText(
                                         text: TextSpan(
-                                            text: 'Phone: ',
+                                            text: 'Address: ',
                                             style: TextStyle(
-                                                fontSize: 16.0,
+                                                fontSize: 13.0,
                                                 fontFamily: "Ubuntu",
                                                 color: Colors.black87,
                                                 fontWeight: FontWeight.w400,
                                                 height: 1.6),
                                             children: <TextSpan>[
                                               TextSpan(
-                                                text: '09074222382',
+                                                text:
+                                                '49 Nembe street, Borikiri, Port harcourt, Nigeria',
                                                 style: TextStyle(
-                                                  fontSize: 15,
+                                                  fontSize: 13,
                                                   fontFamily: 'Ubuntu',
                                                   color: Colors.black,
                                                   fontWeight: FontWeight.w500,
@@ -283,7 +285,7 @@ class _ReviewOrderState extends State<ReviewOrder> {
                                         'Estimated Delivery Time:',
                                         textAlign: TextAlign.left,
                                         style: TextStyle(
-                                          fontSize: 15,
+                                          fontSize: 13,
                                           fontFamily: 'Ubuntu',
                                           color: Colors.black87,
                                           fontWeight: FontWeight.w400,
@@ -293,7 +295,7 @@ class _ReviewOrderState extends State<ReviewOrder> {
                                         '33 mins',
                                         textAlign: TextAlign.left,
                                         style: TextStyle(
-                                          fontSize: 15,
+                                          fontSize: 13,
                                           fontFamily: 'Ubuntu',
                                           color: Colors.black,
                                           fontWeight: FontWeight.w500,
@@ -301,7 +303,7 @@ class _ReviewOrderState extends State<ReviewOrder> {
                                       )
                                     ]),
                               ),
-                              SizedBox(height: 20),
+                              SizedBox(height: 15),
                               Container(
                                 padding: EdgeInsets.only(left: 20, right: 20),
                                 child: Row(
@@ -312,7 +314,7 @@ class _ReviewOrderState extends State<ReviewOrder> {
                                         'Distance in Kilometers:',
                                         textAlign: TextAlign.left,
                                         style: TextStyle(
-                                          fontSize: 15,
+                                          fontSize: 13,
                                           fontFamily: 'Ubuntu',
                                           color: Colors.black87,
                                           fontWeight: FontWeight.w400,
@@ -322,7 +324,7 @@ class _ReviewOrderState extends State<ReviewOrder> {
                                         '6km',
                                         textAlign: TextAlign.left,
                                         style: TextStyle(
-                                          fontSize: 15,
+                                          fontSize: 13,
                                           fontFamily: 'Ubuntu',
                                           color: Colors.black,
                                           fontWeight: FontWeight.w500,
@@ -336,7 +338,7 @@ class _ReviewOrderState extends State<ReviewOrder> {
                                 child: DottedLine(
                                   direction: Axis.horizontal,
                                   lineLength: double.infinity,
-                                  lineThickness: 0.8,
+                                  lineThickness: 0.5,
                                   dashLength: 5.0,
                                   dashColor: Colors.grey,
                                   dashRadius: 0.0,
@@ -356,7 +358,7 @@ class _ReviewOrderState extends State<ReviewOrder> {
                                         'Total Delivery Cost:',
                                         textAlign: TextAlign.left,
                                         style: TextStyle(
-                                          fontSize: 15,
+                                          fontSize: 13,
                                           fontFamily: 'Ubuntu',
                                           color: Colors.black87,
                                           fontWeight: FontWeight.w400,
@@ -367,7 +369,7 @@ class _ReviewOrderState extends State<ReviewOrder> {
                                         maxLines: 1,
                                         textAlign: TextAlign.left,
                                         style: TextStyle(
-                                            fontSize: 18.0,
+                                            fontSize: 15.0,
                                             fontFamily: "Roboto",
                                             color: AppColors.primaryText,
                                             fontWeight: FontWeight.w700,
@@ -400,10 +402,10 @@ class _ReviewOrderState extends State<ReviewOrder> {
                           color: AppColors.primaryText,
                           child: Text("Pay " + currencyFormatter.format(amount),
                               style: TextStyle(
-                                  fontFamily: 'Ubuntu',
+                                  fontFamily: "Roboto",
                                   fontWeight: FontWeight.w600,
                                   color: Color(0xFFFFFFFF),
-                                  fontSize: 16,
+                                  fontSize: 15,
                                   height: 1.4)),
                         ),
                       ),

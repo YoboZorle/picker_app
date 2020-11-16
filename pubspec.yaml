@@ -40,6 +40,7 @@ dependencies:
   intl: ^0.15.8
   dotted_line: ^2.0.2
   url_launcher: ^5.7.10
+  circular_profile_avatar: ^1.0.8
 
 dev_dependencies:
   flutter_test:
@@ -57,7 +58,7 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/flare/splash_kargo_bg.flr
+    - assets/flare/
     - assets/fonts/
     - assets/images/
     - assets/svg/

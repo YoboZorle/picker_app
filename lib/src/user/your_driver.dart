@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
+import 'package:pickrr_app/src/user/admin_driver.dart';
 import 'package:pickrr_app/src/user/review_order.dart';
 import 'package:pickrr_app/src/values/values.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -117,7 +118,7 @@ class _YourDriverState extends State<YourDriver> {
                             fontWeight: FontWeight.w700,
                             height: 1.35),
                       ),
-                      SizedBox(height: 20),
+                      SizedBox(height: 15),
                       ListTile(
                         trailing: Column(
                           children: [
@@ -214,7 +215,7 @@ class _YourDriverState extends State<YourDriver> {
                             height: 45,
                             alignment: Alignment.center,
                             margin: EdgeInsets.only(
-                                bottom: 10, left: 25, right: 25, top: 30),
+                                bottom: 10, left: 25, right: 25, top: 25),
                             decoration: BoxDecoration(
                               color: AppColors.primaryText,
                               boxShadow: [Shadows.secondaryShadow],
@@ -254,7 +255,7 @@ class _YourDriverState extends State<YourDriver> {
                         onTap: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => Home()),
+                            MaterialPageRoute(builder: (context) => AdminDriver()),
                           );
                         },
                       ),

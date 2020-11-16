@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:pickrr_app/src/auth/otp_verification.dart';
 import 'package:pickrr_app/src/values/values.dart';
 
@@ -9,7 +8,6 @@ class UserDrawer extends StatefulWidget {
 }
 
 class _UserDrawerState extends State<UserDrawer> {
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -45,23 +43,6 @@ class _UserDrawerState extends State<UserDrawer> {
               color: Colors.grey[300]),
           ListTile(
             title: Text(
-              'Shopping Log',
-              style: TextStyle(
-                  fontWeight: FontWeight.w400,
-                  fontFamily: "Ubuntu",
-                  fontSize: 18),
-            ),
-            leading: Icon(Icons.local_shipping_outlined),
-            dense: false,
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => OTPVerification(authId: null)),
-              );
-            },
-          ),
-          ListTile(
-            title: Text(
               'Track Deliveries',
               style: TextStyle(
                   fontWeight: FontWeight.w400,
@@ -74,7 +55,7 @@ class _UserDrawerState extends State<UserDrawer> {
           ),
           ListTile(
             title: Text(
-              'Ride History',
+              'Order History',
               style: TextStyle(
                   fontWeight: FontWeight.w400,
                   fontFamily: "Ubuntu",
