@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:pickrr_app/src/auth/otp_verification.dart';
-import 'package:pickrr_app/src/driver/driver_tabs.dart';
+import 'package:pickrr_app/src/driver/driver_onboard.dart';
+import 'package:pickrr_app/src/user/ride_history/ride_history.dart';
 import 'package:pickrr_app/src/user/track_deliveries/track_deliveries.dart';
 import 'package:pickrr_app/src/values/values.dart';
 
@@ -56,7 +56,7 @@ class _UserDrawerState extends State<UserDrawer> {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => TrackRides()),
+                MaterialPageRoute(builder: (context) => TrackDeliveries()),
               );
             },
           ),
@@ -69,6 +69,12 @@ class _UserDrawerState extends State<UserDrawer> {
                   fontSize: 18),
             ),
             leading: Icon(Icons.history),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => RideHistory()),
+              );
+            },
           ),
           ListTile(
             title: Text(
@@ -119,7 +125,7 @@ class _UserDrawerState extends State<UserDrawer> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => DriverTabs()),
+                  MaterialPageRoute(builder: (context) => DriverBoard()),
                 );
               },
             ),

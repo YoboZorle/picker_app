@@ -1,191 +1,182 @@
+import 'package:circular_profile_avatar/circular_profile_avatar.dart';
 import 'package:flutter/material.dart';
+import 'package:pickrr_app/src/utils/transitionAppbar/transition_appbar.dart';
 import 'package:pickrr_app/src/values/values.dart';
 
-class TrackRides extends StatefulWidget {
-  @override
-  _TrackRidesState createState() => _TrackRidesState();
-}
-
-class _TrackRidesState extends State<TrackRides> {
+class TrackDeliveries extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Shopping Log',
-      home: Scaffold(
-        appBar: AppBar(
-          automaticallyImplyLeading: true,
-          backgroundColor: AppColors.primaryText,
-          title: Text(
-            'Track Deliveries',
-            style: TextStyle(
-                fontWeight: FontWeight.w700,
-                fontFamily: "Ubuntu",
-                fontSize: 18),
+    cryptoPortfolioItem(String img, String name, double amount, String rate,
+            String percentage) =>
+        Card(
+          elevation: 0,
+          child: InkWell(
+            onTap: () => print("tapped"),
+            child: Container(
+              padding: EdgeInsets.only(top: 15.0, bottom: 15.0, right: 15.0),
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(22.0)),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  Padding(
+                      padding: EdgeInsets.only(left: 10.0, right: 15.0),
+                      // child: Icon(icon, color: Colors.grey),
+                      child: CircularProfileAvatar(
+                        img,
+                        radius: 25,
+                        backgroundColor: Colors.grey[200],
+                        // sets initials text, set your own style, default Text('')
+                        borderColor: Colors
+                            .brown, // sets border color, default Colors.white
+                        elevation:
+                            0.0, // sets elevation (shadow of the profile picture), default value is 0.0
+                        cacheImage:
+                            true, // allow widget to cache image against provided url
+                        onTap: () {
+                          print('yea');
+                        }, // sets on tap
+                        showInitialTextAbovePicture:
+                            false, // setting it true will show initials text above profile picture, default false
+                      )),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Text(
+                              name,
+                              style: TextStyle(
+                                  fontFamily: "Ubuntu",
+                                  fontSize: 17.0,
+                                  fontWeight: FontWeight.w800),
+                            ),
+                            Text("\u20A6$amount",
+                                style: TextStyle(
+                                    fontSize: 16.0,
+                                    fontFamily: "Ubuntu",
+                                    fontWeight: FontWeight.bold))
+                          ],
+                        ),
+                        SizedBox(height: 3),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Text("$rate",
+                                style: TextStyle(
+                                    fontSize: 13.0,
+                                    fontWeight: FontWeight.normal)),
+                            Text("+ \u20A6$percentage",
+                                style: TextStyle(
+                                  fontSize: 14.0,
+                                  color: Colors.red[500],
+                                ))
+                          ],
+                        )
+                      ],
+                    ),
+                    flex: 3,
+                  ),
+                ],
+              ),
+            ),
           ),
+        );
+    return Scaffold(backgroundColor: Colors.white,
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+          elevation: 0,
           leading: IconButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            icon: Icon(Icons.arrow_back_ios, size: 22, color: Colors.white),
-          ),
+        icon: Icon(Icons.arrow_back_ios, color: Colors.black),
+        onPressed: () {
+          Navigator.pop(context);
+        },
+      )),
+      body: SafeArea(
+        child: CustomScrollView(
+          slivers: <Widget>[
+            TransitionAppBar(
+              extent: 100,
+              avatar: Text("Track Deliveries",
+                  style: TextStyle(
+                    fontWeight: FontWeight.w800,
+                    fontFamily: 'Ubuntu',
+                    fontSize: 25,
+                  )),
+              title: Container(
+                margin: EdgeInsets.only(left: 20.0, right: 20),
+                decoration: BoxDecoration(
+                    color: Colors.grey[300],
+                    borderRadius: BorderRadius.all(Radius.circular(5.0))),
+                child: Row(children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.only(left: 20.0, right: 10.0),
+                    child: Icon(Icons.search),
+                  ),
+                  Expanded(
+                    child: TextFormField(
+                      keyboardType: TextInputType.text,
+                      textInputAction: TextInputAction.done,
+                      cursorColor: Colors.black,
+                      autofocus: false,
+                      decoration: InputDecoration(
+                          filled: true,
+                          fillColor: Colors.transparent,
+                          contentPadding: EdgeInsets.symmetric(
+                              vertical: 10, horizontal: 15),
+                          hintText: "Enter tracking ID",
+                          border: InputBorder.none,
+                          disabledBorder: OutlineInputBorder(
+                            borderSide:
+                                new BorderSide(color: Colors.transparent),
+                            borderRadius: new BorderRadius.circular(2),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide:
+                                new BorderSide(color: Colors.transparent),
+                            borderRadius: new BorderRadius.circular(2),
+                          )),
+                    ),
+                  ),
+                ]),
+              ),
+            ),
+            SliverList(
+              delegate: SliverChildListDelegate(
+                [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      RaisedButton(
+                        elevation: 15,
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                              top: 10, bottom: 10, right: 8, left: 8),
+                          child: Text('Track',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 17.0,
+                                  fontFamily: "Ubuntu",
+                                  fontWeight: FontWeight.w600)),
+                        ),
+                        color: AppColors.primaryText,
+                        textColor: AppColors.primaryText,
+                        onPressed: () {},
+                      ),
+                      SizedBox(width: 20),
+                    ],
+                  ),
+                  SizedBox(height: 40),
+                  Center(child: Text("Tracked deliveries appear here")),
+                ],
+              ),
+            )
+          ],
         ),
-        body: BodyLayout(),
       ),
     );
   }
 }
-
-class BodyLayout extends StatefulWidget {
-  @override
-  _BodyLayoutState createState() => _BodyLayoutState();
-}
-
-class _BodyLayoutState extends State<BodyLayout> {
-
-  final transact_id = [
-    '3542749',
-    '2548176',
-    '2653673',
-    '2988893',
-    '0680793',
-    '2564822',
-    'su23884',
-    '2871672',
-    '9872928'
-  ];
-  final address = [
-    '24 Victoria street, Port harcourt',
-    '40 Dline street, Port harcourt',
-    '4B Abacha road, Off GRA, Port harcourt',
-    '216 Lagos Street, Town ',
-    '200 Nembe street, Port harcourt',
-    '39 Island Layout, Porrt harcout',
-    '281 Freetown Close, Port harcourt ',
-    '12B Avenue Ndoki, Port harcourt',
-    '4 Delta Junction, Port harcourt'
-  ];
-
-  final dates = [
-    '8/11',
-    '5/11',
-    '3/11',
-    '1/11',
-    '30/10',
-    '23/10',
-    '21/10',
-    '19/10',
-    '15/10'
-  ];
-
-  final time = [
-    '10:45 AM',
-    '3:32 PM',
-    '2:40 PM',
-    '4:02 PM',
-    '1:23 PM',
-    '11:29 AM',
-    '11:11 AM',
-    '3:23 PM',
-    '12:05 AM'
-  ];
-
-  final status = [
-    'In progress',
-    'Scheduled',
-    'Shipped',
-    'Shipped',
-    'Cancelled',
-    'Shipped',
-    'Cancel',
-    'Shipped',
-    'Shipped'
-  ];
-
-  final type = [
-    'Packed meals from Chicken republic',
-    'Package textiles',
-    'Bevearages',
-    'Shoes',
-    'Food',
-    'Books',
-    'Books',
-    'Package',
-    'Packed meals'
-  ];
-
-  bool isShipped = true;
-
-
-  @override
-  Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: transact_id.length,
-      itemBuilder: (context, index) {
-        return Container(
-          margin: EdgeInsets.only(top: 10, left: 10, right: 10),
-          child: Card(
-            elevation: 0,
-            child: ListTile(
-              leading: Text(dates[index],
-                  style: TextStyle(
-                      fontWeight: FontWeight.w800,
-                      fontFamily: "Ubuntu",
-                      color: AppColors.primaryText,
-                      fontSize: 16)),
-              title: Text('Transaction ID: ' + transact_id[index],
-                  style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontFamily: "Ubuntu",
-                      color: Colors.black,
-                      fontSize: 16)),
-              subtitle: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(address[index],
-                      maxLines: 2,
-                      style: TextStyle(
-                          fontWeight: FontWeight.w400,
-                          fontFamily: "Ubuntu",
-                          color: AppColors.primaryText,
-                          fontSize: 15)),
-                  SizedBox(height: 3),
-                  Text(type[index],
-                      maxLines: 1,
-                      style: TextStyle(
-                          fontWeight: FontWeight.w400,
-                          fontFamily: "Ubuntu",
-                          color: Colors.black,
-                          fontSize: 15)),
-                  SizedBox(height: 3),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(time[index],
-                          maxLines: 1,
-                          style: TextStyle(
-                              fontWeight: FontWeight.w400,
-                              fontFamily: "Ubuntu",
-                              color: Colors.grey,
-                              fontSize: 15)),
-                      Text(status[index],
-                          maxLines: 1,
-                          style: TextStyle(
-                              fontWeight: FontWeight.w400,
-                              fontFamily: "Ubuntu",
-                              color: isShipped ? Colors.grey : Colors.cyan,
-                              fontSize: 15)),
-                    ],
-                  ),
-                ],
-              ),
-              isThreeLine: true,
-            ),
-          ),
-        );
-      },
-    );
-  }
-}
-
-
