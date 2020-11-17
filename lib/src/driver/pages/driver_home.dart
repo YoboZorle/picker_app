@@ -1,10 +1,9 @@
-import 'dart:async';
-
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:lite_rolling_switch/lite_rolling_switch.dart';
+import 'package:pickrr_app/src/driver/driver_accept.dart';
 import 'package:pickrr_app/src/values/values.dart';
 
 import '../../home.dart';
@@ -16,13 +15,9 @@ class DriverHome extends StatefulWidget {
 
 class _DriverHomeState extends State<DriverHome> {
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-
-  static final CameraPosition _kGooglePlex = CameraPosition(
-    target: LatLng(4.814041, 7.002759),
-    zoom: 15.5746,
-  );
-
-  Completer<GoogleMapController> _controller = Completer();
+  GoogleMapController myMapController;
+  final Set<Marker> _markers = new Set();
+  static const LatLng _mainLocation = const LatLng(4.814340, 7.000848);
 
   @override
   Widget build(BuildContext context) {
@@ -138,136 +133,177 @@ class _DriverHomeState extends State<DriverHome> {
           ),
         ),
       ),
-      body: SafeArea(
-        child: Stack(
-          children: <Widget>[
-            GoogleMap(
-              mapType: MapType.normal,
-              initialCameraPosition: _kGooglePlex,
-              myLocationEnabled: true,
-              onMapCreated: (GoogleMapController controller) {
-                _controller.complete(controller);
-              },
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Expanded(
+            child: Stack(
+              children: [
+                Hero(
+                  tag: 'map',
+                  flightShuttleBuilder: _flightShuttleBuilder,
+                  child: GoogleMap(
+                    initialCameraPosition: CameraPosition(
+                      target: _mainLocation,
+                      zoom: 15.6,
+                    ),
+                    markers: this.myMarker(),
+                    mapType: MapType.normal,
+                    myLocationButtonEnabled: false,
+                    zoomControlsEnabled: false,
+                    onMapCreated: (controller) {
+                      setState(() {
+                        myMapController = controller;
+                      });
+                    },
+                  ),
+                ),
+                CustomerAppBar(),
+                Positioned(bottom: 0, right: 0, child: notifPanel())
+              ],
             ),
-            CustomHeader(),
-            Positioned(
-              bottom: 0,
+          ),
+          Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                boxShadow: [
+                  Shadows.primaryShadow,
+                ],
+              ),
+              width: MediaQuery.of(context).size.width,
               child: Column(
                 children: [
-                  notifPanel(),
                   Container(
-                    height: MediaQuery.of(context).size.height / 2.6,
-                    width: MediaQuery.of(context).size.width,
+                    height: 8,
+                    width: 60,
+                    margin: EdgeInsets.only(top: 15, bottom: 18),
                     decoration: BoxDecoration(
-                      color: Colors.white,
-                      boxShadow: [
-                        Shadows.primaryShadow,
+                        color: Colors.grey[300],
+                        borderRadius: BorderRadius.circular(16)),
+                  ),
+                  Text(
+                    "Ride Available",
+                    maxLines: 1,
+                    textAlign: TextAlign.left,
+                    style: TextStyle(
+                        fontSize: 20.0,
+                        fontFamily: "Ubuntu",
+                        color: Colors.black,
+                        fontWeight: FontWeight.w700,
+                        height: 1.35),
+                  ),
+                  SizedBox(height: 15),
+                  ListTile(
+                    trailing: Column(
+                      children: [
+                        Expanded(
+                          child: Container(
+                              width: 70.0,
+                              height: 70.0,
+                              margin: EdgeInsets.only(right: 15),
+                              decoration: new BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  image: new DecorationImage(
+                                      fit: BoxFit.cover,
+                                      image: NetworkImage(
+                                          "https://monologueblogger.com/wp-content/uploads/2015/05/Brody-At-Dusk-Male-Drama-Monologue.jpg")))),
+                        ),
                       ],
                     ),
-                    child: Expanded(
-                      child: Column(
-                        children: [
-                          Container(
-                            height: 8,
-                            width: 60,
-                            margin: EdgeInsets.only(top: 15, bottom: 15),
-                            decoration: BoxDecoration(
-                                color: Colors.grey[300],
-                                borderRadius: BorderRadius.circular(16)),
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
+                    title: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        RichText(
+                          text: TextSpan(
                             children: [
-                              SizedBox(width: 20),
-                              new Text(
-                                "New pickup available!",
-                                maxLines: 1,
-                                textAlign: TextAlign.left,
+                              TextSpan(
+                                text: 'Mike Anderson ',
                                 style: TextStyle(
-                                    fontSize: 20.0,
+                                    fontSize: 18.0,
                                     fontFamily: "Ubuntu",
                                     color: Colors.black,
                                     fontWeight: FontWeight.w700,
-                                    height: 1.6),
+                                    height: 1.5),
                               ),
+                              // WidgetSpan(
+                              //   child: Padding(
+                              //     padding: const EdgeInsets.all(4.0),
+                              //     child: Icon(Icons.circle,
+                              //         size: 8, color: Colors.grey),
+                              //   ),
+                              // ),
                             ],
                           ),
-                          Container(
-                              height: 0.8,
-                              margin: EdgeInsets.only(top: 10, bottom: 15),
-                              width: MediaQuery.of(context).size.width,
-                              color: Colors.grey[300]),
-                          ListTile(
-                            leading: CircleAvatar(
-                                radius: 30,
-                                backgroundImage: NetworkImage(
-                                    "https://i.pinimg.com/originals/f5/1b/e3/f51be323ae96b07a34a5f858402ae040.jpg")),
-                            title: Text(
-                              "Amaka Johnson",
-                              textAlign: TextAlign.left,
-                              style: TextStyle(
-                                fontSize: 18.0,
-                                fontFamily: "Ubuntu",
-                                fontWeight: FontWeight.w500,
-                                height: 1.6,
-                              ),
-                            ),
-                            subtitle: Text(
-                              "107 Victoria Street, Port harcourt",
-                              maxLines: 2,
-                              textAlign: TextAlign.left,
-                              style: TextStyle(
-                                fontSize: 16.0,
-                                fontFamily: "Ubuntu",
-                                fontWeight: FontWeight.w400,
-                                height: 1.4,
-                              ),
-                            ),
-                            isThreeLine: true,
-                            contentPadding: EdgeInsets.only(left: 20),
-                            dense: true,
-                          ),
-                          Expanded(child: SizedBox()),
-                          Container(
-                              height: 50,
-                              alignment: Alignment.center,
-                              margin: EdgeInsets.only(
-                                  bottom: 15, left: 25, right: 25),
-                              decoration: BoxDecoration(
-                                color: AppColors.primaryText,
-                                boxShadow: [Shadows.secondaryShadow],
-                                borderRadius: Radii.kRoundpxRadius,
-                              ),
-                              child: Text('Accept',
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      fontFamily: 'Ubuntu',
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w500))),
-                          Container(
-                              height: 30,
-                              alignment: Alignment.center,
-                              margin: EdgeInsets.only(
-                                  bottom: 25, left: 25, right: 25),
-                              decoration: BoxDecoration(
+                        ),
+                      ],
+                    ),
+                    subtitle: RichText(
+                      text: TextSpan(
+                          text: '12B Sani Abach Road 5',
+                          style: TextStyle(
+                              fontSize: 16.0,
+                              fontFamily: "Ubuntu",
+                              color: Colors.black,
+                              fontWeight: FontWeight.w400,
+                              height: 1.6),
+                          children: <TextSpan>[
+                          ]),
+                    ),
+                    contentPadding: EdgeInsets.only(left: 20),
+                    dense: true,
+                  ),
+                  Hero(
+                    tag: "btn",
+                    flightShuttleBuilder: _flightShuttleBuilder,
+                    child: GestureDetector(
+                      child: Container(
+                        height: 45,
+                        alignment: Alignment.center,
+                        margin: EdgeInsets.only(
+                            bottom: 10, left: 25, right: 25, top: 25),
+                        decoration: BoxDecoration(
+                          color: AppColors.primaryText,
+                          boxShadow: [Shadows.secondaryShadow],
+                          borderRadius: Radii.kRoundpxRadius,
+                        ),
+                        child: Text('Accept',
+                            style: TextStyle(
+                                fontSize: 15,
+                                fontFamily: 'Ubuntu',
                                 color: Colors.white,
-                                borderRadius: Radii.kRoundpxRadius,
-                              ),
-                              child: Text('Decline',
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      fontFamily: 'Ubuntu',
-                                      color: AppColors.primaryText,
-                                      fontWeight: FontWeight.w500))),
-                        ],
+                                fontWeight: FontWeight.w500)),
                       ),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => DriverAccept()),
+                        );
+                      },
                     ),
                   ),
+                  GestureDetector(
+                    child: Container(
+                      height: 45,
+                      alignment: Alignment.center,
+                      margin: EdgeInsets.only(
+                          bottom: 10, left: 25, right: 25, top: 0),
+                      child: Text('Cancel ride',
+                          style: TextStyle(
+                              fontSize: 15,
+                              fontFamily: 'Ubuntu',
+                              color: Colors.black87,
+                              fontWeight: FontWeight.w500)),
+                    ),
+                    onTap: () {
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(builder: (context) => AdminDriver()),
+                      // );
+                    },
+                  ),
                 ],
-              ),
-            )
-          ],
-        ),
+              )),
+        ],
       ),
     );
   }
@@ -318,6 +354,36 @@ class _DriverHomeState extends State<DriverHome> {
           SizedBox(width: 15),
         ]),
       );
+
+  Set<Marker> myMarker() {
+    setState(() {
+      _markers.add(Marker(
+        // This marker id can be anything that uniquely identifies each marker.
+        markerId: MarkerId(_mainLocation.toString()),
+        position: _mainLocation,
+        infoWindow: InfoWindow(
+          title: 'Historical City',
+          snippet: '5 Star Rating',
+        ),
+        icon: BitmapDescriptor.defaultMarker,
+      ));
+    });
+
+    return _markers;
+  }
+
+  Widget _flightShuttleBuilder(
+    BuildContext flightContext,
+    Animation<double> animation,
+    HeroFlightDirection flightDirection,
+    BuildContext fromHeroContext,
+    BuildContext toHeroContext,
+  ) {
+    return DefaultTextStyle(
+      style: DefaultTextStyle.of(toHeroContext).style,
+      child: toHeroContext.widget,
+    );
+  }
 }
 
 /// Search text field plus the horizontally scrolling categories below the text field
@@ -371,9 +437,9 @@ class CustomerAppBar extends StatelessWidget {
                       value: true,
                       textOn: 'Online',
                       textOff: 'Offline',
-                      colorOn: Colors.green,
+                      colorOn: AppColors.primaryText,
                       colorOff: Colors.grey[400],
-                      iconOn: Icons.lightbulb_outline,
+                      iconOn: Icons.directions_bike,
                       iconOff: Icons.power_settings_new,
                       onChanged: (bool state) {
                         print('turned ${(state) ? 'on' : 'off'}');
