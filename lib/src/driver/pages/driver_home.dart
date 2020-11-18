@@ -5,6 +5,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:lite_rolling_switch/lite_rolling_switch.dart';
 import 'package:pickrr_app/src/driver/driver_accept.dart';
 import 'package:pickrr_app/src/values/values.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../home.dart';
 
@@ -18,6 +19,8 @@ class _DriverHomeState extends State<DriverHome> {
   GoogleMapController myMapController;
   final Set<Marker> _markers = new Set();
   static const LatLng _mainLocation = const LatLng(4.814340, 7.000848);
+
+  bool arrived = false;
 
   @override
   Widget build(BuildContext context) {
@@ -159,7 +162,10 @@ class _DriverHomeState extends State<DriverHome> {
                   ),
                 ),
                 CustomerAppBar(),
-                Positioned(bottom: 0, right: 0, child: notifPanel())
+                Positioned(
+                    bottom: 0,
+                    right: 0,
+                    child: arrived ? orderLocationDetailsPanel() : notifPanel())
               ],
             ),
           ),
@@ -182,7 +188,7 @@ class _DriverHomeState extends State<DriverHome> {
                         borderRadius: BorderRadius.circular(16)),
                   ),
                   Text(
-                    "Ride Available",
+                    arrived ? "Meet and Pickup" : "Ride Available!",
                     maxLines: 1,
                     textAlign: TextAlign.left,
                     style: TextStyle(
@@ -192,7 +198,7 @@ class _DriverHomeState extends State<DriverHome> {
                         fontWeight: FontWeight.w700,
                         height: 1.35),
                   ),
-                  SizedBox(height: 15),
+                  SizedBox(height: 10),
                   ListTile(
                     trailing: Column(
                       children: [
@@ -217,7 +223,16 @@ class _DriverHomeState extends State<DriverHome> {
                           text: TextSpan(
                             children: [
                               TextSpan(
-                                text: 'Mike Anderson ',
+                                text: 'Name:',
+                                style: TextStyle(
+                                    fontSize: 16.0,
+                                    fontFamily: "Ubuntu",
+                                    color: Colors.grey,
+                                    fontWeight: FontWeight.w500,
+                                    height: 1.5),
+                              ),
+                              TextSpan(
+                                text: ' Mike Anderson ',
                                 style: TextStyle(
                                     fontSize: 18.0,
                                     fontFamily: "Ubuntu",
@@ -238,69 +253,146 @@ class _DriverHomeState extends State<DriverHome> {
                       ],
                     ),
                     subtitle: RichText(
-                      text: TextSpan(
-                          text: '12B Sani Abach Road 5',
+                      text: TextSpan(children: [
+                        TextSpan(
+                          text: 'Pickup:',
+                          style: TextStyle(
+                              fontSize: 16.0,
+                              fontFamily: "Ubuntu",
+                              color: Colors.grey,
+                              fontWeight: FontWeight.w500,
+                              height: 1.5),
+                        ),
+                        TextSpan(
+                          text: ' 12B Sani Abach Road 5',
                           style: TextStyle(
                               fontSize: 16.0,
                               fontFamily: "Ubuntu",
                               color: Colors.black,
                               fontWeight: FontWeight.w400,
                               height: 1.6),
-                          children: <TextSpan>[
-                          ]),
+                        ),
+                      ]),
                     ),
                     contentPadding: EdgeInsets.only(left: 20),
                     dense: true,
                   ),
-                  Hero(
-                    tag: "btn",
-                    flightShuttleBuilder: _flightShuttleBuilder,
-                    child: GestureDetector(
-                      child: Container(
-                        height: 45,
-                        alignment: Alignment.center,
-                        margin: EdgeInsets.only(
-                            bottom: 10, left: 25, right: 25, top: 25),
-                        decoration: BoxDecoration(
-                          color: AppColors.primaryText,
-                          boxShadow: [Shadows.secondaryShadow],
-                          borderRadius: Radii.kRoundpxRadius,
+                  arrived
+                      ? GestureDetector(
+                          child: Container(
+                            height: 45,
+                            alignment: Alignment.center,
+                            margin: EdgeInsets.only(
+                                bottom: 5, left: 25, right: 25, top: 10),
+                            decoration: BoxDecoration(
+                              color: Colors.grey[300],
+                              borderRadius: Radii.kRoundpxRadius,
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(Icons.phone_rounded,
+                                    color: Colors.black, size: 20),
+                                SizedBox(width: 8),
+                                Text('Call 08161654006',
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        fontFamily: 'Ubuntu',
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.w500)),
+                              ],
+                            ),
+                          ),
+                          onTap: () => launch("tel://08161654006"),
+                        )
+                      : SizedBox(),
+                  arrived
+                      ? Hero(
+                          tag: "btn",
+                          flightShuttleBuilder: _flightShuttleBuilder,
+                          child: GestureDetector(
+                            child: Container(
+                              height: 45,
+                              alignment: Alignment.center,
+                              margin: EdgeInsets.only(
+                                  bottom: 10, left: 25, right: 25, top: 18),
+                              decoration: BoxDecoration(
+                                color: AppColors.primaryText,
+                                boxShadow: [Shadows.secondaryShadow],
+                                borderRadius: Radii.kRoundpxRadius,
+                              ),
+                              child: Text('Arrived',
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      fontFamily: 'Ubuntu',
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w500)),
+                            ),
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => DriverAccept()),
+                              );
+                              // setState(() {
+                              //   arrived = !arrived;
+                              // });
+                            },
+                          ),
+                        )
+                      : Hero(
+                          tag: "btn",
+                          flightShuttleBuilder: _flightShuttleBuilder,
+                          child: GestureDetector(
+                            child: Container(
+                              height: 45,
+                              alignment: Alignment.center,
+                              margin: EdgeInsets.only(
+                                  bottom: 10, left: 25, right: 25, top: 18),
+                              decoration: BoxDecoration(
+                                color: AppColors.primaryText,
+                                boxShadow: [Shadows.secondaryShadow],
+                                borderRadius: Radii.kRoundpxRadius,
+                              ),
+                              child: Text('Accept',
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      fontFamily: 'Ubuntu',
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w500)),
+                            ),
+                            onTap: () {
+                              // Navigator.push(
+                              //   context,
+                              //   MaterialPageRoute(builder: (context) => DriverAccept()),
+                              // );
+                              setState(() {
+                                arrived = !arrived;
+                              });
+                            },
+                          ),
                         ),
-                        child: Text('Accept',
-                            style: TextStyle(
-                                fontSize: 15,
-                                fontFamily: 'Ubuntu',
-                                color: Colors.white,
-                                fontWeight: FontWeight.w500)),
-                      ),
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => DriverAccept()),
-                        );
-                      },
-                    ),
-                  ),
-                  GestureDetector(
-                    child: Container(
-                      height: 45,
-                      alignment: Alignment.center,
-                      margin: EdgeInsets.only(
-                          bottom: 10, left: 25, right: 25, top: 0),
-                      child: Text('Cancel ride',
-                          style: TextStyle(
-                              fontSize: 15,
-                              fontFamily: 'Ubuntu',
-                              color: Colors.black87,
-                              fontWeight: FontWeight.w500)),
-                    ),
-                    onTap: () {
-                      // Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute(builder: (context) => AdminDriver()),
-                      // );
-                    },
-                  ),
+                  arrived
+                      ? SizedBox()
+                      : GestureDetector(
+                          child: Container(
+                            height: 45,
+                            alignment: Alignment.center,
+                            margin: EdgeInsets.only(
+                                bottom: 10, left: 25, right: 25, top: 0),
+                            child: Text('Decline ride',
+                                style: TextStyle(
+                                    fontSize: 15,
+                                    fontFamily: 'Ubuntu',
+                                    color: Colors.black87,
+                                    fontWeight: FontWeight.w500)),
+                          ),
+                          onTap: () {
+                            // Navigator.push(
+                            //   context,
+                            //   MaterialPageRoute(builder: (context) => AdminDriver()),
+                            // );
+                          },
+                        ),
                 ],
               )),
         ],
@@ -353,6 +445,62 @@ class _DriverHomeState extends State<DriverHome> {
           ),
           SizedBox(width: 15),
         ]),
+      );
+
+  Widget orderLocationDetailsPanel() => Hero(
+        tag: "orderLocation",
+        child: Container(
+          width: MediaQuery.of(context).size.width,
+          child: Row(children: [
+            Expanded(child: SizedBox()),
+            Column(
+              children: [
+                Container(
+                  // width: 42,
+                  height: 35,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.rectangle,
+                    borderRadius: BorderRadius.circular(4),
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black26,
+                        blurRadius: 12.0,
+                        offset: Offset(0.0, 5.0),
+                      ),
+                    ],
+                  ),
+                  child: Row(
+                    children: [
+                      Container(
+                          height: 35,
+                          width: 45,
+                          // padding: EdgeInsets.all(5),
+                          color: AppColors.primaryText,
+                          child: Icon(Icons.directions_bike_sharp,
+                              color: Colors.white)),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: new Text(
+                          "2 mins",
+                          maxLines: 1,
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                              fontSize: 16.0,
+                              fontFamily: "Ubuntu",
+                              color: Colors.black,
+                              fontWeight: FontWeight.w700),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 15),
+              ],
+            ),
+            SizedBox(width: 15),
+          ]),
+        ),
       );
 
   Set<Marker> myMarker() {
