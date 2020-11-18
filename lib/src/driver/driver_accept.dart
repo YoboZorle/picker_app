@@ -82,6 +82,10 @@ class _DriverAcceptState extends State<DriverAccept> {
                                 }),
                           )),
                     ),
+                    Positioned(
+                        bottom: 0,
+                        right: 0,
+                        child: orderLocationDetailsPanel()),
                   ],
                 ),
               ),
@@ -104,7 +108,7 @@ class _DriverAcceptState extends State<DriverAccept> {
                             borderRadius: BorderRadius.circular(16)),
                       ),
                       new Text(
-                        "Delivery takes 14 mins",
+                        "Delivery will take 14 mins",
                         maxLines: 1,
                         textAlign: TextAlign.left,
                         style: TextStyle(
@@ -135,36 +139,15 @@ class _DriverAcceptState extends State<DriverAccept> {
                         title: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            RichText(
-                              text: TextSpan(
-                                children: [
-                                  TextSpan(
-                                    text: 'QLink bike ',
-                                    style: TextStyle(
-                                        fontSize: 15.0,
-                                        fontFamily: "Ubuntu",
-                                        color: Colors.grey[600],
-                                        fontWeight: FontWeight.w400,
-                                        height: 1.5),
-                                  ),
-                                  WidgetSpan(
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(4.0),
-                                      child: Icon(Icons.circle,
-                                          size: 8, color: Colors.grey),
-                                    ),
-                                  ),
-                                  TextSpan(
-                                    text: ' Plate Number: RV745T',
-                                    style: TextStyle(
-                                        fontSize: 15.0,
-                                        fontFamily: "Ubuntu",
-                                        color: Colors.grey[600],
-                                        fontWeight: FontWeight.w400,
-                                        height: 1.5),
-                                  ),
-                                ],
-                              ),
+                            Text(
+                              "Transaction ID:",
+                              maxLines: 1,
+                              textAlign: TextAlign.left,
+                              style: TextStyle(
+                                  fontSize: 15.0,
+                                  fontFamily: "Ubuntu",
+                                  color: Colors.grey,
+                                  fontWeight: FontWeight.w400),
                             ),
                             Text(
                               "87AGB346",
@@ -181,7 +164,7 @@ class _DriverAcceptState extends State<DriverAccept> {
                         ),
                         subtitle: RichText(
                           text: TextSpan(
-                              text: 'Your driver is ',
+                              text: 'Your sender name: ',
                               style: TextStyle(
                                   fontSize: 16.0,
                                   fontFamily: "Ubuntu",
@@ -190,7 +173,7 @@ class _DriverAcceptState extends State<DriverAccept> {
                                   height: 1.6),
                               children: <TextSpan>[
                                 TextSpan(
-                                  text: 'Confidence Yobo',
+                                  text: 'Confidence',
                                   style: TextStyle(
                                       fontSize: 16.0,
                                       fontFamily: "Ubuntu",
@@ -199,6 +182,43 @@ class _DriverAcceptState extends State<DriverAccept> {
                                       height: 1.6),
                                 )
                               ]),
+                        ),
+                        contentPadding: EdgeInsets.only(left: 20),
+                        dense: true,
+                      ),
+                      Container(height: 0.4,
+                      width: MediaQuery.of(context).size.width,
+                      color: Colors.grey,
+                      margin: EdgeInsets.only(left: 20, right: 20, top: 8)),
+                      ListTile(
+                        leading: Icon(Icons.location_on_rounded, color: Colors.deepPurpleAccent, size: 22),
+                        title:   Text('KoWork NG, Sani Abacha Road, Port harcourt, Nigeria',
+                          style: TextStyle(
+                              fontSize: 16.0,
+                              fontFamily: "Ubuntu",
+                              color: Colors.black87,
+                              fontWeight: FontWeight.w400,
+                              height: 1.5),
+                        ),
+                        contentPadding: EdgeInsets.only(left: 20, right: 20),
+                        dense: true,
+                      ),
+                      ListTile(
+                        leading: Transform.rotate(
+                          angle: 120,
+                          child: Icon(
+                            Icons.navigation_rounded,
+                            color: Colors.green,
+                            size: 22,
+                          ),
+                        ),
+                        title:   Text('20 Rex Lawson Street, Borikiri, Port harcourt, Nigeria',
+                          style: TextStyle(
+                              fontSize: 16.0,
+                              fontFamily: "Ubuntu",
+                              color: Colors.black87,
+                              fontWeight: FontWeight.w400,
+                              height: 1.5),
                         ),
                         contentPadding: EdgeInsets.only(left: 20),
                         dense: true,
@@ -281,40 +301,99 @@ class _DriverAcceptState extends State<DriverAccept> {
     );
   }
 
-  void _settingModalBottomSheet(context){
+  Widget orderLocationDetailsPanel() => Hero(
+        tag: "orderLocation",
+        child: Container(
+          width: MediaQuery.of(context).size.width,
+          child: Row(children: [
+            Expanded(child: SizedBox()),
+            Column(
+              children: [
+                Container(
+                  // width: 42,
+                  height: 35,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.rectangle,
+                    borderRadius: BorderRadius.circular(4),
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black26,
+                        blurRadius: 12.0,
+                        offset: Offset(0.0, 5.0),
+                      ),
+                    ],
+                  ),
+                  child: Row(
+                    children: [
+                      Container(
+                          height: 35,
+                          width: 45,
+                          // padding: EdgeInsets.all(5),
+                          color: AppColors.primaryText,
+                          child: Icon(Icons.directions_bike_sharp,
+                              color: Colors.white)),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: new Text(
+                          "7km",
+                          maxLines: 1,
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                              fontSize: 16.0,
+                              fontFamily: "Ubuntu",
+                              color: Colors.black,
+                              fontWeight: FontWeight.w700),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 15),
+              ],
+            ),
+            SizedBox(width: 15),
+          ]),
+        ),
+      );
+
+  void _settingModalBottomSheet(context) {
     showModalBottomSheet(
         context: context,
-        builder: (BuildContext bc){
+        builder: (BuildContext bc) {
           return Container(
             padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
             child: new Wrap(
               children: <Widget>[
-                Container(margin: EdgeInsets.only(bottom: 10, top: 15),
+                Container(
+                    margin: EdgeInsets.only(bottom: 10, top: 15),
                     child: Center(
-                  child: Text('Reason For Cancellation',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          fontSize: 18.0,
-                          fontFamily: "Ubuntu",
-                          color: Colors.black,
-                          fontWeight: FontWeight.w800,
-                          height: 1.35)),
-                )),
+                      child: Text('Reason For Cancellation',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontSize: 18.0,
+                              fontFamily: "Ubuntu",
+                              color: Colors.black,
+                              fontWeight: FontWeight.w800,
+                              height: 1.35)),
+                    )),
                 new ListTile(
                   dense: true,
-                  leading: Icon(Icons.circle, size: 10, color: Colors.grey[500]),
-                    title: new Text('Under-aged user making order',
+                  leading:
+                      Icon(Icons.circle, size: 10, color: Colors.grey[500]),
+                  title: new Text('Under-aged user making order',
                       style: TextStyle(
                           fontSize: 16.0,
                           fontFamily: "Ubuntu",
                           color: Colors.black,
                           fontWeight: FontWeight.w400,
                           height: 1.35)),
-                    onTap: () => {},
+                  onTap: () => {},
                 ),
                 new ListTile(
                   dense: true,
-                  leading: Icon(Icons.circle, size: 10, color: Colors.grey[500]),
+                  leading:
+                      Icon(Icons.circle, size: 10, color: Colors.grey[500]),
                   title: new Text('Could not find user at the location',
                       style: TextStyle(
                           fontSize: 16.0,
@@ -326,8 +405,10 @@ class _DriverAcceptState extends State<DriverAccept> {
                 ),
                 new ListTile(
                   dense: true,
-                  leading: Icon(Icons.circle, size: 10, color: Colors.grey[500]),
-                  title: new Text('User not willing to adhere the system guidelines',
+                  leading:
+                      Icon(Icons.circle, size: 10, color: Colors.grey[500]),
+                  title: new Text(
+                      'User not willing to adhere the system guidelines',
                       style: TextStyle(
                           fontSize: 16.0,
                           fontFamily: "Ubuntu",
@@ -339,7 +420,6 @@ class _DriverAcceptState extends State<DriverAccept> {
               ],
             ),
           );
-        }
-    );
+        });
   }
 }
