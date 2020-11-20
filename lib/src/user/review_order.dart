@@ -276,6 +276,80 @@ class _ReviewOrderState extends State<ReviewOrder> {
                               ),
                               SizedBox(height: 25),
                               Container(
+                                margin: EdgeInsets.only(left: 20, right: 20, bottom: 4),
+                                child: Row(
+                                  children: [
+                                    Text('Name',
+                                      style: TextStyle(
+                                          fontSize: 14.0,
+                                          fontFamily: "Ubuntu",
+                                          color: Colors.black87,
+                                          fontWeight: FontWeight.w400),
+                                    ),
+                                    SizedBox(width: 18),
+                                    Expanded(
+                                      child: Text('George Adowei',
+                                        style: TextStyle(
+                                            fontSize: 14.0,
+                                            fontFamily: "Ubuntu",
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.w600),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(left: 20, right: 20, bottom: 4),
+                                child: Row(
+                                  children: [
+                                    Text('Phone',
+                                      style: TextStyle(
+                                          fontSize: 14.0,
+                                          fontFamily: "Ubuntu",
+                                          color: Colors.black87,
+                                          fontWeight: FontWeight.w400),
+                                    ),
+                                    SizedBox(width: 18),
+                                    Expanded(
+                                      child: Text('08034233482',
+                                        style: TextStyle(
+                                            fontSize: 14.0,
+                                            fontFamily: "Ubuntu",
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.w600),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(left: 20, right: 20, bottom: 4),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Text('Address',
+                                      style: TextStyle(
+                                          fontSize: 14.0,
+                                          fontFamily: "Ubuntu",
+                                          color: Colors.black87,
+                                          fontWeight: FontWeight.w400),
+                                    ),
+                                    SizedBox(width: 18),
+                                    Expanded(
+                                      child: Text('7B Sani Abacha road, Phase 3C, Port harcourt, Nigeria',
+                                        style: TextStyle(
+                                            fontSize: 14.0,
+                                            fontFamily: "Ubuntu",
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.w600),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Container(
                                 padding: EdgeInsets.only(left: 20, right: 20),
                                 child: Row(
                                     mainAxisAlignment:
