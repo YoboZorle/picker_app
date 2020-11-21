@@ -188,7 +188,7 @@ class _DriverHomeState extends State<DriverHome> {
                         borderRadius: BorderRadius.circular(16)),
                   ),
                   Text(
-                    arrived ? "Meet and Pickup" : "Ride Available!",
+                    arrived ? "Meet and Pickup" : "New Request!",
                     maxLines: 1,
                     textAlign: TextAlign.left,
                     style: TextStyle(
@@ -234,10 +234,10 @@ class _DriverHomeState extends State<DriverHome> {
                               TextSpan(
                                 text: ' Mike Anderson ',
                                 style: TextStyle(
-                                    fontSize: 18.0,
+                                    fontSize: 17.0,
                                     fontFamily: "Ubuntu",
                                     color: Colors.black,
-                                    fontWeight: FontWeight.w700,
+                                    fontWeight: FontWeight.w600,
                                     height: 1.5),
                               ),
                               // WidgetSpan(

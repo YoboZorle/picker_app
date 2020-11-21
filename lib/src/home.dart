@@ -111,7 +111,7 @@ class _HomeState extends State<Home> {
                           ListTile(
                             leading: Icon(
                               Icons.location_on_rounded,
-                              color: Colors.grey[500],
+                              color: Colors.redAccent,
                             ),
                             title: TextField(
                               decoration: InputDecoration(
@@ -141,7 +141,7 @@ class _HomeState extends State<Home> {
                               angle: 120,
                               child: Icon(
                                 Icons.navigation_rounded,
-                                color: Colors.grey[500],
+                                color: Colors.greenAccent,
                               ),
                             ),
                             title: TextField(

@@ -24,7 +24,7 @@ class _ReviewOrderState extends State<ReviewOrder> {
           appBar: AppBar(
             centerTitle: true,
             title: Text(
-              'Complete Order',
+              'Review Order',
               style: TextStyle(
                 fontSize: 16,
                 fontFamily: 'Ubuntu',
@@ -80,201 +80,33 @@ class _ReviewOrderState extends State<ReviewOrder> {
                                       ),
                                     )
                                   ]),
-                              SizedBox(height: 20),
-                              Container(
-                                padding: EdgeInsets.only(left: 20),
-                                child: Text(
-                                  'Receiver\'s Details',
-                                  textAlign: TextAlign.left,
-                                  style: TextStyle(
-                                    fontSize: 13,
-                                    fontFamily: 'Ubuntu',
-                                    color: Colors.green,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                              ),
-                              Container(
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  boxShadow: [Shadows.secondaryShadow8],
-                                  borderRadius: Radii.kRoundpxRadius8,
-                                ),
-                                padding: EdgeInsets.only(left: 20, bottom: 10, right: 20),
-                                child: ListTile(
-                                  title: RichText(
-                                    text: TextSpan(
-                                        text: 'Name: ',
-                                        style: TextStyle(
-                                            fontSize: 13.0,
-                                            fontFamily: "Ubuntu",
-                                            color: Colors.black87,
-                                            fontWeight: FontWeight.w400,
-                                            height: 1.6),
-                                        children: <TextSpan>[
-                                          TextSpan(
-                                            text: 'George Adowei',
-                                            style: TextStyle(
-                                              fontSize: 13,
-                                              fontFamily: 'Ubuntu',
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.w500,
-                                            ),
-                                          )
-                                        ]),
-                                  ),
-                                  subtitle: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      RichText(
-                                        text: TextSpan(
-                                            text: 'Phone: ',
-                                            style: TextStyle(
-                                                fontSize: 13.0,
-                                                fontFamily: "Ubuntu",
-                                                color: Colors.black87,
-                                                fontWeight: FontWeight.w400,
-                                                height: 1.6),
-                                            children: <TextSpan>[
-                                              TextSpan(
-                                                text: '08034233482',
-                                                style: TextStyle(
-                                                  fontSize: 13,
-                                                  fontFamily: 'Ubuntu',
-                                                  color: Colors.black,
-                                                  fontWeight: FontWeight.w500,
-                                                ),
-                                              )
-                                            ]),
-                                      ),
-                                      RichText(
-                                        text: TextSpan(
-                                            text: 'Address: ',
-                                            style: TextStyle(
-                                                fontSize: 13.0,
-                                                fontFamily: "Ubuntu",
-                                                color: Colors.black87,
-                                                fontWeight: FontWeight.w400,
-                                                height: 1.6),
-                                            children: <TextSpan>[
-                                              TextSpan(
-                                                text:
-                                                    '7B Sani Abacha road, GRA Phase 3C, Port harcourt, Nigeria',
-                                                style: TextStyle(
-                                                  fontSize: 13,
-                                                  fontFamily: 'Ubuntu',
-                                                  color: Colors.black,
-                                                  fontWeight: FontWeight.w500,
-                                                ),
-                                              )
-                                            ]),
-                                      ),
-
-                                    ],
-                                  ),
-                                  contentPadding: EdgeInsets.all(0),
-                                  dense: true,
-                                ),
-                              ),
-                              SizedBox(height: 20),
-                              Container(
-                                padding: EdgeInsets.only(left: 20),
-                                child: Text(
-                                  'Sender\'s Details',
-                                  textAlign: TextAlign.left,
-                                  style: TextStyle(
-                                    fontSize: 13,
-                                    fontFamily: 'Ubuntu',
-                                    color: Colors.red,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                              ),
-                              Container(
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  boxShadow: [Shadows.secondaryShadow8],
-                                  borderRadius: Radii.kRoundpxRadius8,
-                                ),
-                                padding: EdgeInsets.only(left: 20, bottom: 10, right: 20),
-                                child: ListTile(
-                                  title: RichText(
-                                    text: TextSpan(
-                                        text: 'Name: ',
-                                        style: TextStyle(
-                                            fontSize: 13.0,
-                                            fontFamily: "Ubuntu",
-                                            color: Colors.black87,
-                                            fontWeight: FontWeight.w400,
-                                            height: 1.6),
-                                        children: <TextSpan>[
-                                          TextSpan(
-                                            text: 'Blessing Christopher',
-                                            style: TextStyle(
-                                              fontSize: 13,
-                                              fontFamily: 'Ubuntu',
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.w500,
-                                            ),
-                                          )
-                                        ]),
-                                  ),
-                                  subtitle: Column(
-                                    crossAxisAlignment:
-                                    CrossAxisAlignment.start,
-                                    children: [
-
-                                      RichText(
-                                        text: TextSpan(
-                                            text: 'Phone: ',
-                                            style: TextStyle(
-                                                fontSize: 13.0,
-                                                fontFamily: "Ubuntu",
-                                                color: Colors.black87,
-                                                fontWeight: FontWeight.w400,
-                                                height: 1.6),
-                                            children: <TextSpan>[
-                                              TextSpan(
-                                                text: '09074222382',
-                                                style: TextStyle(
-                                                  fontSize: 13,
-                                                  fontFamily: 'Ubuntu',
-                                                  color: Colors.black,
-                                                  fontWeight: FontWeight.w500,
-                                                ),
-                                              )
-                                            ]),
-                                      ),
-                                      RichText(
-                                        text: TextSpan(
-                                            text: 'Address: ',
-                                            style: TextStyle(
-                                                fontSize: 13.0,
-                                                fontFamily: "Ubuntu",
-                                                color: Colors.black87,
-                                                fontWeight: FontWeight.w400,
-                                                height: 1.6),
-                                            children: <TextSpan>[
-                                              TextSpan(
-                                                text:
-                                                '49 Nembe street, Borikiri, Port harcourt, Nigeria',
-                                                style: TextStyle(
-                                                  fontSize: 13,
-                                                  fontFamily: 'Ubuntu',
-                                                  color: Colors.black,
-                                                  fontWeight: FontWeight.w500,
-                                                ),
-                                              )
-                                            ]),
-                                      ),
-                                    ],
-                                  ),
-                                  contentPadding: EdgeInsets.all(0),
-                                  dense: true,
-                                ),
-                              ),
                               SizedBox(height: 25),
+                              Container(
+                                padding: EdgeInsets.only(left: 20, bottom: 8),
+                                child: Row(
+                                  children: [
+                                    Transform.rotate(
+                                      angle: 120,
+                                      child: Icon(
+                                        Icons.navigation_rounded,
+                                        size: 22,
+                                        color: Colors.greenAccent,
+                                      ),
+                                    ),
+                                    SizedBox(width: 3),
+                                    Text(
+                                      'RECEIVER DETAILS',
+                                      textAlign: TextAlign.left,
+                                      style: TextStyle(
+                                        fontSize: 15,
+                                        fontFamily: 'Ubuntu',
+                                        color: Colors.black87,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
                               Container(
                                 margin: EdgeInsets.only(left: 20, right: 20, bottom: 4),
                                 child: Row(
@@ -349,6 +181,107 @@ class _ReviewOrderState extends State<ReviewOrder> {
                                   ],
                                 ),
                               ),
+                              SizedBox(height: 25),
+
+                              Container(
+                                padding: EdgeInsets.only(left: 20, bottom: 8),
+                                child: Row(
+                                  children: [
+                                    Icon(
+                                  Icons.location_on_rounded,
+                                  size: 22,
+                                  color: Colors.redAccent,
+                                ),
+                                    SizedBox(width: 3),
+                                    Text(
+                                      'SENDER DETAILS',
+                                      textAlign: TextAlign.left,
+                                      style: TextStyle(
+                                        fontSize: 15,
+                                        fontFamily: 'Ubuntu',
+                                        color: Colors.black87,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(left: 20, right: 20, bottom: 4),
+                                child: Row(
+                                  children: [
+                                    Text('Name',
+                                      style: TextStyle(
+                                          fontSize: 14.0,
+                                          fontFamily: "Ubuntu",
+                                          color: Colors.black87,
+                                          fontWeight: FontWeight.w400),
+                                    ),
+                                    SizedBox(width: 18),
+                                    Expanded(
+                                      child: Text('George Adowei',
+                                        style: TextStyle(
+                                            fontSize: 14.0,
+                                            fontFamily: "Ubuntu",
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.w600),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(left: 20, right: 20, bottom: 4),
+                                child: Row(
+                                  children: [
+                                    Text('Phone',
+                                      style: TextStyle(
+                                          fontSize: 14.0,
+                                          fontFamily: "Ubuntu",
+                                          color: Colors.black87,
+                                          fontWeight: FontWeight.w400),
+                                    ),
+                                    SizedBox(width: 18),
+                                    Expanded(
+                                      child: Text('08034233482',
+                                        style: TextStyle(
+                                            fontSize: 14.0,
+                                            fontFamily: "Ubuntu",
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.w600),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(left: 20, right: 20, bottom: 4),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Text('Address',
+                                      style: TextStyle(
+                                          fontSize: 14.0,
+                                          fontFamily: "Ubuntu",
+                                          color: Colors.black87,
+                                          fontWeight: FontWeight.w400),
+                                    ),
+                                    SizedBox(width: 18),
+                                    Expanded(
+                                      child: Text('7B Sani Abacha road, Phase 3C, Port harcourt, Nigeria',
+                                        style: TextStyle(
+                                            fontSize: 14.0,
+                                            fontFamily: "Ubuntu",
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.w600),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+
+                              SizedBox(height: 25),
                               Container(
                                 padding: EdgeInsets.only(left: 20, right: 20),
                                 child: Row(
