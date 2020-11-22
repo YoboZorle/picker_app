@@ -188,10 +188,10 @@ class _DriverAcceptState extends State<DriverAccept> {
                       ),
                       Container(height: 0.4,
                       width: MediaQuery.of(context).size.width,
-                      color: Colors.grey,
-                      margin: EdgeInsets.only(left: 20, right: 20, top: 8)),
+                      color: Colors.grey[400],
+                      margin: EdgeInsets.only(left: 20, right: 20, top: 8, bottom: 3)),
                       ListTile(
-                        leading: Icon(Icons.location_on_rounded, color: Colors.deepPurpleAccent, size: 22),
+                        leading: Icon(Icons.location_on_rounded, color: Colors.redAccent, size: 22),
                         title:   Text('KoWork NG, Sani Abacha Road, Port harcourt, Nigeria',
                           style: TextStyle(
                               fontSize: 16.0,
@@ -208,7 +208,7 @@ class _DriverAcceptState extends State<DriverAccept> {
                           angle: 120,
                           child: Icon(
                             Icons.navigation_rounded,
-                            color: Colors.green,
+                            color: Colors.greenAccent,
                             size: 22,
                           ),
                         ),

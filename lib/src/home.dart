@@ -178,7 +178,7 @@ class _HomeState extends State<Home> {
                                     boxShadow: [Shadows.secondaryShadow],
                                     borderRadius: Radii.kRoundpxRadius,
                                   ),
-                                  child: Text('Find Rider',
+                                  child: Text('Request Rider',
                                       style: TextStyle(
                                           fontSize: 15,
                                           fontFamily: 'Ubuntu',

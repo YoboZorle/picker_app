@@ -70,7 +70,7 @@ class OTPVerification extends StatelessWidget {
                               EdgeInsets.only(left: 50, right: 50, top: 25),
                               child: pinViewWithSms(context)),
                           SizedBox(height: 25),
-                          Text('I didn\'t receive a magic code!',
+                          Text('I didn\'t receive a verification code!',
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontSize: 15.7,

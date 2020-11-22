@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 import 'package:pickrr_app/src/home.dart';
 import 'package:pickrr_app/src/user/your_driver.dart';
@@ -108,10 +109,12 @@ class _ReviewOrderState extends State<ReviewOrder> {
                                 ),
                               ),
                               Container(
-                                margin: EdgeInsets.only(left: 20, right: 20, bottom: 4),
+                                margin: EdgeInsets.only(
+                                    left: 20, right: 20, bottom: 4),
                                 child: Row(
                                   children: [
-                                    Text('Name',
+                                    Text(
+                                      'Name',
                                       style: TextStyle(
                                           fontSize: 14.0,
                                           fontFamily: "Ubuntu",
@@ -120,7 +123,8 @@ class _ReviewOrderState extends State<ReviewOrder> {
                                     ),
                                     SizedBox(width: 18),
                                     Expanded(
-                                      child: Text('George Adowei',
+                                      child: Text(
+                                        'George Adowei',
                                         style: TextStyle(
                                             fontSize: 14.0,
                                             fontFamily: "Ubuntu",
@@ -132,10 +136,12 @@ class _ReviewOrderState extends State<ReviewOrder> {
                                 ),
                               ),
                               Container(
-                                margin: EdgeInsets.only(left: 20, right: 20, bottom: 4),
+                                margin: EdgeInsets.only(
+                                    left: 20, right: 20, bottom: 4),
                                 child: Row(
                                   children: [
-                                    Text('Phone',
+                                    Text(
+                                      'Phone',
                                       style: TextStyle(
                                           fontSize: 14.0,
                                           fontFamily: "Ubuntu",
@@ -144,7 +150,8 @@ class _ReviewOrderState extends State<ReviewOrder> {
                                     ),
                                     SizedBox(width: 18),
                                     Expanded(
-                                      child: Text('08034233482',
+                                      child: Text(
+                                        '08034233482',
                                         style: TextStyle(
                                             fontSize: 14.0,
                                             fontFamily: "Ubuntu",
@@ -156,12 +163,14 @@ class _ReviewOrderState extends State<ReviewOrder> {
                                 ),
                               ),
                               Container(
-                                margin: EdgeInsets.only(left: 20, right: 20, bottom: 4),
+                                margin: EdgeInsets.only(
+                                    left: 20, right: 20, bottom: 4),
                                 child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
-                                    Text('Address',
+                                    Text(
+                                      'Address',
                                       style: TextStyle(
                                           fontSize: 14.0,
                                           fontFamily: "Ubuntu",
@@ -170,7 +179,8 @@ class _ReviewOrderState extends State<ReviewOrder> {
                                     ),
                                     SizedBox(width: 18),
                                     Expanded(
-                                      child: Text('7B Sani Abacha road, Phase 3C, Port harcourt, Nigeria',
+                                      child: Text(
+                                        '7B Sani Abacha road, Phase 3C, Port harcourt, Nigeria',
                                         style: TextStyle(
                                             fontSize: 14.0,
                                             fontFamily: "Ubuntu",
@@ -181,17 +191,21 @@ class _ReviewOrderState extends State<ReviewOrder> {
                                   ],
                                 ),
                               ),
-                              SizedBox(height: 25),
-
+                              Container(
+                                  height: 0.5,
+                                  width: MediaQuery.of(context).size.width,
+                                  color: Colors.grey[300],
+                                  margin: EdgeInsets.symmetric(
+                                      vertical: 20, horizontal: 20)),
                               Container(
                                 padding: EdgeInsets.only(left: 20, bottom: 8),
                                 child: Row(
                                   children: [
                                     Icon(
-                                  Icons.location_on_rounded,
-                                  size: 22,
-                                  color: Colors.redAccent,
-                                ),
+                                      Icons.location_on_rounded,
+                                      size: 22,
+                                      color: Colors.redAccent,
+                                    ),
                                     SizedBox(width: 3),
                                     Text(
                                       'SENDER DETAILS',
@@ -207,10 +221,12 @@ class _ReviewOrderState extends State<ReviewOrder> {
                                 ),
                               ),
                               Container(
-                                margin: EdgeInsets.only(left: 20, right: 20, bottom: 4),
+                                margin: EdgeInsets.only(
+                                    left: 20, right: 20, bottom: 4),
                                 child: Row(
                                   children: [
-                                    Text('Name',
+                                    Text(
+                                      'Name',
                                       style: TextStyle(
                                           fontSize: 14.0,
                                           fontFamily: "Ubuntu",
@@ -219,7 +235,8 @@ class _ReviewOrderState extends State<ReviewOrder> {
                                     ),
                                     SizedBox(width: 18),
                                     Expanded(
-                                      child: Text('George Adowei',
+                                      child: Text(
+                                        'Cynthia Morgan',
                                         style: TextStyle(
                                             fontSize: 14.0,
                                             fontFamily: "Ubuntu",
@@ -231,10 +248,12 @@ class _ReviewOrderState extends State<ReviewOrder> {
                                 ),
                               ),
                               Container(
-                                margin: EdgeInsets.only(left: 20, right: 20, bottom: 4),
+                                margin: EdgeInsets.only(
+                                    left: 20, right: 20, bottom: 4),
                                 child: Row(
                                   children: [
-                                    Text('Phone',
+                                    Text(
+                                      'Phone',
                                       style: TextStyle(
                                           fontSize: 14.0,
                                           fontFamily: "Ubuntu",
@@ -243,7 +262,8 @@ class _ReviewOrderState extends State<ReviewOrder> {
                                     ),
                                     SizedBox(width: 18),
                                     Expanded(
-                                      child: Text('08034233482',
+                                      child: Text(
+                                        '07093432486',
                                         style: TextStyle(
                                             fontSize: 14.0,
                                             fontFamily: "Ubuntu",
@@ -255,12 +275,14 @@ class _ReviewOrderState extends State<ReviewOrder> {
                                 ),
                               ),
                               Container(
-                                margin: EdgeInsets.only(left: 20, right: 20, bottom: 4),
+                                margin: EdgeInsets.only(
+                                    left: 20, right: 20, bottom: 4),
                                 child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
-                                    Text('Address',
+                                    Text(
+                                      'Address',
                                       style: TextStyle(
                                           fontSize: 14.0,
                                           fontFamily: "Ubuntu",
@@ -269,7 +291,8 @@ class _ReviewOrderState extends State<ReviewOrder> {
                                     ),
                                     SizedBox(width: 18),
                                     Expanded(
-                                      child: Text('7B Sani Abacha road, Phase 3C, Port harcourt, Nigeria',
+                                      child: Text(
+                                        '3B Helmet Close, Port harcourt, Nigeria',
                                         style: TextStyle(
                                             fontSize: 14.0,
                                             fontFamily: "Ubuntu",
@@ -280,7 +303,6 @@ class _ReviewOrderState extends State<ReviewOrder> {
                                   ],
                                 ),
                               ),
-
                               SizedBox(height: 25),
                               Container(
                                 padding: EdgeInsets.only(left: 20, right: 20),
@@ -292,7 +314,7 @@ class _ReviewOrderState extends State<ReviewOrder> {
                                         'Estimated Delivery Time:',
                                         textAlign: TextAlign.left,
                                         style: TextStyle(
-                                          fontSize: 13,
+                                          fontSize: 14,
                                           fontFamily: 'Ubuntu',
                                           color: Colors.black87,
                                           fontWeight: FontWeight.w400,
@@ -302,7 +324,7 @@ class _ReviewOrderState extends State<ReviewOrder> {
                                         '33 mins',
                                         textAlign: TextAlign.left,
                                         style: TextStyle(
-                                          fontSize: 13,
+                                          fontSize: 14,
                                           fontFamily: 'Ubuntu',
                                           color: Colors.black,
                                           fontWeight: FontWeight.w500,
@@ -321,7 +343,7 @@ class _ReviewOrderState extends State<ReviewOrder> {
                                         'Distance in Kilometers:',
                                         textAlign: TextAlign.left,
                                         style: TextStyle(
-                                          fontSize: 13,
+                                          fontSize: 14,
                                           fontFamily: 'Ubuntu',
                                           color: Colors.black87,
                                           fontWeight: FontWeight.w400,
@@ -331,7 +353,7 @@ class _ReviewOrderState extends State<ReviewOrder> {
                                         '6km',
                                         textAlign: TextAlign.left,
                                         style: TextStyle(
-                                          fontSize: 13,
+                                          fontSize: 14,
                                           fontFamily: 'Ubuntu',
                                           color: Colors.black,
                                           fontWeight: FontWeight.w500,
@@ -365,7 +387,7 @@ class _ReviewOrderState extends State<ReviewOrder> {
                                         'Total Delivery Cost:',
                                         textAlign: TextAlign.left,
                                         style: TextStyle(
-                                          fontSize: 13,
+                                          fontSize: 14,
                                           fontFamily: 'Ubuntu',
                                           color: Colors.black87,
                                           fontWeight: FontWeight.w400,
@@ -401,10 +423,12 @@ class _ReviewOrderState extends State<ReviewOrder> {
                           ),
                           // onPressed: _submitFormDetails,
                           onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => YourDriver()));
+                            // Navigator.push(
+                            //     context,
+                            //     MaterialPageRoute(
+                            //         builder: (context) => YourDriver()));
+
+                            _choosePaymentMethodSheet(context);
                           },
                           color: AppColors.primaryText,
                           child: Text("Pay " + currencyFormatter.format(amount),
@@ -424,5 +448,74 @@ class _ReviewOrderState extends State<ReviewOrder> {
             ),
           )),
     );
+  }
+
+  void _choosePaymentMethodSheet(context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext bc) {
+          return SafeArea(
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 10),
+              child: new Wrap(
+                children: <Widget>[
+                  Center(
+                    child: Container(
+                      height: 8,
+                      width: 60,
+                      margin: EdgeInsets.only(top: 15, bottom: 18),
+                      decoration: BoxDecoration(
+                          color: Colors.grey[300],
+                          borderRadius: BorderRadius.circular(16)),
+                    ),
+                  ),
+                  Container(
+                      margin: EdgeInsets.only(bottom: 10, top: 5),
+                      child: Center(
+                        child: Text('Choose Payment Method',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                fontSize: 18.0,
+                                fontFamily: "Ubuntu",
+                                color: Colors.black,
+                                fontWeight: FontWeight.w800,
+                                height: 1.35)),
+                      )),
+                  Container(
+                    margin: EdgeInsets.only(bottom: 15),
+                    child: new ListTile(
+                      dense: true,
+                      leading:
+                      SvgPicture.asset('assets/svg/cash.svg',
+                          height: 35, semanticsLabel: 'cash icon'),
+                      title: new Text('Pay with Cash',
+                          style: TextStyle(
+                              fontSize: 16.0,
+                              fontFamily: "Ubuntu",
+                              color: Colors.black,
+                              fontWeight: FontWeight.w400)),
+                      onTap: () => {},
+                    ),
+                  ),
+                  Divider(height: 0.5, color: Colors.grey[400]),
+                  SizedBox(height: 15),
+                  new ListTile(
+                    dense: true,
+                    leading:
+                    SvgPicture.asset('assets/svg/card.svg',
+                        height: 23, semanticsLabel: 'card icon'),
+                    title: new Text('Pay Online',
+                        style: TextStyle(
+                            fontSize: 16.0,
+                            fontFamily: "Ubuntu",
+                            color: Colors.black,
+                            fontWeight: FontWeight.w400)),
+                    onTap: () => {},
+                  ),
+                ],
+              ),
+            ),
+          );
+        });
   }
 }
