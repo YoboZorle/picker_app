@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:pickrr_app/src/user/custom_appbar.dart';
+import 'package:pickrr_app/src/user/map/map.dart';
 import 'package:pickrr_app/src/user/user_drawer.dart';
 import 'package:pickrr_app/src/user/user_order.dart';
 import 'package:pickrr_app/src/values/values.dart';
@@ -217,55 +218,65 @@ class _HomeState extends State<Home> {
     return _markers;
   }
 
-  Widget notifPanel() => Hero(
-        tag: "notif",
-        child: Container(
-          width: MediaQuery.of(context).size.width,
-          child: Row(children: [
-            Expanded(child: SizedBox()),
-            Column(
-              children: [
-                Badge(
-                  animationDuration: Duration(milliseconds: 700),
-                  elevation: 0,
-                  animationType: BadgeAnimationType.scale,
-                  badgeContent: Padding(
-                    padding: const EdgeInsets.all(2.0),
-                    child: Text('9',
-                        style: TextStyle(
-                            fontSize: 15,
-                            fontFamily: "Ubuntu",
-                            color: Colors.white,
-                            fontWeight: FontWeight.w400)),
-                  ),
-                  child: Container(
-                    width: 42,
-                    height: 42,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.white,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black26,
-                          blurRadius: 12.0,
-                          offset: Offset(0.0, 5.0),
-                        ),
-                      ],
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(10.5),
-                      child: SvgPicture.asset('assets/svg/kargo_notif.svg',
-                          height: 25, semanticsLabel: 'Acme Logo'),
-                    ),
-                  ),
-                ),
-                SizedBox(height: 15),
-              ],
-            ),
-            SizedBox(width: 15),
-          ]),
-        ),
+  Widget notifPanel() => GestureDetector(
+    onTap: (){
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) =>
+                MapPage()),
       );
+    },
+    child: Hero(
+          tag: "notif",
+          child: Container(
+            width: MediaQuery.of(context).size.width,
+            child: Row(children: [
+              Expanded(child: SizedBox()),
+              Column(
+                children: [
+                  Badge(
+                    animationDuration: Duration(milliseconds: 700),
+                    elevation: 0,
+                    animationType: BadgeAnimationType.scale,
+                    badgeContent: Padding(
+                      padding: const EdgeInsets.all(2.0),
+                      child: Text('9',
+                          style: TextStyle(
+                              fontSize: 15,
+                              fontFamily: "Ubuntu",
+                              color: Colors.white,
+                              fontWeight: FontWeight.w400)),
+                    ),
+                    child: Container(
+                      width: 42,
+                      height: 42,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.white,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black26,
+                            blurRadius: 12.0,
+                            offset: Offset(0.0, 5.0),
+                          ),
+                        ],
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(10.5),
+                        child: SvgPicture.asset('assets/svg/kargo_notif.svg',
+                            height: 25, semanticsLabel: 'Acme Logo'),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 15),
+                ],
+              ),
+              SizedBox(width: 15),
+            ]),
+          ),
+        ),
+  );
 
   Widget _flightShuttleBuilder(
     BuildContext flightContext,
