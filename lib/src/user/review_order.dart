@@ -494,7 +494,12 @@ class _ReviewOrderState extends State<ReviewOrder> {
                               fontFamily: "Ubuntu",
                               color: Colors.black,
                               fontWeight: FontWeight.w400)),
-                      onTap: () => {},
+                      onTap: () => {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => YourDriver()))
+                      },
                     ),
                   ),
                   Divider(height: 0.5, color: Colors.grey[400]),

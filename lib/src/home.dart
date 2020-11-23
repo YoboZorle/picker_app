@@ -2,7 +2,6 @@ import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:pickrr_app/src/auth/otp_verification.dart';
 import 'package:pickrr_app/src/user/custom_appbar.dart';
 import 'package:pickrr_app/src/user/user_drawer.dart';
 import 'package:pickrr_app/src/user/user_order.dart';
@@ -101,7 +100,7 @@ class _HomeState extends State<Home> {
                               maxLines: 1,
                               textAlign: TextAlign.left,
                               style: TextStyle(
-                                  fontSize: 18.0,
+                                  fontSize: 20.0,
                                   fontFamily: "Ubuntu",
                                   color: Colors.black,
                                   fontWeight: FontWeight.w700,
