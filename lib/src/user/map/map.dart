@@ -85,7 +85,6 @@ class MapPageState extends State<MapPage> {
   }
 
   setPolylines() async {
-
     List<PointLatLng> result = await polylinePoints?.getRouteBetweenCoordinates(
         googleAPIKey,
         SOURCE_LOCATION.latitude,
