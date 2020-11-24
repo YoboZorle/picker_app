@@ -65,3 +65,10 @@ class Shadows {
     blurRadius: 8,
   );
 }
+
+class APIConstants {
+  static final String httpUrl = 'http://54.221.222.32';
+  static final String wsUrl = 'ws://54.221.222.32';
+  static final String assetsUrl = 'https://yarner-storage.s3.amazonaws.com/yarn-a9e77482c84e16/';
+  static final String apiUrl = '$httpUrl/api/';
+}
