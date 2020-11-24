@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
-import 'package:pickrr_app/src/auth/otp_verification.dart';
+import 'package:pickrr_app/src/helpers/constants.dart';
 import 'package:pickrr_app/src/user/receiver_details.dart';
-import 'package:pickrr_app/src/user/your_driver.dart';
-import 'package:pickrr_app/src/values/values.dart';
 
 class UserOrder extends StatefulWidget {
   @override

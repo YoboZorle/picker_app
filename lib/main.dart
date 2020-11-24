@@ -1,23 +1,16 @@
-/*
-*  main.dart
-*  Pickrr
-*
-*  Created by Yobo Zorle.
-*  Copyright © 2020 Klynox. All rights reserved.
-    */
-
 import 'package:flutter/material.dart';
+import 'package:bloc/bloc.dart';
+import 'package:pickrr_app/src/blocs/observer.dart';
+import 'package:pickrr_app/src/screens/onboard.dart';
 
-import 'src/home.dart';
-import 'src/onboard/onboard.dart';
-
-void main() => runApp(App());
+void main() {
+  Bloc.observer = CustomBlocObserver();
+  runApp(App());
+}
 
 class App extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
-
     return MaterialApp(
       home: Onboard(),
     );

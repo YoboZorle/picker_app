@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:pickrr_app/src/driver/driver_onboard.dart';
-import 'package:pickrr_app/src/values/values.dart';
+import 'package:pickrr_app/src/helpers/constants.dart';
 
 class CustomerAppBar extends StatelessWidget {
   @override

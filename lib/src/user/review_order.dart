@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
-import 'package:pickrr_app/src/home.dart';
+import 'package:pickrr_app/src/helpers/constants.dart';
 import 'package:pickrr_app/src/user/your_driver.dart';
-import 'package:pickrr_app/src/values/values.dart';
 import 'package:dotted_line/dotted_line.dart';
 
 class ReviewOrder extends StatefulWidget {

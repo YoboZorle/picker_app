@@ -2,7 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:country_code_picker/country_code_picker.dart';
-import 'package:pickrr_app/src/values/values.dart';
+import 'package:pickrr_app/src/helpers/constants.dart';
 
 import 'otp_verification.dart';
 
@@ -315,7 +315,7 @@ class _PhoneLoginState extends State<PhoneLogin> with TickerProviderStateMixin {
               onPressed: (){
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => OTPVerification()),
+                  MaterialPageRoute(builder: (context) => OTPVerification(phone: '09039383838')),
                 );
               },
               color: AppColors.primaryText,

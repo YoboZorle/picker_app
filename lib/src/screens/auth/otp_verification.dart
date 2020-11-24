@@ -1,17 +1,14 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:pickrr_app/src/values/values.dart';
+import 'package:pickrr_app/src/helpers/constants.dart';
 import 'package:pin_view/pin_view.dart';
 
 import 'complete_profile_form.dart';
 
 class OTPVerification extends StatelessWidget {
-  String _poseGirl = "pose";
-  String _authId;
+  final String phone;
 
-  OTPVerification({@required authId}){
-    this._authId = authId;
-  }
+  OTPVerification({@required this.phone});
 
   final SmsListener smsListener = SmsListener(
       from: '6505551212', //sms phone number
@@ -55,7 +52,7 @@ class OTPVerification extends StatelessWidget {
                         child: ListView(children: <Widget>[
                           hintText(),
                           SizedBox(height: 8),
-                          Text('Input the verification code sent to $_authId',
+                          Text('Input the verification code sent to $phone',
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontSize: 15.7,

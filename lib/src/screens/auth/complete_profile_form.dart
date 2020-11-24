@@ -5,8 +5,8 @@ import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:pickrr_app/src/home.dart';
-import 'package:pickrr_app/src/values/values.dart';
+import 'package:pickrr_app/src/helpers/constants.dart';
+import 'file:///C:/Users/HP/Desktop/Development/MobileDev/picker_app/lib/src/screens/home.dart';
 
 class CompleteProfileForm extends StatefulWidget {
   @override

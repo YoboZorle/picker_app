@@ -1,8 +1,8 @@
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
-import 'package:pickrr_app/src/anim/show_up_animation.dart';
+import 'file:///C:/Users/HP/Desktop/Development/MobileDev/picker_app/lib/src/utils/show_up_animation.dart';
 import 'package:pickrr_app/src/driver/driver_tabs.dart';
-import 'package:pickrr_app/src/values/values.dart';
+import 'package:pickrr_app/src/helpers/constants.dart';
 
 class DriverBoard extends StatelessWidget {
   final int delayAmount = 500;

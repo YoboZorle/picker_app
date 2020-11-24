@@ -2,11 +2,11 @@ import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:pickrr_app/src/helpers/constants.dart';
 import 'package:pickrr_app/src/user/custom_appbar.dart';
 import 'package:pickrr_app/src/user/map/map.dart';
 import 'package:pickrr_app/src/user/user_drawer.dart';
 import 'package:pickrr_app/src/user/user_order.dart';
-import 'package:pickrr_app/src/values/values.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -18,6 +18,7 @@ class _HomeState extends State<Home> {
   GoogleMapController myMapController;
   final Set<Marker> _markers = new Set();
   static const LatLng _mainLocation = const LatLng(4.814340, 7.000848);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -60,7 +61,6 @@ class _HomeState extends State<Home> {
                       ],
                     ),
                   ),
-
                   Container(
                       decoration: BoxDecoration(
                         color: Colors.white,
@@ -95,7 +95,8 @@ class _HomeState extends State<Home> {
                           ),
                           Container(
                             alignment: Alignment.centerLeft,
-                            margin: EdgeInsets.only(left: 20, bottom: 5, top: 3),
+                            margin:
+                                EdgeInsets.only(left: 20, bottom: 5, top: 3),
                             child: new Text(
                               "Want to make deliveries?",
                               maxLines: 1,
@@ -146,21 +147,21 @@ class _HomeState extends State<Home> {
                             ),
                             title: TextField(
                                 decoration: InputDecoration(
-                                    hintText: "Input destination location...",
-                                  hintStyle: TextStyle(
-                                      fontSize: 15.0,
-                                      fontFamily: "Ubuntu",
-                                      color: Colors.grey[600],
-                                      fontWeight: FontWeight.w400,
-                                      height: 1.35),
-                                  enabledBorder: UnderlineInputBorder(
-                                    borderSide:
-                                    BorderSide(color: Colors.grey[300]),
-                                  ),
-                                  focusedBorder: UnderlineInputBorder(
-                                    borderSide:
+                              hintText: "Input destination location...",
+                              hintStyle: TextStyle(
+                                  fontSize: 15.0,
+                                  fontFamily: "Ubuntu",
+                                  color: Colors.grey[600],
+                                  fontWeight: FontWeight.w400,
+                                  height: 1.35),
+                              enabledBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(color: Colors.grey[300]),
+                              ),
+                              focusedBorder: UnderlineInputBorder(
+                                borderSide:
                                     BorderSide(color: AppColors.primaryText),
-                                  ),)),
+                              ),
+                            )),
                             contentPadding: EdgeInsets.only(left: 20),
                             dense: true,
                           ),
@@ -188,8 +189,7 @@ class _HomeState extends State<Home> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) =>
-                                          UserOrder()),
+                                      builder: (context) => UserOrder()),
                                 );
                               },
                             ),
@@ -219,15 +219,13 @@ class _HomeState extends State<Home> {
   }
 
   Widget notifPanel() => GestureDetector(
-    onTap: (){
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) =>
-                MapPage()),
-      );
-    },
-    child: Hero(
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => MapPage()),
+          );
+        },
+        child: Hero(
           tag: "notif",
           child: Container(
             width: MediaQuery.of(context).size.width,
@@ -276,7 +274,7 @@ class _HomeState extends State<Home> {
             ]),
           ),
         ),
-  );
+      );
 
   Widget _flightShuttleBuilder(
     BuildContext flightContext,

@@ -1,7 +1,7 @@
 import 'package:circular_profile_avatar/circular_profile_avatar.dart';
 import 'package:flutter/material.dart';
+import 'package:pickrr_app/src/helpers/constants.dart';
 import 'package:pickrr_app/src/utils/transitionAppbar/transition_appbar.dart';
-import 'package:pickrr_app/src/values/values.dart';
 
 class DriverWallet extends StatelessWidget {
   @override

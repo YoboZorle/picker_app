@@ -4,10 +4,10 @@ import 'package:flutter_svg/svg.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:lite_rolling_switch/lite_rolling_switch.dart';
 import 'package:pickrr_app/src/driver/driver_accept.dart';
-import 'package:pickrr_app/src/values/values.dart';
+import 'package:pickrr_app/src/helpers/constants.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../home.dart';
+import '../../screens/home.dart';
 
 class DriverHome extends StatefulWidget {
   @override
