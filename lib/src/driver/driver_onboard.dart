@@ -1,6 +1,6 @@
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
-import 'file:///C:/Users/HP/Desktop/Development/MobileDev/picker_app/lib/src/utils/show_up_animation.dart';
+import 'package:pickrr_app/src/utils/show_up_animation.dart';
 import 'package:pickrr_app/src/driver/driver_tabs.dart';
 import 'package:pickrr_app/src/helpers/constants.dart';
 
@@ -32,38 +32,34 @@ class DriverBoard extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             ShowUp(
-                              child: Text(
-                                'Pickrr Driver',
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 27,
-                                    fontFamily: 'Ubuntu',
-                                    fontWeight: FontWeight.w900),
+
+                              child: Hero(
+                                tag: 'input_phon_auth_title',
+                                flightShuttleBuilder: _flightShuttleBuilder,
+                                child: Text(
+                                  'Gentle hands,\nfast tyres',
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 27,
+                                      fontFamily: 'Ubuntu',
+                                      fontWeight: FontWeight.w800),
+                                ),
                               ),
                               delay: delayAmount + 800,
                             ),
                             SizedBox(height: 12),
                             ShowUp(
-                              child: Text(
-                                'Be your own boss?\nStart today',
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 25,
-                                    fontFamily: 'Ubuntu',
-                                    fontWeight: FontWeight.w700),
-                              ),
-                              delay: delayAmount + 1100,
-                            ),
-                            SizedBox(height: 12),
-                            ShowUp(
-                              child:Text(
-                                'Pickrr Driver gives you access to more customers nearby who need your delivery services.',
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 16,
-                                    fontFamily: 'Ubuntu',
-                                    fontWeight: FontWeight.w500,
-                                    height: 1.3),
+                              child: Hero(
+                                tag: 'body_text_splash',
+                                child: Text(
+                                  'We are the people you call for when you want your package delivered safe and fast.',
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 16,
+                                      fontFamily: 'Ubuntu',
+                                      fontWeight: FontWeight.w500,
+                                      height: 1.3),
+                                )
                               ),
                               delay: delayAmount + 1500,
                             ),
@@ -96,7 +92,7 @@ class DriverBoard extends StatelessWidget {
                                       ]),
                                   child: Center(
                                     child: Text(
-                                      'Get started',
+                                      'Send Package',
                                       textAlign: TextAlign.left,
                                       style: TextStyle(
                                         fontFamily: "Ubuntu",

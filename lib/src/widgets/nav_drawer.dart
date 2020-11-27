@@ -23,31 +23,39 @@ class NavDrawer extends StatelessWidget {
           padding: EdgeInsets.only(left: 15.0, right: 15.0),
           child: Column(children: <Widget>[
             SizedBox(height: 30),
-            ListTile(
-              leading: ClipOval(
-                  child: Container(
-                    height: 70.0,
-                    width: 70.0,
-                    child: CustomImage(
-                      imageUrl:
-                      '${APIConstants.assetsUrl}${user.profileImageUrl}',
+            Row(
+              children: [
+                ClipOval(
+                    child: Container(
+                      height: 65.0,
+                      width: 65.0,
+                      child: CustomImage(
+                        imageUrl:
+                        '${APIConstants.assetsUrl}${user.profileImageUrl}',
+                      ),
+                    )),
+                SizedBox(width: 20),
+                Column(crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      user.fullname,
+                      style: TextStyle(
+                          fontWeight: FontWeight.w700,
+                          fontFamily: "Ubuntu",
+                          fontSize: 18),
                     ),
-                  )),
-              title: Text(
-                user.fullname,
-                style: TextStyle(
-                    fontWeight: FontWeight.w700,
-                    fontFamily: "Ubuntu",
-                    fontSize: 18),
-              ),
-              subtitle: Text(
-                'Edit profile',
-                style: TextStyle(
-                    fontWeight: FontWeight.w400,
-                    fontFamily: "Ubuntu",
-                    height: 1.5,
-                    fontSize: 14),
-              ),
+                    SizedBox(height: 3),
+                    Text(
+                      'Edit profile',
+                      style: TextStyle(
+                          fontWeight: FontWeight.w400,
+                          fontFamily: "Ubuntu",
+                          height: 1.5,
+                          fontSize: 14),
+                    ),
+                  ],
+                ),
+              ],
             ),
             Container(
                 height: 0.7,
@@ -62,7 +70,7 @@ class NavDrawer extends StatelessWidget {
                     fontFamily: "Ubuntu",
                     fontSize: 18),
               ),
-              leading: Icon(Icons.track_changes),
+              leading: Icon(Icons.add_road),
               dense: false,
               onTap: () {
                 Navigator.push(
@@ -89,13 +97,30 @@ class NavDrawer extends StatelessWidget {
             ),
             ListTile(
               title: Text(
+                'Payment',
+                style: TextStyle(
+                    fontWeight: FontWeight.w400,
+                    fontFamily: "Ubuntu",
+                    fontSize: 18),
+              ),
+              leading: Icon(Icons.account_balance_wallet_outlined),
+              dense: false,
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => TrackDeliveries()),
+                );
+              },
+            ),
+            ListTile(
+              title: Text(
                 'Support',
                 style: TextStyle(
                     fontWeight: FontWeight.w400,
                     fontFamily: "Ubuntu",
                     fontSize: 18),
               ),
-              leading: Icon(Icons.support_agent),
+              leading: Icon(Icons.help_outline),
             ),
             ListTile(
               title: Text(

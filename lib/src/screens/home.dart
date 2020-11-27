@@ -1,11 +1,10 @@
-import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:pickrr_app/src/helpers/constants.dart';
 import 'package:pickrr_app/src/user/custom_appbar.dart';
-import 'package:pickrr_app/src/user/map/map.dart';
-import 'file:///C:/Users/HP/Desktop/Development/MobileDev/picker_app/lib/src/widgets/nav_drawer.dart';
+import 'package:pickrr_app/src/widgets/nav_drawer.dart';
+
 import 'package:pickrr_app/src/user/user_order.dart';
 
 class Home extends StatefulWidget {
@@ -57,7 +56,6 @@ class _HomeState extends State<Home> {
                           ),
                         ),
                         CustomerAppBar(),
-                        Positioned(bottom: 0, right: 0, child: notifPanel())
                       ],
                     ),
                   ),
@@ -83,12 +81,12 @@ class _HomeState extends State<Home> {
                             alignment: Alignment.centerLeft,
                             margin: EdgeInsets.only(left: 20),
                             child: Text(
-                              "Glad to meet you",
+                              "Glad to see you Yobo,",
                               textAlign: TextAlign.left,
                               style: TextStyle(
-                                fontSize: 14,
+                                fontSize: 15,
                                 fontFamily: "Ubuntu",
-                                color: AppColor.primaryText,
+                                color: Colors.black54,
                                 fontWeight: FontWeight.w400,
                               ),
                             ),
@@ -98,7 +96,7 @@ class _HomeState extends State<Home> {
                             margin:
                                 EdgeInsets.only(left: 20, bottom: 5, top: 3),
                             child: new Text(
-                              "Want to make deliveries?",
+                              "A driver is ready for you :)",
                               maxLines: 1,
                               textAlign: TextAlign.left,
                               style: TextStyle(
@@ -109,91 +107,150 @@ class _HomeState extends State<Home> {
                                   height: 1.35),
                             ),
                           ),
-                          ListTile(
-                            leading: Icon(
-                              Icons.location_on_rounded,
-                              color: Colors.redAccent,
-                            ),
-                            title: TextField(
-                              decoration: InputDecoration(
-                                hintText: "Enter pickup location...",
-                                hintStyle: TextStyle(
-                                    fontSize: 15.0,
-                                    fontFamily: "Ubuntu",
-                                    color: Colors.grey[600],
-                                    fontWeight: FontWeight.w400,
-                                    height: 1.35),
-                                enabledBorder: UnderlineInputBorder(
-                                  borderSide:
-                                      BorderSide(color: Colors.grey[300]),
-                                ),
-                                focusedBorder: UnderlineInputBorder(
-                                  borderSide:
-                                      BorderSide(color: AppColor.primaryText),
-                                ),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => UserOrder()),
+                              );
+                            },
+                            child: Container(
+                              height: 50,
+                              margin: EdgeInsets.only(
+                                  left: 20, right: 20, bottom: 20, top: 13),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                border: Border.fromBorderSide(
+                                    Borders.global_search_border),
+                                boxShadow: [
+                                  Shadows.global_shadow_search,
+                                ],
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(5)),
                               ),
-                            ),
-                            contentPadding: EdgeInsets.only(left: 20),
-                            dense: true,
-                          ),
-                          SizedBox(height: 10),
-                          ListTile(
-                            leading: Transform.rotate(
-                              angle: 120,
-                              child: Icon(
-                                Icons.navigation_rounded,
-                                color: Colors.greenAccent,
-                              ),
-                            ),
-                            title: TextField(
-                                decoration: InputDecoration(
-                              hintText: "Input destination location...",
-                              hintStyle: TextStyle(
-                                  fontSize: 15.0,
-                                  fontFamily: "Ubuntu",
-                                  color: Colors.grey[600],
-                                  fontWeight: FontWeight.w400,
-                                  height: 1.35),
-                              enabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: Colors.grey[300]),
-                              ),
-                              focusedBorder: UnderlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: AppColor.primaryText),
-                              ),
-                            )),
-                            contentPadding: EdgeInsets.only(left: 20),
-                            dense: true,
-                          ),
-                          Hero(
-                            tag: "btn",
-                            flightShuttleBuilder: _flightShuttleBuilder,
-                            child: GestureDetector(
-                              child: Container(
-                                  height: 45,
-                                  alignment: Alignment.center,
-                                  margin: EdgeInsets.only(
-                                      bottom: 18, left: 25, right: 25, top: 25),
-                                  decoration: BoxDecoration(
-                                    color: AppColor.primaryText,
-                                    boxShadow: [Shadows.secondaryShadow],
-                                    borderRadius: Radii.kRoundpxRadius,
-                                  ),
-                                  child: Text('Request Rider',
+                              child: Row(
+                                children: [
+                                  SizedBox(width: 20),
+                                  SvgPicture.asset(
+                                      'assets/svg/global_search.svg',
+                                      height: 21,
+                                      semanticsLabel: 'search icon'),
+                                  Container(
+                                    margin: EdgeInsets.only(left: 20),
+                                    child: Text(
+                                      "Enter destination…",
+                                      textAlign: TextAlign.left,
                                       style: TextStyle(
-                                          fontSize: 15,
-                                          fontFamily: 'Ubuntu',
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.w500))),
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => UserOrder()),
-                                );
-                              },
+                                        color: Colors.black45,
+                                        fontFamily: "Ubuntu",
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 17,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
+                          Container(
+                              margin: EdgeInsets.only(left: 20, right: 20),
+                              child: Column(children: <Widget>[
+                                SizedBox(height: 8),
+                                Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: <Widget>[
+                                      Icon(
+                                        Icons.location_on_rounded,
+                                        size: 22,
+                                        color: Colors.grey[300],
+                                      ),
+                                      SizedBox(width: 15),
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            "Ada-George Road",
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                            textAlign: TextAlign.left,
+                                            style: TextStyle(
+                                              color: Colors.black,
+                                              fontFamily: "Ubuntu",
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 15,
+                                            ),
+                                          ),
+                                          SizedBox(height: 3),
+                                          Text(
+                                            "Port harcourt, Nigeria",
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                            textAlign: TextAlign.left,
+                                            style: TextStyle(
+                                              color: Colors.black45,
+                                              fontFamily: "Ubuntu",
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: 14,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ]),
+                                Container(
+                                    height: 0.5,
+                                    width: MediaQuery.of(context).size.width,
+                                    margin:
+                                        EdgeInsets.only(top: 15, bottom: 15),
+                                    color: Colors.grey[300]),
+                                Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: <Widget>[
+                                      Icon(
+                                        Icons.location_on_rounded,
+                                        size: 22,
+                                        color: Colors.grey[300],
+                                      ),
+                                      SizedBox(width: 15),
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            "NTA Road",
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                            textAlign: TextAlign.left,
+                                            style: TextStyle(
+                                              color: Colors.black,
+                                              fontFamily: "Ubuntu",
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 15,
+                                            ),
+                                          ),
+                                          SizedBox(height: 3),
+                                          Text(
+                                            "Port harcourt, Nigeria",
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                            textAlign: TextAlign.left,
+                                            style: TextStyle(
+                                              color: Colors.black45,
+                                              fontFamily: "Ubuntu",
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: 14,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ]),
+                                SizedBox(height: 20),
+                              ])),
                         ],
                       )),
                 ],
@@ -214,67 +271,8 @@ class _HomeState extends State<Home> {
         icon: BitmapDescriptor.defaultMarker,
       ));
     });
-
     return _markers;
   }
-
-  Widget notifPanel() => GestureDetector(
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => MapPage()),
-          );
-        },
-        child: Hero(
-          tag: "notif",
-          child: Container(
-            width: MediaQuery.of(context).size.width,
-            child: Row(children: [
-              Expanded(child: SizedBox()),
-              Column(
-                children: [
-                  Badge(
-                    animationDuration: Duration(milliseconds: 700),
-                    elevation: 0,
-                    animationType: BadgeAnimationType.scale,
-                    badgeContent: Padding(
-                      padding: const EdgeInsets.all(2.0),
-                      child: Text('9',
-                          style: TextStyle(
-                              fontSize: 15,
-                              fontFamily: "Ubuntu",
-                              color: Colors.white,
-                              fontWeight: FontWeight.w400)),
-                    ),
-                    child: Container(
-                      width: 42,
-                      height: 42,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Colors.white,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black26,
-                            blurRadius: 12.0,
-                            offset: Offset(0.0, 5.0),
-                          ),
-                        ],
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(10.5),
-                        child: SvgPicture.asset('assets/svg/kargo_notif.svg',
-                            height: 25, semanticsLabel: 'Acme Logo'),
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 15),
-                ],
-              ),
-              SizedBox(width: 15),
-            ]),
-          ),
-        ),
-      );
 
   Widget _flightShuttleBuilder(
     BuildContext flightContext,

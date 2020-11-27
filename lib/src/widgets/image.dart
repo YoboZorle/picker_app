@@ -20,11 +20,11 @@ class CustomImage extends StatelessWidget {
         placeholder: (context, url) => Container(
             width: double.infinity,
             height: double.infinity,
-            color: AppColor.grey),
+            color: Colors.grey[300]),
         errorWidget: (context, url, error) => Container(
-            color: AppColor.grey,
+            color: Colors.grey[300],
             width: double.infinity,
             height: double.infinity,
-            child: Center(child: Icon(Icons.error))));
+            child: Center(child: Icon(Icons.person, color: Colors.grey))));
   }
 }

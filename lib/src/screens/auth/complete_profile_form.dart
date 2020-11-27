@@ -14,8 +14,8 @@ class CompleteProfileForm extends StatefulWidget {
 }
 
 class _CompleteProfileFormState extends State<CompleteProfileForm> {
-  TextEditingController _emailController;
   TextEditingController _fnameController;
+  TextEditingController _emailController;
   File _profileImage;
   final picker = ImagePicker();
   UserRepository _userRepository;
@@ -102,7 +102,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
                               'Set Up Your Profile',
                               textAlign: TextAlign.center,
                               style: TextStyle(
-                                fontSize: 22,
+                                fontSize: 18,
                                 fontFamily: 'Ubuntu',
                                 color: Colors.black,
                                 fontWeight: FontWeight.w800,
@@ -120,15 +120,15 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
                                               child: Image.asset(
                                               'assets/images/placeholder.jpg',
                                               fit: BoxFit.cover,
-                                              width: 95.0,
-                                              height: 95.0,
+                                              width: 90.0,
+                                              height: 90.0,
                                             ))
                                           : ClipOval(
                                               child: Image.file(
                                               _profileImage,
                                               fit: BoxFit.cover,
-                                              width: 95.0,
-                                              height: 95.0,
+                                              width: 90.0,
+                                              height: 90.0,
                                             )),
                                       SizedBox(height: 18),
                                       Text('Upload photo',
@@ -142,21 +142,18 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
                                   )),
                             ),
                             SizedBox(height: 25),
-                            Container(
-                                alignment: Alignment.center,
-                                height: 47,
-                                margin: EdgeInsets.only(
-                                    left: 20, right: 20, bottom: 10),
-                                color: Colors.grey[200],
-                                child: emailInput()),
-                            SizedBox(height: 15),
-                            Container(
-                                alignment: Alignment.center,
-                                height: 47,
-                                margin: EdgeInsets.only(
-                                    left: 20, right: 20, bottom: 10),
-                                color: Colors.grey[200],
-                                child: fullNameInput()),
+                                Container(
+                                    height: 47,
+                                    margin: EdgeInsets.only(left: 20, right: 20, bottom: 20),
+                                    color: Colors.grey[200],
+                                    child: _fullNameInput()),
+                                Container(
+                                    alignment: Alignment.center,
+                                    height: 47,
+                                    margin: EdgeInsets.only(
+                                        left: 20, right: 20, bottom: 10),
+                                    color: Colors.grey[200],
+                                    child: _emailInput()),
                             Container(
                               margin: EdgeInsets.only(left: 20),
                               child: Text('We\'ll send you your ride receipts.',
@@ -165,7 +162,8 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
                                       fontWeight: FontWeight.w400,
                                       color: Colors.grey,
                                       fontSize: 13)),
-                            )
+                            ),
+
                           ])),
                     ])),
               ),
@@ -203,68 +201,69 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
 
   @override
   void dispose() {
+    _fnameController.dispose();
     _emailController.dispose();
     _fnameController.dispose();
     super.dispose();
   }
 
-  fullNameInput() => Container(
-        margin: EdgeInsets.only(left: 15),
-        child: Row(
-          children: <Widget>[
-            Expanded(
-              child: Container(
-                width: MediaQuery.of(context).size.width,
-                margin: EdgeInsets.only(left: 0),
-                child: TextFormField(
-                  keyboardType: TextInputType.name,
-                  cursorColor: AppColor.primaryText,
-                  controller: _fnameController,
-                  style: TextStyle(
-                      fontSize: 18.0,
-                      fontFamily: 'Ubuntu',
-                      color: Colors.black,
-                      fontWeight: FontWeight.w400),
-                  decoration: InputDecoration(
-                    hintText: 'Enter full name',
-                    hintStyle: TextStyle(
-                        fontSize: 18.0,
-                        fontFamily: 'Ubuntu',
-                        color: Colors.grey,
-                        fontWeight: FontWeight.w400),
-                    border: InputBorder.none,
-                    focusedBorder: InputBorder.none,
-                    enabledBorder: InputBorder.none,
-                    errorBorder: InputBorder.none,
-                    disabledBorder: InputBorder.none,
-                    suffixIcon: _fnameController.text != null &&
-                            _fnameController.text.isNotEmpty
-                        ? Padding(
-                            padding:
-                                const EdgeInsetsDirectional.only(start: 12.0),
-                            child: IconButton(
-                              iconSize: 16.0,
-                              icon: Icon(
-                                Icons.cancel,
-                                color: Colors.grey,
-                              ),
-                              onPressed: () {
-                                setState(() {
-                                  _fnameController.clear();
-                                });
-                              },
-                            ),
-                          )
-                        : null,
+
+  _fullNameInput() => Container(
+    margin: EdgeInsets.only(left: 15),
+    child: Row(
+      children: <Widget>[
+        Expanded(
+          child: Container(
+            width: MediaQuery.of(context).size.width,
+            margin: EdgeInsets.only(left: 0),
+            child: TextFormField(
+              keyboardType: TextInputType.name,
+              cursorColor: AppColor.primaryText,
+              controller: _fnameController,
+              style: TextStyle(
+                  fontSize: 16.0,
+                  fontFamily: 'Ubuntu',
+                  color: Colors.black,
+                  fontWeight: FontWeight.w400),
+              decoration: InputDecoration(
+                hintText: 'Enter full name',
+                hintStyle: TextStyle(
+                    fontSize: 16.0,
+                    fontFamily: 'Ubuntu',
+                    color: Colors.grey,
+                    fontWeight: FontWeight.w400),
+                border: InputBorder.none,
+                focusedBorder: InputBorder.none,
+                enabledBorder: InputBorder.none,
+                errorBorder: InputBorder.none,
+                disabledBorder: InputBorder.none,
+                suffixIcon: _fnameController.text.isNotEmpty
+                    ? Padding(
+                  padding:
+                  const EdgeInsetsDirectional.only(start: 12.0),
+                  child: IconButton(
+                    iconSize: 16.0,
+                    icon: Icon(
+                      Icons.cancel,
+                      color: Colors.grey,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        _fnameController.clear();
+                      });
+                    },
                   ),
-                ),
+                )
+                    : null,
               ),
             ),
-          ],
+          ),
         ),
-      );
+      ],
+    ),
+  );
 
-  emailInput() => Container(
+  _emailInput() => Container(
         margin: EdgeInsets.only(left: 15),
         child: Row(
           children: <Widget>[
@@ -277,14 +276,14 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
                   cursorColor: AppColor.primaryText,
                   controller: _emailController,
                   style: TextStyle(
-                      fontSize: 18.0,
+                      fontSize: 16.0,
                       fontFamily: 'Ubuntu',
                       color: Colors.black,
                       fontWeight: FontWeight.w400),
                   decoration: InputDecoration(
                     hintText: 'Input email',
                     hintStyle: TextStyle(
-                        fontSize: 18.0,
+                        fontSize: 16.0,
                         fontFamily: 'Ubuntu',
                         color: Colors.grey,
                         fontWeight: FontWeight.w400),
