@@ -9,10 +9,11 @@ class Borders {
 }
 
 class AppColors {
-  static const Color primaryBackground = Color.fromARGB(255, 255, 255, 255);
-  static const Color secondaryBackground = Color.fromARGB(255, 0, 141, 210);
-  static const Color primaryElement = Color.fromARGB(255, 255, 255, 255);
-  static const Color primaryText = Color.fromARGB(255, 0, 141, 210);
+  static final Color primaryBackground = Color.fromARGB(255, 255, 255, 255);
+  static final Color secondaryBackground = Color.fromARGB(255, 0, 141, 210);
+  static final Color primaryElement = Color.fromARGB(255, 255, 255, 255);
+  static final Color primaryText = Color.fromARGB(255, 0, 141, 210);
+  static final grey = Color(0xFF959595);
 }
 
 class Radii {
