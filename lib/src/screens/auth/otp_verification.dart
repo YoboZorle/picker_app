@@ -35,7 +35,7 @@ class OTPVerification extends StatelessWidget {
   }
 
   _requestOTPVerification(String pin, {BuildContext context}) {
-    AlertBar.dialog(context, 'Requesting...', AppColors.primaryText,
+    AlertBar.dialog(context, 'Requesting...', AppColor.primaryText,
         showProgressIndicator: true, duration: null);
     try {
       BlocProvider.of<LoginBloc>(context).add(
@@ -57,7 +57,7 @@ class OTPVerification extends StatelessWidget {
       AlertBar.dialog(context, 'Request failed. Please try again.', Colors.red,
           icon: Icon(Icons.error, color: Colors.red), duration: 5);
     } else if (state.isLoading) {
-      AlertBar.dialog(context, 'Login in...', AppColors.primaryText,
+      AlertBar.dialog(context, 'Login in...', AppColor.primaryText,
           showProgressIndicator: true, duration: null);
     } else if (state.isSuccess) {
       BlocProvider.of<AuthenticationBloc>(context).add(AuthenticationEvent.AUTHENTICATED);
@@ -141,7 +141,7 @@ class OTPVerification extends StatelessWidget {
                                     style: TextStyle(
                                         fontSize: 15,
                                         fontFamily: 'Ubuntu',
-                                        color: AppColors.primaryText,
+                                        color: AppColor.primaryText,
                                         fontWeight: FontWeight.w500,
                                         height: 1.3),
                                     recognizer: TapGestureRecognizer()
@@ -161,7 +161,7 @@ class OTPVerification extends StatelessWidget {
 
   void _sendOTPRequest(context) async {
     AlertBar.dialog(
-        context, 'Requesting Verification code...', AppColors.primaryText,
+        context, 'Requesting Verification code...', AppColor.primaryText,
         showProgressIndicator: true, duration: null);
 
     try {

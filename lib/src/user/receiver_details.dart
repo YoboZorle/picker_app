@@ -128,7 +128,7 @@ class _UserDetailsState extends State<UserDetails> {
                           borderSide: BorderSide(color: Colors.grey[300]),
                         ),
                         focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: AppColors.primaryText),
+                          borderSide: BorderSide(color: AppColor.primaryText),
                         ),
                       ),
                     ),
@@ -155,7 +155,7 @@ class _UserDetailsState extends State<UserDetails> {
                           borderSide: BorderSide(color: Colors.grey[300]),
                         ),
                         focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: AppColors.primaryText),
+                          borderSide: BorderSide(color: AppColor.primaryText),
                         ),
                       ),
                     ),
@@ -172,7 +172,7 @@ class _UserDetailsState extends State<UserDetails> {
                           margin: EdgeInsets.only(
                               bottom: 18, left: 25, right: 25, top: 30),
                           decoration: BoxDecoration(
-                            color: AppColors.primaryText,
+                            color: AppColor.primaryText,
                             boxShadow: [Shadows.secondaryShadow],
                             borderRadius: Radii.kRoundpxRadius,
                           ),

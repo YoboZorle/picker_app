@@ -75,8 +75,8 @@ class DriverBoard extends StatelessWidget {
                                   decoration: BoxDecoration(
                                       gradient: LinearGradient(
                                         colors: [
-                                          AppColors.primaryText,
-                                          AppColors.primaryText,
+                                          AppColor.primaryText,
+                                          AppColor.primaryText,
                                           Colors.lightBlueAccent
                                         ],
                                         begin: Alignment.centerLeft,
@@ -88,7 +88,7 @@ class DriverBoard extends StatelessWidget {
                                       boxShadow: [
                                         BoxShadow(
                                           color:
-                                          AppColors.primaryText.withOpacity(0.25),
+                                          AppColor.primaryText.withOpacity(0.25),
                                           spreadRadius: 2,
                                           blurRadius: 20,
                                           offset: Offset(0, 10),

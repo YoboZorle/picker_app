@@ -113,7 +113,7 @@ class UserRepository extends APIClient {
       // final responseBody = response.data;
       // await this.persistToken(responseBody['token']);
       var jwtToken =
-          'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MDg0Njc2MDgsInVzZXJJZCI6MiwicGhvdG8iOiIiLCJmdWxsbmFtZSI6IiIsInBob25lIjoiMDkwMzgzNzM5MjMifQ.ebefIb9TujaIY5u6do9CLDR55UwK3EDSXqucm4-9ymQ';
+          'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MTk0Njc2MDgsInVzZXJJZCI6MiwicGhvbmUiOiIwOTA5NDczODM4MyIsImZ1bGxuYW1lIjoiSmFjayBNYSIsInByb2ZpbGVJbWFnZVVybCI6Imh0dHBzOi8vaW1hZ2VzLnVuc3BsYXNoLmNvbS9waG90by0xNTYzMTIyODcwLTZiMGI0OGEwYWYwOT9peGxpYj1yYi0xLjIuMSZpeGlkPWV5SmhjSEJmYVdRaU9qRXlNRGQ5JmF1dG89Zm9ybWF0JmZpdD1jcm9wJnc9MTAwMCZxPTgwIn0.ydIU_gJJIa5BOAdipafAzi3-D8sDPoEWbxGi1d9RD5s';
       await this.persistToken(jwtToken);
     } catch (e) {
       if (e.response != null) {
@@ -134,12 +134,15 @@ class UserRepository extends APIClient {
       // return response.data;
       return new Future.delayed(new Duration(seconds: 5), () {
         debugLog('Updating profile details...');
-        return {
+        var profileDetails = {
           'userId': 2,
           'fullname': 'James Tom',
           'email': 'jt@gmail.com',
           'phone': '09038373923'
         };
+        User user = User.fromMap(profileDetails);
+        persistUserDetails(user);
+        return profileDetails;
       });
     } catch (e) {
       cprint(e, errorIn: 'updateProfileDetails');

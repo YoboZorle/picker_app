@@ -102,7 +102,7 @@ class _DriverHomeState extends State<DriverHome> {
               Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
-                  color: AppColors.primaryText,
+                  color: AppColor.primaryText,
                 ),
                 margin: EdgeInsets.only(bottom: 40),
                 child: ListTile(
@@ -317,7 +317,7 @@ class _DriverHomeState extends State<DriverHome> {
                               margin: EdgeInsets.only(
                                   bottom: 10, left: 25, right: 25, top: 18),
                               decoration: BoxDecoration(
-                                color: AppColors.primaryText,
+                                color: AppColor.primaryText,
                                 boxShadow: [Shadows.secondaryShadow],
                                 borderRadius: Radii.kRoundpxRadius,
                               ),
@@ -349,7 +349,7 @@ class _DriverHomeState extends State<DriverHome> {
                               margin: EdgeInsets.only(
                                   bottom: 10, left: 25, right: 25, top: 18),
                               decoration: BoxDecoration(
-                                color: AppColors.primaryText,
+                                color: AppColor.primaryText,
                                 boxShadow: [Shadows.secondaryShadow],
                                 borderRadius: Radii.kRoundpxRadius,
                               ),
@@ -476,7 +476,7 @@ class _DriverHomeState extends State<DriverHome> {
                           height: 35,
                           width: 45,
                           // padding: EdgeInsets.all(5),
-                          color: AppColors.primaryText,
+                          color: AppColor.primaryText,
                           child: Icon(Icons.directions_bike_sharp,
                               color: Colors.white)),
                       Padding(
@@ -585,7 +585,7 @@ class CustomerAppBar extends StatelessWidget {
                       value: true,
                       textOn: 'Online',
                       textOff: 'Offline',
-                      colorOn: AppColors.primaryText,
+                      colorOn: AppColor.primaryText,
                       colorOff: Colors.grey[400],
                       iconOn: Icons.directions_bike,
                       iconOff: Icons.power_settings_new,

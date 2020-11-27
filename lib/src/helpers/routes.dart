@@ -56,7 +56,10 @@ class Routes {
         return SlideLeftRoute<bool>(
             builder: (BuildContext context) => CompleteProfileForm());
       case "HomePage":
-        return CustomRoute<bool>(builder: (BuildContext context) => Home());
+        return CustomRoute<bool>(builder: (BuildContext context) => BlocProvider<AuthenticationBloc>(
+            create: (_) =>
+            AuthenticationBloc()..add(AuthenticationEvent.AUTHENTICATED),
+            child: Home()));
       default:
         return onUnknownRoute(RouteSettings(name: '/Unknown'));
     }
@@ -79,7 +82,7 @@ Widget homePage(BuildContext context, AuthenticationState state) {
   }
 
   User user = state.props[0];
-  if (user.isCompleteDetails) {
+  if (!user.isCompleteDetails) {
     return CompleteProfileForm();
   }
 

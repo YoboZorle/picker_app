@@ -42,7 +42,7 @@ class CustomerAppBar extends StatelessWidget {
                     height: 42,
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
-                      color: AppColors.primaryText,
+                      color: AppColor.primaryText,
                       boxShadow: [Shadows.secondaryShadow],
                       borderRadius: Radii.k25pxRadius,
                     ),

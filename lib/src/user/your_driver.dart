@@ -214,7 +214,7 @@ class _YourDriverState extends State<YourDriver> {
                             margin: EdgeInsets.only(
                                 bottom: 10, left: 25, right: 25, top: 25),
                             decoration: BoxDecoration(
-                              color: AppColors.primaryText,
+                              color: AppColor.primaryText,
                               boxShadow: [Shadows.secondaryShadow],
                               borderRadius: Radii.kRoundpxRadius,
                             ),

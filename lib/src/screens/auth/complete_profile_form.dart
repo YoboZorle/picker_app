@@ -56,7 +56,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
       return;
     }
 
-    AlertBar.dialog(context, 'Saving information...', AppColors.primaryText,
+    AlertBar.dialog(context, 'Saving information...', AppColor.primaryText,
         showProgressIndicator: true, duration: null);
 
     try {
@@ -182,7 +182,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
                           borderRadius: new BorderRadius.circular(25.0),
                         ),
                         onPressed: () => updateProfileDetailsHandler(),
-                        color: AppColors.primaryText,
+                        color: AppColor.primaryText,
                         child: Text("Continue",
                             style: TextStyle(
                                 fontFamily: 'Ubuntu',
@@ -218,7 +218,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
                 margin: EdgeInsets.only(left: 0),
                 child: TextFormField(
                   keyboardType: TextInputType.name,
-                  cursorColor: AppColors.primaryText,
+                  cursorColor: AppColor.primaryText,
                   controller: _fnameController,
                   style: TextStyle(
                       fontSize: 18.0,
@@ -274,7 +274,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
                 margin: EdgeInsets.only(left: 0),
                 child: TextFormField(
                   keyboardType: TextInputType.emailAddress,
-                  cursorColor: AppColors.primaryText,
+                  cursorColor: AppColor.primaryText,
                   controller: _emailController,
                   style: TextStyle(
                       fontSize: 18.0,

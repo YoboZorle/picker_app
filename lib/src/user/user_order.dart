@@ -149,7 +149,7 @@ class _UserOrderState extends State<UserOrder> {
                           margin: EdgeInsets.only(
                               bottom: 18, left: 25, right: 25, top: 30),
                           decoration: BoxDecoration(
-                            color: AppColors.primaryText,
+                            color: AppColor.primaryText,
                             boxShadow: [Shadows.secondaryShadow],
                             borderRadius: Radii.kRoundpxRadius,
                           ),
@@ -228,7 +228,7 @@ class _UserOrderState extends State<UserOrder> {
                         height: 35,
                           width: 45,
                           // padding: EdgeInsets.all(5),
-                          color: AppColors.primaryText,
+                          color: AppColor.primaryText,
                           child: Icon(Icons.directions_bike_sharp,
                               color: Colors.white)),
                       Padding(

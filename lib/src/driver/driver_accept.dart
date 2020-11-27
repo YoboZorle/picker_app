@@ -233,7 +233,7 @@ class _DriverAcceptState extends State<DriverAccept> {
                             margin: EdgeInsets.only(
                                 bottom: 10, left: 25, right: 25, top: 25),
                             decoration: BoxDecoration(
-                              color: AppColors.primaryText,
+                              color: AppColor.primaryText,
                               boxShadow: [Shadows.secondaryShadow],
                               borderRadius: Radii.kRoundpxRadius,
                             ),
@@ -330,7 +330,7 @@ class _DriverAcceptState extends State<DriverAccept> {
                           height: 35,
                           width: 45,
                           // padding: EdgeInsets.all(5),
-                          color: AppColors.primaryText,
+                          color: AppColor.primaryText,
                           child: Icon(Icons.directions_bike_sharp,
                               color: Colors.white)),
                       Padding(

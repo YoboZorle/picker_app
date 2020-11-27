@@ -9,10 +9,10 @@ class User extends Equatable {
   final String email;
 
   bool get isCompleteDetails {
-    return email == null ||
-        email.isEmpty ||
-        profileImageUrl == null ||
-        profileImageUrl.isEmpty;
+    return email != null ||
+        email.isNotEmpty ||
+        profileImageUrl != null ||
+        profileImageUrl.isNotEmpty;
   }
 
   User(

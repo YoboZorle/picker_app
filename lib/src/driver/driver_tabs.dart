@@ -17,7 +17,7 @@ class _DriverTabsState extends State<DriverTabs> {
 
   int tabIndex = 0;
   Color tabColor = Colors.grey[500];
-  Color selectedTabColor = AppColors.primaryText;
+  Color selectedTabColor = AppColor.primaryText;
 
   @override
   void initState() {
@@ -35,7 +35,7 @@ class _DriverTabsState extends State<DriverTabs> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      color: AppColors.primaryText,
+      color: AppColor.primaryText,
       home: Scaffold(
         body: IndexedStack(
             index: listScreensIndex.indexOf(tabIndex), children: listScreens),

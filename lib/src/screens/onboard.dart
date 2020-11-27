@@ -65,8 +65,8 @@ class Onboard extends StatelessWidget {
                                 decoration: BoxDecoration(
                                     gradient: LinearGradient(
                                       colors: [
-                                        AppColors.primaryText,
-                                        AppColors.primaryText,
+                                        AppColor.primaryText,
+                                        AppColor.primaryText,
                                         Colors.lightBlueAccent
                                       ],
                                       begin: Alignment.centerLeft,
@@ -77,7 +77,7 @@ class Onboard extends StatelessWidget {
                                     ),
                                     boxShadow: [
                                       BoxShadow(
-                                        color: AppColors.primaryText
+                                        color: AppColor.primaryText
                                             .withOpacity(0.25),
                                         spreadRadius: 2,
                                         blurRadius: 20,

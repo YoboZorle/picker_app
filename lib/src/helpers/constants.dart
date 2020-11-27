@@ -8,7 +8,7 @@ class Borders {
   );
 }
 
-class AppColors {
+class AppColor {
   static final Color primaryBackground = Color.fromARGB(255, 255, 255, 255);
   static final Color secondaryBackground = Color.fromARGB(255, 0, 141, 210);
   static final Color primaryElement = Color.fromARGB(255, 255, 255, 255);

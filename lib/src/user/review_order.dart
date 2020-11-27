@@ -399,7 +399,7 @@ class _ReviewOrderState extends State<ReviewOrder> {
                                         style: TextStyle(
                                             fontSize: 15.0,
                                             fontFamily: "Roboto",
-                                            color: AppColors.primaryText,
+                                            color: AppColor.primaryText,
                                             fontWeight: FontWeight.w700,
                                             height: 1.35),
                                       ),
@@ -429,7 +429,7 @@ class _ReviewOrderState extends State<ReviewOrder> {
 
                             _choosePaymentMethodSheet(context);
                           },
-                          color: AppColors.primaryText,
+                          color: AppColor.primaryText,
                           child: Text("Pay " + currencyFormatter.format(amount),
                               style: TextStyle(
                                   fontFamily: "Roboto",

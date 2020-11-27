@@ -57,7 +57,7 @@ class _DriverProfState extends State<DriverProf>
               Text('David Ejiro',
                   style: TextStyle(
                     fontSize: 18,
-                    color: AppColors.primaryText,
+                    color: AppColor.primaryText,
                     fontFamily: "Ubuntu",
                     fontWeight: FontWeight.w600,
                   )),
@@ -73,7 +73,7 @@ class _DriverProfState extends State<DriverProf>
               Text('Started 23rd July, 2019',
                   style: TextStyle(
                     fontSize: 15,
-                    color: AppColors.primaryText,
+                    color: AppColor.primaryText,
                     fontFamily: "Ubuntu",
                     fontWeight: FontWeight.w400,
                   )),

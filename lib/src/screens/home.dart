@@ -5,7 +5,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:pickrr_app/src/helpers/constants.dart';
 import 'package:pickrr_app/src/user/custom_appbar.dart';
 import 'package:pickrr_app/src/user/map/map.dart';
-import 'package:pickrr_app/src/user/user_drawer.dart';
+import 'file:///C:/Users/HP/Desktop/Development/MobileDev/picker_app/lib/src/widgets/nav_drawer.dart';
 import 'package:pickrr_app/src/user/user_order.dart';
 
 class Home extends StatefulWidget {
@@ -25,7 +25,7 @@ class _HomeState extends State<Home> {
         home: Scaffold(
             key: _scaffoldKey,
             drawer: Drawer(
-              child: UserDrawer(),
+              child: NavDrawer(),
             ),
             body: GestureDetector(
               onTap: () {
@@ -88,7 +88,7 @@ class _HomeState extends State<Home> {
                               style: TextStyle(
                                 fontSize: 14,
                                 fontFamily: "Ubuntu",
-                                color: AppColors.primaryText,
+                                color: AppColor.primaryText,
                                 fontWeight: FontWeight.w400,
                               ),
                             ),
@@ -129,7 +129,7 @@ class _HomeState extends State<Home> {
                                 ),
                                 focusedBorder: UnderlineInputBorder(
                                   borderSide:
-                                      BorderSide(color: AppColors.primaryText),
+                                      BorderSide(color: AppColor.primaryText),
                                 ),
                               ),
                             ),
@@ -159,7 +159,7 @@ class _HomeState extends State<Home> {
                               ),
                               focusedBorder: UnderlineInputBorder(
                                 borderSide:
-                                    BorderSide(color: AppColors.primaryText),
+                                    BorderSide(color: AppColor.primaryText),
                               ),
                             )),
                             contentPadding: EdgeInsets.only(left: 20),
@@ -175,7 +175,7 @@ class _HomeState extends State<Home> {
                                   margin: EdgeInsets.only(
                                       bottom: 18, left: 25, right: 25, top: 25),
                                   decoration: BoxDecoration(
-                                    color: AppColors.primaryText,
+                                    color: AppColor.primaryText,
                                     boxShadow: [Shadows.secondaryShadow],
                                     borderRadius: Radii.kRoundpxRadius,
                                   ),

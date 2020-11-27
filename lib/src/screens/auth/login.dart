@@ -152,7 +152,7 @@ class _LoginState extends State<Login> {
                 child: TextFormField(
                   controller: _phoneController,
                   keyboardType: TextInputType.number,
-                  cursorColor: AppColors.primaryText,
+                  cursorColor: AppColor.primaryText,
                   inputFormatters: <TextInputFormatter>[
                     FilteringTextInputFormatter.digitsOnly
                   ],
@@ -249,7 +249,7 @@ class _LoginState extends State<Login> {
                   borderRadius: new BorderRadius.circular(25.0),
                 ),
                 onPressed: () => _processLogin(),
-                color: AppColors.primaryText,
+                color: AppColor.primaryText,
                 child: Text("Send code",
                     style: TextStyle(
                         fontFamily: 'Ubuntu',
@@ -279,7 +279,7 @@ class _LoginState extends State<Login> {
     }
 
     AlertBar.dialog(
-        context, 'Requesting Verification code...', AppColors.primaryText,
+        context, 'Requesting Verification code...', AppColor.primaryText,
         showProgressIndicator: true, duration: null);
 
     try {

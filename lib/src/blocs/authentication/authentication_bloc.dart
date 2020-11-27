@@ -29,7 +29,8 @@ class AuthenticationBloc
   }
 
   Stream<AuthenticationState> _loadPersistedUserDetails(User user) async* {
-    final upToDateUserDetailsMap = await _userRepository.getUserDetails(user.id);
+    final upToDateUserDetailsMap =
+        await _userRepository.getUserDetails(user.id);
     final upToDateUserDetails = User.fromMap(upToDateUserDetailsMap);
     persistUserDetails(upToDateUserDetails);
     yield LoggedIn(upToDateUserDetails);
@@ -41,7 +42,7 @@ class AuthenticationBloc
       if (isSignedIn) {
         final User user = await _userRepository.getUser();
         yield LoggedIn(user);
-        if(await isInternetConnected()) {
+        if (await isInternetConnected()) {
           yield* _loadPersistedUserDetails(user);
         }
       } else {
@@ -54,10 +55,14 @@ class AuthenticationBloc
   }
 
   Stream<AuthenticationState> _mapLoggedInToState() async* {
-    final User user = await _userRepository.getUser();
-    yield LoggedIn(user);
-    if(await isInternetConnected()) {
-      yield* _loadPersistedUserDetails(user);
+    try {
+      final User user = await _userRepository.getUser();
+      yield LoggedIn(user);
+      if (await isInternetConnected()) {
+        yield* _loadPersistedUserDetails(user);
+      }
+    } catch (_) {
+      yield NonLoggedIn();
     }
   }
 
