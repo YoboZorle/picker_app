@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pickrr_app/src/helpers/db/user.dart';
+import 'package:pickrr_app/src/helpers/utility.dart';
 import 'package:pickrr_app/src/models/user.dart';
 import 'package:pickrr_app/src/services/repositories/user.dart';
 
@@ -27,22 +28,37 @@ class AuthenticationBloc
     }
   }
 
+  Stream<AuthenticationState> _loadPersistedUserDetails(User user) async* {
+    final upToDateUserDetailsMap = await _userRepository.getUserDetails(user.id);
+    final upToDateUserDetails = User.fromMap(upToDateUserDetailsMap);
+    persistUserDetails(upToDateUserDetails);
+    yield LoggedIn(upToDateUserDetails);
+  }
+
   Stream<AuthenticationState> _mapAppStartedToState() async* {
     try {
       final isSignedIn = await _userRepository.isSignedIn();
       if (isSignedIn) {
         final User user = await _userRepository.getUser();
         yield LoggedIn(user);
+        if(await isInternetConnected()) {
+          yield* _loadPersistedUserDetails(user);
+        }
       } else {
         yield NonLoggedIn();
       }
-    } catch (_) {
+    } catch (err) {
+      cprint(err, errorIn: '_mapAppStartedToState');
       yield NonLoggedIn();
     }
   }
 
   Stream<AuthenticationState> _mapLoggedInToState() async* {
-    yield LoggedIn(await _userRepository.getUser());
+    final User user = await _userRepository.getUser();
+    yield LoggedIn(user);
+    if(await isInternetConnected()) {
+      yield* _loadPersistedUserDetails(user);
+    }
   }
 
   Stream<AuthenticationState> _mapLoggedOutToState(

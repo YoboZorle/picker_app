@@ -72,3 +72,7 @@ class APIConstants {
   static final String assetsUrl = 'https://yarner-storage.s3.amazonaws.com/yarn-a9e77482c84e16/';
   static final String apiUrl = '$httpUrl/api/';
 }
+
+class AppData {
+  static final String messageFrom = 'Pickrr';
+}

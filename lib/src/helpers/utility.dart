@@ -1,7 +1,11 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:intl/intl.dart';
+import 'package:pickrr_app/src/helpers/db/user.dart';
 import 'dart:developer' as developer;
+
+import 'package:pickrr_app/src/models/user.dart';
 
 void debugLog(dynamic log, {dynamic param = ""}) {
   final String time = DateFormat("mm:ss:mmm").format(DateTime.now());
@@ -58,4 +62,27 @@ class Token {
 
     return utf8.decode(base64Url.decode(output));
   }
+}
+
+/// Checks for internet connection by pinging `google.com`
+Future<bool> isInternetConnected() async {
+  debugLog('Checking internet connectivity...');
+  try {
+    final result = await InternetAddress.lookup('google.com');
+    if(result.isNotEmpty && result[0].rawAddress.isNotEmpty){
+      debugLog('Internet available');
+      return true;
+    }
+    debugLog('no internet connection');
+    return false;
+  } on SocketException catch(_) {
+    debugLog('no internet connection');
+    return false;
+  }
+}
+
+/// Persist user details in Sqflite for easy accessibility
+Future<void> persistUserDetails(User user) async {
+  UserProvider helper = UserProvider.instance;
+  await helper.updateOrInsert(user);
 }

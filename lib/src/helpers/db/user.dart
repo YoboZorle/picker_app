@@ -7,13 +7,11 @@ import 'package:path_provider/path_provider.dart';
 final String databaseName = "yarner.user.db";
 final String tableUser = 'user';
 final String columnId = '_userId';
-final String columnFirstname = 'firstname';
-final String columnLastname = 'lastname';
+final String columnFullname = 'fullname';
 final String columnPhone = 'phone';
 final String columnEmail = 'email';
 final String columnProfileImageUrl = 'profileImageUrl';
 final String columnCallingCode = 'callingCode';
-final String columnOnlineStatus = 'onlineStatus';
 
 class UserProvider {
   Database db;
@@ -35,13 +33,11 @@ class UserProvider {
       await db.execute('''
 create table $tableUser ( 
   $columnId integer primary key autoincrement, 
-  $columnFirstname text not null,
-  $columnLastname text not null,
-  $columnProfileImageUrl text not null,
-  $columnPhone text not null,
-  $columnEmail text not null,
-  $columnCallingCode text not null,
-  $columnOnlineStatus integer not null)
+  $columnFullname text,
+  $columnProfileImageUrl text,
+  $columnPhone text,
+  $columnEmail text,
+  $columnCallingCode text)
 ''');
     });
   }

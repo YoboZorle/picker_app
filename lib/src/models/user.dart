@@ -2,36 +2,37 @@ import 'package:equatable/equatable.dart';
 
 class User extends Equatable {
   final int id;
-  final String firstname;
-  final String lastname;
-  final int onlineStatus;
+  final String fullname;
   final String phone;
   final String profileImageUrl;
   final String callingCode;
   final String email;
 
+  bool get isCompleteDetails {
+    return email == null ||
+        email.isEmpty ||
+        profileImageUrl == null ||
+        profileImageUrl.isEmpty;
+  }
+
   User(
       {this.id,
-      this.firstname,
-      this.lastname,
+      this.fullname,
       this.phone,
-        this.email,
+      this.email,
       this.callingCode,
-      this.profileImageUrl,
-      this.onlineStatus});
+      this.profileImageUrl});
 
   @override
-  List<Object> get props => [id, firstname, lastname, onlineStatus, email];
+  List<Object> get props => [id, fullname, email];
 
   Map<String, dynamic> toMap() {
     var map = <String, dynamic>{
-      'firstname': firstname,
-      'lastname': lastname,
+      'fullname': fullname,
       'email': email,
       'phone': phone,
       'profileImageUrl': profileImageUrl,
-      'callingCode': callingCode,
-      'onlineStatus': onlineStatus
+      'callingCode': callingCode
     };
     if (id != null) {
       map['_userId'] = id;
@@ -41,15 +42,13 @@ class User extends Equatable {
   }
 
   User.fromMap(Map<String, dynamic> mapData)
-      : id = mapData['userId'] ?? null,
-        firstname = mapData['firstname'] ?? '',
-        lastname = mapData['lastname'] ?? '',
+      : id = mapData['userId'] ?? mapData['_userId'] ?? null,
+        fullname = mapData['fullname'] ?? '',
         phone = mapData['phone'] ?? '',
         email = mapData['email'] ?? '',
         profileImageUrl = mapData['profileImageUrl'] ?? '',
-        callingCode = mapData['callingCode'] ?? '',
-        onlineStatus = mapData['onlineStatus'];
+        callingCode = mapData['callingCode'] ?? '';
 
   @override
-  String toString() => 'User { id: $id, firstname: $firstname }';
+  String toString() => 'User { id: $id, fullname: $fullname }';
 }

@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:pickrr_app/src/helpers/constants.dart';
-import 'file:///C:/Users/HP/Desktop/Development/MobileDev/picker_app/lib/src/screens/home.dart';
+import 'package:pickrr_app/src/screens/home.dart';
 
 class CompleteProfileForm extends StatefulWidget {
   @override
@@ -15,13 +15,15 @@ class CompleteProfileForm extends StatefulWidget {
 
 class _CompleteProfileFormState extends State<CompleteProfileForm> {
   TextEditingController _emailController;
+  TextEditingController _fnameController;
   File _profileImage;
   final picker = ImagePicker();
 
   @override
   void initState() {
-    super.initState();
     _emailController = new TextEditingController();
+    _fnameController = new TextEditingController();
+    super.initState();
   }
 
   Future getImage() async {
@@ -69,9 +71,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
                                       ),
                                     ),
                                   ),
-                                  onTap: (){
-
-                                  },
+                                  onTap: () => Navigator.pushReplacementNamed(context, '/HomePage'),
                                 ),
                               ],
                             ),
@@ -127,6 +127,14 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
                                     left: 20, right: 20, bottom: 10),
                                 color: Colors.grey[200],
                                 child: emailInput()),
+                            SizedBox(height: 15),
+                            Container(
+                                alignment: Alignment.center,
+                                height: 47,
+                                margin: EdgeInsets.only(
+                                    left: 20, right: 20, bottom: 10),
+                                color: Colors.grey[200],
+                                child: fullNameInput()),
                             Container(
                               margin: EdgeInsets.only(left: 20),
                               child: Text('We\'ll send you your ride receipts.',
@@ -135,43 +143,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
                                       fontWeight: FontWeight.w400,
                                       color: Colors.grey,
                                       fontSize: 13)),
-                            ),
-                            SizedBox(height: 30),
-                            Container(
-                              height: 50,
-                              margin: EdgeInsets.symmetric(horizontal: 20),
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                      child: Container(
-                                          height: 0.8,
-                                          width:
-                                              MediaQuery.of(context).size.width,
-                                          color: Colors.grey,
-                                          margin: EdgeInsets.only(right: 20))),
-                                  Text("OR",
-                                      style: TextStyle(color: Colors.grey)),
-                                  Expanded(
-                                      child: Container(
-                                          height: 0.8,
-                                          width:
-                                              MediaQuery.of(context).size.width,
-                                          color: Colors.grey,
-                                          margin: EdgeInsets.only(left: 20))),
-                                ],
-                              ),
-                            ),
-                            SizedBox(height: 30),
-                            Container(
-                              height: 50,
-                              margin: EdgeInsets.symmetric(horizontal: 20),
-                              child: SignInButton(
-                                Buttons.Google,
-                                text: "Continue with Google",
-                                elevation: 20,
-                                onPressed: () {},
-                              ),
-                            ),
+                            )
                           ])),
                     ])),
               ),
@@ -187,13 +159,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
                         shape: new RoundedRectangleBorder(
                           borderRadius: new BorderRadius.circular(25.0),
                         ),
-                        // onPressed: _submitFormDetails,
                         onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      Home()));
                         },
                         color: AppColors.primaryText,
                         child: Text("Continue",
@@ -217,8 +183,64 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
   @override
   void dispose() {
     _emailController.dispose();
+    _fnameController.dispose();
     super.dispose();
   }
+
+  fullNameInput() => Container(
+    margin: EdgeInsets.only(left: 15),
+    child: Row(
+      children: <Widget>[
+        Expanded(
+          child: Container(
+            width: MediaQuery.of(context).size.width,
+            margin: EdgeInsets.only(left: 0),
+            child: TextFormField(
+              keyboardType: TextInputType.name,
+              cursorColor: AppColors.primaryText,
+              controller: _fnameController,
+              style: TextStyle(
+                  fontSize: 18.0,
+                  fontFamily: 'Ubuntu',
+                  color: Colors.black,
+                  fontWeight: FontWeight.w400),
+              decoration: InputDecoration(
+                hintText: 'Enter full name',
+                hintStyle: TextStyle(
+                    fontSize: 18.0,
+                    fontFamily: 'Ubuntu',
+                    color: Colors.grey,
+                    fontWeight: FontWeight.w400),
+                border: InputBorder.none,
+                focusedBorder: InputBorder.none,
+                enabledBorder: InputBorder.none,
+                errorBorder: InputBorder.none,
+                disabledBorder: InputBorder.none,
+                suffixIcon: _fnameController.text != null && _fnameController.text.isNotEmpty
+                    ? Padding(
+                  padding:
+                  const EdgeInsetsDirectional.only(start: 12.0),
+                  child: IconButton(
+                    iconSize: 16.0,
+                    icon: Icon(
+                      Icons.cancel,
+                      color: Colors.grey,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        _fnameController.clear();
+                      });
+                    },
+                  ),
+                )
+                    : null,
+              ),
+            ),
+          ),
+        ),
+      ],
+    ),
+  );
 
   emailInput() => Container(
         margin: EdgeInsets.only(left: 15),
@@ -249,7 +271,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
                     enabledBorder: InputBorder.none,
                     errorBorder: InputBorder.none,
                     disabledBorder: InputBorder.none,
-                    suffixIcon: _emailController.text.isNotEmpty
+                    suffixIcon: _emailController.text != null && _emailController.text.isNotEmpty
                         ? Padding(
                             padding:
                                 const EdgeInsetsDirectional.only(start: 12.0),
