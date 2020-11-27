@@ -1,25 +1,24 @@
 import 'package:flutter/material.dart';
 
-class RideHistory extends StatelessWidget {
+class UserProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       body: SafeArea(
         child: CustomScrollView(
           slivers: <Widget>[
             SliverAppBar(
-              brightness: Brightness.light,
               backgroundColor: Colors.white,
+              brightness: Brightness.light,
+              centerTitle: true,
               title: Text(
-                'Order History',
+                'My Profile',
                 style: TextStyle(
                     fontFamily: "Ubuntu",
                     fontSize: 17.0,
                     color: Colors.black,
                     fontWeight: FontWeight.w800),
               ),
-              centerTitle: true,
               leading: IconButton(
                   onPressed: () {
                     Navigator.pop(context);
@@ -34,10 +33,10 @@ class RideHistory extends StatelessWidget {
                     elevation: 0,
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
-                          vertical: 10.0, horizontal: 20),
+                          vertical: 5.0, horizontal: 20),
                       child: ListTile(
                         title: Text(
-                          'Aggrey Road 7',
+                          'Miller Playman',
                           style: TextStyle(
                               fontSize: 16.0,
                               fontFamily: "Ubuntu",
@@ -45,28 +44,14 @@ class RideHistory extends StatelessWidget {
                               fontWeight: FontWeight.w500,
                               height: 1.6),
                         ),
-                        subtitle: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              '17/11/2020, 6:49 AM',
-                              style: TextStyle(
-                                  fontSize: 16.0,
-                                  fontFamily: "Ubuntu",
-                                  color: Colors.grey,
-                                  fontWeight: FontWeight.w400,
-                                  height: 1.6),
-                            ),
-                            Text(
-                              'SCHEDULED',
-                              style: TextStyle(
-                                  fontSize: 16.0,
-                                  fontFamily: "Ubuntu",
-                                  color: Colors.orange,
-                                  fontWeight: FontWeight.w400,
-                                  height: 1.6),
-                            ),
-                          ],
+                        subtitle:   Text(
+                          'Full name',
+                          style: TextStyle(
+                              fontSize: 15.0,
+                              fontFamily: "Ubuntu",
+                              color: Colors.grey,
+                              fontWeight: FontWeight.w400,
+                              height: 1.5),
                         ),
                         contentPadding: EdgeInsets.all(0),
                         dense: true,
@@ -77,10 +62,10 @@ class RideHistory extends StatelessWidget {
                     elevation: 0,
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
-                          vertical: 10.0, horizontal: 20),
+                          vertical: 5.0, horizontal: 20),
                       child: ListTile(
                         title: Text(
-                          'Sani Abacha Road 5',
+                          'millerplayman@gmail.com',
                           style: TextStyle(
                               fontSize: 16.0,
                               fontFamily: "Ubuntu",
@@ -88,28 +73,14 @@ class RideHistory extends StatelessWidget {
                               fontWeight: FontWeight.w500,
                               height: 1.6),
                         ),
-                        subtitle: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              '16/11/2020, 6:49 PM',
-                              style: TextStyle(
-                                  fontSize: 16.0,
-                                  fontFamily: "Ubuntu",
-                                  color: Colors.grey,
-                                  fontWeight: FontWeight.w400,
-                                  height: 1.6),
-                            ),
-                            Text(
-                              'RIDE FINISHED',
-                              style: TextStyle(
-                                  fontSize: 16.0,
-                                  fontFamily: "Ubuntu",
-                                  color: Colors.green,
-                                  fontWeight: FontWeight.w400,
-                                  height: 1.6),
-                            ),
-                          ],
+                        subtitle: Text(
+                          'My email',
+                          style: TextStyle(
+                              fontSize: 15.0,
+                              fontFamily: "Ubuntu",
+                              color: Colors.grey,
+                              fontWeight: FontWeight.w400,
+                              height: 1.5),
                         ),
                         contentPadding: EdgeInsets.all(0),
                         dense: true,
@@ -120,10 +91,10 @@ class RideHistory extends StatelessWidget {
                     elevation: 0,
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
-                          vertical: 10.0, horizontal: 20),
+                          vertical: 5.0, horizontal: 20),
                       child: ListTile(
                         title: Text(
-                          'Hospital Road 4',
+                          '+2347056606492',
                           style: TextStyle(
                               fontSize: 16.0,
                               fontFamily: "Ubuntu",
@@ -131,20 +102,30 @@ class RideHistory extends StatelessWidget {
                               fontWeight: FontWeight.w500,
                               height: 1.6),
                         ),
-                        subtitle: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                        subtitle: Text(
+                          'My phone number',
+                          style: TextStyle(
+                              fontSize: 15.0,
+                              fontFamily: "Ubuntu",
+                              color: Colors.grey,
+                              fontWeight: FontWeight.w400,
+                              height: 1.5),
+                        ),
+                        contentPadding: EdgeInsets.all(0),
+                        dense: true,
+                      ),
+                    ),
+                  ),
+                  Card(
+                    elevation: 0,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 5.0, horizontal: 20),
+                      child: ListTile(
+                        title:    Row(mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              '14/11/2020, 6:26 PM',
-                              style: TextStyle(
-                                  fontSize: 16.0,
-                                  fontFamily: "Ubuntu",
-                                  color: Colors.grey,
-                                  fontWeight: FontWeight.w400,
-                                  height: 1.6),
-                            ),
-                            Text(
-                              'YOU CANCELLED',
+                              'LOG OUT',
                               style: TextStyle(
                                   fontSize: 16.0,
                                   fontFamily: "Ubuntu",
@@ -156,6 +137,9 @@ class RideHistory extends StatelessWidget {
                         ),
                         contentPadding: EdgeInsets.all(0),
                         dense: true,
+                        onTap: (){
+
+                        },
                       ),
                     ),
                   ),

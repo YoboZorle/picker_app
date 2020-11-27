@@ -6,6 +6,7 @@ import 'package:pickrr_app/src/helpers/constants.dart';
 import 'package:pickrr_app/src/models/user.dart';
 import 'package:pickrr_app/src/user/ride_history/ride_history.dart';
 import 'package:pickrr_app/src/user/track_deliveries/track_deliveries.dart';
+import 'package:pickrr_app/src/user/user_profile/user_profile.dart';
 import 'package:pickrr_app/src/widgets/image.dart';
 
 class NavDrawer extends StatelessWidget {
@@ -23,39 +24,47 @@ class NavDrawer extends StatelessWidget {
           padding: EdgeInsets.only(left: 15.0, right: 15.0),
           child: Column(children: <Widget>[
             SizedBox(height: 30),
-            Row(
-              children: [
-                ClipOval(
-                    child: Container(
-                      height: 65.0,
-                      width: 65.0,
-                      child: CustomImage(
-                        imageUrl:
-                        '${APIConstants.assetsUrl}${user.profileImageUrl}',
+            GestureDetector(
+              onTap: (){
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => UserProfile()),
+                );
+              },
+              child: Row(
+                children: [
+                  ClipOval(
+                      child: Container(
+                        height: 65.0,
+                        width: 65.0,
+                        child: CustomImage(
+                          imageUrl:
+                          '${APIConstants.assetsUrl}${user.profileImageUrl}',
+                        ),
+                      )),
+                  SizedBox(width: 20),
+                  Column(crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        user.fullname,
+                        style: TextStyle(
+                            fontWeight: FontWeight.w700,
+                            fontFamily: "Ubuntu",
+                            fontSize: 18),
                       ),
-                    )),
-                SizedBox(width: 20),
-                Column(crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      user.fullname,
-                      style: TextStyle(
-                          fontWeight: FontWeight.w700,
-                          fontFamily: "Ubuntu",
-                          fontSize: 18),
-                    ),
-                    SizedBox(height: 3),
-                    Text(
-                      'Edit profile',
-                      style: TextStyle(
-                          fontWeight: FontWeight.w400,
-                          fontFamily: "Ubuntu",
-                          height: 1.5,
-                          fontSize: 14),
-                    ),
-                  ],
-                ),
-              ],
+                      SizedBox(height: 3),
+                      Text(
+                        'View profile',
+                        style: TextStyle(
+                            fontWeight: FontWeight.w400,
+                            fontFamily: "Ubuntu",
+                            height: 1.5,
+                            fontSize: 14),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
             Container(
                 height: 0.7,
