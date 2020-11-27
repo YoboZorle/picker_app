@@ -1,12 +1,12 @@
 import 'dart:io';
-import 'package:flutter_signin_button/button_view.dart';
-import 'package:flutter_signin_button/flutter_signin_button.dart';
-
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:pickrr_app/src/helpers/constants.dart';
-import 'package:pickrr_app/src/screens/home.dart';
+import 'package:pickrr_app/src/helpers/utility.dart';
+import 'package:pickrr_app/src/services/repositories/user.dart';
+import 'package:pickrr_app/src/utils/alert_bar.dart';
 
 class CompleteProfileForm extends StatefulWidget {
   @override
@@ -18,11 +18,13 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
   TextEditingController _fnameController;
   File _profileImage;
   final picker = ImagePicker();
+  UserRepository _userRepository;
 
   @override
   void initState() {
     _emailController = new TextEditingController();
     _fnameController = new TextEditingController();
+    _userRepository = UserRepository();
     super.initState();
   }
 
@@ -32,6 +34,49 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
     setState(() {
       _profileImage = File(pickedFile.path);
     });
+  }
+
+  bool _hasCompletedForm() {
+    return _emailController.text != null &&
+        _emailController.text.isNotEmpty &&
+        _fnameController.text != null &&
+        _fnameController.text.isNotEmpty &&
+        _profileImage != null;
+  }
+
+  updateProfileDetailsHandler() async {
+    if (!_hasCompletedForm()) {
+      AlertBar.dialog(
+          context, 'Please provide requested information', Colors.red,
+          icon: Icon(
+            Icons.error,
+            color: Colors.red,
+          ),
+          duration: 5);
+      return;
+    }
+
+    AlertBar.dialog(context, 'Saving information...', AppColors.primaryText,
+        showProgressIndicator: true, duration: null);
+
+    try {
+      String fileName = _profileImage.path.split('/').last;
+      Map<String, dynamic> formDetails = {
+        'fullname': _fnameController.text,
+        'email': _emailController.text,
+        'photo':
+            await MultipartFile.fromFile(_profileImage.path, filename: fileName)
+      };
+
+      await _userRepository
+          .updateProfileDetails(new FormData.fromMap(formDetails));
+      Navigator.pushReplacementNamed(context, '/HomePage');
+    } catch (err) {
+      debugLog(err);
+      Navigator.pop(context);
+      AlertBar.dialog(context, 'Request failed. please try again', Colors.red,
+          icon: Icon(Icons.error), duration: 5);
+    }
   }
 
   @override
@@ -47,35 +92,12 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
             child: Column(children: <Widget>[
               Expanded(
                 child: new Container(
-                    margin: EdgeInsets.only(top: 5, right: 10, left: 10),
+                    margin: EdgeInsets.only(top: 10, right: 10, left: 10),
                     child: Stack(children: <Widget>[
                       SafeArea(
                           child: ListView(
                               physics: const BouncingScrollPhysics(),
                               children: <Widget>[
-                            Row(
-                              children: [
-                                GestureDetector(
-                                  child: Container(
-                                    alignment: Alignment.centerLeft,
-                                    padding: const EdgeInsets.only(left: 15.0),
-                                    height: 30,
-                                    width: 80,
-                                    child: Text(
-                                      'Skip',
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        fontFamily: 'Ubuntu',
-                                        color: AppColors.primaryText,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                  ),
-                                  onTap: () => Navigator.pushReplacementNamed(context, '/HomePage'),
-                                ),
-                              ],
-                            ),
-                            SizedBox(height: 25),
                             Text(
                               'Set Up Your Profile',
                               textAlign: TextAlign.center,
@@ -159,8 +181,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
                         shape: new RoundedRectangleBorder(
                           borderRadius: new BorderRadius.circular(25.0),
                         ),
-                        onPressed: () {
-                        },
+                        onPressed: () => updateProfileDetailsHandler(),
                         color: AppColors.primaryText,
                         child: Text("Continue",
                             style: TextStyle(
@@ -188,59 +209,60 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
   }
 
   fullNameInput() => Container(
-    margin: EdgeInsets.only(left: 15),
-    child: Row(
-      children: <Widget>[
-        Expanded(
-          child: Container(
-            width: MediaQuery.of(context).size.width,
-            margin: EdgeInsets.only(left: 0),
-            child: TextFormField(
-              keyboardType: TextInputType.name,
-              cursorColor: AppColors.primaryText,
-              controller: _fnameController,
-              style: TextStyle(
-                  fontSize: 18.0,
-                  fontFamily: 'Ubuntu',
-                  color: Colors.black,
-                  fontWeight: FontWeight.w400),
-              decoration: InputDecoration(
-                hintText: 'Enter full name',
-                hintStyle: TextStyle(
-                    fontSize: 18.0,
-                    fontFamily: 'Ubuntu',
-                    color: Colors.grey,
-                    fontWeight: FontWeight.w400),
-                border: InputBorder.none,
-                focusedBorder: InputBorder.none,
-                enabledBorder: InputBorder.none,
-                errorBorder: InputBorder.none,
-                disabledBorder: InputBorder.none,
-                suffixIcon: _fnameController.text != null && _fnameController.text.isNotEmpty
-                    ? Padding(
-                  padding:
-                  const EdgeInsetsDirectional.only(start: 12.0),
-                  child: IconButton(
-                    iconSize: 16.0,
-                    icon: Icon(
-                      Icons.cancel,
-                      color: Colors.grey,
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        _fnameController.clear();
-                      });
-                    },
+        margin: EdgeInsets.only(left: 15),
+        child: Row(
+          children: <Widget>[
+            Expanded(
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                margin: EdgeInsets.only(left: 0),
+                child: TextFormField(
+                  keyboardType: TextInputType.name,
+                  cursorColor: AppColors.primaryText,
+                  controller: _fnameController,
+                  style: TextStyle(
+                      fontSize: 18.0,
+                      fontFamily: 'Ubuntu',
+                      color: Colors.black,
+                      fontWeight: FontWeight.w400),
+                  decoration: InputDecoration(
+                    hintText: 'Enter full name',
+                    hintStyle: TextStyle(
+                        fontSize: 18.0,
+                        fontFamily: 'Ubuntu',
+                        color: Colors.grey,
+                        fontWeight: FontWeight.w400),
+                    border: InputBorder.none,
+                    focusedBorder: InputBorder.none,
+                    enabledBorder: InputBorder.none,
+                    errorBorder: InputBorder.none,
+                    disabledBorder: InputBorder.none,
+                    suffixIcon: _fnameController.text != null &&
+                            _fnameController.text.isNotEmpty
+                        ? Padding(
+                            padding:
+                                const EdgeInsetsDirectional.only(start: 12.0),
+                            child: IconButton(
+                              iconSize: 16.0,
+                              icon: Icon(
+                                Icons.cancel,
+                                color: Colors.grey,
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  _fnameController.clear();
+                                });
+                              },
+                            ),
+                          )
+                        : null,
                   ),
-                )
-                    : null,
+                ),
               ),
             ),
-          ),
+          ],
         ),
-      ],
-    ),
-  );
+      );
 
   emailInput() => Container(
         margin: EdgeInsets.only(left: 15),
@@ -271,7 +293,8 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
                     enabledBorder: InputBorder.none,
                     errorBorder: InputBorder.none,
                     disabledBorder: InputBorder.none,
-                    suffixIcon: _emailController.text != null && _emailController.text.isNotEmpty
+                    suffixIcon: _emailController.text != null &&
+                            _emailController.text.isNotEmpty
                         ? Padding(
                             padding:
                                 const EdgeInsetsDirectional.only(start: 12.0),
