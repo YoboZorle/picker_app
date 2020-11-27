@@ -19,6 +19,12 @@ class _HomeState extends State<Home> {
   static const LatLng _mainLocation = const LatLng(4.814340, 7.000848);
 
   @override
+  void initState() {
+    print('Loading page');
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return MaterialApp(
         home: Scaffold(

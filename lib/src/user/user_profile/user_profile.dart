@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_awesome_alert_box/flutter_awesome_alert_box.dart';
 
 class UserProfile extends StatelessWidget {
   @override
@@ -138,7 +139,10 @@ class UserProfile extends StatelessWidget {
                         contentPadding: EdgeInsets.all(0),
                         dense: true,
                         onTap: (){
-
+                          ConfirmAlertBoxDark(context: context,
+                            title: 'Are you sure you want to leave?',
+                            infoMessage: '',
+                          );
                         },
                       ),
                     ),
