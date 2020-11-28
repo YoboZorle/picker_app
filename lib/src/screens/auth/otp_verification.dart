@@ -40,10 +40,9 @@ class OTPVerification extends StatelessWidget {
     try {
       BlocProvider.of<LoginBloc>(context).add(
         LoginSubmitted(
-            otp: pin,
+            otp: pin.toString(),
             callingCode: callingCode,
-            phoneNumber: phone,
-            deviceToken: 'deviceToken'),
+            phoneNumber: phone),
       );
     } catch (err) {
       Navigator.pop(context);
@@ -78,7 +77,7 @@ class OTPVerification extends StatelessWidget {
             if (state is LoggedIn) {
               User user = state.props[0];
 
-              if (user.isCompleteDetails) {
+              if (!user.isCompleteDetails) {
                 Navigator.pushReplacementNamed(context, '/CompleteProfileDetails');
                 return;
               }

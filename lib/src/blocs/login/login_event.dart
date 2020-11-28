@@ -11,16 +11,15 @@ class LoginSubmitted extends LoginEvent {
   final String otp;
   final String callingCode;
   final String phoneNumber;
-  final String deviceToken;
 
   const LoginSubmitted(
-      {this.otp, this.callingCode, this.phoneNumber, this.deviceToken});
+      {this.otp, this.callingCode, this.phoneNumber});
 
   @override
-  List<Object> get props => [otp, callingCode, phoneNumber, deviceToken];
+  List<Object> get props => [otp, callingCode, phoneNumber];
 
   @override
   String toString() {
-    return 'LoginPressed { otp: $otp, callingCode: $callingCode, phoneNumber: $phoneNumber, deviceToken: $deviceToken }';
+    return 'LoginPressed { otp: $otp, callingCode: $callingCode, phoneNumber: $phoneNumber }';
   }
 }

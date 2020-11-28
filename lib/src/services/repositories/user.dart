@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:meta/meta.dart';
 
-// import 'package:pickrr_app/src/helpers/constants.dart';
+import 'package:pickrr_app/src/helpers/constants.dart';
 import 'package:pickrr_app/src/helpers/db/user.dart';
 import 'package:pickrr_app/src/helpers/utility.dart';
 import 'package:pickrr_app/src/models/user.dart';
@@ -57,17 +57,12 @@ class UserRepository extends APIClient {
   }
 
   getUserDetails(userId) async {
-    // final String url = '/$userId';
+    final String url = '/$userId';
 
     try {
-      return new Future.delayed(new Duration(seconds: 5), () {
-        return {
-          'userId': 2,
-          'fullname': 'John',
-          'phone': '0903383383',
-          'callingCode': '234'
-        };
-      });
+      response = await dio.get(url);
+      final responseBody = response.data;
+      return responseBody;
     } catch (e) {
       throw ServiceError(e);
     }
@@ -82,14 +77,11 @@ class UserRepository extends APIClient {
 
   Future<void> requestOTP(
       {@required phone, @required String callingCode}) async {
-    // var formData = {'phone': phone, 'calling_code': callingCode};
-    // final String url = '${APIConstants.apiUrl}users/obtain-otp';
+    var formData = {'phone': phone, 'calling_code': callingCode};
+    final String url = '${APIConstants.apiUrl}users/obtain-otp';
 
     try {
-      // return await dio.post(url, data: formData);
-      return new Future.delayed(new Duration(seconds: 5), () {
-        debugLog('Requesting OTP');
-      });
+      await dio.post(url, data: formData);
     } catch (e) {
       throw ServiceError(e);
     }
@@ -98,23 +90,18 @@ class UserRepository extends APIClient {
   otpVerification(
       {@required otp,
       @required phone,
-      @required String callingCode,
-      @required String deviceToken}) async {
-    // var formData = {
-    //   'otp': otp,
-    //   'phone': phone,
-    //   'calling_code': callingCode,
-    //   'device_token': deviceToken
-    // };
-    // final String url = '${APIConstants.apiUrl}users/obtain-jwt';
+      @required String callingCode}) async {
+    var formData = {
+      'otp': otp,
+      'phone': phone,
+      'calling_code': callingCode
+    };
+    final String url = '${APIConstants.apiUrl}users/token/obtain';
 
     try {
-      // response = await dio.post(url, data: formData);
-      // final responseBody = response.data;
-      // await this.persistToken(responseBody['token']);
-      var jwtToken =
-          'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MTk0Njc2MDgsInVzZXJJZCI6MiwicGhvbmUiOiIwOTA5NDczODM4MyIsImZ1bGxuYW1lIjoiSmFjayBNYSIsInByb2ZpbGVJbWFnZVVybCI6Imh0dHBzOi8vaW1hZ2VzLnVuc3BsYXNoLmNvbS9waG90by0xNTYzMTIyODcwLTZiMGI0OGEwYWYwOT9peGxpYj1yYi0xLjIuMSZpeGlkPWV5SmhjSEJmYVdRaU9qRXlNRGQ5JmF1dG89Zm9ybWF0JmZpdD1jcm9wJnc9MTAwMCZxPTgwIn0.ydIU_gJJIa5BOAdipafAzi3-D8sDPoEWbxGi1d9RD5s';
-      await this.persistToken(jwtToken);
+      response = await dio.post(url, data: formData);
+      final responseBody = response.data;
+      await this.persistToken(responseBody['access']);
     } catch (e) {
       cprint(e, errorIn: 'otpVerification');
       if (e.response != null) {
@@ -128,23 +115,13 @@ class UserRepository extends APIClient {
   }
 
   updateProfileDetails(FormData details) async {
-    // final String url = '/';
+    Map tokenPayload = await getTokenPayload();
+    final String url = '/${tokenPayload['userId']}';
 
     try {
-      // response = await dio.patch(url, data: details);
-      // return response.data;
-      return new Future.delayed(new Duration(seconds: 5), () {
-        debugLog('Updating profile details...');
-        var profileDetails = {
-          'userId': 2,
-          'fullname': 'James Tom',
-          'email': 'jt@gmail.com',
-          'phone': '09038373923'
-        };
-        User user = User.fromMap(profileDetails);
-        persistUserDetails(user);
-        return profileDetails;
-      });
+      response = await dio.patch(url, data: details);
+      User user = User.fromMap(response.data);
+      persistUserDetails(user);
     } catch (e) {
       cprint(e, errorIn: 'updateProfileDetails');
       throw ServiceError(e);

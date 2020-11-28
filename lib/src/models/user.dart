@@ -50,5 +50,5 @@ class User extends Equatable {
         callingCode = mapData['callingCode'] ?? '';
 
   @override
-  String toString() => 'User { id: $id, fullname: $fullname }';
+  String toString() => 'User { id: $id, fullname: $fullname, phone: $phone }';
 }

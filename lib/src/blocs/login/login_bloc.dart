@@ -17,16 +17,14 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       yield* _mapLoginPressedToState(
           otp: event.otp,
           callingCode: event.callingCode,
-          phoneNumber: event.phoneNumber,
-          deviceToken: event.deviceToken);
+          phoneNumber: event.phoneNumber);
     }
   }
 
   Stream<LoginState> _mapLoginPressedToState({
     String otp,
     String callingCode,
-    String phoneNumber,
-    String deviceToken,
+    String phoneNumber
   }) async* {
     yield LoginState.loading();
 
@@ -34,11 +32,9 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       await _userRepository.otpVerification(
           otp: otp,
           callingCode: callingCode,
-          phone: phoneNumber,
-          deviceToken: deviceToken);
+          phone: phoneNumber);
       yield LoginState.success();
     } catch (err) {
-      debugLog(err);
       yield LoginState.failure();
     }
   }
