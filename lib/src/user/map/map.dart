@@ -458,13 +458,13 @@ class _MapPageState extends State<MapPage> {
 
                               _calculateDistance().then((isCalculated) {
                                 if (isCalculated) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
+                                  Scaffold.of(context).showSnackBar(
                                     SnackBar(
                                       content: Text('Distance Calculated Sucessfully'),
                                     ),
                                   );
                                 } else {
-                                  ScaffoldMessenger.of(context).showSnackBar(
+                                  Scaffold.of(context).showSnackBar(
                                     SnackBar(
                                       content: Text('Error Calculating Distance'),
                                     ),

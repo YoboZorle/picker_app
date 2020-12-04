@@ -19,6 +19,8 @@ class NavDrawer extends StatelessWidget {
             (_) => Navigator.pushReplacementNamed(context, '/'));
       }
       User user = state.props[0];
+      print('Hello here :');
+      print(user);
       return SafeArea(
         child: Container(
           padding: EdgeInsets.only(left: 15.0, right: 15.0),
