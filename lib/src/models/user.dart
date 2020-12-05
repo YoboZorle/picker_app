@@ -1,5 +1,12 @@
 import 'package:equatable/equatable.dart';
 
+_isUserDriver(value){
+  if(value == null)return false;
+  if(value is bool) return value;
+  if(value == 0) return false;
+  return true;
+}
+
 class User extends Equatable {
   final int id;
   final String fullname;
@@ -7,6 +14,7 @@ class User extends Equatable {
   final String profileImageUrl;
   final String callingCode;
   final String email;
+  final bool isDriver;
 
   bool get isCompleteDetails {
     return email != null ||
@@ -21,7 +29,7 @@ class User extends Equatable {
       this.phone,
       this.email,
       this.callingCode,
-      this.profileImageUrl});
+      this.profileImageUrl, this.isDriver});
 
   @override
   List<Object> get props => [id, fullname, email];
@@ -32,7 +40,8 @@ class User extends Equatable {
       'email': email,
       'phone': phone,
       'profileImageUrl': profileImageUrl,
-      'callingCode': callingCode
+      'callingCode': callingCode,
+      'is_driver': isDriver == true ? 1: 0
     };
     if (id != null) {
       map['_userId'] = id;
@@ -47,6 +56,7 @@ class User extends Equatable {
         phone = mapData['phone'] ?? '',
         email = mapData['email'] ?? '',
         profileImageUrl = mapData['profileImageUrl'] ?? '',
+        isDriver = _isUserDriver(mapData['is_driver']),
         callingCode = mapData['callingCode'] ?? '';
 
   @override

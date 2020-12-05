@@ -82,6 +82,10 @@ class OTPVerification extends StatelessWidget {
                 return;
               }
 
+              if(user.isDriver){
+                Navigator.pushReplacementNamed(context, '/DriversHomePage');
+              }
+
               Navigator.pushReplacementNamed(context, '/HomePage');
             }
           },

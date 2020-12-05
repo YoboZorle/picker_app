@@ -21,74 +21,72 @@ class _HomeState extends State<Home> {
 
   @override
   void initState() {
-    print('Loading page');
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        home: Scaffold(
-            key: _scaffoldKey,
-            drawer: Drawer(
-              child: NavDrawer(),
-            ),
-            body: AnnotatedRegion<SystemUiOverlayStyle>(
-              value: SystemUiOverlayStyle(
-                statusBarColor: Colors.transparent,
-              ),
-              child: GestureDetector(
-                onTap: () {
-                  FocusScope.of(context).requestFocus(new FocusNode());
-                },
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Expanded(
-                      child: Stack(
-                        children: [
-                          Hero(
-                            tag: 'map',
-                            flightShuttleBuilder: _flightShuttleBuilder,
-                            child: GoogleMap(
-                              initialCameraPosition: CameraPosition(
-                                target: _mainLocation,
-                                zoom: 15.6,
-                              ),
-                              markers: this.myMarker(),
-                              mapType: MapType.normal,
-                              myLocationButtonEnabled: false,
-                              zoomControlsEnabled: false,
-                              onMapCreated: (controller) {
-                                setState(() {
-                                  myMapController = controller;
-                                });
-                              },
-                            ),
+    return Scaffold(
+        key: _scaffoldKey,
+        drawer: Drawer(
+          child: NavDrawer(),
+        ),
+        body: AnnotatedRegion<SystemUiOverlayStyle>(
+          value: SystemUiOverlayStyle(
+            statusBarColor: Colors.transparent,
+          ),
+          child: GestureDetector(
+            onTap: () {
+              FocusScope.of(context).requestFocus(new FocusNode());
+            },
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Expanded(
+                  child: Stack(
+                    children: [
+                      Hero(
+                        tag: 'map',
+                        flightShuttleBuilder: _flightShuttleBuilder,
+                        child: GoogleMap(
+                          initialCameraPosition: CameraPosition(
+                            target: _mainLocation,
+                            zoom: 15.6,
                           ),
-                          CustomerAppBar(),
-                        ],
-                      ),
-                    ),
-                    Container(
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          boxShadow: [
-                            Shadows.primaryShadow,
-                          ],
+                          markers: this.myMarker(),
+                          mapType: MapType.normal,
+                          myLocationButtonEnabled: false,
+                          zoomControlsEnabled: false,
+                          onMapCreated: (controller) {
+                            setState(() {
+                              myMapController = controller;
+                            });
+                          },
                         ),
-                        width: MediaQuery.of(context).size.width,
-                        child: Column(
-                          children: [
-                            Container(
-                              height: 8,
-                              width: 60,
-                              margin: EdgeInsets.only(top: 15, bottom: 15),
-                              decoration: BoxDecoration(
-                                  color: Colors.grey[300],
-                                  borderRadius: BorderRadius.circular(16)),
-                            ),
-                            Container(
+                      ),
+                      CustomerAppBar(),
+                    ],
+                  ),
+                ),
+                Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      boxShadow: [
+                        Shadows.primaryShadow,
+                      ],
+                    ),
+                    width: MediaQuery.of(context).size.width,
+                    child: Column(
+                      children: [
+                        Container(
+                          height: 8,
+                          width: 60,
+                          margin: EdgeInsets.only(top: 15, bottom: 15),
+                          decoration: BoxDecoration(
+                              color: Colors.grey[300],
+                              borderRadius: BorderRadius.circular(16)),
+                        ),
+                        Container(
                               alignment: Alignment.centerLeft,
                               margin: EdgeInsets.only(left: 20),
                               child: Text(
@@ -249,7 +247,8 @@ class _HomeState extends State<Home> {
                   ],
                 ),
               ),
-            )));
+            ));
+
   }
 
   Set<Marker> myMarker() {

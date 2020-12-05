@@ -7,8 +7,11 @@ import 'package:pickrr_app/src/models/user.dart';
 import 'package:pickrr_app/src/screens/auth/complete_profile_form.dart';
 import 'package:pickrr_app/src/screens/auth/login.dart';
 import 'package:pickrr_app/src/screens/auth/otp_verification.dart';
+import 'package:pickrr_app/src/screens/driver/onboard.dart';
 import 'package:pickrr_app/src/screens/home.dart';
 import 'package:pickrr_app/src/screens/onboard.dart';
+import 'package:pickrr_app/src/driver/driver_tabs.dart';
+import 'package:pickrr_app/src/screens/driver/driver_form.dart';
 
 class Routes {
   static dynamic route() {
@@ -31,8 +34,17 @@ class Routes {
     switch (pathElements[1]) {
       case "Onboard":
         return CustomRoute<bool>(builder: (BuildContext context) => Onboard());
+      case "DriversHomePage":
+        return SlideLeftRoute<bool>(
+            builder: (BuildContext context) => DriverTabs());
       case "Login":
         return SlideLeftRoute<bool>(builder: (BuildContext context) => Login());
+      case "DriverOnboard":
+        return SlideLeftRoute<bool>(
+            builder: (BuildContext context) => DriverOnboard());
+      case "DriverApplication":
+        return CustomRoute<bool>(
+            builder: (BuildContext context) => DriverApplication());
       case "OTPVerification":
         String phone;
         String callingCode;
@@ -56,10 +68,11 @@ class Routes {
         return SlideLeftRoute<bool>(
             builder: (BuildContext context) => CompleteProfileForm());
       case "HomePage":
-        return CustomRoute<bool>(builder: (BuildContext context) => BlocProvider<AuthenticationBloc>(
-            create: (_) =>
-            AuthenticationBloc()..add(AuthenticationEvent.AUTHENTICATED),
-            child: Home()));
+        return CustomRoute<bool>(
+            builder: (BuildContext context) => BlocProvider<AuthenticationBloc>(
+                create: (_) => AuthenticationBloc()
+                  ..add(AuthenticationEvent.AUTHENTICATED),
+                child: Home()));
       default:
         return onUnknownRoute(RouteSettings(name: '/Unknown'));
     }
@@ -84,6 +97,10 @@ Widget homePage(BuildContext context, AuthenticationState state) {
   User user = state.props[0];
   if (!user.isCompleteDetails) {
     return CompleteProfileForm();
+  }
+
+  if (user.isDriver) {
+    return DriverTabs();
   }
 
   return Home();
