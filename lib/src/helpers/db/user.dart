@@ -11,6 +11,7 @@ final String columnFullname = 'fullname';
 final String columnPhone = 'phone';
 final String columnEmail = 'email';
 final String columnProfileImageUrl = 'profileImageUrl';
+final String columnIsDriver = 'is_driver';
 final String columnCallingCode = 'callingCode';
 
 class UserProvider {
@@ -37,6 +38,7 @@ create table $tableUser (
   $columnProfileImageUrl text,
   $columnPhone text,
   $columnEmail text,
+  $columnIsDriver integer,
   $columnCallingCode text)
 ''');
     });

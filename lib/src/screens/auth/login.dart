@@ -295,7 +295,7 @@ class _LoginState extends State<Login> {
   }
 
   _openEnterOTPScreen() {
-    Navigator.pushNamed(
+    Navigator.pushReplacementNamed(
         context, '/OTPVerification/${_phoneController.text}/$_callingCode');
   }
 }

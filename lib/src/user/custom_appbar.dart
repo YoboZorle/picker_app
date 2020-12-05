@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:pickrr_app/src/driver/driver_onboard.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pickrr_app/src/blocs/authentication/bloc.dart';
+import 'package:pickrr_app/src/models/user.dart';
 import 'package:pickrr_app/src/helpers/constants.dart';
 
 class CustomerAppBar extends StatelessWidget {
@@ -17,7 +19,6 @@ class CustomerAppBar extends StatelessWidget {
                 flightShuttleBuilder: _flightShuttleBuilder,
                 child: GestureDetector(
                     child: Container(
-                      // color: Colors.yellow,
                       padding: EdgeInsets.only(right: 10),
                       child: Card(
                           elevation: 8,
@@ -34,53 +35,74 @@ class CustomerAppBar extends StatelessWidget {
                     ),
                     onTap: () {
                       Scaffold.of(context).openDrawer();
-                      // _scaffoldKey.currentState.openDrawer();
                     }),
               ),
-              GestureDetector(
-                child: Container(
-                    height: 42,
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      color: AppColor.primaryText,
-                      boxShadow: [Shadows.secondaryShadow],
-                      borderRadius: Radii.k25pxRadius,
-                    ),
-                    child: Row(
-                      children: [
-                        SizedBox(width: 15),
-                        SvgPicture.asset('assets/svg/kargo_bike.svg',
-                            height: 20, semanticsLabel: 'Bike Icon'),
-                        SizedBox(width: 8),
-                        Text('Become a rider',
-                            style: TextStyle(
-                                fontSize: 14,
-                                fontFamily: 'Ubuntu',
-                                color: Colors.white,
-                                fontWeight: FontWeight.w400)),
-                        SizedBox(width: 15),
-                      ],
-                    )),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => DriverBoard()),
-                  );
-                },
-              ),
-
+              BlocBuilder<AuthenticationBloc, AuthenticationState>(
+                  builder: (_, state) {
+                if (state is NonLoggedIn) {
+                  WidgetsBinding.instance.addPostFrameCallback(
+                      (_) => Navigator.pushReplacementNamed(context, '/'));
+                }
+                if (state.props.isEmpty) {
+                  return Container();
+                }
+                User user = state.props[0];
+                return GestureDetector(
+                  child: Container(
+                      height: 42,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        color: AppColor.primaryText,
+                        boxShadow: [Shadows.secondaryShadow],
+                        borderRadius: Radii.k25pxRadius,
+                      ),
+                      child: Row(
+                        children: [
+                          SizedBox(width: 15),
+                          SvgPicture.asset('assets/svg/kargo_bike.svg',
+                              height: 20, semanticsLabel: 'Bike Icon'),
+                          SizedBox(width: 8),
+                          user.isDriver ? Text('Open as rider',
+                              style: TextStyle(
+                                  fontSize: 14,
+                                  fontFamily: 'Ubuntu',
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w400)) : Text('Become a rider',
+                              style: TextStyle(
+                                  fontSize: 14,
+                                  fontFamily: 'Ubuntu',
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w400)),
+                          SizedBox(width: 15),
+                        ],
+                      )),
+                  onTap: () {
+                    if(!user.isDriver){
+                      Navigator.pushNamed(
+                        context,
+                        '/DriverOnboard',
+                      );
+                      return;
+                    }
+                    Navigator.pushNamed(
+                      context,
+                      '/DriverOnboard',
+                    );
+                  },
+                );
+              }),
             ],
           )),
     );
   }
 
   Widget _flightShuttleBuilder(
-      BuildContext flightContext,
-      Animation<double> animation,
-      HeroFlightDirection flightDirection,
-      BuildContext fromHeroContext,
-      BuildContext toHeroContext,
-      ) {
+    BuildContext flightContext,
+    Animation<double> animation,
+    HeroFlightDirection flightDirection,
+    BuildContext fromHeroContext,
+    BuildContext toHeroContext,
+  ) {
     return DefaultTextStyle(
       style: DefaultTextStyle.of(toHeroContext).style,
       child: toHeroContext.widget,

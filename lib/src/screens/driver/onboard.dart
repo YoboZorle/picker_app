@@ -1,10 +1,9 @@
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:pickrr_app/src/utils/show_up_animation.dart';
-import 'package:pickrr_app/src/driver/driver_tabs.dart';
 import 'package:pickrr_app/src/helpers/constants.dart';
 
-class DriverBoard extends StatelessWidget {
+class DriverOnboard extends StatelessWidget {
   final int delayAmount = 500;
   final bgImage = 'assets/flare/pickrr.flr';
 
@@ -24,7 +23,6 @@ class DriverBoard extends StatelessWidget {
                 right: 0,
                 child: Align(
                   child: Container(
-                    // color: Colors.black12,
                       height: MediaQuery.of(context).size.height / 2.4,
                       width: MediaQuery.of(context).size.width,
                       margin: EdgeInsets.only(left: 30, bottom: 30, right: 30),
@@ -32,7 +30,6 @@ class DriverBoard extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             ShowUp(
-
                               child: Hero(
                                 tag: 'input_phon_auth_title',
                                 flightShuttleBuilder: _flightShuttleBuilder,
@@ -50,17 +47,16 @@ class DriverBoard extends StatelessWidget {
                             SizedBox(height: 12),
                             ShowUp(
                               child: Hero(
-                                tag: 'body_text_splash',
-                                child: Text(
-                                  'We are the people you call for when you want your package delivered safe and fast.',
-                                  style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 16,
-                                      fontFamily: 'Ubuntu',
-                                      fontWeight: FontWeight.w500,
-                                      height: 1.3),
-                                )
-                              ),
+                                  tag: 'body_text_splash',
+                                  child: Text(
+                                    'We are the people you call for when you want your package delivered safe and fast.',
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 16,
+                                        fontFamily: 'Ubuntu',
+                                        fontWeight: FontWeight.w500,
+                                        height: 1.3),
+                                  )),
                               delay: delayAmount + 1500,
                             ),
                             SizedBox(height: 20),
@@ -83,8 +79,8 @@ class DriverBoard extends StatelessWidget {
                                       ),
                                       boxShadow: [
                                         BoxShadow(
-                                          color:
-                                          AppColor.primaryText.withOpacity(0.25),
+                                          color: AppColor.primaryText
+                                              .withOpacity(0.25),
                                           spreadRadius: 2,
                                           blurRadius: 20,
                                           offset: Offset(0, 10),
@@ -105,10 +101,8 @@ class DriverBoard extends StatelessWidget {
                                   ),
                                 ),
                                 onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(builder: (context) => DriverTabs()),
-                                  );
+                                  Navigator.pushNamed(
+                                      context, '/DriverApplication');
                                 },
                               ),
                               delay: delayAmount + 2400,
@@ -123,12 +117,12 @@ class DriverBoard extends StatelessWidget {
 }
 
 Widget _flightShuttleBuilder(
-    BuildContext flightContext,
-    Animation<double> animation,
-    HeroFlightDirection flightDirection,
-    BuildContext fromHeroContext,
-    BuildContext toHeroContext,
-    ) {
+  BuildContext flightContext,
+  Animation<double> animation,
+  HeroFlightDirection flightDirection,
+  BuildContext fromHeroContext,
+  BuildContext toHeroContext,
+) {
   return DefaultTextStyle(
     style: DefaultTextStyle.of(toHeroContext).style,
     child: toHeroContext.widget,
