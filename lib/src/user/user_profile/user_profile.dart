@@ -141,6 +141,8 @@ class UserProfile extends StatelessWidget {
                         onTap: (){
                           ConfirmAlertBoxDark(context: context,
                             title: 'Are you sure you want to leave?',
+                            titleTextColor: Colors.white,
+                            icon: Icons.eighteen_mp,
                             infoMessage: '',
                           );
                         },

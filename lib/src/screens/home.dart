@@ -107,7 +107,7 @@ class _HomeState extends State<Home> {
                               margin:
                                   EdgeInsets.only(left: 20, bottom: 5, top: 3),
                               child: new Text(
-                                "A driver is ready for you",
+                                "A driver is ready for you.",
                                 maxLines: 1,
                                 textAlign: TextAlign.left,
                                 style: TextStyle(
@@ -118,18 +118,11 @@ class _HomeState extends State<Home> {
                                     height: 1.35),
                               ),
                             ),
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => UserOrder()),
-                                );
-                              },
-                              child: Container(
-                                height: 50,
+                            Container(
+                                height: 50.0,
+                                width: double.infinity,
                                 margin: EdgeInsets.only(
-                                    left: 20, right: 20, bottom: 20, top: 13),
+                                    left: 20, right: 20, bottom: 10, top: 13),
                                 decoration: BoxDecoration(
                                   color: Colors.white,
                                   border: Border.fromBorderSide(
@@ -140,128 +133,117 @@ class _HomeState extends State<Home> {
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(5)),
                                 ),
-                                child: Row(
-                                  children: [
-                                    SizedBox(width: 20),
-                                    SvgPicture.asset(
-                                        'assets/svg/global_search.svg',
-                                        height: 21,
-                                        semanticsLabel: 'search icon'),
-                                    Container(
-                                      margin: EdgeInsets.only(left: 20),
-                                      child: Text(
-                                        "Enter destination…",
-                                        textAlign: TextAlign.left,
-                                        style: TextStyle(
+                                child: Column(
+                                  children: <Widget>[
+                                    TextField(
+                                      readOnly: true,
+                                      decoration: InputDecoration(
+                                        hintText: "Enter Pickup Location",
+                                        hintStyle: TextStyle(
                                           color: Colors.black45,
                                           fontFamily: "Ubuntu",
                                           fontWeight: FontWeight.w400,
                                           fontSize: 17,
                                         ),
+                                        border: InputBorder.none,
+                                        prefixIcon: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 8.0, right: 5),
+                                              child: SvgPicture.asset(
+                                                  'assets/svg/pin.svg',
+                                                  height: 19,
+                                                  color: AppColor.primaryText,
+                                                  semanticsLabel:
+                                                      'search icon'),
+                                            ),
+                                          ],
+                                        ),
+                                        contentPadding: EdgeInsets.only(
+                                            left: 15.0, top: 15.0),
                                       ),
+                                      onTap: () async {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => UserOrder()),
+                                        );
+                                      },
                                     ),
                                   ],
-                                ),
-                              ),
-                            ),
+                                )),
                             Container(
-                                margin: EdgeInsets.only(left: 20, right: 20),
-                                child: Column(children: <Widget>[
-                                  SizedBox(height: 8),
-                                  Row(
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      children: <Widget>[
-                                        Icon(
-                                          Icons.location_on_rounded,
-                                          size: 22,
-                                          color: Colors.grey[300],
+                                height: 50.0,
+                                width: double.infinity,
+                                margin: EdgeInsets.only(
+                                    left: 20, right: 20, bottom: 20, top: 10),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  border: Border.fromBorderSide(
+                                      Borders.global_search_border),
+                                  boxShadow: [
+                                    Shadows.global_shadow_search,
+                                  ],
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(5)),
+                                ),
+                                child: Column(
+                                  children: <Widget>[
+                                    TextField(
+                                      readOnly: true,
+                                      decoration: InputDecoration(
+                                        hintText: "Enter Destination Location",
+                                        hintStyle: TextStyle(
+                                          color: Colors.black45,
+                                          fontFamily: "Ubuntu",
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: 17,
                                         ),
-                                        SizedBox(width: 15),
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
+                                        border: InputBorder.none,
+                                        prefixIcon: Column(
                                           mainAxisAlignment:
-                                              MainAxisAlignment.start,
+                                              MainAxisAlignment.center,
                                           children: [
-                                            Text(
-                                              "Ada-George Road",
-                                              maxLines: 1,
-                                              overflow: TextOverflow.ellipsis,
-                                              textAlign: TextAlign.left,
-                                              style: TextStyle(
-                                                color: Colors.black,
-                                                fontFamily: "Ubuntu",
-                                                fontWeight: FontWeight.w500,
-                                                fontSize: 15,
-                                              ),
-                                            ),
-                                            SizedBox(height: 3),
-                                            Text(
-                                              "Port harcourt, Nigeria",
-                                              maxLines: 1,
-                                              overflow: TextOverflow.ellipsis,
-                                              textAlign: TextAlign.left,
-                                              style: TextStyle(
-                                                color: Colors.black45,
-                                                fontFamily: "Ubuntu",
-                                                fontWeight: FontWeight.w400,
-                                                fontSize: 14,
-                                              ),
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 8.0, right: 5),
+                                              child: SvgPicture.asset(
+                                                  'assets/svg/nav.svg',
+                                                  height: 19,
+                                                  color: AppColor.primaryText,
+                                                  semanticsLabel:
+                                                      'search icon'),
                                             ),
                                           ],
                                         ),
-                                      ]),
-                                  Container(
-                                      height: 0.5,
-                                      width: MediaQuery.of(context).size.width,
-                                      margin:
-                                          EdgeInsets.only(top: 15, bottom: 15),
-                                      color: Colors.grey[300]),
-                                  Row(
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      children: <Widget>[
-                                        Icon(
-                                          Icons.location_on_rounded,
-                                          size: 22,
-                                          color: Colors.grey[300],
-                                        ),
-                                        SizedBox(width: 15),
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              "NTA Road",
-                                              maxLines: 1,
-                                              overflow: TextOverflow.ellipsis,
-                                              textAlign: TextAlign.left,
-                                              style: TextStyle(
-                                                color: Colors.black,
-                                                fontFamily: "Ubuntu",
-                                                fontWeight: FontWeight.w500,
-                                                fontSize: 15,
-                                              ),
-                                            ),
-                                            SizedBox(height: 3),
-                                            Text(
-                                              "Port harcourt, Nigeria",
-                                              maxLines: 1,
-                                              overflow: TextOverflow.ellipsis,
-                                              textAlign: TextAlign.left,
-                                              style: TextStyle(
-                                                color: Colors.black45,
-                                                fontFamily: "Ubuntu",
-                                                fontWeight: FontWeight.w400,
-                                                fontSize: 14,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ]),
-                                  SizedBox(height: 20),
-                                ])),
+                                        contentPadding: EdgeInsets.only(
+                                            left: 15.0, top: 15.0),
+                                      ),
+                                      onTap: () async {},
+                                    ),
+                                  ],
+                                )),
+                            GestureDetector(
+                              child: Container(
+                                  height: 47,
+                                  alignment: Alignment.center,
+                                  margin: EdgeInsets.only(left: 20, right: 20, bottom: 35),
+                                  decoration: BoxDecoration(
+                                    color: AppColor.primaryText,
+                                    borderRadius: Radii.k25pxAll,
+                                  ),
+                                  child: Text('Request rider',
+                                      style: TextStyle(
+                                          fontSize: 14,
+                                          fontFamily: 'Ubuntu',
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.w400))),
+                              onTap: () {
+                              },
+                            ),
                           ],
                         )),
                   ],

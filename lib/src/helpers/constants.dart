@@ -8,7 +8,7 @@ class Borders {
   );
 
   static final BorderSide global_search_border = BorderSide(
-    color: Color.fromARGB(54, 0, 141, 210),
+    color: Color.fromARGB(70, 0, 141, 210),
     width: 0.4,
     style: BorderStyle.solid,
   );
@@ -33,6 +33,12 @@ class Radii {
       topLeft: Radius.circular(25),
       bottomLeft: Radius.circular(25),
       bottomRight: Radius.circular(5));
+
+  static final BorderRadiusGeometry k25pxAll = BorderRadius.only(
+      topRight: Radius.circular(25),
+      topLeft: Radius.circular(25),
+      bottomLeft: Radius.circular(25),
+      bottomRight: Radius.circular(25));
 
   static final BorderRadiusGeometry kRoundpxRadius = BorderRadius.only(
       topRight: Radius.circular(25),
