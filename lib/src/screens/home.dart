@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_google_places/flutter_google_places.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:google_map_polyline/google_map_polyline.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:google_maps_webservice/places.dart';
 import 'package:pickrr_app/src/helpers/constants.dart';
 import 'package:pickrr_app/src/user/custom_appbar.dart';
 import 'package:pickrr_app/src/widgets/nav_drawer.dart';
@@ -15,13 +18,110 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  GoogleMapController myMapController;
-  final Set<Marker> _markers = new Set();
-  static const LatLng _mainLocation = const LatLng(4.814340, 7.000848);
 
-  @override
-  void initState() {
-    super.initState();
+  GoogleMapController mapController;
+  TextEditingController destinationController = new TextEditingController();
+  TextEditingController pickupController = new TextEditingController();
+  List<Marker> markersList = [];
+  final String key = "AIzaSyAPV3djPp_HceZIbgK4M4jRadHA-d08ECg";
+  LatLng _center = LatLng(
+      4.778559, 7.016669); //port harcourt coordinates -- default location
+  GoogleMapsPlaces _places = GoogleMapsPlaces(apiKey: "AIzaSyAPV3djPp_HceZIbgK4M4jRadHA-d08ECg");
+  GoogleMapPolyline googleMapPolyline = new GoogleMapPolyline(apiKey: "AIzaSyAPV3djPp_HceZIbgK4M4jRadHA-d08ECg");
+  final List<Polyline> polyline = [];
+  List<LatLng> routeCoords = [];
+
+  PlaceDetails departure;
+  PlaceDetails arrival;
+
+  void onMapCreated(controller) {
+    setState(() {
+      mapController = controller;
+    });
+  }
+
+  Future<Null> displayPredictionDeparture(Prediction p) async {
+    if (p != null) {
+      // get detail (lat/lng)
+      PlacesDetailsResponse detail = await _places.getDetailsByPlaceId(
+          p.placeId);
+      final lat = detail.result.geometry.location.lat;
+      final lng = detail.result.geometry.location.lng;
+
+      setState(() {
+        departure = detail.result;
+        destinationController.text = detail.result.name;
+        Marker marker = Marker(
+            markerId: MarkerId('arrivalMarker'),
+            draggable: false,
+            infoWindow: InfoWindow(
+              title: "This is where you will arrive",
+            ),
+            onTap: () {
+              //print('this is where you will arrive');
+            },
+            position: LatLng(lat, lng)
+        );
+        markersList.add(marker);
+      });
+
+      mapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
+          target: LatLng(lat, lng),
+          zoom: 16.0
+      )));
+    }
+  }
+
+  Future<Null> displayPredictionArrival(Prediction p) async {
+    if (p != null) {
+      // get detail (lat/lng)
+      PlacesDetailsResponse detail = await _places.getDetailsByPlaceId(
+          p.placeId);
+      final lat = detail.result.geometry.location.lat;
+      final lng = detail.result.geometry.location.lng;
+
+      setState(() {
+        arrival = detail.result;
+        pickupController.text = detail.result.name;
+        Marker marker = Marker(
+            markerId: MarkerId('arrivalMarker'),
+            draggable: false,
+            infoWindow: InfoWindow(
+              title: "This is where you will arrive",
+            ),
+            onTap: () {
+              //print('this is where you will arrive');
+            },
+            position: LatLng(lat, lng)
+        );
+        markersList.add(marker);
+      });
+
+      mapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
+          target: LatLng(lat, lng),
+          zoom: 10.0
+      )));
+
+      computePath();
+    }
+  }
+
+  computePath()async{
+    LatLng origin = new LatLng(departure.geometry.location.lat, departure.geometry.location.lng);
+    LatLng end = new LatLng(arrival.geometry.location.lat, arrival.geometry.location.lng);
+    routeCoords.addAll(await googleMapPolyline.getCoordinatesWithLocation(origin: origin, destination: end, mode: RouteMode.driving));
+
+    setState(() {
+      polyline.add(Polyline(
+          polylineId: PolylineId('iter'),
+          visible: true,
+          points: routeCoords,
+          width: 4,
+          color: Colors.blue,
+          startCap: Cap.roundCap,
+          endCap: Cap.buttCap
+      ));
+    });
   }
 
   @override
@@ -48,20 +148,20 @@ class _HomeState extends State<Home> {
                       Hero(
                         tag: 'map',
                         flightShuttleBuilder: _flightShuttleBuilder,
-                        child: GoogleMap(
+                        child:
+                        GoogleMap(
+                          onMapCreated: onMapCreated,
                           initialCameraPosition: CameraPosition(
-                            target: _mainLocation,
-                            zoom: 15.6,
+                            target: _center,
+                            zoom: 15.0,
                           ),
-                          markers: this.myMarker(),
-                          mapType: MapType.normal,
+                          markers: Set.from(markersList),
+                          polylines: Set.from(polyline),
+                          indoorViewEnabled: true,
+                          myLocationEnabled: true,
                           myLocationButtonEnabled: false,
+                          zoomGesturesEnabled: true,
                           zoomControlsEnabled: false,
-                          onMapCreated: (controller) {
-                            setState(() {
-                              myMapController = controller;
-                            });
-                          },
                         ),
                       ),
                       CustomerAppBar(),
@@ -163,12 +263,17 @@ class _HomeState extends State<Home> {
                                         contentPadding: EdgeInsets.only(
                                             left: 15.0, top: 15.0),
                                       ),
+                                      controller: pickupController,
                                       onTap: () async {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) => UserOrder()),
-                                        );
+                                        Prediction p = await PlacesAutocomplete.show(
+                                            context: context,
+                                            apiKey: key,
+                                            mode: Mode.fullscreen,
+                                            language: "en",
+                                            components: [
+                                              new Component(Component.country, "ng")
+                                            ]);
+                                        displayPredictionArrival(p);
                                       },
                                     ),
                                   ],
@@ -220,7 +325,18 @@ class _HomeState extends State<Home> {
                                         contentPadding: EdgeInsets.only(
                                             left: 15.0, top: 15.0),
                                       ),
-                                      onTap: () async {},
+                                      controller: destinationController,
+                                      onTap: () async {
+                                        Prediction p = await PlacesAutocomplete.show(
+                                            context: context,
+                                            apiKey: key,
+                                            mode: Mode.fullscreen,
+                                            language: "en",
+                                            components: [
+                                              new Component(Component.country, "ng")
+                                            ]);
+                                        displayPredictionDeparture(p);
+                                      },
                                     ),
                                   ],
                                 )),
@@ -249,22 +365,6 @@ class _HomeState extends State<Home> {
               ),
             ));
 
-  }
-
-  Set<Marker> myMarker() {
-    setState(() {
-      _markers.add(Marker(
-        // This marker id can be anything that uniquely identifies each marker.
-        markerId: MarkerId(_mainLocation.toString()),
-        position: _mainLocation,
-        infoWindow: InfoWindow(
-          title: 'Historical City',
-          snippet: '5 Star Rating',
-        ),
-        icon: BitmapDescriptor.defaultMarker,
-      ));
-    });
-    return _markers;
   }
 
   Widget _flightShuttleBuilder(

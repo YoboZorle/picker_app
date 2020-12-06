@@ -6,6 +6,7 @@ import 'package:pickrr_app/src/models/user.dart';
 import 'package:pickrr_app/src/screens/driver/onboard.dart';
 import 'package:pickrr_app/src/user/ride_history/ride_history.dart';
 import 'package:pickrr_app/src/user/track_deliveries/track_deliveries.dart';
+import 'package:pickrr_app/src/user/user_order.dart';
 import 'package:pickrr_app/src/user/user_profile/user_profile.dart';
 import 'package:pickrr_app/src/widgets/image.dart';
 
@@ -145,6 +146,13 @@ class NavDrawer extends StatelessWidget {
                     fontSize: 18),
               ),
               leading: Icon(Icons.read_more),
+              onTap:(){
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => UserOrder()),
+                );
+              }
             ),
             ListTile(
               title: Text(
