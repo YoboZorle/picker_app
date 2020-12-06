@@ -35,7 +35,7 @@ packages:
       name: cached_network_image
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.3.3"
+    version: "2.4.1"
   characters:
     dependency: transitive
     description:
@@ -260,7 +260,7 @@ packages:
       name: geolocator
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "6.1.7"
+    version: "6.1.10"
   geolocator_platform_interface:
     dependency: transitive
     description:
@@ -288,7 +288,7 @@ packages:
       name: google_maps_flutter_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.4"
+    version: "1.0.5"
   google_maps_webservice:
     dependency: "direct main"
     description:
@@ -351,14 +351,14 @@ packages:
       name: location
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.0.2"
+    version: "3.1.0"
   location_platform_interface:
     dependency: transitive
     description:
       name: location_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.0"
+    version: "1.0.1"
   location_web:
     dependency: transitive
     description:

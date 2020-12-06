@@ -69,6 +69,8 @@ class _HomeState extends State<Home> {
           target: LatLng(lat, lng),
           zoom: 16.0
       )));
+
+      computePath();
     }
   }
 
@@ -101,12 +103,13 @@ class _HomeState extends State<Home> {
           target: LatLng(lat, lng),
           zoom: 10.0
       )));
-
-      computePath();
     }
   }
 
   computePath()async{
+    print('KOOOOL');
+    print(departure);
+    print('----------------------99-------');
     LatLng origin = new LatLng(departure.geometry.location.lat, departure.geometry.location.lng);
     LatLng end = new LatLng(arrival.geometry.location.lat, arrival.geometry.location.lng);
     routeCoords.addAll(await googleMapPolyline.getCoordinatesWithLocation(origin: origin, destination: end, mode: RouteMode.driving));
@@ -187,193 +190,193 @@ class _HomeState extends State<Home> {
                               borderRadius: BorderRadius.circular(16)),
                         ),
                         Container(
-                              alignment: Alignment.centerLeft,
-                              margin: EdgeInsets.only(left: 20),
-                              child: Text(
-                                "Hello Yobo,",
-                                textAlign: TextAlign.left,
-                                style: TextStyle(
-                                  fontSize: 15,
-                                  fontFamily: "Ubuntu",
-                                  color: Colors.black54,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                              ),
+                          alignment: Alignment.centerLeft,
+                          margin: EdgeInsets.only(left: 20),
+                          child: Text(
+                            "Hello Yobo,",
+                            textAlign: TextAlign.left,
+                            style: TextStyle(
+                              fontSize: 15,
+                              fontFamily: "Ubuntu",
+                              color: Colors.black54,
+                              fontWeight: FontWeight.w400,
                             ),
-                            Container(
-                              alignment: Alignment.centerLeft,
-                              margin:
-                                  EdgeInsets.only(left: 20, bottom: 5, top: 3),
-                              child: new Text(
-                                "A driver is ready for you.",
-                                maxLines: 1,
-                                textAlign: TextAlign.left,
-                                style: TextStyle(
-                                    fontSize: 20.0,
-                                    fontFamily: "Ubuntu",
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w700,
-                                    height: 1.35),
-                              ),
+                          ),
+                        ),
+                        Container(
+                          alignment: Alignment.centerLeft,
+                          margin:
+                          EdgeInsets.only(left: 20, bottom: 5, top: 3),
+                          child: new Text(
+                            "A driver is ready for you.",
+                            maxLines: 1,
+                            textAlign: TextAlign.left,
+                            style: TextStyle(
+                                fontSize: 20.0,
+                                fontFamily: "Ubuntu",
+                                color: Colors.black,
+                                fontWeight: FontWeight.w700,
+                                height: 1.35),
+                          ),
+                        ),
+                        Container(
+                            height: 50.0,
+                            width: double.infinity,
+                            margin: EdgeInsets.only(
+                                left: 20, right: 20, bottom: 10, top: 13),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              border: Border.fromBorderSide(
+                                  Borders.global_search_border),
+                              boxShadow: [
+                                Shadows.global_shadow_search,
+                              ],
+                              borderRadius:
+                              BorderRadius.all(Radius.circular(5)),
                             ),
-                            Container(
-                                height: 50.0,
-                                width: double.infinity,
-                                margin: EdgeInsets.only(
-                                    left: 20, right: 20, bottom: 10, top: 13),
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  border: Border.fromBorderSide(
-                                      Borders.global_search_border),
-                                  boxShadow: [
-                                    Shadows.global_shadow_search,
-                                  ],
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(5)),
-                                ),
-                                child: Column(
-                                  children: <Widget>[
-                                    TextField(
-                                      readOnly: true,
-                                      decoration: InputDecoration(
-                                        hintText: "Enter Pickup Location",
-                                        hintStyle: TextStyle(
-                                          color: Colors.black45,
-                                          fontFamily: "Ubuntu",
-                                          fontWeight: FontWeight.w400,
-                                          fontSize: 17,
-                                        ),
-                                        border: InputBorder.none,
-                                        prefixIcon: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                  left: 8.0, right: 5),
-                                              child: SvgPicture.asset(
-                                                  'assets/svg/pin.svg',
-                                                  height: 19,
-                                                  color: AppColor.primaryText,
-                                                  semanticsLabel:
-                                                      'search icon'),
-                                            ),
-                                          ],
-                                        ),
-                                        contentPadding: EdgeInsets.only(
-                                            left: 15.0, top: 15.0),
-                                      ),
-                                      controller: pickupController,
-                                      onTap: () async {
-                                        Prediction p = await PlacesAutocomplete.show(
-                                            context: context,
-                                            apiKey: key,
-                                            mode: Mode.fullscreen,
-                                            language: "en",
-                                            components: [
-                                              new Component(Component.country, "ng")
-                                            ]);
-                                        displayPredictionArrival(p);
-                                      },
+                            child: Column(
+                              children: <Widget>[
+                                TextField(
+                                  readOnly: true,
+                                  decoration: InputDecoration(
+                                    hintText: "Enter Pickup Location",
+                                    hintStyle: TextStyle(
+                                      color: Colors.black45,
+                                      fontFamily: "Ubuntu",
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 17,
                                     ),
-                                  ],
-                                )),
-                            Container(
-                                height: 50.0,
-                                width: double.infinity,
-                                margin: EdgeInsets.only(
-                                    left: 20, right: 20, bottom: 20, top: 10),
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  border: Border.fromBorderSide(
-                                      Borders.global_search_border),
-                                  boxShadow: [
-                                    Shadows.global_shadow_search,
-                                  ],
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(5)),
-                                ),
-                                child: Column(
-                                  children: <Widget>[
-                                    TextField(
-                                      readOnly: true,
-                                      decoration: InputDecoration(
-                                        hintText: "Enter Destination Location",
-                                        hintStyle: TextStyle(
-                                          color: Colors.black45,
-                                          fontFamily: "Ubuntu",
-                                          fontWeight: FontWeight.w400,
-                                          fontSize: 17,
+                                    border: InputBorder.none,
+                                    prefixIcon: Column(
+                                      mainAxisAlignment:
+                                      MainAxisAlignment.center,
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                              left: 8.0, right: 5),
+                                          child: SvgPicture.asset(
+                                              'assets/svg/pin.svg',
+                                              height: 19,
+                                              color: AppColor.primaryText,
+                                              semanticsLabel:
+                                              'search icon'),
                                         ),
-                                        border: InputBorder.none,
-                                        prefixIcon: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                  left: 8.0, right: 5),
-                                              child: SvgPicture.asset(
-                                                  'assets/svg/nav.svg',
-                                                  height: 19,
-                                                  color: AppColor.primaryText,
-                                                  semanticsLabel:
-                                                      'search icon'),
-                                            ),
-                                          ],
-                                        ),
-                                        contentPadding: EdgeInsets.only(
-                                            left: 15.0, top: 15.0),
-                                      ),
-                                      controller: destinationController,
-                                      onTap: () async {
-                                        Prediction p = await PlacesAutocomplete.show(
-                                            context: context,
-                                            apiKey: key,
-                                            mode: Mode.fullscreen,
-                                            language: "en",
-                                            components: [
-                                              new Component(Component.country, "ng")
-                                            ]);
-                                        displayPredictionDeparture(p);
-                                      },
+                                      ],
                                     ),
-                                  ],
-                                )),
-                            GestureDetector(
-                              child: Container(
-                                  height: 47,
-                                  alignment: Alignment.center,
-                                  margin: EdgeInsets.only(left: 20, right: 20, bottom: 35),
-                                  decoration: BoxDecoration(
-                                    color: AppColor.primaryText,
-                                    borderRadius: Radii.k25pxAll,
+                                    contentPadding: EdgeInsets.only(
+                                        left: 15.0, top: 15.0),
                                   ),
-                                  child: Text('Request rider',
-                                      style: TextStyle(
-                                          fontSize: 14,
-                                          fontFamily: 'Ubuntu',
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.w400))),
-                              onTap: () {
-                              },
+                                  controller: pickupController,
+                                  onTap: () async {
+                                    Prediction p = await PlacesAutocomplete.show(
+                                        context: context,
+                                        apiKey: key,
+                                        mode: Mode.fullscreen,
+                                        language: "en",
+                                        components: [
+                                          new Component(Component.country, "ng")
+                                        ]);
+                                    displayPredictionArrival(p);
+                                  },
+                                ),
+                              ],
+                            )),
+                        Container(
+                            height: 50.0,
+                            width: double.infinity,
+                            margin: EdgeInsets.only(
+                                left: 20, right: 20, bottom: 20, top: 10),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              border: Border.fromBorderSide(
+                                  Borders.global_search_border),
+                              boxShadow: [
+                                Shadows.global_shadow_search,
+                              ],
+                              borderRadius:
+                              BorderRadius.all(Radius.circular(5)),
                             ),
-                          ],
-                        )),
-                  ],
-                ),
-              ),
-            ));
+                            child: Column(
+                              children: <Widget>[
+                                TextField(
+                                  readOnly: true,
+                                  decoration: InputDecoration(
+                                    hintText: "Enter Destination Location",
+                                    hintStyle: TextStyle(
+                                      color: Colors.black45,
+                                      fontFamily: "Ubuntu",
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 17,
+                                    ),
+                                    border: InputBorder.none,
+                                    prefixIcon: Column(
+                                      mainAxisAlignment:
+                                      MainAxisAlignment.center,
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                              left: 8.0, right: 5),
+                                          child: SvgPicture.asset(
+                                              'assets/svg/nav.svg',
+                                              height: 19,
+                                              color: AppColor.primaryText,
+                                              semanticsLabel:
+                                              'search icon'),
+                                        ),
+                                      ],
+                                    ),
+                                    contentPadding: EdgeInsets.only(
+                                        left: 15.0, top: 15.0),
+                                  ),
+                                  controller: destinationController,
+                                  onTap: () async {
+                                    Prediction p = await PlacesAutocomplete.show(
+                                        context: context,
+                                        apiKey: key,
+                                        mode: Mode.fullscreen,
+                                        language: "en",
+                                        components: [
+                                          new Component(Component.country, "ng")
+                                        ]);
+                                    displayPredictionDeparture(p);
+                                  },
+                                ),
+                              ],
+                            )),
+                        GestureDetector(
+                          child: Container(
+                              height: 47,
+                              alignment: Alignment.center,
+                              margin: EdgeInsets.only(left: 20, right: 20, bottom: 35),
+                              decoration: BoxDecoration(
+                                color: AppColor.primaryText,
+                                borderRadius: Radii.k25pxAll,
+                              ),
+                              child: Text('Request rider',
+                                  style: TextStyle(
+                                      fontSize: 14,
+                                      fontFamily: 'Ubuntu',
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w400))),
+                          onTap: () {
+                          },
+                        ),
+                      ],
+                    )),
+              ],
+            ),
+          ),
+        ));
 
   }
 
   Widget _flightShuttleBuilder(
-    BuildContext flightContext,
-    Animation<double> animation,
-    HeroFlightDirection flightDirection,
-    BuildContext fromHeroContext,
-    BuildContext toHeroContext,
-  ) {
+      BuildContext flightContext,
+      Animation<double> animation,
+      HeroFlightDirection flightDirection,
+      BuildContext fromHeroContext,
+      BuildContext toHeroContext,
+      ) {
     return DefaultTextStyle(
       style: DefaultTextStyle.of(toHeroContext).style,
       child: toHeroContext.widget,
