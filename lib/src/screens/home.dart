@@ -116,9 +116,9 @@ class _HomeState extends State<Home> {
           polylineId: PolylineId('iter'),
           visible: true,
           points: routeCoords,
-          width: 5,
+          width: 6,
           geodesic: true,
-          color: Colors.blue,
+          color: Colors.red,
           startCap: Cap.roundCap,
           endCap: Cap.buttCap
       ));
