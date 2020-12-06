@@ -107,19 +107,17 @@ class _HomeState extends State<Home> {
   }
 
   computePath()async{
-    print('KOOOOL');
-    print(departure);
-    print('----------------------99-------');
     LatLng origin = new LatLng(departure.geometry.location.lat, departure.geometry.location.lng);
     LatLng end = new LatLng(arrival.geometry.location.lat, arrival.geometry.location.lng);
-    routeCoords.addAll(await googleMapPolyline.getCoordinatesWithLocation(origin: origin, destination: end, mode: RouteMode.driving));
+    routeCoords.addAll(await googleMapPolyline.getCoordinatesWithLocation(origin: origin, destination: end, mode: RouteMode.walking));
 
     setState(() {
       polyline.add(Polyline(
           polylineId: PolylineId('iter'),
           visible: true,
           points: routeCoords,
-          width: 4,
+          width: 5,
+          geodesic: true,
           color: Colors.blue,
           startCap: Cap.roundCap,
           endCap: Cap.buttCap
@@ -165,6 +163,8 @@ class _HomeState extends State<Home> {
                           myLocationButtonEnabled: false,
                           zoomGesturesEnabled: true,
                           zoomControlsEnabled: false,
+                          trafficEnabled: false,
+                          buildingsEnabled: false,
                         ),
                       ),
                       CustomerAppBar(),
