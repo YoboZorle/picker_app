@@ -154,21 +154,6 @@ class NavDrawer extends StatelessWidget {
                 );
               }
             ),
-            ListTile(
-              title: Text(
-                'Logout',
-                style: TextStyle(
-                    fontWeight: FontWeight.w400,
-                    fontFamily: "Ubuntu",
-                    fontSize: 18),
-              ),
-              leading: Icon(Icons.logout),
-              onTap: () {
-                BlocProvider.of<AuthenticationBloc>(context)
-                    .add(AuthenticationEvent.LOGGED_OUT);
-                Navigator.pushReplacementNamed(context, '/');
-              },
-            ),
             Expanded(child: SizedBox()),
             Container(
               decoration: BoxDecoration(

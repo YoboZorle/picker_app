@@ -40,7 +40,7 @@ class _HomeState extends State<Home> {
     });
   }
 
-  Future<Null> displayPredictionDeparture(Prediction p) async {
+  Future<Null> displayPredictionDestination(Prediction p) async {
     if (p != null) {
       // get detail (lat/lng)
       PlacesDetailsResponse detail = await _places.getDetailsByPlaceId(
@@ -74,7 +74,7 @@ class _HomeState extends State<Home> {
     }
   }
 
-  Future<Null> displayPredictionArrival(Prediction p) async {
+  Future<Null> displayPredictionPickup(Prediction p) async {
     if (p != null) {
       // get detail (lat/lng)
       PlacesDetailsResponse detail = await _places.getDetailsByPlaceId(
@@ -86,10 +86,10 @@ class _HomeState extends State<Home> {
         arrival = detail.result;
         pickupController.text = detail.result.name;
         Marker marker = Marker(
-            markerId: MarkerId('arrivalMarker'),
+            markerId: MarkerId('pickupMarker'),
             draggable: false,
             infoWindow: InfoWindow(
-              title: "This is where you will arrive",
+              title: "This is where you start",
             ),
             onTap: () {
               //print('this is where you will arrive');
@@ -246,6 +246,12 @@ class _HomeState extends State<Home> {
                                       fontWeight: FontWeight.w400,
                                       fontSize: 17,
                                     ),
+                                    labelStyle: TextStyle(
+                                      color: Colors.black,
+                                      fontFamily: "Ubuntu",
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 17,
+                                    ),
                                     border: InputBorder.none,
                                     prefixIcon: Column(
                                       mainAxisAlignment:
@@ -276,7 +282,7 @@ class _HomeState extends State<Home> {
                                         components: [
                                           new Component(Component.country, "ng")
                                         ]);
-                                    displayPredictionArrival(p);
+                                    displayPredictionPickup(p);
                                   },
                                 ),
                               ],
@@ -306,6 +312,12 @@ class _HomeState extends State<Home> {
                                       color: Colors.black45,
                                       fontFamily: "Ubuntu",
                                       fontWeight: FontWeight.w400,
+                                      fontSize: 17,
+                                    ),
+                                    labelStyle: TextStyle(
+                                      color: Colors.black,
+                                      fontFamily: "Ubuntu",
+                                      fontWeight: FontWeight.w500,
                                       fontSize: 17,
                                     ),
                                     border: InputBorder.none,
@@ -338,7 +350,7 @@ class _HomeState extends State<Home> {
                                         components: [
                                           new Component(Component.country, "ng")
                                         ]);
-                                    displayPredictionDeparture(p);
+                                    displayPredictionDestination(p);
                                   },
                                 ),
                               ],
