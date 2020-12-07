@@ -17,9 +17,9 @@ class User extends Equatable {
   final bool isDriver;
 
   bool get isCompleteDetails {
-    return email != null ||
-        email.isNotEmpty ||
-        profileImageUrl != null ||
+    return email != null &&
+        email.isNotEmpty &&
+        profileImageUrl != null &&
         profileImageUrl.isNotEmpty;
   }
 
