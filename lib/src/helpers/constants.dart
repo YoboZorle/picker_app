@@ -94,5 +94,6 @@ class APIConstants {
 
 class AppData {
   static final String messageFrom = 'Yarner';
+  static final String mapAPIKey = 'AIzaSyAPV3djPp_HceZIbgK4M4jRadHA-d08ECg';
 }
 
