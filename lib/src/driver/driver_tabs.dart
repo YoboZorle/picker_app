@@ -34,15 +34,12 @@ class _DriverTabsState extends State<DriverTabs> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      color: AppColor.primaryText,
-      home: Scaffold(
+    return Scaffold(
         body: IndexedStack(
             index: listScreensIndex.indexOf(tabIndex), children: listScreens),
         bottomNavigationBar: _buildTabBar(),
         backgroundColor: Theme.of(context).primaryColor,
-      ),
-    );
+      );
   }
 
   void _selectedTab(int index) {

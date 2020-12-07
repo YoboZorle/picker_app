@@ -7,7 +7,6 @@ import 'package:pickrr_app/src/driver/driver_accept.dart';
 import 'package:pickrr_app/src/helpers/constants.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../screens/home.dart';
 
 class DriverHome extends StatefulWidget {
   @override
@@ -125,10 +124,7 @@ class _DriverHomeState extends State<DriverHome> {
                   trailing: Icon(Icons.arrow_forward_ios,
                       size: 17, color: Colors.grey[200]),
                   onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => Home()),
-                    );
+                    Navigator.pushNamed(context, '/HomePage');
                   },
                 ),
               )

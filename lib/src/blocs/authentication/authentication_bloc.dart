@@ -40,6 +40,7 @@ class AuthenticationBloc
     try {
       final isSignedIn = await _userRepository.isSignedIn();
       if (isSignedIn) {
+        print('Hello from here ---------------');
         final User user = await _userRepository.getUser();
         yield LoggedIn(user);
         if (await isInternetConnected()) {
@@ -49,6 +50,7 @@ class AuthenticationBloc
         yield NonLoggedIn();
       }
     } catch (err) {
+      print(err);
       cprint(err, errorIn: '_mapAppStartedToState');
       yield NonLoggedIn();
     }

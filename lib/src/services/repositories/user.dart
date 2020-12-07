@@ -123,6 +123,7 @@ class UserRepository extends APIClient {
       User user = User.fromMap(response.data);
       persistUserDetails(user);
     } catch (e) {
+      print(e);
       cprint(e, errorIn: 'updateProfileDetails');
       throw ServiceError(e);
     }

@@ -78,10 +78,10 @@ class OTPVerification extends StatelessWidget {
               User user = state.props[0];
 
               Navigator.pop(context);
-              if (!user.isCompleteDetails) {
-                Navigator.pushReplacementNamed(context, '/CompleteProfileDetails');
-                return;
-              }
+              // if (!user.isCompleteDetails) {
+              //   Navigator.pushReplacementNamed(context, '/CompleteProfileDetails');
+              //   return;
+              // }
 
               if(user.isDriver){
                 Navigator.pushReplacementNamed(context, '/DriversHomePage');

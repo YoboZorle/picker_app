@@ -68,7 +68,7 @@ class Routes {
         return SlideLeftRoute<bool>(
             builder: (BuildContext context) => CompleteProfileForm());
       case "HomePage":
-        return CustomRoute<bool>(
+        return SlideLeftRoute<bool>(
             builder: (BuildContext context) => BlocProvider<AuthenticationBloc>(
                 create: (_) => AuthenticationBloc()
                   ..add(AuthenticationEvent.AUTHENTICATED),
@@ -95,9 +95,9 @@ Widget homePage(BuildContext context, AuthenticationState state) {
   }
 
   User user = state.props[0];
-  if (!user.isCompleteDetails) {
-    return CompleteProfileForm();
-  }
+  // if (!user.isCompleteDetails) {
+  //   return CompleteProfileForm();
+  // }
 
   if (user.isDriver) {
     return DriverTabs();
