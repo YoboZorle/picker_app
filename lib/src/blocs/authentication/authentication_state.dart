@@ -22,4 +22,13 @@ class LoggedIn extends AuthenticationState {
   String toString() => 'LoggedIn { user: $user }';
 }
 
+class DetailsUpdate extends LoggedIn {
+  final User user;
+
+  const DetailsUpdate(this.user): super(user);
+
+  @override
+  String toString() => 'DetailsUpdate { user: $user }';
+}
+
 class NonLoggedIn extends AuthenticationState {}
