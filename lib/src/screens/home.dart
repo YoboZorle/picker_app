@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_google_places/flutter_google_places.dart';
@@ -30,6 +32,7 @@ class _HomeState extends State<Home> {
   GoogleMapPolyline googleMapPolyline = new GoogleMapPolyline(apiKey: "AIzaSyAPV3djPp_HceZIbgK4M4jRadHA-d08ECg");
   final List<Polyline> polyline = [];
   List<LatLng> routeCoords = [];
+  Completer<GoogleMapController> __controller = Completer();
 
   PlaceDetails departure;
   PlaceDetails arrival;
@@ -37,6 +40,7 @@ class _HomeState extends State<Home> {
   void onMapCreated(controller) {
     setState(() {
       mapController = controller;
+      __controller.complete(controller);
     });
   }
 
@@ -101,7 +105,7 @@ class _HomeState extends State<Home> {
 
       mapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
           target: LatLng(lat, lng),
-          zoom: 10.0
+          zoom: 16.0
       )));
     }
   }
@@ -154,7 +158,7 @@ class _HomeState extends State<Home> {
                           onMapCreated: onMapCreated,
                           initialCameraPosition: CameraPosition(
                             target: _center,
-                            zoom: 15.0,
+                            zoom: 16.0,
                           ),
                           markers: Set.from(markersList),
                           polylines: Set.from(polyline),
@@ -193,7 +197,7 @@ class _HomeState extends State<Home> {
                           alignment: Alignment.centerLeft,
                           margin: EdgeInsets.only(left: 20),
                           child: Text(
-                            "Hello Yobo,",
+                            "Hello George,",
                             textAlign: TextAlign.left,
                             style: TextStyle(
                               fontSize: 15,
@@ -355,7 +359,7 @@ class _HomeState extends State<Home> {
                                 ),
                               ],
                             )),
-                        GestureDetector(
+                        InkWell(
                           child: Container(
                               height: 47,
                               alignment: Alignment.center,
@@ -371,7 +375,14 @@ class _HomeState extends State<Home> {
                                       color: Colors.white,
                                       fontWeight: FontWeight.w400))),
                           onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      UserOrder()),
+                            );
                           },
+                          splashColor: Colors.grey[300],
                         ),
                       ],
                     )),

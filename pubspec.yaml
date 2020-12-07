@@ -59,6 +59,7 @@ dependencies:
   shared_preferences: ^0.5.12
   flutter_secure_storage: ^3.3.5
   flushbar: ^1.10.4
+  flutter_clipboard_manager: ^0.0.2
 
 dev_dependencies:
   flutter_test:

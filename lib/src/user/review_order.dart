@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_clipboard_manager/flutter_clipboard_manager.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 import 'package:pickrr_app/src/helpers/constants.dart';
@@ -14,19 +15,21 @@ class _ReviewOrderState extends State<ReviewOrder> {
   double amount = 500;
   final currencyFormatter =
       NumberFormat.currency(locale: 'en_US', symbol: '\u20a6');
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async => false,
       child: new Scaffold(
+          key: _scaffoldKey,
           backgroundColor: Colors.white,
           appBar: AppBar(
             centerTitle: true,
             title: Text(
               'Review Order',
               style: TextStyle(
-                fontSize: 16,
+                fontSize: 17,
                 fontFamily: 'Ubuntu',
                 color: Colors.black,
                 fontWeight: FontWeight.w800,
@@ -38,7 +41,7 @@ class _ReviewOrderState extends State<ReviewOrder> {
                 Navigator.pop(context);
               },
             ),
-            elevation: 0.5,
+            elevation: 0,
             backgroundColor: Colors.white,
           ),
           body: GestureDetector(
@@ -73,129 +76,140 @@ class _ReviewOrderState extends State<ReviewOrder> {
                                       '87AGB346',
                                       textAlign: TextAlign.left,
                                       style: TextStyle(
-                                        fontSize: 14,
+                                        fontSize: 16,
                                         fontFamily: 'Ubuntu',
                                         color: Colors.black,
-                                        fontWeight: FontWeight.w500,
+                                        fontWeight: FontWeight.w600,
                                       ),
-                                    )
+                                    ),
+                                    Expanded(child: SizedBox()),
+                                    Container(height: 33,
+                                      margin: EdgeInsets.only(right: 20),
+                                      child: RaisedButton(
+                                        child: Text('COPY ID'),
+                                        onPressed: () {
+                                          final snackBar = SnackBar(
+                                            content: Text('Transaction ID Copied!'),
+                                            action: SnackBarAction(
+                                              label: '87AGB346',
+                                              textColor: Colors.yellowAccent,
+                                              onPressed: () {},
+                                            ),
+                                          );
+                                          _scaffoldKey.currentState.showSnackBar(snackBar);
+                                        },
+                                      ),
+                                    ),
                                   ]),
                               SizedBox(height: 25),
+
                               Container(
-                                padding: EdgeInsets.only(left: 20, bottom: 8),
-                                child: Row(
-                                  children: [
-                                    Transform.rotate(
-                                      angle: 120,
-                                      child: Icon(
-                                        Icons.navigation_rounded,
-                                        size: 22,
-                                        color: Colors.greenAccent,
-                                      ),
+                                margin: EdgeInsets.symmetric(horizontal: 15),
+                                child: Card(elevation: 100,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(20.0),
+                                    child: Column(
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Transform.rotate(
+                                              angle: 120,
+                                              child: Icon(
+                                                Icons.navigation_rounded,
+                                                size: 22,
+                                                color: Colors.greenAccent,
+                                              ),
+                                            ),
+                                            SizedBox(width: 3),
+                                            Text(
+                                              'RECEIVER DETAILS',
+                                              textAlign: TextAlign.left,
+                                              style: TextStyle(
+                                                fontSize: 15,
+                                                fontFamily: 'Ubuntu',
+                                                color: Colors.black87,
+                                                fontWeight: FontWeight.w500,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        Row(
+                                          children: [
+                                            Text(
+                                              'Name',
+                                              style: TextStyle(
+                                                  fontSize: 14.0,
+                                                  fontFamily: "Ubuntu",
+                                                  color: Colors.black87,
+                                                  fontWeight: FontWeight.w400),
+                                            ),
+                                            SizedBox(width: 18),
+                                            Expanded(
+                                              child: Text(
+                                                'George Adowei',
+                                                style: TextStyle(
+                                                    fontSize: 14.0,
+                                                    fontFamily: "Ubuntu",
+                                                    color: Colors.black,
+                                                    fontWeight: FontWeight.w600),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        Row(
+                                          children: [
+                                            Text(
+                                              'Phone',
+                                              style: TextStyle(
+                                                  fontSize: 14.0,
+                                                  fontFamily: "Ubuntu",
+                                                  color: Colors.black87,
+                                                  fontWeight: FontWeight.w400),
+                                            ),
+                                            SizedBox(width: 18),
+                                            Expanded(
+                                              child: Text(
+                                                '08034233482',
+                                                style: TextStyle(
+                                                    fontSize: 14.0,
+                                                    fontFamily: "Ubuntu",
+                                                    color: Colors.black,
+                                                    fontWeight: FontWeight.w600),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        Row(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          mainAxisAlignment: MainAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              'Address',
+                                              style: TextStyle(
+                                                  fontSize: 14.0,
+                                                  fontFamily: "Ubuntu",
+                                                  color: Colors.black87,
+                                                  fontWeight: FontWeight.w400),
+                                            ),
+                                            SizedBox(width: 18),
+                                            Expanded(
+                                              child: Text(
+                                                '7B Sani Abacha road, Phase 3C, Port harcourt, Nigeria',
+                                                style: TextStyle(
+                                                    fontSize: 14.0,
+                                                    fontFamily: "Ubuntu",
+                                                    color: Colors.black,
+                                                    fontWeight: FontWeight.w600),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
                                     ),
-                                    SizedBox(width: 3),
-                                    Text(
-                                      'RECEIVER DETAILS',
-                                      textAlign: TextAlign.left,
-                                      style: TextStyle(
-                                        fontSize: 15,
-                                        fontFamily: 'Ubuntu',
-                                        color: Colors.black87,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    ),
-                                  ],
+                                  ),
                                 ),
                               ),
-                              Container(
-                                margin: EdgeInsets.only(
-                                    left: 20, right: 20, bottom: 4),
-                                child: Row(
-                                  children: [
-                                    Text(
-                                      'Name',
-                                      style: TextStyle(
-                                          fontSize: 14.0,
-                                          fontFamily: "Ubuntu",
-                                          color: Colors.black87,
-                                          fontWeight: FontWeight.w400),
-                                    ),
-                                    SizedBox(width: 18),
-                                    Expanded(
-                                      child: Text(
-                                        'George Adowei',
-                                        style: TextStyle(
-                                            fontSize: 14.0,
-                                            fontFamily: "Ubuntu",
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.w600),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                margin: EdgeInsets.only(
-                                    left: 20, right: 20, bottom: 4),
-                                child: Row(
-                                  children: [
-                                    Text(
-                                      'Phone',
-                                      style: TextStyle(
-                                          fontSize: 14.0,
-                                          fontFamily: "Ubuntu",
-                                          color: Colors.black87,
-                                          fontWeight: FontWeight.w400),
-                                    ),
-                                    SizedBox(width: 18),
-                                    Expanded(
-                                      child: Text(
-                                        '08034233482',
-                                        style: TextStyle(
-                                            fontSize: 14.0,
-                                            fontFamily: "Ubuntu",
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.w600),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                margin: EdgeInsets.only(
-                                    left: 20, right: 20, bottom: 4),
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      'Address',
-                                      style: TextStyle(
-                                          fontSize: 14.0,
-                                          fontFamily: "Ubuntu",
-                                          color: Colors.black87,
-                                          fontWeight: FontWeight.w400),
-                                    ),
-                                    SizedBox(width: 18),
-                                    Expanded(
-                                      child: Text(
-                                        '7B Sani Abacha road, Phase 3C, Port harcourt, Nigeria',
-                                        style: TextStyle(
-                                            fontSize: 14.0,
-                                            fontFamily: "Ubuntu",
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.w600),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                  height: 0.5,
-                                  width: MediaQuery.of(context).size.width,
-                                  color: Colors.grey[300],
-                                  margin: EdgeInsets.symmetric(
-                                      vertical: 20, horizontal: 20)),
+
                               Container(
                                 padding: EdgeInsets.only(left: 20, bottom: 8),
                                 child: Row(

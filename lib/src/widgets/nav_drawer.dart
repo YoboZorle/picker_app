@@ -121,10 +121,10 @@ class NavDrawer extends StatelessWidget {
               leading: Icon(Icons.account_balance_wallet_outlined),
               dense: false,
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => TrackDeliveries()),
-                );
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(builder: (context) => TrackDeliveries()),
+                // );
               },
             ),
             ListTile(
@@ -147,11 +147,11 @@ class NavDrawer extends StatelessWidget {
               ),
               leading: Icon(Icons.read_more),
               onTap:(){
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => UserOrder()),
-                );
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(
+                //       builder: (context) => UserOrder()),
+                // );
               }
             ),
             Expanded(child: SizedBox()),
@@ -183,7 +183,7 @@ class NavDrawer extends StatelessWidget {
                 onTap: () {
                   Navigator.pushNamed(
                     context,
-                    'DriverOnboard',
+                    '/DriverOnboard',
                   );
                 },
               ),
