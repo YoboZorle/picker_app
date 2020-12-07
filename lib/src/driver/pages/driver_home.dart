@@ -534,18 +534,6 @@ class _DriverHomeState extends State<DriverHome> {
   }
 }
 
-/// Search text field plus the horizontally scrolling categories below the text field
-class CustomHeader extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        CustomerAppBar(),
-      ],
-    );
-  }
-}
-
 class CustomerAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

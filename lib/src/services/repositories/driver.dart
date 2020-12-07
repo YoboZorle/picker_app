@@ -23,7 +23,11 @@ class DriverRepository extends APIClient {
       await dio.post(url, data: details);
     } catch (e) {
       cprint(e.response, errorIn: 'driverRequest');
-      throw ServiceError(e);
+      if (e.response.data != null &&
+          e.response.data['non_field_errors'] != null) {
+        throw ServiceError(e.response.data['non_field_errors'].first);
+      }
+      throw ServiceError('Request failed please try again.');
     }
   }
 }
