@@ -25,11 +25,10 @@ class _HomeState extends State<Home> {
   TextEditingController destinationController = new TextEditingController();
   TextEditingController pickupController = new TextEditingController();
   List<Marker> markersList = [];
-  final String key = "AIzaSyAPV3djPp_HceZIbgK4M4jRadHA-d08ECg";
   LatLng _center = LatLng(
       4.778559, 7.016669); //port harcourt coordinates -- default location
-  GoogleMapsPlaces _places = GoogleMapsPlaces(apiKey: "AIzaSyAPV3djPp_HceZIbgK4M4jRadHA-d08ECg");
-  GoogleMapPolyline googleMapPolyline = new GoogleMapPolyline(apiKey: "AIzaSyAPV3djPp_HceZIbgK4M4jRadHA-d08ECg");
+  GoogleMapsPlaces _places = GoogleMapsPlaces(apiKey: AppData.mapAPIKey);
+  GoogleMapPolyline googleMapPolyline = new GoogleMapPolyline(apiKey: AppData.mapAPIKey);
   final List<Polyline> polyline = [];
   List<LatLng> routeCoords = [];
   Completer<GoogleMapController> __controller = Completer();
@@ -231,9 +230,9 @@ class _HomeState extends State<Home> {
                             decoration: BoxDecoration(
                               color: Colors.white,
                               border: Border.fromBorderSide(
-                                  Borders.global_search_border),
+                                  Borders.globalSearchBorder),
                               boxShadow: [
-                                Shadows.global_shadow_search,
+                                Shadows.globalShadowSearch,
                               ],
                               borderRadius:
                               BorderRadius.all(Radius.circular(5)),
@@ -280,7 +279,7 @@ class _HomeState extends State<Home> {
                                   onTap: () async {
                                     Prediction p = await PlacesAutocomplete.show(
                                         context: context,
-                                        apiKey: key,
+                                        apiKey: AppData.mapAPIKey,
                                         mode: Mode.fullscreen,
                                         language: "en",
                                         components: [
@@ -299,9 +298,9 @@ class _HomeState extends State<Home> {
                             decoration: BoxDecoration(
                               color: Colors.white,
                               border: Border.fromBorderSide(
-                                  Borders.global_search_border),
+                                  Borders.globalSearchBorder),
                               boxShadow: [
-                                Shadows.global_shadow_search,
+                                Shadows.globalShadowSearch,
                               ],
                               borderRadius:
                               BorderRadius.all(Radius.circular(5)),
@@ -348,7 +347,7 @@ class _HomeState extends State<Home> {
                                   onTap: () async {
                                     Prediction p = await PlacesAutocomplete.show(
                                         context: context,
-                                        apiKey: key,
+                                        apiKey: AppData.mapAPIKey,
                                         mode: Mode.fullscreen,
                                         language: "en",
                                         components: [
@@ -404,5 +403,11 @@ class _HomeState extends State<Home> {
       style: DefaultTextStyle.of(toHeroContext).style,
       child: toHeroContext.widget,
     );
+  }
+
+  @override
+  void dispose() {
+    mapController.dispose();
+    super.dispose();
   }
 }

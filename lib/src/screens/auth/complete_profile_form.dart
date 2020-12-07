@@ -31,9 +31,11 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
   Future getImage() async {
     final pickedFile =
         await ImagePicker().getImage(source: ImageSource.gallery);
-    setState(() {
-      _profileImage = File(pickedFile.path);
-    });
+    if (pickedFile != null) {
+      setState(() {
+        _profileImage = File(pickedFile.path);
+      });
+    }
   }
 
   bool _hasCompletedForm() {
@@ -142,18 +144,19 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
                                   )),
                             ),
                             SizedBox(height: 25),
-                                Container(
-                                    height: 47,
-                                    margin: EdgeInsets.only(left: 20, right: 20, bottom: 20),
-                                    color: Colors.grey[200],
-                                    child: _fullNameInput()),
-                                Container(
-                                    alignment: Alignment.center,
-                                    height: 47,
-                                    margin: EdgeInsets.only(
-                                        left: 20, right: 20, bottom: 10),
-                                    color: Colors.grey[200],
-                                    child: _emailInput()),
+                            Container(
+                                height: 47,
+                                margin: EdgeInsets.only(
+                                    left: 20, right: 20, bottom: 20),
+                                color: Colors.grey[200],
+                                child: _fullNameInput()),
+                            Container(
+                                alignment: Alignment.center,
+                                height: 47,
+                                margin: EdgeInsets.only(
+                                    left: 20, right: 20, bottom: 10),
+                                color: Colors.grey[200],
+                                child: _emailInput()),
                             Container(
                               margin: EdgeInsets.only(left: 20),
                               child: Text('We\'ll send you your ride receipts.',
@@ -163,7 +166,6 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
                                       color: Colors.grey,
                                       fontSize: 13)),
                             ),
-
                           ])),
                     ])),
               ),
@@ -207,61 +209,60 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
     super.dispose();
   }
 
-
   _fullNameInput() => Container(
-    margin: EdgeInsets.only(left: 15),
-    child: Row(
-      children: <Widget>[
-        Expanded(
-          child: Container(
-            width: MediaQuery.of(context).size.width,
-            margin: EdgeInsets.only(left: 0),
-            child: TextFormField(
-              keyboardType: TextInputType.name,
-              cursorColor: AppColor.primaryText,
-              controller: _fnameController,
-              style: TextStyle(
-                  fontSize: 16.0,
-                  fontFamily: 'Ubuntu',
-                  color: Colors.black,
-                  fontWeight: FontWeight.w400),
-              decoration: InputDecoration(
-                hintText: 'Enter full name',
-                hintStyle: TextStyle(
-                    fontSize: 16.0,
-                    fontFamily: 'Ubuntu',
-                    color: Colors.grey,
-                    fontWeight: FontWeight.w400),
-                border: InputBorder.none,
-                focusedBorder: InputBorder.none,
-                enabledBorder: InputBorder.none,
-                errorBorder: InputBorder.none,
-                disabledBorder: InputBorder.none,
-                suffixIcon: _fnameController.text.isNotEmpty
-                    ? Padding(
-                  padding:
-                  const EdgeInsetsDirectional.only(start: 12.0),
-                  child: IconButton(
-                    iconSize: 16.0,
-                    icon: Icon(
-                      Icons.cancel,
-                      color: Colors.grey,
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        _fnameController.clear();
-                      });
-                    },
+        margin: EdgeInsets.only(left: 15),
+        child: Row(
+          children: <Widget>[
+            Expanded(
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                margin: EdgeInsets.only(left: 0),
+                child: TextFormField(
+                  keyboardType: TextInputType.name,
+                  cursorColor: AppColor.primaryText,
+                  controller: _fnameController,
+                  style: TextStyle(
+                      fontSize: 16.0,
+                      fontFamily: 'Ubuntu',
+                      color: Colors.black,
+                      fontWeight: FontWeight.w400),
+                  decoration: InputDecoration(
+                    hintText: 'Enter full name',
+                    hintStyle: TextStyle(
+                        fontSize: 16.0,
+                        fontFamily: 'Ubuntu',
+                        color: Colors.grey,
+                        fontWeight: FontWeight.w400),
+                    border: InputBorder.none,
+                    focusedBorder: InputBorder.none,
+                    enabledBorder: InputBorder.none,
+                    errorBorder: InputBorder.none,
+                    disabledBorder: InputBorder.none,
+                    suffixIcon: _fnameController.text.isNotEmpty
+                        ? Padding(
+                            padding:
+                                const EdgeInsetsDirectional.only(start: 12.0),
+                            child: IconButton(
+                              iconSize: 16.0,
+                              icon: Icon(
+                                Icons.cancel,
+                                color: Colors.grey,
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  _fnameController.clear();
+                                });
+                              },
+                            ),
+                          )
+                        : null,
                   ),
-                )
-                    : null,
+                ),
               ),
             ),
-          ),
+          ],
         ),
-      ],
-    ),
-  );
+      );
 
   _emailInput() => Container(
         margin: EdgeInsets.only(left: 15),

@@ -33,7 +33,7 @@ class AuthenticationBloc
         await _userRepository.getUserDetails(user.id);
     final upToDateUserDetails = User.fromMap(upToDateUserDetailsMap);
     persistUserDetails(upToDateUserDetails);
-    yield LoggedIn(upToDateUserDetails);
+    yield DetailsUpdate(upToDateUserDetails);
   }
 
   Stream<AuthenticationState> _mapAppStartedToState() async* {

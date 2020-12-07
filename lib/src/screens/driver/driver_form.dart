@@ -173,11 +173,20 @@ class _DriverApplicationState extends State<DriverApplication> {
       };
 
       await _driverRepository.driverRequest(new FormData.fromMap(formDetails));
-      Navigator.pushReplacementNamed(context, '/DriversHomePage');
+      AlertBar.dialog(context,
+          'Request has been sent. You will be contacted soon.', Colors.green,
+          icon: Icon(
+            Icons.check_circle_outline,
+            color: Colors.green,
+          ),
+          duration: 10);
+      Future.delayed(new Duration(seconds: 7), () {
+        Navigator.pushReplacementNamed(context, '/');
+      });
     } catch (err) {
       debugLog(err);
       Navigator.pop(context);
-      AlertBar.dialog(context, 'Request failed. please try again', Colors.red,
+      AlertBar.dialog(context, err.message, Colors.red,
           icon: Icon(Icons.error), duration: 5);
     }
   }

@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:pickrr_app/src/helpers/constants.dart';
 
 class CustomImage extends StatelessWidget {
   final String imageUrl;
