@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pickrr_app/src/blocs/authentication/bloc.dart';
 import 'package:pickrr_app/src/helpers/constants.dart';
 import 'package:pickrr_app/src/models/user.dart';
-import 'package:pickrr_app/src/screens/driver/onboard.dart';
 import 'package:pickrr_app/src/user/ride_history/ride_history.dart';
 import 'package:pickrr_app/src/user/track_deliveries/track_deliveries.dart';
 import 'package:pickrr_app/src/user/user_order.dart';
@@ -153,6 +152,21 @@ class NavDrawer extends StatelessWidget {
                       builder: (context) => UserOrder()),
                 );
               }
+            ),
+            ListTile(
+              title: Text(
+                'Logout',
+                style: TextStyle(
+                    fontWeight: FontWeight.w400,
+                    fontFamily: "Ubuntu",
+                    fontSize: 18),
+              ),
+              leading: Icon(Icons.logout),
+              onTap: () {
+                BlocProvider.of<AuthenticationBloc>(context)
+                    .add(AuthenticationEvent.LOGGED_OUT);
+                Navigator.pushReplacementNamed(context, '/');
+              },
             ),
             Expanded(child: SizedBox()),
             Container(

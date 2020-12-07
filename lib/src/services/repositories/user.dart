@@ -62,6 +62,8 @@ class UserRepository extends APIClient {
     try {
       response = await dio.get(url);
       final responseBody = response.data;
+      print('responseBody');
+      print(responseBody);
       return responseBody;
     } catch (e) {
       throw ServiceError(e);

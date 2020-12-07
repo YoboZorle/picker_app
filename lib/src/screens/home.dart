@@ -227,9 +227,9 @@ class _HomeState extends State<Home> {
                             decoration: BoxDecoration(
                               color: Colors.white,
                               border: Border.fromBorderSide(
-                                  Borders.global_search_border),
+                                  Borders.globalSearchBorder),
                               boxShadow: [
-                                Shadows.global_shadow_search,
+                                Shadows.globalShadowSearch,
                               ],
                               borderRadius:
                               BorderRadius.all(Radius.circular(5)),
@@ -295,9 +295,9 @@ class _HomeState extends State<Home> {
                             decoration: BoxDecoration(
                               color: Colors.white,
                               border: Border.fromBorderSide(
-                                  Borders.global_search_border),
+                                  Borders.globalSearchBorder),
                               boxShadow: [
-                                Shadows.global_shadow_search,
+                                Shadows.globalShadowSearch,
                               ],
                               borderRadius:
                               BorderRadius.all(Radius.circular(5)),

@@ -7,7 +7,7 @@ class Borders {
     style: BorderStyle.solid,
   );
 
-  static final BorderSide global_search_border = BorderSide(
+  static final BorderSide globalSearchBorder = BorderSide(
     color: Color.fromARGB(70, 0, 141, 210),
     width: 0.4,
     style: BorderStyle.solid,
@@ -78,7 +78,7 @@ class Shadows {
     blurRadius: 8,
   );
 
-  static final BoxShadow global_shadow_search = BoxShadow(
+  static final BoxShadow globalShadowSearch = BoxShadow(
     color: Color.fromARGB(65, 134, 134, 134),
     offset: Offset(6, 6),
     blurRadius: 10,

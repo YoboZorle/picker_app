@@ -537,7 +537,6 @@ class _DriverHomeState extends State<DriverHome> {
 class CustomerAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    bool status = false;
     return SafeArea(
       child: Padding(
           padding: const EdgeInsets.fromLTRB(14, 15, 16, 8),
