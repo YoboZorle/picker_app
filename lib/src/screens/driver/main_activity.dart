@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pickrr_app/src/helpers/constants.dart';
 import '../../driver/pages/driver_home.dart';
 import 'profile.dart';
-import '../../driver/pages/driver_wallet.dart';
+import 'driver_wallet.dart';
 
 class DriverTabs extends StatefulWidget {
   @override
@@ -16,12 +16,6 @@ class _DriverTabsState extends State<DriverTabs> {
     DriverWallet(key: PageStorageKey('DriverWallet')),
     DriverProfile(key: PageStorageKey('DriverProfile'))
   ];
-
-  List<Widget> originalList;
-  Map<int, bool> originalDic;
-  List<Widget> listScreens;
-  List<int> listScreensIndex;
-
   int tabIndex = 0;
   Color tabColor = Colors.grey[500];
   Color selectedTabColor = AppColor.primaryText;
@@ -29,36 +23,21 @@ class _DriverTabsState extends State<DriverTabs> {
   @override
   void initState() {
     super.initState();
-    originalList = [
-      DriverHome(),
-      DriverWallet(),
-      DriverProfile(),
-    ];
-    originalDic = {0: true, 1: false, 2: false};
-    listScreens = [originalList.first];
-    listScreensIndex = [0];
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: IndexedStack(
-            index: listScreensIndex.indexOf(tabIndex), children: listScreens),
+        body: PageStorage(
+          child: _navPages[tabIndex],
+          bucket: _bucket,
+        ),
         bottomNavigationBar: _buildTabBar(),
         backgroundColor: Theme.of(context).primaryColor,
       );
   }
 
   void _selectedTab(int index) {
-    if (originalDic[index] == false) {
-      listScreensIndex.add(index);
-      originalDic[index] = true;
-      listScreensIndex.sort();
-      listScreens = listScreensIndex.map((index) {
-        return originalList[index];
-      }).toList();
-    }
-
     setState(() {
       tabIndex = index;
     });
@@ -66,7 +45,7 @@ class _DriverTabsState extends State<DriverTabs> {
 
   Widget _buildTabBar() {
     var listItems = [
-      BottomAppBarItem(iconData: Icons.directions_bike_sharp, text: 'Discover'),
+      BottomAppBarItem(iconData: Icons.directions_bike_sharp, text: 'DriverHome'),
       BottomAppBarItem(iconData: Icons.account_balance_wallet, text: 'Wallet'),
       BottomAppBarItem(iconData: Icons.person, text: 'Profile'),
     ];

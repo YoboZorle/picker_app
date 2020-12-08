@@ -5,7 +5,6 @@ import 'package:pickrr_app/src/helpers/constants.dart';
 import 'package:pickrr_app/src/models/user.dart';
 import 'package:pickrr_app/src/user/ride_history/ride_history.dart';
 import 'package:pickrr_app/src/user/track_deliveries/track_deliveries.dart';
-import 'package:pickrr_app/src/user/user_order.dart';
 import 'package:pickrr_app/src/user/user_profile/user_profile.dart';
 import 'package:pickrr_app/src/widgets/image.dart';
 

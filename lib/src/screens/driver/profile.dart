@@ -1,5 +1,3 @@
-import 'package:circular_profile_avatar/circular_profile_avatar.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pickrr_app/src/blocs/authentication/bloc.dart';
