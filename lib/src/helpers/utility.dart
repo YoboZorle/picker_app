@@ -86,3 +86,12 @@ Future<void> persistUserDetails(User user) async {
   UserProvider helper = UserProvider.instance;
   await helper.updateOrInsert(user);
 }
+
+String getdob(String date) {
+  if (date == null || date.isEmpty) {
+    return '';
+  }
+  var dt = DateTime.parse(date).toLocal();
+  var dat = DateFormat.yMMMd().format(dt);
+  return dat;
+}

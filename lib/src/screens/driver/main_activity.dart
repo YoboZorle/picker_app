@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:pickrr_app/src/helpers/constants.dart';
-import 'pages/driver_home.dart';
-import 'pages/driver_prof.dart';
-import 'pages/driver_wallet.dart';
+import '../../driver/pages/driver_home.dart';
+import 'profile.dart';
+import '../../driver/pages/driver_wallet.dart';
 
 class DriverTabs extends StatefulWidget {
   @override
@@ -10,6 +10,13 @@ class DriverTabs extends StatefulWidget {
 }
 
 class _DriverTabsState extends State<DriverTabs> {
+  final PageStorageBucket _bucket = PageStorageBucket();
+  final List<Widget> _navPages = [
+    DriverHome(key: PageStorageKey('DriverHome')),
+    DriverWallet(key: PageStorageKey('DriverWallet')),
+    DriverProfile(key: PageStorageKey('DriverProfile'))
+  ];
+
   List<Widget> originalList;
   Map<int, bool> originalDic;
   List<Widget> listScreens;
@@ -25,7 +32,7 @@ class _DriverTabsState extends State<DriverTabs> {
     originalList = [
       DriverHome(),
       DriverWallet(),
-      DriverProf(),
+      DriverProfile(),
     ];
     originalDic = {0: true, 1: false, 2: false};
     listScreens = [originalList.first];
@@ -115,6 +122,7 @@ class _DriverTabsState extends State<DriverTabs> {
 
 class BottomAppBarItem {
   BottomAppBarItem({this.iconData, this.text});
+
   IconData iconData;
   String text;
 }

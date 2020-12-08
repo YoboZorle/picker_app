@@ -10,7 +10,7 @@ import 'package:pickrr_app/src/screens/auth/otp_verification.dart';
 import 'package:pickrr_app/src/screens/driver/onboard.dart';
 import 'package:pickrr_app/src/screens/home.dart';
 import 'package:pickrr_app/src/screens/onboard.dart';
-import 'package:pickrr_app/src/driver/driver_tabs.dart';
+import 'package:pickrr_app/src/screens/driver/main_activity.dart';
 import 'package:pickrr_app/src/screens/driver/driver_form.dart';
 
 class Routes {
@@ -36,7 +36,10 @@ class Routes {
         return CustomRoute<bool>(builder: (BuildContext context) => Onboard());
       case "DriversHomePage":
         return SlideLeftRoute<bool>(
-            builder: (BuildContext context) => DriverTabs());
+            builder: (BuildContext context) => BlocProvider<AuthenticationBloc>(
+                create: (_) =>
+                    AuthenticationBloc()..add(AuthenticationEvent.AUTHENTICATED),
+                child: DriverTabs()));
       case "Login":
         return SlideLeftRoute<bool>(builder: (BuildContext context) => Login());
       case "DriverOnboard":

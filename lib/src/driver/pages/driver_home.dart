@@ -9,6 +9,8 @@ import 'package:url_launcher/url_launcher.dart';
 
 
 class DriverHome extends StatefulWidget {
+  DriverHome({Key key}) : super(key: key);
+
   @override
   _DriverHomeState createState() => _DriverHomeState();
 }
@@ -327,7 +329,8 @@ class _DriverHomeState extends State<DriverHome> {
                             onTap: () {
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => DriverAccept()),
+                                MaterialPageRoute(
+                                    builder: (context) => DriverAccept()),
                               );
                               // setState(() {
                               //   arrived = !arrived;

@@ -24,4 +24,11 @@ class DriverRepository extends APIClient {
       throw ServiceError('Request failed please try again.');
     }
   }
+
+  Future getDriverDetails() async {
+    final String url = '/user';
+    response = await dio.get(url);
+    final responseBody = response.data;
+    return responseBody;
+  }
 }

@@ -4,6 +4,8 @@ import 'package:pickrr_app/src/helpers/constants.dart';
 import 'package:pickrr_app/src/utils/transitionAppbar/transition_appbar.dart';
 
 class DriverWallet extends StatelessWidget {
+  DriverWallet({Key key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     cryptoPortfolioItem(String img, String name, double amount, String rate,
@@ -28,15 +30,16 @@ class DriverWallet extends StatelessWidget {
                         radius: 25,
                         backgroundColor: Colors.grey[200],
                         // sets initials text, set your own style, default Text('')
-                        borderColor: Colors
-                            .brown, // sets border color, default Colors.white
-                        elevation:
-                            0.0, // sets elevation (shadow of the profile picture), default value is 0.0
-                        cacheImage:
-                            true, // allow widget to cache image against provided url
+                        borderColor: Colors.brown,
+                        // sets border color, default Colors.white
+                        elevation: 0.0,
+                        // sets elevation (shadow of the profile picture), default value is 0.0
+                        cacheImage: true,
+                        // allow widget to cache image against provided url
                         onTap: () {
                           print('yea');
-                        }, // sets on tap
+                        },
+                        // sets on tap
                         showInitialTextAbovePicture:
                             false, // setting it true will show initials text above profile picture, default false
                       )),
