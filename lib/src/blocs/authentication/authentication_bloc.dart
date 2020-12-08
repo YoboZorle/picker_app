@@ -40,7 +40,6 @@ class AuthenticationBloc
     try {
       final isSignedIn = await _userRepository.isSignedIn();
       if (isSignedIn) {
-        print('Hello from here ---------------');
         final User user = await _userRepository.getUser();
         yield LoggedIn(user);
         if (await isInternetConnected()) {
@@ -70,12 +69,12 @@ class AuthenticationBloc
 
   Stream<AuthenticationState> _mapLoggedOutToState(
       AuthenticationState currentState) async* {
-    yield NonLoggedIn();
-    _userRepository.signOutFromDevice();
+    await _userRepository.signOutFromDevice();
     if (currentState is LoggedIn) {
       final User user = currentState.props.first;
       UserProvider helper = UserProvider.instance;
       helper.delete(user.id);
     }
+    yield NonLoggedIn();
   }
 }

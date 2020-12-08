@@ -112,6 +112,113 @@ class _ReviewOrderState extends State<ReviewOrder> {
                                       children: [
                                         Row(
                                           children: [
+                                            Icon(
+                                              Icons.location_on_rounded,
+                                              size: 22,
+                                              color: Colors.redAccent,
+                                            ),
+                                            SizedBox(width: 3),
+                                            Text(
+                                              'SENDER DETAILS',
+                                              textAlign: TextAlign.left,
+                                              style: TextStyle(
+                                                fontSize: 14,
+                                                fontFamily: 'Ubuntu',
+                                                color: Colors.black87,
+                                                fontWeight: FontWeight.w800,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        SizedBox(height: 8),
+                                        Row(
+                                          children: [
+                                            Text(
+                                              'Name',
+                                              style: TextStyle(
+                                                  fontSize: 13.0,
+                                                  fontFamily: "Ubuntu",
+                                                  color: Colors.black87,
+                                                  fontWeight: FontWeight.w400),
+                                            ),
+                                            SizedBox(width: 18),
+                                            Expanded(
+                                              child: Text(
+                                                'Cynthia Morgan',
+                                                style: TextStyle(
+                                                    fontSize: 14.0,
+                                                    fontFamily: "Ubuntu",
+                                                    color: Colors.black,
+                                                    fontWeight: FontWeight.w600),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        SizedBox(height: 3),
+                                        Row(
+                                          children: [
+                                            Text(
+                                              'Phone',
+                                              style: TextStyle(
+                                                  fontSize: 13.0,
+                                                  fontFamily: "Ubuntu",
+                                                  color: Colors.black87,
+                                                  fontWeight: FontWeight.w400),
+                                            ),
+                                            SizedBox(width: 18),
+                                            Expanded(
+                                              child: Text(
+                                                '07034287783',
+                                                style: TextStyle(
+                                                    fontSize: 14.0,
+                                                    fontFamily: "Ubuntu",
+                                                    color: Colors.black,
+                                                    fontWeight: FontWeight.w600),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        SizedBox(height: 3),
+                                        Row(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          mainAxisAlignment: MainAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              'Address',
+                                              style: TextStyle(
+                                                  fontSize: 13.0,
+                                                  fontFamily: "Ubuntu",
+                                                  color: Colors.black87,
+                                                  fontWeight: FontWeight.w400),
+                                            ),
+                                            SizedBox(width: 18),
+                                            Expanded(
+                                              child: Text(
+                                                '24 Odilli road, Port harcourt, Nigeria',
+                                                style: TextStyle(
+                                                    fontSize: 14.0,
+                                                    fontFamily: "Ubuntu",
+                                                    color: Colors.black,
+                                                    fontWeight: FontWeight.w600),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+
+                              Container(
+                                margin: EdgeInsets.symmetric(horizontal: 15),
+                                child: Card(elevation: 100,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(15.0),
+                                    child: Column(
+                                      children: [
+                                        Row(
+                                          children: [
                                             Transform.rotate(
                                               angle: 120,
                                               child: Icon(
@@ -213,113 +320,7 @@ class _ReviewOrderState extends State<ReviewOrder> {
                                 ),
                               ),
 
-                              Container(
-                                padding: EdgeInsets.only(left: 20, bottom: 8),
-                                child: Row(
-                                  children: [
-                                    Icon(
-                                      Icons.location_on_rounded,
-                                      size: 22,
-                                      color: Colors.redAccent,
-                                    ),
-                                    SizedBox(width: 3),
-                                    Text(
-                                      'SENDER DETAILS',
-                                      textAlign: TextAlign.left,
-                                      style: TextStyle(
-                                        fontSize: 15,
-                                        fontFamily: 'Ubuntu',
-                                        color: Colors.black87,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                margin: EdgeInsets.only(
-                                    left: 20, right: 20, bottom: 4),
-                                child: Row(
-                                  children: [
-                                    Text(
-                                      'Name',
-                                      style: TextStyle(
-                                          fontSize: 14.0,
-                                          fontFamily: "Ubuntu",
-                                          color: Colors.black87,
-                                          fontWeight: FontWeight.w400),
-                                    ),
-                                    SizedBox(width: 18),
-                                    Expanded(
-                                      child: Text(
-                                        'Cynthia Morgan',
-                                        style: TextStyle(
-                                            fontSize: 14.0,
-                                            fontFamily: "Ubuntu",
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.w600),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                margin: EdgeInsets.only(
-                                    left: 20, right: 20, bottom: 4),
-                                child: Row(
-                                  children: [
-                                    Text(
-                                      'Phone',
-                                      style: TextStyle(
-                                          fontSize: 14.0,
-                                          fontFamily: "Ubuntu",
-                                          color: Colors.black87,
-                                          fontWeight: FontWeight.w400),
-                                    ),
-                                    SizedBox(width: 18),
-                                    Expanded(
-                                      child: Text(
-                                        '07093432486',
-                                        style: TextStyle(
-                                            fontSize: 14.0,
-                                            fontFamily: "Ubuntu",
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.w600),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                margin: EdgeInsets.only(
-                                    left: 20, right: 20, bottom: 4),
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      'Address',
-                                      style: TextStyle(
-                                          fontSize: 14.0,
-                                          fontFamily: "Ubuntu",
-                                          color: Colors.black87,
-                                          fontWeight: FontWeight.w400),
-                                    ),
-                                    SizedBox(width: 18),
-                                    Expanded(
-                                      child: Text(
-                                        '3B Helmet Close, Port harcourt, Nigeria',
-                                        style: TextStyle(
-                                            fontSize: 14.0,
-                                            fontFamily: "Ubuntu",
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.w600),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              SizedBox(height: 25),
+                              SizedBox(height: 20),
                               Container(
                                 padding: EdgeInsets.only(left: 20, right: 20),
                                 child: Row(
@@ -348,7 +349,7 @@ class _ReviewOrderState extends State<ReviewOrder> {
                                       )
                                     ]),
                               ),
-                              SizedBox(height: 15),
+                              SizedBox(height: 10),
                               Container(
                                 padding: EdgeInsets.only(left: 20, right: 20),
                                 child: Row(
@@ -383,7 +384,7 @@ class _ReviewOrderState extends State<ReviewOrder> {
                                 child: DottedLine(
                                   direction: Axis.horizontal,
                                   lineLength: double.infinity,
-                                  lineThickness: 0.5,
+                                  lineThickness: 1.5,
                                   dashLength: 5.0,
                                   dashColor: Colors.grey,
                                   dashRadius: 0.0,

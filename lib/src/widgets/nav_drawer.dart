@@ -29,9 +29,9 @@ class NavDrawer extends StatelessWidget {
             SizedBox(height: 30),
             GestureDetector(
               onTap: () {
-                Navigator.push(
+                Navigator.pushNamed(
                   context,
-                  MaterialPageRoute(builder: (context) => UserProfile()),
+                 '/ProfileDetails'
                 );
               },
               child: Row(

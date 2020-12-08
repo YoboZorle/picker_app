@@ -123,8 +123,8 @@ class _LoginState extends State<Login> {
         child: Row(
           children: <Widget>[
             Container(
-              height: 30,
-              width: 95,
+              height: 28,
+              width: 85,
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: new CountryCodePicker(
@@ -134,6 +134,7 @@ class _LoginState extends State<Login> {
                       _callingCode = dialCode[1];
                     });
                   },
+                  flagWidth: 28,
                   initialSelection: 'NG',
                   favorite: ['+234', 'NG'],
                   showCountryOnly: true,
@@ -288,6 +289,7 @@ class _LoginState extends State<Login> {
       Navigator.pop(context);
       _openEnterOTPScreen();
     } catch (err) {
+      print(err);
       Navigator.pop(context);
       AlertBar.dialog(context, 'Request failed. please try again', Colors.red,
           icon: Icon(Icons.error), duration: 5);
@@ -295,7 +297,7 @@ class _LoginState extends State<Login> {
   }
 
   _openEnterOTPScreen() {
-    Navigator.pushReplacementNamed(
+    Navigator.pushNamed(
         context, '/OTPVerification/${_phoneController.text}/$_callingCode');
   }
 }

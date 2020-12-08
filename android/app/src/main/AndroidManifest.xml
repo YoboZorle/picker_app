@@ -11,7 +11,7 @@
     <uses-permission android:name="android.permission.READ_SMS"/>
     <uses-permission android:name="android.permission.RECEIVE_SMS"/>
 
-   <application
+    <application android:usesCleartextTraffic="true"
         android:label="Pickrr"
         android:icon="@mipmap/ic_launcher" android:allowBackup="false" android:fullBackupContent="false">
 

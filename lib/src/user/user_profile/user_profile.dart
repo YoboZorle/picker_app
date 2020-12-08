@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_awesome_alert_box/flutter_awesome_alert_box.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pickrr_app/src/blocs/authentication/bloc.dart';
 
 class UserProfile extends StatelessWidget {
   @override
@@ -144,6 +146,11 @@ class UserProfile extends StatelessWidget {
                             titleTextColor: Colors.white,
                             icon: Icons.eighteen_mp,
                             infoMessage: '',
+                            onPressedYes: (){
+                              BlocProvider.of<AuthenticationBloc>(context)
+                                  .add(AuthenticationEvent.LOGGED_OUT);
+                              Navigator.pushReplacementNamed(context, '/');
+                            }
                           );
                         },
                       ),

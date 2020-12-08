@@ -211,7 +211,7 @@ class _HomeState extends State<Home> {
                           margin:
                           EdgeInsets.only(left: 20, bottom: 5, top: 3),
                           child: new Text(
-                            "A driver is ready for you.",
+                            "A rider is ready for you.",
                             maxLines: 1,
                             textAlign: TextAlign.left,
                             style: TextStyle(

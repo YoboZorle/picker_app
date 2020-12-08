@@ -12,6 +12,7 @@ import 'package:pickrr_app/src/screens/home.dart';
 import 'package:pickrr_app/src/screens/onboard.dart';
 import 'package:pickrr_app/src/screens/driver/main_activity.dart';
 import 'package:pickrr_app/src/screens/driver/driver_form.dart';
+import 'package:pickrr_app/src/user/user_profile/user_profile.dart';
 
 class Routes {
   static dynamic route() {
@@ -70,6 +71,12 @@ class Routes {
       case "CompleteProfileDetails":
         return SlideLeftRoute<bool>(
             builder: (BuildContext context) => CompleteProfileForm());
+      case "ProfileDetails":
+        return SlideLeftRoute<bool>(
+            builder: (BuildContext context) => BlocProvider<AuthenticationBloc>(
+                create: (_) => AuthenticationBloc()
+                  ..add(AuthenticationEvent.AUTHENTICATED),
+                child: UserProfile()));
       case "HomePage":
         return SlideLeftRoute<bool>(
             builder: (BuildContext context) => BlocProvider<AuthenticationBloc>(

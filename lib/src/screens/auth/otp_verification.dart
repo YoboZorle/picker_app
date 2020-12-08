@@ -102,22 +102,50 @@ class OTPVerification extends StatelessWidget {
             child: Column(children: <Widget>[
               Expanded(
                 child: new Container(
-                    margin: EdgeInsets.only(top: 50),
+                    margin: EdgeInsets.only(top: 5),
                     child: Stack(children: <Widget>[
                       SafeArea(
                           child: ListView(children: <Widget>[
+                            Row(
+                              children: [
+                                GestureDetector(
+                                  child: Container(
+                                    alignment: Alignment.centerLeft,
+                                    padding: const EdgeInsets.only(left: 15.0),
+                                    height: 40,
+                                    width: 100,
+                                    child: Text(
+                                      'Cancel',
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontFamily: 'Ubuntu',
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  ),
+                                  onTap: () {
+                                    Navigator.pop(context);
+                                  },
+                                ),
+                              ],
+                            ),
+                        SizedBox(height: 30),
                         hintText(),
                         SizedBox(height: 8),
-                        Text(
-                            'Input the verification code sent to +$callingCode${phone.replaceAll(RegExp(r'.(?=.{4})'), '*')}',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: 15.7,
-                              fontFamily: 'Ubuntu',
-                              color: Colors.black,
-                              fontWeight: FontWeight.w400,
-                              height: 1.3,
-                            )),
+                        Container(
+                          margin: EdgeInsets.symmetric(horizontal: 30),
+                          child: Text(
+                              'Input the verification code sent to +$callingCode${phone.replaceAll(RegExp(r'.(?=.{4})'), '*')}',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 15.7,
+                                fontFamily: 'Ubuntu',
+                                color: Colors.black,
+                                fontWeight: FontWeight.w400,
+                                height: 1.4,
+                              )),
+                        ),
                         Container(
                             alignment: Alignment.center,
                             margin:

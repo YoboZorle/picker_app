@@ -83,6 +83,7 @@ class UserRepository extends APIClient {
     try {
       await dio.post(url, data: formData);
     } catch (e) {
+      print(e);
       throw ServiceError(e);
     }
   }

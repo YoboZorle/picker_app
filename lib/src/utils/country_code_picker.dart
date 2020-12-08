@@ -122,7 +122,6 @@ class CountryCodePicker extends StatefulWidget {
               uppercaseCustomList.contains(c.dialCode))
           .toList();
     }
-
     return CountryCodePickerState(elements);
   }
 }
@@ -177,7 +176,7 @@ class CountryCodePickerState extends State<CountryCodePicker> {
                   style:
                       // widget.textStyle
                       TextStyle(
-                              fontSize: 16.0,
+                              fontSize: 15.0,
                               fontFamily: 'Ubuntu',
                               color: Colors.black,
                               fontWeight: FontWeight.w400) ??
