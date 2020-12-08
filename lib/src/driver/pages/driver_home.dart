@@ -7,7 +7,6 @@ import 'package:pickrr_app/src/driver/driver_accept.dart';
 import 'package:pickrr_app/src/helpers/constants.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-
 class DriverHome extends StatefulWidget {
   DriverHome({Key key}) : super(key: key);
 
@@ -238,13 +237,6 @@ class _DriverHomeState extends State<DriverHome> {
                                     fontWeight: FontWeight.w600,
                                     height: 1.5),
                               ),
-                              // WidgetSpan(
-                              //   child: Padding(
-                              //     padding: const EdgeInsets.all(4.0),
-                              //     child: Icon(Icons.circle,
-                              //         size: 8, color: Colors.grey),
-                              //   ),
-                              // ),
                             ],
                           ),
                         ),
@@ -332,9 +324,6 @@ class _DriverHomeState extends State<DriverHome> {
                                 MaterialPageRoute(
                                     builder: (context) => DriverAccept()),
                               );
-                              // setState(() {
-                              //   arrived = !arrived;
-                              // });
                             },
                           ),
                         )
@@ -360,10 +349,6 @@ class _DriverHomeState extends State<DriverHome> {
                                       fontWeight: FontWeight.w500)),
                             ),
                             onTap: () {
-                              // Navigator.push(
-                              //   context,
-                              //   MaterialPageRoute(builder: (context) => DriverAccept()),
-                              // );
                               setState(() {
                                 arrived = !arrived;
                               });
@@ -385,12 +370,7 @@ class _DriverHomeState extends State<DriverHome> {
                                     color: Colors.black87,
                                     fontWeight: FontWeight.w500)),
                           ),
-                          onTap: () {
-                            // Navigator.push(
-                            //   context,
-                            //   MaterialPageRoute(builder: (context) => AdminDriver()),
-                            // );
-                          },
+                          onTap: () {},
                         ),
                 ],
               )),
@@ -455,7 +435,6 @@ class _DriverHomeState extends State<DriverHome> {
             Column(
               children: [
                 Container(
-                  // width: 42,
                   height: 35,
                   decoration: BoxDecoration(
                     shape: BoxShape.rectangle,
@@ -474,7 +453,6 @@ class _DriverHomeState extends State<DriverHome> {
                       Container(
                           height: 35,
                           width: 45,
-                          // padding: EdgeInsets.all(5),
                           color: AppColor.primaryText,
                           child: Icon(Icons.directions_bike_sharp,
                               color: Colors.white)),
@@ -505,7 +483,6 @@ class _DriverHomeState extends State<DriverHome> {
   Set<Marker> myMarker() {
     setState(() {
       _markers.add(Marker(
-        // This marker id can be anything that uniquely identifies each marker.
         markerId: MarkerId(_mainLocation.toString()),
         position: _mainLocation,
         infoWindow: InfoWindow(
@@ -544,7 +521,6 @@ class CustomerAppBar extends StatelessWidget {
             children: [
               GestureDetector(
                   child: Container(
-                    // color: Colors.yellow,
                     padding: EdgeInsets.only(right: 10),
                     child: Card(
                         elevation: 8,
@@ -561,7 +537,6 @@ class CustomerAppBar extends StatelessWidget {
                   ),
                   onTap: () {
                     Scaffold.of(context).openDrawer();
-                    // _scaffoldKey.currentState.openDrawer();
                   }),
               Row(
                 children: [
