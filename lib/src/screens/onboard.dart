@@ -99,7 +99,7 @@ class Onboard extends StatelessWidget {
                                 ),
                               ),
                               onTap: () {
-                                Navigator.pushReplacementNamed(context, '/Login');
+                                Navigator.pushNamed(context, '/Login');
                               },
                             ),
                             delay: delayAmount + 2300,
