@@ -105,9 +105,9 @@ Widget homePage(BuildContext context, AuthenticationState state) {
   }
 
   User user = state.props[0];
-  // if (!user.isCompleteDetails) {
-  //   return CompleteProfileForm();
-  // }
+  if (!user.isCompleteDetails) {
+    return CompleteProfileForm();
+  }
 
   if (user.isDriver) {
     return DriverTabs();
