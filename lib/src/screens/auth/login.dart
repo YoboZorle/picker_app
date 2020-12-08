@@ -1,10 +1,10 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:country_code_picker/country_code_picker.dart';
 import 'package:pickrr_app/src/helpers/constants.dart';
 import 'package:pickrr_app/src/services/repositories/user.dart';
 import 'package:pickrr_app/src/utils/alert_bar.dart';
+import 'package:pickrr_app/src/utils/country_code_picker.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -124,7 +124,7 @@ class _LoginState extends State<Login> {
           children: <Widget>[
             Container(
               height: 30,
-              width: 110,
+              width: 95,
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: new CountryCodePicker(

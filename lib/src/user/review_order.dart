@@ -101,13 +101,13 @@ class _ReviewOrderState extends State<ReviewOrder> {
                                       ),
                                     ),
                                   ]),
-                              SizedBox(height: 25),
+                              SizedBox(height: 15),
 
                               Container(
                                 margin: EdgeInsets.symmetric(horizontal: 15),
                                 child: Card(elevation: 100,
                                   child: Padding(
-                                    padding: const EdgeInsets.all(20.0),
+                                    padding: const EdgeInsets.all(15.0),
                                     child: Column(
                                       children: [
                                         Row(
@@ -117,7 +117,7 @@ class _ReviewOrderState extends State<ReviewOrder> {
                                               child: Icon(
                                                 Icons.navigation_rounded,
                                                 size: 22,
-                                                color: Colors.greenAccent,
+                                                color: Colors.green,
                                               ),
                                             ),
                                             SizedBox(width: 3),
@@ -125,20 +125,21 @@ class _ReviewOrderState extends State<ReviewOrder> {
                                               'RECEIVER DETAILS',
                                               textAlign: TextAlign.left,
                                               style: TextStyle(
-                                                fontSize: 15,
+                                                fontSize: 14,
                                                 fontFamily: 'Ubuntu',
                                                 color: Colors.black87,
-                                                fontWeight: FontWeight.w500,
+                                                fontWeight: FontWeight.w800,
                                               ),
                                             ),
                                           ],
                                         ),
+                                        SizedBox(height: 8),
                                         Row(
                                           children: [
                                             Text(
                                               'Name',
                                               style: TextStyle(
-                                                  fontSize: 14.0,
+                                                  fontSize: 13.0,
                                                   fontFamily: "Ubuntu",
                                                   color: Colors.black87,
                                                   fontWeight: FontWeight.w400),
@@ -156,12 +157,13 @@ class _ReviewOrderState extends State<ReviewOrder> {
                                             ),
                                           ],
                                         ),
+                                        SizedBox(height: 3),
                                         Row(
                                           children: [
                                             Text(
                                               'Phone',
                                               style: TextStyle(
-                                                  fontSize: 14.0,
+                                                  fontSize: 13.0,
                                                   fontFamily: "Ubuntu",
                                                   color: Colors.black87,
                                                   fontWeight: FontWeight.w400),
@@ -179,6 +181,7 @@ class _ReviewOrderState extends State<ReviewOrder> {
                                             ),
                                           ],
                                         ),
+                                        SizedBox(height: 3),
                                         Row(
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           mainAxisAlignment: MainAxisAlignment.start,
@@ -186,7 +189,7 @@ class _ReviewOrderState extends State<ReviewOrder> {
                                             Text(
                                               'Address',
                                               style: TextStyle(
-                                                  fontSize: 14.0,
+                                                  fontSize: 13.0,
                                                   fontFamily: "Ubuntu",
                                                   color: Colors.black87,
                                                   fontWeight: FontWeight.w400),
