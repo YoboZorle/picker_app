@@ -1,0 +1,58 @@
+import 'package:equatable/equatable.dart';
+
+bool _driverStatus(value) {
+  if (value == null) return false;
+  if (value is bool) return value;
+  if (value == 0) return false;
+  return true;
+}
+
+class Driver extends Equatable {
+  final int id;
+  final String plateNumber;
+  final String ticketNumber;
+  final String companyName;
+  final String status;
+  final String createdAt;
+  final bool blocked;
+
+  Driver(
+      {this.id,
+      this.plateNumber,
+      this.ticketNumber,
+      this.companyName,
+      this.status,
+      this.blocked, this.createdAt});
+
+  @override
+  List<Object> get props => [id, ticketNumber, companyName, createdAt];
+
+  Map<String, dynamic> toMap() {
+    var map = <String, dynamic>{
+      'plateNumber': plateNumber,
+      'ticketNumber': ticketNumber,
+      'companyName': companyName,
+      'status': status,
+      'createdAt': createdAt,
+      'blocked': blocked == true ? 1 : 0
+    };
+    if (id != null) {
+      map['_userId'] = id;
+    }
+
+    return map;
+  }
+
+  Driver.fromMap(Map<String, dynamic> mapData)
+      : id = mapData['id'] ?? mapData['_userId'] ?? null,
+        plateNumber = mapData['plateNumber'] ?? '',
+        ticketNumber = mapData['ticketNumber'] ?? '',
+        companyName = mapData['companyName'] ?? '',
+        status = mapData['status'],
+        createdAt = mapData['createdAt'],
+        blocked = _driverStatus(mapData['blocked']);
+
+  @override
+  String toString() =>
+      'Driver { id: $id, ticketNumber: $ticketNumber, companyName: $companyName }';
+}

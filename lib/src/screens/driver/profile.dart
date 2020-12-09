@@ -79,7 +79,7 @@ class DriverProfile extends StatelessWidget {
                               fontWeight: FontWeight.w400,
                             )),
                         SizedBox(height: 4),
-                        Text('Started ${getdob(driverDetails['created_at'])}',
+                        Text('Started ${getdob(driverDetails.createdAt)}',
                             style: TextStyle(
                               fontSize: 15,
                               color: AppColor.primaryText,
@@ -91,7 +91,7 @@ class DriverProfile extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text(driverDetails['company_name'],
+                            Text(driverDetails.companyName,
                                 style: TextStyle(
                                   fontSize: 20,
                                   color: Colors.black,
@@ -106,7 +106,7 @@ class DriverProfile extends StatelessWidget {
                               decoration: BoxDecoration(
                                   color: Colors.black, shape: BoxShape.circle),
                             ),
-                            Text(driverDetails['ticket_number'],
+                            Text(driverDetails.ticketNumber,
                                 style: TextStyle(
                                   fontSize: 20,
                                   color: Colors.black,
@@ -118,7 +118,7 @@ class DriverProfile extends StatelessWidget {
                       ],
                     );
                   },
-                  future: _driverRepository.getDriverDetails(),
+                  future: _driverRepository.getDriverDetailsFromStorage(),
                 )
               ],
             ),

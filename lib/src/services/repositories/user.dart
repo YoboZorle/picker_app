@@ -8,6 +8,7 @@ import 'package:pickrr_app/src/helpers/utility.dart';
 import 'package:pickrr_app/src/models/user.dart';
 import 'package:pickrr_app/src/services/exceptions.dart';
 import 'package:pickrr_app/src/services/http_client.dart';
+import 'package:pickrr_app/src/services/repositories/driver.dart';
 
 class UserRepository extends APIClient {
   final _storage = new FlutterSecureStorage();
@@ -62,6 +63,9 @@ class UserRepository extends APIClient {
     try {
       response = await dio.get(url);
       final responseBody = response.data;
+      if (responseBody['is_driver']) {
+        await DriverRepository().loadDriverDetailsToStorage(userId);
+      }
       return responseBody;
     } catch (e) {
       throw ServiceError(e);
@@ -89,14 +93,8 @@ class UserRepository extends APIClient {
   }
 
   otpVerification(
-      {@required otp,
-      @required phone,
-      @required String callingCode}) async {
-    var formData = {
-      'otp': otp,
-      'phone': phone,
-      'calling_code': callingCode
-    };
+      {@required otp, @required phone, @required String callingCode}) async {
+    var formData = {'otp': otp, 'phone': phone, 'calling_code': callingCode};
     final String url = '${APIConstants.apiUrl}users/token/obtain';
 
     try {
