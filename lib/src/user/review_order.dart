@@ -105,7 +105,7 @@ class _ReviewOrderState extends State<ReviewOrder> {
 
                               Container(
                                 margin: EdgeInsets.symmetric(horizontal: 15),
-                                child: Card(elevation: 100,
+                                child: Card(elevation: 500,
                                   child: Padding(
                                     padding: const EdgeInsets.all(15.0),
                                     child: Column(
@@ -212,7 +212,7 @@ class _ReviewOrderState extends State<ReviewOrder> {
 
                               Container(
                                 margin: EdgeInsets.symmetric(horizontal: 15),
-                                child: Card(elevation: 100,
+                                child: Card(elevation: 500,
                                   child: Padding(
                                     padding: const EdgeInsets.all(15.0),
                                     child: Column(
@@ -415,10 +415,10 @@ class _ReviewOrderState extends State<ReviewOrder> {
                                         maxLines: 1,
                                         textAlign: TextAlign.left,
                                         style: TextStyle(
-                                            fontSize: 15.0,
+                                            fontSize: 18.0,
                                             fontFamily: "Roboto",
                                             color: AppColor.primaryText,
-                                            fontWeight: FontWeight.w700,
+                                            fontWeight: FontWeight.w800,
                                             height: 1.35),
                                       ),
                                     ]),
