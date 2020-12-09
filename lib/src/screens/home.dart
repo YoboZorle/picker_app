@@ -7,6 +7,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:google_map_polyline/google_map_polyline.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_maps_webservice/places.dart';
+import 'package:intl/intl.dart';
 import 'package:pickrr_app/src/helpers/constants.dart';
 import 'package:pickrr_app/src/helpers/utility.dart';
 import 'package:pickrr_app/src/user/custom_appbar.dart';
@@ -41,6 +42,10 @@ class _HomeState extends State<Home> {
   PlaceDetails arrival;
 
   String _placeDistance;
+
+  final currencyFormatter =
+      NumberFormat.currency(locale: 'en_US', symbol: '\u20a6');
+  double amount = 500;
 
   void onMapCreated(controller) {
     setState(() {
@@ -195,8 +200,8 @@ class _HomeState extends State<Home> {
                         ),
                       ),
                       CustomerAppBar(),
-                      Positioned(
-                          bottom: 0, right: 0, child: orderLocationDetailsPanel())
+                      // Positioned(
+                      //     bottom: 0, right: 0, child: orderLocationDetailsPanel())
                     ],
                   ),
                 ),
@@ -210,48 +215,16 @@ class _HomeState extends State<Home> {
                     width: MediaQuery.of(context).size.width,
                     child: Column(
                       children: [
-                        Text('DISTANCE: $_placeDistance km',
-                            style: TextStyle(
-                                color: Colors.purple,
-                                fontSize: 17,
-                                fontWeight: FontWeight.w900)),
                         Container(
                           height: 8,
                           width: 60,
-                          margin: EdgeInsets.only(top: 15, bottom: 15),
+                          margin: EdgeInsets.only(top: 14, bottom: 13),
                           decoration: BoxDecoration(
                               color: Colors.grey[300],
                               borderRadius: BorderRadius.circular(16)),
                         ),
-                        Container(
-                          alignment: Alignment.centerLeft,
-                          margin: EdgeInsets.only(left: 20),
-                          child: Text(
-                            "Hello George,",
-                            textAlign: TextAlign.left,
-                            style: TextStyle(
-                              fontSize: 15,
-                              fontFamily: "Ubuntu",
-                              color: Colors.black54,
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ),
-                        ),
-                        Container(
-                          alignment: Alignment.centerLeft,
-                          margin: EdgeInsets.only(left: 20, bottom: 5, top: 3),
-                          child: new Text(
-                            "A rider is ready for you.",
-                            maxLines: 1,
-                            textAlign: TextAlign.left,
-                            style: TextStyle(
-                                fontSize: 20.0,
-                                fontFamily: "Ubuntu",
-                                color: Colors.black,
-                                fontWeight: FontWeight.w700,
-                                height: 1.35),
-                          ),
-                        ),
+                        _billingLayout(),
+                        // _bottomTitle(),
                         Container(
                             height: 50.0,
                             width: double.infinity,
@@ -488,76 +461,116 @@ class _HomeState extends State<Home> {
     debugLog('Distance in meters: ${meter.toString()}');
   }
 
-  Widget orderLocationDetailsPanel() => Hero(
-    tag: "orderLocation",
-    child: Container(
-      width: MediaQuery.of(context).size.width,
-      child: Row(children: [
-        Expanded(child: SizedBox()),
-        Column(
+  _billingLayout() => Container(
+        width: MediaQuery.of(context).size.width,
+        margin: EdgeInsets.only(left: 20, right: 20, bottom: 15, top: 5),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Container(
-              // width: 42,
-              height: 35,
-              decoration: BoxDecoration(
-                shape: BoxShape.rectangle,
-                borderRadius: BorderRadius.circular(4),
-                color: Colors.white,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black26,
-                    blurRadius: 12.0,
-                    offset: Offset(0.0, 5.0),
-                  ),
-                ],
-              ),
-              child: Row(
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    children: [
-                      Container(
-                          height: 35,
-                          width: 45,
-                          // padding: EdgeInsets.all(5),
-                          color: AppColor.primaryText,
-                          child: Icon(Icons.directions_bike_sharp,
-                              color: Colors.white)),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: new Text(
-                          'Distance',
-                          maxLines: 1,
-                          textAlign: TextAlign.left,
-                          style: TextStyle(
-                              fontSize: 16.0,
-                              fontFamily: "Ubuntu",
-                              color: Colors.black,
-                              fontWeight: FontWeight.w700),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: new Text(
-                    '$_placeDistance km',
-                      maxLines: 1,
-                      textAlign: TextAlign.left,
-                      style: TextStyle(
-                          fontSize: 16.0,
-                          fontFamily: "Ubuntu",
-                          color: Colors.black,
-                          fontWeight: FontWeight.w700),
+                  Text(
+                    'Estimated time:',
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontFamily: "Ubuntu",
+                      color: Colors.black54,
+                      fontWeight: FontWeight.w400,
                     ),
                   ),
+                  Text('13mins',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontFamily: "Ubuntu",
+                        color: Colors.black,
+                        fontWeight: FontWeight.w800,
+                        height: 1.4,
+                      )),
                 ],
               ),
             ),
-            SizedBox(height: 15),
+            Expanded(
+                child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Total distance:',
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontFamily: "Ubuntu",
+                    color: Colors.black54,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+                Text('$_placeDistance' 'km',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontFamily: "Ubuntu",
+                      color: Colors.black,
+                      fontWeight: FontWeight.w800,
+                      height: 1.4,
+                    )),
+              ],
+            )),
+            Expanded(
+                child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Fare estimate:',
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontFamily: "Ubuntu",
+                    color: Colors.black54,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+                Text(currencyFormatter.format(amount),
+                    style: TextStyle(
+                      fontSize: 22,
+                      fontFamily: "Ubuntu",
+                      color: AppColor.primaryText,
+                      fontWeight: FontWeight.w800,
+                    )),
+              ],
+            )),
           ],
         ),
-        SizedBox(width: 15),
-      ]),
-    ),
-  );
+      );
+
+  _bottomTitle() => Column(
+        children: [
+          Container(
+            alignment: Alignment.centerLeft,
+            margin: EdgeInsets.only(left: 20),
+            child: Text(
+              "Hello George,",
+              textAlign: TextAlign.left,
+              style: TextStyle(
+                fontSize: 15,
+                fontFamily: "Ubuntu",
+                color: Colors.black54,
+                fontWeight: FontWeight.w400,
+              ),
+            ),
+          ),
+          Container(
+            alignment: Alignment.centerLeft,
+            margin: EdgeInsets.only(left: 20, bottom: 5, top: 3),
+            child: new Text(
+              "A rider is ready for you.",
+              maxLines: 1,
+              textAlign: TextAlign.left,
+              style: TextStyle(
+                  fontSize: 20.0,
+                  fontFamily: "Ubuntu",
+                  color: Colors.black,
+                  fontWeight: FontWeight.w700,
+                  height: 1.35),
+            ),
+          ),
+        ],
+      );
 }
