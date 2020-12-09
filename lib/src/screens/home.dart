@@ -7,12 +7,14 @@ import 'package:flutter_svg/svg.dart';
 import 'package:google_map_polyline/google_map_polyline.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_maps_webservice/places.dart';
-import 'package:great_circle_distance_calculator/great_circle_distance_calculator.dart';
 import 'package:pickrr_app/src/helpers/constants.dart';
+import 'package:pickrr_app/src/helpers/utility.dart';
 import 'package:pickrr_app/src/user/custom_appbar.dart';
 import 'package:pickrr_app/src/widgets/nav_drawer.dart';
+import 'package:latlong/latlong.dart' as myLat;
 
 import 'package:pickrr_app/src/user/user_order.dart';
+import 'dart:math' show cos, sqrt, asin;
 
 class Home extends StatefulWidget {
   @override
@@ -29,7 +31,8 @@ class _HomeState extends State<Home> {
   LatLng _center = LatLng(
       4.778559, 7.016669); //port harcourt coordinates -- default location
   GoogleMapsPlaces _places = GoogleMapsPlaces(apiKey: AppData.mapAPIKey);
-  GoogleMapPolyline googleMapPolyline = new GoogleMapPolyline(apiKey: AppData.mapAPIKey);
+  GoogleMapPolyline googleMapPolyline =
+      new GoogleMapPolyline(apiKey: AppData.mapAPIKey);
   final List<Polyline> polyline = [];
   List<LatLng> routeCoords = [];
   Completer<GoogleMapController> __controller = Completer();
@@ -49,8 +52,8 @@ class _HomeState extends State<Home> {
   Future<Null> displayPredictionDestination(Prediction p) async {
     if (p != null) {
       // get detail (lat/lng)
-      PlacesDetailsResponse detail = await _places.getDetailsByPlaceId(
-          p.placeId);
+      PlacesDetailsResponse detail =
+          await _places.getDetailsByPlaceId(p.placeId);
       final lat = detail.result.geometry.location.lat;
       final lng = detail.result.geometry.location.lng;
 
@@ -66,15 +69,12 @@ class _HomeState extends State<Home> {
             onTap: () {
               //print('this is where you will arrive');
             },
-            position: LatLng(lat, lng)
-        );
+            position: LatLng(lat, lng));
         markersList.add(marker);
       });
 
-      mapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
-          target: LatLng(lat, lng),
-          zoom: 16.0
-      )));
+      mapController.animateCamera(CameraUpdate.newCameraPosition(
+          CameraPosition(target: LatLng(lat, lng), zoom: 16.0)));
       computePath();
     }
   }
@@ -82,8 +82,8 @@ class _HomeState extends State<Home> {
   Future<Null> displayPredictionPickup(Prediction p) async {
     if (p != null) {
       // get detail (lat/lng)
-      PlacesDetailsResponse detail = await _places.getDetailsByPlaceId(
-          p.placeId);
+      PlacesDetailsResponse detail =
+          await _places.getDetailsByPlaceId(p.placeId);
       final lat = detail.result.geometry.location.lat;
       final lng = detail.result.geometry.location.lng;
 
@@ -99,41 +99,46 @@ class _HomeState extends State<Home> {
             onTap: () {
               //print('this is where you will arrive');
             },
-            position: LatLng(lat, lng)
-        );
+            position: LatLng(lat, lng));
         markersList.add(marker);
       });
-      mapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
-          target: LatLng(lat, lng),
-          zoom: 16.0
-      )));
+      mapController.animateCamera(CameraUpdate.newCameraPosition(
+          CameraPosition(target: LatLng(lat, lng), zoom: 16.0)));
     }
   }
 
-  computePath()async{
-    LatLng origin = new LatLng(departure.geometry.location.lat, departure.geometry.location.lng);
-    LatLng end = new LatLng(arrival.geometry.location.lat, arrival.geometry.location.lng);
-    routeCoords.addAll(await googleMapPolyline.getCoordinatesWithLocation(origin: origin, destination: end, mode: RouteMode.driving));
+  computePath() async {
+    LatLng origin = new LatLng(
+        departure.geometry.location.lat, departure.geometry.location.lng);
+    LatLng end = new LatLng(
+        arrival.geometry.location.lat, arrival.geometry.location.lng);
+    routeCoords.addAll(await googleMapPolyline.getCoordinatesWithLocation(
+        origin: origin, destination: end, mode: RouteMode.driving));
 
-    final lat1 = 41.139129;
-    final lon1 = 1.402244;
+    //math area
+    // _myDistanceCalc(
+    //     lat1: departure.geometry.location.lat,
+    //     lon1: departure.geometry.location.lng,
+    //     lat2: arrival.geometry.location.lat,
+    //     lon2: arrival.geometry.location.lng);
 
-    final lat2 = 41.139074;
-    final lon2 = 1.402315;
+    double totalDistance = 0.0;
 
-    final lata = departure.geometry.location.lat;
-    final lona = departure.geometry.location.lng;
+    // Calculating the total distance by adding the distance
+    // between small segments
+    for (int i = 0; i < routeCoords.length - 1; i++) {
+      totalDistance += _coordinateDistance(
+        routeCoords[i].latitude,
+        routeCoords[i].longitude,
+        routeCoords[i + 1].latitude,
+        routeCoords[i + 1].longitude,
+      );
+    }
 
-    final latb = arrival.geometry.location.lat;
-    final lonb = arrival.geometry.location.lng;
-
-    var gcd = new GreatCircleDistance.fromDegrees(
-        latitude1: lata, longitude1: lonb, latitude2: latb, longitude2: lona);
-
-    print(
-        'Distance from location 1 to 2 using the Spherical Law of Cosines is: ${gcd.sphericalLawOfCosinesDistance()}');
-    print(
-        'Distance from location 1 to 2 using the Vicenty`s formula is: ${gcd.haversineDistance()}');
+    setState(() {
+      _placeDistance = totalDistance.toStringAsFixed(2);
+      print('DISTANCE: $_placeDistance km');
+    });
 
     setState(() {
       polyline.add(Polyline(
@@ -144,8 +149,7 @@ class _HomeState extends State<Home> {
           geodesic: true,
           color: Colors.red,
           startCap: Cap.roundCap,
-          endCap: Cap.buttCap
-      ));
+          endCap: Cap.buttCap));
     });
   }
 
@@ -173,8 +177,7 @@ class _HomeState extends State<Home> {
                       Hero(
                         tag: 'map',
                         flightShuttleBuilder: _flightShuttleBuilder,
-                        child:
-                        GoogleMap(
+                        child: GoogleMap(
                           onMapCreated: onMapCreated,
                           initialCameraPosition: CameraPosition(
                             target: _center,
@@ -205,8 +208,9 @@ class _HomeState extends State<Home> {
                     width: MediaQuery.of(context).size.width,
                     child: Column(
                       children: [
-                        Text( 'DISTANCE: $_placeDistance km',
-                            style: TextStyle(color: Colors.purple,
+                        Text('DISTANCE: $_placeDistance km',
+                            style: TextStyle(
+                                color: Colors.purple,
                                 fontSize: 17,
                                 fontWeight: FontWeight.w900)),
                         Container(
@@ -233,8 +237,7 @@ class _HomeState extends State<Home> {
                         ),
                         Container(
                           alignment: Alignment.centerLeft,
-                          margin:
-                          EdgeInsets.only(left: 20, bottom: 5, top: 3),
+                          margin: EdgeInsets.only(left: 20, bottom: 5, top: 3),
                           child: new Text(
                             "A rider is ready for you.",
                             maxLines: 1,
@@ -260,7 +263,7 @@ class _HomeState extends State<Home> {
                                 Shadows.globalShadowSearch,
                               ],
                               borderRadius:
-                              BorderRadius.all(Radius.circular(5)),
+                                  BorderRadius.all(Radius.circular(5)),
                             ),
                             child: Column(
                               children: <Widget>[
@@ -283,7 +286,7 @@ class _HomeState extends State<Home> {
                                     border: InputBorder.none,
                                     prefixIcon: Column(
                                       mainAxisAlignment:
-                                      MainAxisAlignment.center,
+                                          MainAxisAlignment.center,
                                       children: [
                                         Padding(
                                           padding: const EdgeInsets.only(
@@ -292,36 +295,35 @@ class _HomeState extends State<Home> {
                                               'assets/svg/pin.svg',
                                               height: 19,
                                               color: AppColor.primaryText,
-                                              semanticsLabel:
-                                              'search icon'),
+                                              semanticsLabel: 'search icon'),
                                         ),
                                       ],
                                     ),
-                                    contentPadding: EdgeInsets.only(
-                                        left: 15.0, top: 15.0),
+                                    contentPadding:
+                                        EdgeInsets.only(left: 15.0, top: 15.0),
                                   ),
                                   controller: pickupController,
                                   onTap: () async {
-                                    Prediction p = await PlacesAutocomplete.show(
-                                        context: context,
-                                        apiKey: AppData.mapAPIKey,
-                                        mode: Mode.fullscreen,
-                                        language: "en",
-                                        hint: 'Search pickup location',
-                                        components: [
+                                    Prediction p =
+                                        await PlacesAutocomplete.show(
+                                            context: context,
+                                            apiKey: AppData.mapAPIKey,
+                                            mode: Mode.fullscreen,
+                                            language: "en",
+                                            hint: 'Search pickup location',
+                                            components: [
                                           new Component(Component.country, "ng")
                                         ]);
                                     displayPredictionPickup(p);
 
-
                                     setState(() {
-                                      if (markersList.isNotEmpty) markersList.clear();
+                                      if (markersList.isNotEmpty)
+                                        markersList.clear();
                                       if (polyline.isNotEmpty) polyline.clear();
                                       if (routeCoords.isNotEmpty)
                                         routeCoords.clear();
                                       _placeDistance = null;
                                     });
-
                                   },
                                 ),
                               ],
@@ -339,7 +341,7 @@ class _HomeState extends State<Home> {
                                 Shadows.globalShadowSearch,
                               ],
                               borderRadius:
-                              BorderRadius.all(Radius.circular(5)),
+                                  BorderRadius.all(Radius.circular(5)),
                             ),
                             child: Column(
                               children: <Widget>[
@@ -362,7 +364,7 @@ class _HomeState extends State<Home> {
                                     border: InputBorder.none,
                                     prefixIcon: Column(
                                       mainAxisAlignment:
-                                      MainAxisAlignment.center,
+                                          MainAxisAlignment.center,
                                       children: [
                                         Padding(
                                           padding: const EdgeInsets.only(
@@ -371,28 +373,29 @@ class _HomeState extends State<Home> {
                                               'assets/svg/nav.svg',
                                               height: 19,
                                               color: AppColor.primaryText,
-                                              semanticsLabel:
-                                              'search icon'),
+                                              semanticsLabel: 'search icon'),
                                         ),
                                       ],
                                     ),
-                                    contentPadding: EdgeInsets.only(
-                                        left: 15.0, top: 15.0),
+                                    contentPadding:
+                                        EdgeInsets.only(left: 15.0, top: 15.0),
                                   ),
                                   controller: destinationController,
                                   onTap: () async {
-                                    Prediction p = await PlacesAutocomplete.show(
-                                        context: context,
-                                        apiKey: AppData.mapAPIKey,
-                                        mode: Mode.fullscreen,
-                                        language: "en",
-                                        hint: 'Search destination',
-                                        components: [
+                                    Prediction p =
+                                        await PlacesAutocomplete.show(
+                                            context: context,
+                                            apiKey: AppData.mapAPIKey,
+                                            mode: Mode.fullscreen,
+                                            language: "en",
+                                            hint: 'Search destination',
+                                            components: [
                                           new Component(Component.country, "ng")
                                         ]);
                                     displayPredictionDestination(p);
                                     setState(() {
-                                      if (markersList.isNotEmpty) markersList.clear();
+                                      if (markersList.isNotEmpty)
+                                        markersList.clear();
                                       if (polyline.isNotEmpty) polyline.clear();
                                       if (routeCoords.isNotEmpty)
                                         routeCoords.clear();
@@ -406,7 +409,8 @@ class _HomeState extends State<Home> {
                           child: Container(
                               height: 47,
                               alignment: Alignment.center,
-                              margin: EdgeInsets.only(left: 20, right: 20, bottom: 35),
+                              margin: EdgeInsets.only(
+                                  left: 20, right: 20, bottom: 35),
                               decoration: BoxDecoration(
                                 color: AppColor.primaryText,
                                 borderRadius: Radii.k25pxAll,
@@ -421,8 +425,7 @@ class _HomeState extends State<Home> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) =>
-                                      UserOrder()),
+                                  builder: (context) => UserOrder()),
                             );
                           },
                           splashColor: Colors.grey[300],
@@ -433,16 +436,15 @@ class _HomeState extends State<Home> {
             ),
           ),
         ));
-
   }
 
   Widget _flightShuttleBuilder(
-      BuildContext flightContext,
-      Animation<double> animation,
-      HeroFlightDirection flightDirection,
-      BuildContext fromHeroContext,
-      BuildContext toHeroContext,
-      ) {
+    BuildContext flightContext,
+    Animation<double> animation,
+    HeroFlightDirection flightDirection,
+    BuildContext fromHeroContext,
+    BuildContext toHeroContext,
+  ) {
     return DefaultTextStyle(
       style: DefaultTextStyle.of(toHeroContext).style,
       child: toHeroContext.widget,
@@ -453,5 +455,34 @@ class _HomeState extends State<Home> {
   void dispose() {
     mapController.dispose();
     super.dispose();
+  }
+
+  // Formula for calculating distance between two coordinates
+  // https://stackoverflow.com/a/54138876/11910277
+  double _coordinateDistance(lat1, lon1, lat2, lon2) {
+    var p = 0.017453292519943295;
+    var c = cos;
+    var a = 0.5 -
+        c((lat2 - lat1) * p) / 2 +
+        c(lat1 * p) * c(lat2 * p) * (1 - c((lon2 - lon1) * p)) / 2;
+    return 12742 * asin(sqrt(a));
+  }
+
+  void _myDistanceCalc({lat1, lon1, lat2, lon2}) {
+    debugLog('Calculating distance');
+    final myLat.Distance distance = new myLat.Distance();
+
+    // km = 423
+    debugLog('Computing distance ...');
+    final int km = distance.as(
+        myLat.LengthUnit.Kilometer,
+        new myLat.LatLng(52.518611, 13.408056),
+        new myLat.LatLng(51.519475, 7.46694444));
+    debugLog('Distance in km: ${km.toString()}');
+
+    // meter = 422591.551
+    final int meter = distance(new myLat.LatLng(52.518611, 13.408056),
+        new myLat.LatLng(51.519475, 7.46694444));
+    debugLog('Distance in meters: ${meter.toString()}');
   }
 }
