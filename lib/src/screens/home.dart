@@ -7,6 +7,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:google_map_polyline/google_map_polyline.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_maps_webservice/places.dart';
+import 'package:great_circle_distance_calculator/great_circle_distance_calculator.dart';
 import 'package:pickrr_app/src/helpers/constants.dart';
 import 'package:pickrr_app/src/user/custom_appbar.dart';
 import 'package:pickrr_app/src/widgets/nav_drawer.dart';
@@ -35,6 +36,8 @@ class _HomeState extends State<Home> {
 
   PlaceDetails departure;
   PlaceDetails arrival;
+
+  String _placeDistance;
 
   void onMapCreated(controller) {
     setState(() {
@@ -72,7 +75,6 @@ class _HomeState extends State<Home> {
           target: LatLng(lat, lng),
           zoom: 16.0
       )));
-
       computePath();
     }
   }
@@ -101,7 +103,6 @@ class _HomeState extends State<Home> {
         );
         markersList.add(marker);
       });
-
       mapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
           target: LatLng(lat, lng),
           zoom: 16.0
@@ -113,6 +114,26 @@ class _HomeState extends State<Home> {
     LatLng origin = new LatLng(departure.geometry.location.lat, departure.geometry.location.lng);
     LatLng end = new LatLng(arrival.geometry.location.lat, arrival.geometry.location.lng);
     routeCoords.addAll(await googleMapPolyline.getCoordinatesWithLocation(origin: origin, destination: end, mode: RouteMode.walking));
+
+    final lat1 = 41.139129;
+    final lon1 = 1.402244;
+
+    final lat2 = 41.139074;
+    final lon2 = 1.402315;
+
+    final lata = departure.geometry.location.lat;
+    final longa = departure.geometry.location.lng;
+
+    final latb = arrival.geometry.location.lat;
+    final lonb = arrival.geometry.location.lng;
+
+    var gcd = new GreatCircleDistance.fromDegrees(
+        latitude1: lata, longitude1: longa, latitude2: latb, longitude2: lonb);
+
+    print(
+        'Distance from location 1 to 2 using the Spherical Law of Cosines is: ${gcd.sphericalLawOfCosinesDistance()}');
+    print(
+        'Distance from location 1 to 2 using the Vicenty`s formula is: ${gcd.haversineDistance()}');
 
     setState(() {
       polyline.add(Polyline(
@@ -184,6 +205,10 @@ class _HomeState extends State<Home> {
                     width: MediaQuery.of(context).size.width,
                     child: Column(
                       children: [
+                        Text( 'DISTANCE: $_placeDistance km',
+                            style: TextStyle(color: Colors.purple,
+                                fontSize: 17,
+                                fontWeight: FontWeight.w900)),
                         Container(
                           height: 8,
                           width: 60,
@@ -286,6 +311,16 @@ class _HomeState extends State<Home> {
                                           new Component(Component.country, "ng")
                                         ]);
                                     displayPredictionPickup(p);
+
+
+                                    setState(() {
+                                      if (markersList.isNotEmpty) markersList.clear();
+                                      if (polyline.isNotEmpty) polyline.clear();
+                                      if (routeCoords.isNotEmpty)
+                                        routeCoords.clear();
+                                      _placeDistance = null;
+                                    });
+
                                   },
                                 ),
                               ],
@@ -354,6 +389,13 @@ class _HomeState extends State<Home> {
                                           new Component(Component.country, "ng")
                                         ]);
                                     displayPredictionDestination(p);
+                                    setState(() {
+                                      if (markersList.isNotEmpty) markersList.clear();
+                                      if (polyline.isNotEmpty) polyline.clear();
+                                      if (routeCoords.isNotEmpty)
+                                        routeCoords.clear();
+                                      _placeDistance = null;
+                                    });
                                   },
                                 ),
                               ],

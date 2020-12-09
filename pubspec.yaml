@@ -61,6 +61,8 @@ dependencies:
   flushbar: ^1.10.4
   flutter_clipboard_manager: ^0.0.2
 
+  great_circle_distance_calculator: ^1.0.3
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
