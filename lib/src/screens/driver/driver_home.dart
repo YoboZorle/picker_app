@@ -1,10 +1,12 @@
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:lite_rolling_switch/lite_rolling_switch.dart';
+import 'package:pickrr_app/src/blocs/authentication/bloc.dart';
 import 'package:pickrr_app/src/driver/driver_accept.dart';
 import 'package:pickrr_app/src/helpers/constants.dart';
+import 'package:pickrr_app/src/widgets/driver_appbar.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class DriverHome extends StatefulWidget {
@@ -26,113 +28,123 @@ class _DriverHomeState extends State<DriverHome> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      drawer: Drawer(
-        child: SafeArea(
-          child: Container(
-            padding: EdgeInsets.only(left: 15.0, right: 15.0),
-            child: Column(children: <Widget>[
-              SizedBox(height: 30),
-              ListTile(
-                leading: CircleAvatar(
-                    radius: 30,
-                    backgroundImage: NetworkImage(
-                        "https://images.unsplash.com/photo-1563122870-6b0b48a0af09?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1000&q=80")),
-                title: Text(
-                  'David Ejiro',
-                  style: TextStyle(
-                      fontWeight: FontWeight.w700,
-                      fontFamily: "Ubuntu",
-                      fontSize: 18),
-                ),
-                subtitle: Text(
-                  'Driver profile',
-                  style: TextStyle(
-                      fontWeight: FontWeight.w400,
-                      fontFamily: "Ubuntu",
-                      fontSize: 15),
-                ),
-              ),
-              Container(
-                  height: 0.7,
-                  margin: EdgeInsets.symmetric(vertical: 20),
-                  width: MediaQuery.of(context).size.width,
-                  color: Colors.grey[300]),
-              ListTile(
-                title: Text(
-                  'Track Deliveries',
-                  style: TextStyle(
-                      fontWeight: FontWeight.w400,
-                      fontFamily: "Ubuntu",
-                      fontSize: 18),
-                ),
-                leading: Icon(Icons.track_changes),
-                dense: false,
-              ),
-              ListTile(
-                title: Text(
-                  'Ride History',
-                  style: TextStyle(
-                      fontWeight: FontWeight.w400,
-                      fontFamily: "Ubuntu",
-                      fontSize: 18),
-                ),
-                leading: Icon(Icons.history),
-              ),
-              ListTile(
-                title: Text(
-                  'Support',
-                  style: TextStyle(
-                      fontWeight: FontWeight.w400,
-                      fontFamily: "Ubuntu",
-                      fontSize: 18),
-                ),
-                leading: Icon(Icons.support_agent),
-              ),
-              ListTile(
-                title: Text(
-                  'About',
-                  style: TextStyle(
-                      fontWeight: FontWeight.w400,
-                      fontFamily: "Ubuntu",
-                      fontSize: 18),
-                ),
-                leading: Icon(Icons.read_more),
-              ),
-              Expanded(child: SizedBox()),
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: AppColor.primaryText,
-                ),
-                margin: EdgeInsets.only(bottom: 40),
-                child: ListTile(
+      drawer: BlocBuilder<AuthenticationBloc, AuthenticationState>(
+          builder: (_, state) {
+        if (state is NonLoggedIn) {
+          WidgetsBinding.instance.addPostFrameCallback(
+              (_) => Navigator.pushReplacementNamed(context, '/'));
+        }
+        if (state.props.isEmpty) {
+          return Container();
+        }
+        return Drawer(
+          child: SafeArea(
+            child: Container(
+              padding: EdgeInsets.only(left: 15.0, right: 15.0),
+              child: Column(children: <Widget>[
+                SizedBox(height: 30),
+                ListTile(
+                  leading: CircleAvatar(
+                      radius: 30,
+                      backgroundImage: NetworkImage(
+                          "https://images.unsplash.com/photo-1563122870-6b0b48a0af09?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1000&q=80")),
                   title: Text(
-                    'Back to user',
+                    'David Ejiro',
                     style: TextStyle(
-                        fontWeight: FontWeight.w500,
+                        fontWeight: FontWeight.w700,
                         fontFamily: "Ubuntu",
-                        color: Colors.white,
-                        fontSize: 16),
+                        fontSize: 18),
                   ),
                   subtitle: Text(
-                    'Go back to ordering rides',
+                    'Driver profile',
                     style: TextStyle(
                         fontWeight: FontWeight.w400,
                         fontFamily: "Ubuntu",
-                        color: Colors.grey[200],
                         fontSize: 15),
                   ),
-                  trailing: Icon(Icons.arrow_forward_ios,
-                      size: 17, color: Colors.grey[200]),
-                  onTap: () {
-                    Navigator.pushNamed(context, '/HomePage');
-                  },
                 ),
-              )
-            ]),
+                Container(
+                    height: 0.7,
+                    margin: EdgeInsets.symmetric(vertical: 20),
+                    width: MediaQuery.of(context).size.width,
+                    color: Colors.grey[300]),
+                ListTile(
+                  title: Text(
+                    'Track Deliveries',
+                    style: TextStyle(
+                        fontWeight: FontWeight.w400,
+                        fontFamily: "Ubuntu",
+                        fontSize: 18),
+                  ),
+                  leading: Icon(Icons.track_changes),
+                  dense: false,
+                ),
+                ListTile(
+                  title: Text(
+                    'Ride History',
+                    style: TextStyle(
+                        fontWeight: FontWeight.w400,
+                        fontFamily: "Ubuntu",
+                        fontSize: 18),
+                  ),
+                  leading: Icon(Icons.history),
+                ),
+                ListTile(
+                  title: Text(
+                    'Support',
+                    style: TextStyle(
+                        fontWeight: FontWeight.w400,
+                        fontFamily: "Ubuntu",
+                        fontSize: 18),
+                  ),
+                  leading: Icon(Icons.support_agent),
+                ),
+                ListTile(
+                  title: Text(
+                    'About',
+                    style: TextStyle(
+                        fontWeight: FontWeight.w400,
+                        fontFamily: "Ubuntu",
+                        fontSize: 18),
+                  ),
+                  leading: Icon(Icons.read_more),
+                ),
+                Expanded(child: SizedBox()),
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: AppColor.primaryText,
+                  ),
+                  margin: EdgeInsets.only(bottom: 40),
+                  child: ListTile(
+                    title: Text(
+                      'Back to user',
+                      style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontFamily: "Ubuntu",
+                          color: Colors.white,
+                          fontSize: 16),
+                    ),
+                    subtitle: Text(
+                      'Go back to ordering rides',
+                      style: TextStyle(
+                          fontWeight: FontWeight.w400,
+                          fontFamily: "Ubuntu",
+                          color: Colors.grey[200],
+                          fontSize: 15),
+                    ),
+                    trailing: Icon(Icons.arrow_forward_ios,
+                        size: 17, color: Colors.grey[200]),
+                    onTap: () {
+                      Navigator.pushNamed(context, '/HomePage');
+                    },
+                  ),
+                )
+              ]),
+            ),
           ),
-        ),
-      ),
+        );
+      }),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
@@ -158,7 +170,17 @@ class _DriverHomeState extends State<DriverHome> {
                     },
                   ),
                 ),
-                CustomerAppBar(),
+                BlocBuilder<AuthenticationBloc, AuthenticationState>(
+                    builder: (_, state) {
+                  if (state is NonLoggedIn) {
+                    WidgetsBinding.instance.addPostFrameCallback(
+                        (_) => Navigator.pushReplacementNamed(context, '/'));
+                  }
+                  if (state.props.isEmpty) {
+                    return Container();
+                  }
+                  return CustomerAppBar();
+                }),
                 Positioned(
                     bottom: 0,
                     right: 0,
@@ -506,59 +528,6 @@ class _DriverHomeState extends State<DriverHome> {
     return DefaultTextStyle(
       style: DefaultTextStyle.of(toHeroContext).style,
       child: toHeroContext.widget,
-    );
-  }
-}
-
-class CustomerAppBar extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return SafeArea(
-      child: Padding(
-          padding: const EdgeInsets.fromLTRB(14, 15, 16, 8),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              GestureDetector(
-                  child: Container(
-                    padding: EdgeInsets.only(right: 10),
-                    child: Card(
-                        elevation: 8,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(50.0),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Icon(
-                            Icons.menu_sharp,
-                            size: 25,
-                          ),
-                        )),
-                  ),
-                  onTap: () {
-                    Scaffold.of(context).openDrawer();
-                  }),
-              Row(
-                children: [
-                  SizedBox(
-                    height: 45,
-                    child: LiteRollingSwitch(
-                      value: true,
-                      textOn: 'Online',
-                      textOff: 'Offline',
-                      colorOn: AppColor.primaryText,
-                      colorOff: Colors.grey[400],
-                      iconOn: Icons.directions_bike,
-                      iconOff: Icons.power_settings_new,
-                      onChanged: (bool state) {
-                        print('turned ${(state) ? 'on' : 'off'}');
-                      },
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          )),
     );
   }
 }

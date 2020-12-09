@@ -42,19 +42,32 @@ class DriverRepository extends APIClient {
     return driver;
   }
 
-  Future loadDriverDetailsToStorage(userId) async {
-    var driverResponse = await getDriverDetails();
+  Future<void> updateStatus({String status}) async {
+    final String url = '/user';
+    response = await dio.patch(url, data: {
+      'status': status
+    });
+    final responseBody = response.data;
+    await _persistDriverDetails(responseBody);
+  }
+
+  Future<void> _persistDriverDetails(rawData) async {
     DriverProvider helper = DriverProvider.instance;
     Map<String, dynamic> driverDetails = {
-      'id': userId,
-      'plateNumber': driverResponse['plate_number'],
-      'ticketNumber': driverResponse['ticket_number'],
-      'companyName': driverResponse['company_name'],
-      'status': driverResponse['status'],
-      'blocked': driverResponse['blocked'],
-      'createdAt': driverResponse['created_at'],
+      'id': rawData['user'],
+      'plateNumber': rawData['plate_number'],
+      'ticketNumber': rawData['ticket_number'],
+      'companyName': rawData['company_name'],
+      'status': rawData['status'],
+      'blocked': rawData['blocked'],
+      'createdAt': rawData['created_at'],
     };
     Driver driver = Driver.fromMap(driverDetails);
     await helper.updateOrInsert(driver);
+  }
+
+  Future loadDriverDetailsToStorage(userId) async {
+    var driverResponse = await getDriverDetails();
+    await _persistDriverDetails(driverResponse);
   }
 }

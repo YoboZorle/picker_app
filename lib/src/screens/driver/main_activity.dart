@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pickrr_app/src/blocs/driver/driver_status/bloc.dart';
 import 'package:pickrr_app/src/helpers/constants.dart';
-import '../../driver/pages/driver_home.dart';
+import 'driver_home.dart';
 import 'profile.dart';
 import 'driver_wallet.dart';
 
@@ -12,7 +14,9 @@ class DriverTabs extends StatefulWidget {
 class _DriverTabsState extends State<DriverTabs> {
   final PageStorageBucket _bucket = PageStorageBucket();
   final List<Widget> _navPages = [
-    DriverHome(key: PageStorageKey('DriverHome')),
+    BlocProvider<DriverStatusBloc>(
+        create: (_) => DriverStatusBloc(),
+        child: DriverHome(key: PageStorageKey('DriverHome'))),
     DriverWallet(key: PageStorageKey('DriverWallet')),
     DriverProfile(key: PageStorageKey('DriverProfile'))
   ];
@@ -28,13 +32,13 @@ class _DriverTabsState extends State<DriverTabs> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: PageStorage(
-          child: _navPages[tabIndex],
-          bucket: _bucket,
-        ),
-        bottomNavigationBar: _buildTabBar(),
-        backgroundColor: Theme.of(context).primaryColor,
-      );
+      body: PageStorage(
+        child: _navPages[tabIndex],
+        bucket: _bucket,
+      ),
+      bottomNavigationBar: _buildTabBar(),
+      backgroundColor: Theme.of(context).primaryColor,
+    );
   }
 
   void _selectedTab(int index) {
@@ -45,7 +49,8 @@ class _DriverTabsState extends State<DriverTabs> {
 
   Widget _buildTabBar() {
     var listItems = [
-      BottomAppBarItem(iconData: Icons.directions_bike_sharp, text: 'DriverHome'),
+      BottomAppBarItem(
+          iconData: Icons.directions_bike_sharp, text: 'DriverHome'),
       BottomAppBarItem(iconData: Icons.account_balance_wallet, text: 'Wallet'),
       BottomAppBarItem(iconData: Icons.person, text: 'Profile'),
     ];
