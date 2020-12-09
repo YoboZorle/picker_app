@@ -195,6 +195,8 @@ class _HomeState extends State<Home> {
                         ),
                       ),
                       CustomerAppBar(),
+                      Positioned(
+                          bottom: 0, right: 0, child: orderLocationDetailsPanel())
                     ],
                   ),
                 ),
@@ -485,4 +487,77 @@ class _HomeState extends State<Home> {
         new myLat.LatLng(51.519475, 7.46694444));
     debugLog('Distance in meters: ${meter.toString()}');
   }
+
+  Widget orderLocationDetailsPanel() => Hero(
+    tag: "orderLocation",
+    child: Container(
+      width: MediaQuery.of(context).size.width,
+      child: Row(children: [
+        Expanded(child: SizedBox()),
+        Column(
+          children: [
+            Container(
+              // width: 42,
+              height: 35,
+              decoration: BoxDecoration(
+                shape: BoxShape.rectangle,
+                borderRadius: BorderRadius.circular(4),
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black26,
+                    blurRadius: 12.0,
+                    offset: Offset(0.0, 5.0),
+                  ),
+                ],
+              ),
+              child: Row(
+                children: [
+                  Row(
+                    children: [
+                      Container(
+                          height: 35,
+                          width: 45,
+                          // padding: EdgeInsets.all(5),
+                          color: AppColor.primaryText,
+                          child: Icon(Icons.directions_bike_sharp,
+                              color: Colors.white)),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: new Text(
+                          'Distance',
+                          maxLines: 1,
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                              fontSize: 16.0,
+                              fontFamily: "Ubuntu",
+                              color: Colors.black,
+                              fontWeight: FontWeight.w700),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: new Text(
+                    '$_placeDistance km',
+                      maxLines: 1,
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                          fontSize: 16.0,
+                          fontFamily: "Ubuntu",
+                          color: Colors.black,
+                          fontWeight: FontWeight.w700),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: 15),
+          ],
+        ),
+        SizedBox(width: 15),
+      ]),
+    ),
+  );
 }
