@@ -113,7 +113,7 @@ class _HomeState extends State<Home> {
   computePath()async{
     LatLng origin = new LatLng(departure.geometry.location.lat, departure.geometry.location.lng);
     LatLng end = new LatLng(arrival.geometry.location.lat, arrival.geometry.location.lng);
-    routeCoords.addAll(await googleMapPolyline.getCoordinatesWithLocation(origin: origin, destination: end, mode: RouteMode.walking));
+    routeCoords.addAll(await googleMapPolyline.getCoordinatesWithLocation(origin: origin, destination: end, mode: RouteMode.driving));
 
     final lat1 = 41.139129;
     final lon1 = 1.402244;
@@ -122,13 +122,13 @@ class _HomeState extends State<Home> {
     final lon2 = 1.402315;
 
     final lata = departure.geometry.location.lat;
-    final longa = departure.geometry.location.lng;
+    final lona = departure.geometry.location.lng;
 
     final latb = arrival.geometry.location.lat;
     final lonb = arrival.geometry.location.lng;
 
     var gcd = new GreatCircleDistance.fromDegrees(
-        latitude1: lata, longitude1: longa, latitude2: latb, longitude2: lonb);
+        latitude1: lata, longitude1: lonb, latitude2: latb, longitude2: lona);
 
     print(
         'Distance from location 1 to 2 using the Spherical Law of Cosines is: ${gcd.sphericalLawOfCosinesDistance()}');
@@ -307,6 +307,7 @@ class _HomeState extends State<Home> {
                                         apiKey: AppData.mapAPIKey,
                                         mode: Mode.fullscreen,
                                         language: "en",
+                                        hint: 'Search pickup location',
                                         components: [
                                           new Component(Component.country, "ng")
                                         ]);
@@ -385,6 +386,7 @@ class _HomeState extends State<Home> {
                                         apiKey: AppData.mapAPIKey,
                                         mode: Mode.fullscreen,
                                         language: "en",
+                                        hint: 'Search destination',
                                         components: [
                                           new Component(Component.country, "ng")
                                         ]);

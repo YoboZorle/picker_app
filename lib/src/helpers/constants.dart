@@ -86,8 +86,8 @@ class Shadows {
 }
 
 class APIConstants {
-  static final String httpUrl = 'http://192.168.21.114:8000';
-  static final String wsUrl = 'ws://192.168.21.114:8000';
+  static final String httpUrl = 'http://192.168.43.105:8000';
+  static final String wsUrl = 'ws://192.168.43.105::8000';
   static final String assetsUrl = 'https://yarner-storage.s3.amazonaws.com/yarn-a9e77482c84e16/';
   static final String apiUrl = '$httpUrl/api/';
 }
