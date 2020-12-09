@@ -12,6 +12,7 @@ import 'package:pickrr_app/src/driver/driver_accept.dart';
 import 'package:pickrr_app/src/helpers/constants.dart';
 import 'package:pickrr_app/src/models/user.dart';
 import 'package:pickrr_app/src/widgets/driver_appbar.dart';
+import 'package:pickrr_app/src/widgets/image.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:web_socket_channel/io.dart';
@@ -80,10 +81,15 @@ class _DriverHomeState extends State<DriverHome> {
               child: Column(children: <Widget>[
                 SizedBox(height: 30),
                 ListTile(
-                  leading: CircleAvatar(
-                      radius: 30,
-                      backgroundImage: NetworkImage(
-                          "https://images.unsplash.com/photo-1563122870-6b0b48a0af09?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1000&q=80")),
+                  leading: ClipOval(
+                      child: Container(
+                        height: 65.0,
+                        width: 65.0,
+                        child: CustomImage(
+                          imageUrl:
+                          '${APIConstants.assetsUrl}${user.profileImageUrl}',
+                        ),
+                      )),
                   title: Text(
                     user.fullname,
                     style: TextStyle(
