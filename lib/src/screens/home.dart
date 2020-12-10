@@ -131,7 +131,6 @@ class _HomeState extends State<Home> {
     }
 
     int speed = 30;
-    double time = speed * totalDistance;
 
     double kmsPerMin = 0.5;
 
