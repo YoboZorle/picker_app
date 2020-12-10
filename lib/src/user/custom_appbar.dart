@@ -47,10 +47,6 @@ class CustomerAppBar extends StatelessWidget {
                   return Container();
                 }
                 User user = state.props[0];
-                print('Hello from this side');
-                print(user);
-                print(user.isDriver);
-                print('----cosing -------');
                 return GestureDetector(
                   child: Container(
                       height: 42,
@@ -90,7 +86,7 @@ class CustomerAppBar extends StatelessWidget {
                     }
                     Navigator.pushNamed(
                       context,
-                      '/DriverOnboard',
+                      '/DriversHomePage',
                     );
                   },
                 );
