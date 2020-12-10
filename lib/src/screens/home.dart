@@ -152,7 +152,9 @@ class _HomeState extends State<Home> {
       _distanceCovered = totalDistance;
       _placeDistance = totalDistance.toStringAsFixed(1);
       _placeTime = totalTime;
+    });
 
+    setState(() {
       polyline.add(Polyline(
           polylineId: PolylineId('iter'),
           visible: true,
