@@ -14,7 +14,6 @@ import 'package:pickrr_app/src/user/custom_appbar.dart';
 import 'package:pickrr_app/src/user/receiver_details.dart';
 import 'package:pickrr_app/src/widgets/nav_drawer.dart';
 
-
 class Home extends StatefulWidget {
   @override
   _HomeState createState() => _HomeState();
@@ -76,7 +75,7 @@ class _HomeState extends State<Home> {
       mapController.animateCamera(CameraUpdate.newCameraPosition(
           CameraPosition(target: LatLng(lat, lng), zoom: 16.0)));
 
-      if(destination != null && pickupPoint != null){
+      if (destination != null && pickupPoint != null) {
         computePath();
       }
     }
@@ -104,7 +103,7 @@ class _HomeState extends State<Home> {
       });
       mapController.animateCamera(CameraUpdate.newCameraPosition(
           CameraPosition(target: LatLng(lat, lng), zoom: 16.0)));
-      if(destination != null && pickupPoint != null){
+      if (destination != null && pickupPoint != null) {
         computePath();
       }
     }
@@ -216,6 +215,7 @@ class _HomeState extends State<Home> {
                           myLocationEnabled: true,
                           myLocationButtonEnabled: false,
                           zoomGesturesEnabled: true,
+                          compassEnabled: false,
                           zoomControlsEnabled: false,
                           trafficEnabled: false,
                           buildingsEnabled: false,
@@ -305,7 +305,8 @@ class _HomeState extends State<Home> {
                                             context: context,
                                             apiKey: AppData.mapAPIKey,
                                             mode: Mode.fullscreen,
-                                            logo: Icon(Icons.search, color: Colors.transparent),
+                                            logo: Icon(Icons.search,
+                                                color: Colors.transparent),
                                             language: "en",
                                             hint: 'Search pickup location',
                                             components: [
@@ -386,7 +387,8 @@ class _HomeState extends State<Home> {
                                             apiKey: AppData.mapAPIKey,
                                             mode: Mode.fullscreen,
                                             language: "en",
-                                            logo: Icon(Icons.search, color: Colors.transparent),
+                                            logo: Icon(Icons.search,
+                                                color: Colors.transparent),
                                             hint: 'Search destination',
                                             components: [
                                           new Component(Component.country, "ng")
@@ -411,7 +413,7 @@ class _HomeState extends State<Home> {
                               height: 47,
                               alignment: Alignment.center,
                               margin: EdgeInsets.only(
-                                  left: 20, right: 20, bottom: 25),
+                                  left: 20, right: 20, bottom: 20),
                               decoration: BoxDecoration(
                                 color: _placeDistance != null
                                     ? AppColor.primaryText
@@ -428,11 +430,71 @@ class _HomeState extends State<Home> {
                                       color: Colors.white,
                                       fontWeight: FontWeight.w400))),
                           onTap: () => _placeDistance != null
-                              ? Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => UserDetails()),
-                          )
+                              ?
+                              // Navigator.push(
+                              //   context,
+                              //   MaterialPageRoute(
+                              //       builder: (context) => UserDetails()),
+                              // )
+
+                              showModalBottomSheet<void>(
+                                  isScrollControlled: true,
+                                  isDismissible: false,
+                                  enableDrag: true,
+                                  context: context,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(0.0),
+                                        topRight: Radius.circular(0.0)),
+                                  ),
+                                  builder: (BuildContext context) {
+                                    return Padding(
+                                        padding:
+                                            MediaQuery.of(context).viewInsets,
+                                        child: Container(
+                                            color: Colors.white,
+                                            child: Wrap(
+                                              children: <Widget>[
+                                                TextFormField(
+                                                  validator: (value) {
+                                                    if (value.isEmpty) {
+                                                      return "Could not be empty";
+                                                    }
+                                                    return null;
+                                                  },
+                                                  decoration: InputDecoration(
+                                                      labelText: "PASSWORD",
+                                                      border:
+                                                          OutlineInputBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          5))),
+                                                  onFieldSubmitted:
+                                                      (String p) {},
+                                                ),
+                                                TextFormField(
+                                                  validator: (value) {
+                                                    if (value.isEmpty) {
+                                                      return "Could not be empty";
+                                                    }
+                                                    return null;
+                                                  },
+                                                  decoration: InputDecoration(
+                                                      labelText: "PASSWORD",
+                                                      border:
+                                                          OutlineInputBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          5))),
+                                                  onFieldSubmitted:
+                                                      (String p) {},
+                                                ),
+                                              ],
+                                            )));
+                                  },
+                                )
                               : null,
                           splashColor: Colors.grey[300],
                         ),
