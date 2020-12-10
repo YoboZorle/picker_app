@@ -209,7 +209,6 @@ class _ReviewOrderState extends State<ReviewOrder> {
                                   ),
                                 ),
                               ),
-
                               Container(
                                 margin: EdgeInsets.symmetric(horizontal: 15),
                                 child: Card(elevation: 500,
@@ -319,7 +318,6 @@ class _ReviewOrderState extends State<ReviewOrder> {
                                   ),
                                 ),
                               ),
-
                               SizedBox(height: 20),
                               Container(
                                 padding: EdgeInsets.only(left: 20, right: 20),

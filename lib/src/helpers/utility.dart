@@ -69,13 +69,13 @@ Future<bool> isInternetConnected() async {
   debugLog('Checking internet connectivity...');
   try {
     final result = await InternetAddress.lookup('google.com');
-    if(result.isNotEmpty && result[0].rawAddress.isNotEmpty){
+    if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
       debugLog('Internet available');
       return true;
     }
     debugLog('no internet connection');
     return false;
-  } on SocketException catch(_) {
+  } on SocketException catch (_) {
     debugLog('no internet connection');
     return false;
   }
@@ -94,4 +94,15 @@ String getdob(String date) {
   var dt = DateTime.parse(date).toLocal();
   var dat = DateFormat.yMMMd().format(dt);
   return dat;
+}
+
+double priceCalculator(double distance) {
+  int distanceCovered = distance < 1 ? 1 : distance.toInt();
+  final double flatRate = 300;
+  final double perKmCharge = 70;
+  double price = 0;
+
+  price = flatRate;
+  if (distanceCovered > 4) price += (perKmCharge * distanceCovered.toInt());
+  return price;
 }
