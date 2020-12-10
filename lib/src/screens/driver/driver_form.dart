@@ -43,15 +43,26 @@ class _DriverApplicationState extends State<DriverApplication> {
                           child: ListView(
                               physics: const BouncingScrollPhysics(),
                               children: <Widget>[
-                            Text(
-                              'Become A Pickrr',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontFamily: 'Ubuntu',
-                                color: Colors.black,
-                                fontWeight: FontWeight.w800,
-                              ),
+                            Row(
+                              children: [
+                                IconButton(
+                                  icon: Icon(Icons.arrow_back_ios,
+                                      color: Colors.black),
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                ),
+                                Text(
+                                  'Become A Pickrr',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontFamily: 'Ubuntu',
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w800,
+                                  ),
+                                ),
+                              ],
                             ),
                             SizedBox(height: 45),
                             Container(
