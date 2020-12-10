@@ -526,7 +526,7 @@ class _HomeState extends State<Home> {
                     currencyFormatter.format(priceCalculator(_distanceCovered)),
                     style: TextStyle(
                       fontSize: 22,
-                      fontFamily: "Ubuntu",
+                      fontFamily: "Roboto",
                       color: AppColor.primaryText,
                       fontWeight: FontWeight.w800,
                     )),
