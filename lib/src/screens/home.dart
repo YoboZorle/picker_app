@@ -110,6 +110,16 @@ class _HomeState extends State<Home> {
   }
 
   computePath() async {
+    // setState(() {
+      if (markersList.isNotEmpty)
+        markersList.clear();
+      if (polyline.isNotEmpty) polyline.clear();
+      if (routeCoords.isNotEmpty)
+        routeCoords.clear();
+      _placeDistance = null;
+      _distanceCovered = null;
+      _placeTime = null;
+    // });
     LatLng origin = new LatLng(
         destination.geometry.location.lat, destination.geometry.location.lng);
     LatLng end = new LatLng(
@@ -177,6 +187,17 @@ class _HomeState extends State<Home> {
         150.0,
       ),
     );
+
+    // setState(() {
+    //   if (markersList.isNotEmpty)
+    //     markersList.clear();
+    //   if (polyline.isNotEmpty) polyline.clear();
+    //   if (routeCoords.isNotEmpty)
+    //     routeCoords.clear();
+    //   // _placeDistance = null;
+    //   // _distanceCovered = null;
+    //   // _placeTime = null;
+    // });
   }
 
   @override
