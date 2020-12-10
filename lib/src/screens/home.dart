@@ -351,7 +351,7 @@ class _HomeState extends State<Home> {
                             height: 50.0,
                             width: double.infinity,
                             margin: EdgeInsets.only(
-                                left: 20, right: 20, bottom: 18, top: 10),
+                                left: 20, right: 20, bottom: 18, top: 8),
                             decoration: BoxDecoration(
                               color: Colors.white,
                               border: Border.fromBorderSide(
@@ -443,11 +443,11 @@ class _HomeState extends State<Home> {
                                       color: Colors.white,
                                       fontWeight: FontWeight.w400))),
                           onTap: () {
-                            Navigator.push(
+                            _placeDistance != null ? Navigator.push(
                               context,
                               MaterialPageRoute(
                                   builder: (context) => UserOrder()),
-                            );
+                            ) : null;
                           },
                           splashColor: Colors.grey[300],
                         ),
