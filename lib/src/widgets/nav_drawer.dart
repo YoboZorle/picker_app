@@ -163,7 +163,7 @@ class NavDrawer extends StatelessWidget {
               margin: EdgeInsets.only(bottom: 40),
               child: ListTile(
                 title: Text(
-                  'Become a rider',
+                  !user.isDriver ? 'Become a rider' : 'Open as rider',
                   style: TextStyle(
                       fontWeight: FontWeight.w500,
                       fontFamily: "Ubuntu",
@@ -181,9 +181,16 @@ class NavDrawer extends StatelessWidget {
                 trailing: Icon(Icons.arrow_forward_ios,
                     size: 17, color: Colors.grey[200]),
                 onTap: () {
+                  if(!user.isDriver){
+                    Navigator.pushNamed(
+                      context,
+                      '/DriverOnboard',
+                    );
+                    return;
+                  }
                   Navigator.pushNamed(
                     context,
-                    '/DriverOnboard',
+                    '/DriversHomePage',
                   );
                 },
               ),
