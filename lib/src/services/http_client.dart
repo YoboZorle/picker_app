@@ -18,11 +18,6 @@ class APIClient {
     }, onResponse: (Response response) async {
       return response;
     }, onError: (DioError e) async {
-          print('The error occured here');
-          print(e);
-          print(e.response);
-          print(e.response.statusCode);
-          print('--------------Wooooo---------JJJJ----');
       if (e.response.statusCode == 401) {
         await signOutFromDevice();
       }

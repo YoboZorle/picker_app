@@ -1,13 +1,21 @@
+import 'dart:async';
+import 'dart:convert';
+
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:pickrr_app/src/blocs/authentication/bloc.dart';
 import 'package:pickrr_app/src/driver/driver_accept.dart';
 import 'package:pickrr_app/src/helpers/constants.dart';
+import 'package:pickrr_app/src/models/user.dart';
 import 'package:pickrr_app/src/widgets/driver_appbar.dart';
+import 'package:pickrr_app/src/widgets/image.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:web_socket_channel/io.dart';
 
 class DriverHome extends StatefulWidget {
   DriverHome({Key key}) : super(key: key);
@@ -21,8 +29,36 @@ class _DriverHomeState extends State<DriverHome> {
   GoogleMapController myMapController;
   final Set<Marker> _markers = new Set();
   static const LatLng _mainLocation = const LatLng(4.814340, 7.000848);
+  StreamSubscription<Position> _positionStream;
+  final _storage = new FlutterSecureStorage();
+  var _channel;
 
   bool arrived = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _updateDriverPosition();
+  }
+
+  _updateDriverPosition() async {
+    final String jwtToken = await _storage.read(key: 'accessToken');
+    _channel = IOWebSocketChannel.connect(
+        "${APIConstants.wsUrl}/ws/drivers/update-location/?token=$jwtToken");
+    _positionStream =
+        Geolocator.getPositionStream().listen((Position position) {
+      if (position != null) {
+        _channel.sink.add(json
+            .encode({'lat': position.latitude, 'long': position.longitude}));
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _positionStream.cancel();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +73,7 @@ class _DriverHomeState extends State<DriverHome> {
         if (state.props.isEmpty) {
           return Container();
         }
+        User user = state.props[0];
         return Drawer(
           child: SafeArea(
             child: Container(
@@ -44,12 +81,17 @@ class _DriverHomeState extends State<DriverHome> {
               child: Column(children: <Widget>[
                 SizedBox(height: 30),
                 ListTile(
-                  leading: CircleAvatar(
-                      radius: 30,
-                      backgroundImage: NetworkImage(
-                          "https://images.unsplash.com/photo-1563122870-6b0b48a0af09?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1000&q=80")),
+                  leading: ClipOval(
+                      child: Container(
+                        height: 65.0,
+                        width: 65.0,
+                        child: CustomImage(
+                          imageUrl:
+                          '${APIConstants.assetsUrl}${user.profileImageUrl}',
+                        ),
+                      )),
                   title: Text(
-                    'David Ejiro',
+                    user.fullname,
                     style: TextStyle(
                         fontWeight: FontWeight.w700,
                         fontFamily: "Ubuntu",
