@@ -63,7 +63,7 @@ class _HomeState extends State<Home> {
         destination = detail.result;
         destinationController.text = detail.result.name;
         Marker marker = Marker(
-            markerId: MarkerId('pickupPointMarker'),
+            markerId: MarkerId('distanceMarker'),
             draggable: false,
             infoWindow: InfoWindow(
               title: "This is where you will arrive",
@@ -75,6 +75,7 @@ class _HomeState extends State<Home> {
 
       mapController.animateCamera(CameraUpdate.newCameraPosition(
           CameraPosition(target: LatLng(lat, lng), zoom: 16.0)));
+
       if(destination != null && pickupPoint != null){
         computePath();
       }
@@ -110,14 +111,6 @@ class _HomeState extends State<Home> {
   }
 
   computePath() async {
-    // setState(() {
-      if (polyline.isNotEmpty) polyline.clear();
-      if (routeCoords.isNotEmpty)
-        routeCoords.clear();
-      _placeDistance = null;
-      _distanceCovered = null;
-      _placeTime = null;
-    // });
     LatLng origin = new LatLng(
         destination.geometry.location.lat, destination.geometry.location.lng);
     LatLng end = new LatLng(
@@ -185,17 +178,6 @@ class _HomeState extends State<Home> {
         150.0,
       ),
     );
-
-    // setState(() {
-    //   if (markersList.isNotEmpty)
-    //     markersList.clear();
-    //   if (polyline.isNotEmpty) polyline.clear();
-    //   if (routeCoords.isNotEmpty)
-    //     routeCoords.clear();
-    //   // _placeDistance = null;
-    //   // _distanceCovered = null;
-    //   // _placeTime = null;
-    // });
   }
 
   @override
@@ -330,6 +312,16 @@ class _HomeState extends State<Home> {
                                           new Component(Component.country, "ng")
                                         ]);
                                     displayPredictionPickup(p);
+                                    setState(() {
+                                      if (markersList.isNotEmpty)
+                                        markersList.clear();
+                                      if (polyline.isNotEmpty) polyline.clear();
+                                      if (routeCoords.isNotEmpty)
+                                        routeCoords.clear();
+                                      _placeDistance = null;
+                                      _placeTime = null;
+                                      _distanceCovered = null;
+                                    });
                                   },
                                 ),
                               ],
@@ -400,6 +392,16 @@ class _HomeState extends State<Home> {
                                           new Component(Component.country, "ng")
                                         ]);
                                     displayPredictionDestination(p);
+                                    setState(() {
+                                      if (markersList.isNotEmpty)
+                                        markersList.clear();
+                                      if (polyline.isNotEmpty) polyline.clear();
+                                      if (routeCoords.isNotEmpty)
+                                        routeCoords.clear();
+                                      _placeDistance = null;
+                                      _placeTime = null;
+                                      _distanceCovered = null;
+                                    });
                                   },
                                 ),
                               ],
@@ -441,8 +443,6 @@ class _HomeState extends State<Home> {
           ),
         ));
   }
-
-
 
   @override
   void dispose() {

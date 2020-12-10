@@ -18,5 +18,6 @@ void main() {
     expect(priceCalculator(5), 370.0);
     expect(priceCalculator(45), 3170.0);
     expect(priceCalculator(20), 1420.0);
+    expect(priceCalculator(22.5), 1630.0);
   });
 }
