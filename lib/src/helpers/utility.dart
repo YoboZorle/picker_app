@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:math' show cos, sqrt, asin;
 
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:pickrr_app/src/helpers/db/user.dart';
 import 'dart:developer' as developer;
@@ -97,12 +99,34 @@ String getdob(String date) {
 }
 
 double priceCalculator(double distance) {
-  int distanceCovered = distance < 1 ? 1 : distance.toInt();
+  int distanceCovered = distance < 1 ? 1 : distance.round();
   final double flatRate = 300;
   final double perKmCharge = 70;
   double price = 0;
 
   price = flatRate;
-  if (distanceCovered > 4) price += (perKmCharge * distanceCovered.toInt());
+  if (distanceCovered > 4) price += (perKmCharge * (distanceCovered -4));
   return price;
+}
+
+Widget flightShuttleBuilder(
+    BuildContext flightContext,
+    Animation<double> animation,
+    HeroFlightDirection flightDirection,
+    BuildContext fromHeroContext,
+    BuildContext toHeroContext,
+    ) {
+  return DefaultTextStyle(
+    style: DefaultTextStyle.of(toHeroContext).style,
+    child: toHeroContext.widget,
+  );
+}
+
+double coordinateDistance(lat1, lon1, lat2, lon2) {
+  var p = 0.017453292519943295;
+  var c = cos;
+  var a = 0.5 -
+      c((lat2 - lat1) * p) / 2 +
+      c(lat1 * p) * c(lat2 * p) * (1 - c((lon2 - lon1) * p)) / 2;
+  return 12742 * asin(sqrt(a));
 }

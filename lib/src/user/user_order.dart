@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:pickrr_app/src/helpers/constants.dart';
+import 'package:pickrr_app/src/helpers/utility.dart';
 import 'package:pickrr_app/src/user/receiver_details.dart';
 
 class UserOrder extends StatefulWidget {
@@ -32,7 +33,7 @@ class _UserOrderState extends State<UserOrder> {
               children: [
                 Hero(
                   tag: 'map',
-                  flightShuttleBuilder: _flightShuttleBuilder,
+                  flightShuttleBuilder: flightShuttleBuilder,
                   child: GoogleMap(
                     initialCameraPosition: CameraPosition(
                       target: _mainLocation,
@@ -54,7 +55,7 @@ class _UserOrderState extends State<UserOrder> {
                       padding: const EdgeInsets.fromLTRB(14, 15, 16, 8),
                       child: Hero(
                         tag: "nav",
-                        flightShuttleBuilder: _flightShuttleBuilder,
+                        flightShuttleBuilder: flightShuttleBuilder,
                         child: GestureDetector(
                             child: Container(
                               // color: Colors.yellow,
@@ -141,7 +142,7 @@ class _UserOrderState extends State<UserOrder> {
                   ),
                   Hero(
                     tag: "btn",
-                    flightShuttleBuilder: _flightShuttleBuilder,
+                    flightShuttleBuilder: flightShuttleBuilder,
                     child: GestureDetector(
                       child: Container(
                           height: 45,
@@ -192,12 +193,6 @@ class _UserOrderState extends State<UserOrder> {
     return _markers;
   }
 
-  void currency() {
-    Locale locale = Localizations.localeOf(context);
-    var format = NumberFormat.simpleCurrency(locale: locale.toString());
-    print("CURRENCY SYMBOL ${format.currencySymbol}"); // $
-    print("CURRENCY NAME ${format.currencyName}"); // USD
-  }
 
   Widget orderLocationDetailsPanel() => Hero(
         tag: "orderLocation",
@@ -254,17 +249,4 @@ class _UserOrderState extends State<UserOrder> {
           ]),
         ),
       );
-
-  Widget _flightShuttleBuilder(
-    BuildContext flightContext,
-    Animation<double> animation,
-    HeroFlightDirection flightDirection,
-    BuildContext fromHeroContext,
-    BuildContext toHeroContext,
-  ) {
-    return DefaultTextStyle(
-      style: DefaultTextStyle.of(toHeroContext).style,
-      child: toHeroContext.widget,
-    );
-  }
 }

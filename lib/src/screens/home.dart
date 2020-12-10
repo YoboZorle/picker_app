@@ -14,8 +14,6 @@ import 'package:pickrr_app/src/user/custom_appbar.dart';
 import 'package:pickrr_app/src/user/receiver_details.dart';
 import 'package:pickrr_app/src/widgets/nav_drawer.dart';
 
-import 'package:pickrr_app/src/user/user_order.dart';
-import 'dart:math' show cos, sqrt, asin;
 
 class Home extends StatefulWidget {
   @override
@@ -60,8 +58,6 @@ class _HomeState extends State<Home> {
           await _places.getDetailsByPlaceId(p.placeId);
       final lat = detail.result.geometry.location.lat;
       final lng = detail.result.geometry.location.lng;
-
-
 
       setState(() {
         destination = detail.result;
@@ -124,7 +120,7 @@ class _HomeState extends State<Home> {
     double totalDistance = 0.0;
 
     for (int i = 0; i < routeCoords.length - 1; i++) {
-      totalDistance += _coordinateDistance(
+      totalDistance += coordinateDistance(
         routeCoords[i].latitude,
         routeCoords[i].longitude,
         routeCoords[i + 1].latitude,
@@ -206,7 +202,7 @@ class _HomeState extends State<Home> {
                     children: [
                       Hero(
                         tag: 'map',
-                        flightShuttleBuilder: _flightShuttleBuilder,
+                        flightShuttleBuilder: flightShuttleBuilder,
                         child: GoogleMap(
                           onMapCreated: onMapCreated,
                           initialCameraPosition: CameraPosition(
@@ -427,32 +423,12 @@ class _HomeState extends State<Home> {
         ));
   }
 
-  Widget _flightShuttleBuilder(
-    BuildContext flightContext,
-    Animation<double> animation,
-    HeroFlightDirection flightDirection,
-    BuildContext fromHeroContext,
-    BuildContext toHeroContext,
-  ) {
-    return DefaultTextStyle(
-      style: DefaultTextStyle.of(toHeroContext).style,
-      child: toHeroContext.widget,
-    );
-  }
+
 
   @override
   void dispose() {
     mapController.dispose();
     super.dispose();
-  }
-
-  double _coordinateDistance(lat1, lon1, lat2, lon2) {
-    var p = 0.017453292519943295;
-    var c = cos;
-    var a = 0.5 -
-        c((lat2 - lat1) * p) / 2 +
-        c(lat1 * p) * c(lat2 * p) * (1 - c((lon2 - lon1) * p)) / 2;
-    return 12742 * asin(sqrt(a));
   }
 
   _deliveryDetails() => Container(

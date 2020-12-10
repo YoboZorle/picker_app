@@ -12,11 +12,11 @@ void main() {
   test('Calculate price for distances greater than 1', () {
     expect(priceCalculator(1), 300.0);
     expect(priceCalculator(4), 300.0);
-    expect(priceCalculator(4.5), 300.0);
-    expect(priceCalculator(4.9), 300.0);
+    expect(priceCalculator(4.5), 370.0);
+    expect(priceCalculator(4.9), 370.0);
     expect(priceCalculator(4.0), 300.0);
-    expect(priceCalculator(5), 650.0);
-    expect(priceCalculator(45), 3450.0);
-    expect(priceCalculator(20), 1700.0);
+    expect(priceCalculator(5), 370.0);
+    expect(priceCalculator(45), 3170.0);
+    expect(priceCalculator(20), 1420.0);
   });
 }
