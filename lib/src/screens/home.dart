@@ -12,7 +12,6 @@ import 'package:pickrr_app/src/helpers/constants.dart';
 import 'package:pickrr_app/src/helpers/utility.dart';
 import 'package:pickrr_app/src/user/custom_appbar.dart';
 import 'package:pickrr_app/src/widgets/nav_drawer.dart';
-import 'package:latlong/latlong.dart' as myLat;
 
 import 'package:pickrr_app/src/user/user_order.dart';
 import 'dart:math' show cos, sqrt, asin;
@@ -129,8 +128,6 @@ class _HomeState extends State<Home> {
         routeCoords[i + 1].longitude,
       );
     }
-
-    int speed = 30;
 
     double kmsPerMin = 0.5;
 
@@ -406,15 +403,13 @@ class _HomeState extends State<Home> {
                                       fontFamily: 'Ubuntu',
                                       color: Colors.white,
                                       fontWeight: FontWeight.w400))),
-                          onTap: () {
-                            _placeDistance != null
-                                ? Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => UserOrder()),
-                                  )
-                                : null;
-                          },
+                          onTap: () => _placeDistance != null
+                              ? Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => UserOrder()),
+                          )
+                              : null,
                           splashColor: Colors.grey[300],
                         ),
                       ],
