@@ -29,8 +29,7 @@ class _HomeState extends State<Home> {
   TextEditingController destinationController = new TextEditingController();
   TextEditingController pickupController = new TextEditingController();
   List<Marker> markersList = [];
-  LatLng _center = LatLng(
-      4.778559, 7.016669); //port harcourt coordinates -- default location
+  LatLng _center = LatLng(4.778559, 7.016669);
   GoogleMapsPlaces _places = GoogleMapsPlaces(apiKey: AppData.mapAPIKey);
   GoogleMapPolyline googleMapPolyline =
       new GoogleMapPolyline(apiKey: AppData.mapAPIKey);
@@ -38,15 +37,15 @@ class _HomeState extends State<Home> {
   List<LatLng> routeCoords = [];
   Completer<GoogleMapController> __controller = Completer();
 
-  PlaceDetails departure;
-  PlaceDetails arrival;
+  PlaceDetails destination;
+  PlaceDetails pickupPoint;
 
   String _placeDistance;
+  double _distanceCovered;
   String _placeTime;
 
   final currencyFormatter =
       NumberFormat.currency(locale: 'en_US', symbol: '\u20a6');
-  double amount = 500;
 
   void onMapCreated(controller) {
     setState(() {
@@ -57,44 +56,42 @@ class _HomeState extends State<Home> {
 
   Future<Null> displayPredictionDestination(Prediction p) async {
     if (p != null) {
-      // get detail (lat/lng)
       PlacesDetailsResponse detail =
           await _places.getDetailsByPlaceId(p.placeId);
       final lat = detail.result.geometry.location.lat;
       final lng = detail.result.geometry.location.lng;
 
       setState(() {
-        departure = detail.result;
+        destination = detail.result;
         destinationController.text = detail.result.name;
         Marker marker = Marker(
-            markerId: MarkerId('arrivalMarker'),
+            markerId: MarkerId('pickupPointMarker'),
             draggable: false,
             infoWindow: InfoWindow(
               title: "This is where you will arrive",
             ),
-            onTap: () {
-              //print('this is where you will arrive');
-            },
+            onTap: () {},
             position: LatLng(lat, lng));
         markersList.add(marker);
       });
 
       mapController.animateCamera(CameraUpdate.newCameraPosition(
           CameraPosition(target: LatLng(lat, lng), zoom: 16.0)));
-      computePath();
+      if(destination != null && pickupPoint != null){
+        computePath();
+      }
     }
   }
 
   Future<Null> displayPredictionPickup(Prediction p) async {
     if (p != null) {
-      // get detail (lat/lng)
       PlacesDetailsResponse detail =
           await _places.getDetailsByPlaceId(p.placeId);
       final lat = detail.result.geometry.location.lat;
       final lng = detail.result.geometry.location.lng;
 
       setState(() {
-        arrival = detail.result;
+        pickupPoint = detail.result;
         pickupController.text = detail.result.name;
         Marker marker = Marker(
             markerId: MarkerId('pickupMarker'),
@@ -102,36 +99,28 @@ class _HomeState extends State<Home> {
             infoWindow: InfoWindow(
               title: "This is where you start",
             ),
-            onTap: () {
-              //print('this is where you will arrive');
-            },
+            onTap: () {},
             position: LatLng(lat, lng));
         markersList.add(marker);
       });
       mapController.animateCamera(CameraUpdate.newCameraPosition(
           CameraPosition(target: LatLng(lat, lng), zoom: 16.0)));
+      if(destination != null && pickupPoint != null){
+        computePath();
+      }
     }
   }
 
   computePath() async {
     LatLng origin = new LatLng(
-        departure.geometry.location.lat, departure.geometry.location.lng);
+        destination.geometry.location.lat, destination.geometry.location.lng);
     LatLng end = new LatLng(
-        arrival.geometry.location.lat, arrival.geometry.location.lng);
+        pickupPoint.geometry.location.lat, pickupPoint.geometry.location.lng);
     routeCoords.addAll(await googleMapPolyline.getCoordinatesWithLocation(
         origin: origin, destination: end, mode: RouteMode.driving));
 
-    //math area
-    // _myDistanceCalc(
-    //     lat1: departure.geometry.location.lat,
-    //     lon1: departure.geometry.location.lng,
-    //     lat2: arrival.geometry.location.lat,
-    //     lon2: arrival.geometry.location.lng);
-
     double totalDistance = 0.0;
 
-    // Calculating the total distance by adding the distance
-    // between small segments
     for (int i = 0; i < routeCoords.length - 1; i++) {
       totalDistance += _coordinateDistance(
         routeCoords[i].latitude,
@@ -144,34 +133,27 @@ class _HomeState extends State<Home> {
     int speed = 30;
     double time = speed * totalDistance;
 
-    double kms_per_min = 0.5;
+    double kmsPerMin = 0.5;
 
-    double mins_taken = totalDistance / kms_per_min;
+    double minsTaken = totalDistance / kmsPerMin;
 
-    int totalMinutes = mins_taken.toInt();
+    int totalMinutes = minsTaken.toInt();
 
-    print("ResponseT: kms : $totalDistance, mins: $mins_taken");
     String totalTime;
 
-    if (totalMinutes<60)
-    {
-      totalTime =  "$totalMinutes mins";
-    }else {
+    if (totalMinutes < 60) {
+      totalTime = "$totalMinutes mins";
+    } else {
       String minutes = (totalMinutes % 60).toString();
       minutes = minutes.length == 1 ? "0$minutes" : minutes;
-      totalTime =  "${totalMinutes ~/ 60} hours, $minutes mins";
+      totalTime = "${totalMinutes ~/ 60} hours, $minutes mins";
     }
 
     setState(() {
+      _distanceCovered = totalDistance;
       _placeDistance = totalDistance.toStringAsFixed(1);
-      print('DISTANCE: $_placeDistance km');
-
       _placeTime = totalTime;
-      print('Time is just $_placeTime');
 
-    });
-
-    setState(() {
       polyline.add(Polyline(
           polylineId: PolylineId('iter'),
           visible: true,
@@ -187,15 +169,15 @@ class _HomeState extends State<Home> {
       CameraUpdate.newLatLngBounds(
         LatLngBounds(
           northeast: LatLng(
-            departure.geometry.location.lat,
-            departure.geometry.location.lng,
+            destination.geometry.location.lat,
+            destination.geometry.location.lng,
           ),
           southwest: LatLng(
-            arrival.geometry.location.lat,
-            arrival.geometry.location.lng,
+            pickupPoint.geometry.location.lat,
+            pickupPoint.geometry.location.lng,
           ),
         ),
-        150.0, // padding
+        150.0,
       ),
     );
   }
@@ -242,8 +224,6 @@ class _HomeState extends State<Home> {
                         ),
                       ),
                       CustomerAppBar(),
-                      // Positioned(
-                      //     bottom: 0, right: 0, child: orderLocationDetailsPanel())
                     ],
                   ),
                 ),
@@ -265,8 +245,9 @@ class _HomeState extends State<Home> {
                               color: Colors.grey[300],
                               borderRadius: BorderRadius.circular(16)),
                         ),
-                    _placeDistance != null ? _billingLayout()
-                        : _bottomTitle(),
+                        _placeDistance != null
+                            ? _deliveryDetails()
+                            : _bottomTitle(),
                         Container(
                             height: 50.0,
                             width: double.infinity,
@@ -332,17 +313,6 @@ class _HomeState extends State<Home> {
                                           new Component(Component.country, "ng")
                                         ]);
                                     displayPredictionPickup(p);
-
-                                    setState(() {
-                                      if (markersList.isNotEmpty)
-                                        markersList.clear();
-                                      if (polyline.isNotEmpty) polyline.clear();
-                                      if (routeCoords.isNotEmpty)
-                                        routeCoords.clear();
-                                      _placeDistance = null;
-                                      _placeTime = null;
-                                      pickupController.clear();
-                                    });
                                   },
                                 ),
                               ],
@@ -412,16 +382,6 @@ class _HomeState extends State<Home> {
                                           new Component(Component.country, "ng")
                                         ]);
                                     displayPredictionDestination(p);
-                                    setState(() {
-                                      if (markersList.isNotEmpty)
-                                        markersList.clear();
-                                      if (polyline.isNotEmpty) polyline.clear();
-                                      if (routeCoords.isNotEmpty)
-                                        routeCoords.clear();
-                                      _placeDistance = null;
-                                      _placeTime = null;
-                                      destinationController.clear();
-                                    });
                                   },
                                 ),
                               ],
@@ -433,21 +393,28 @@ class _HomeState extends State<Home> {
                               margin: EdgeInsets.only(
                                   left: 20, right: 20, bottom: 25),
                               decoration: BoxDecoration(
-                                color: _placeDistance != null ? AppColor.primaryText : Colors.grey.withOpacity(0.5),
+                                color: _placeDistance != null
+                                    ? AppColor.primaryText
+                                    : Colors.grey.withOpacity(0.5),
                                 borderRadius: Radii.k25pxAll,
                               ),
-                              child: Text(_placeDistance != null ? 'Request rider' : 'Get estimate',
+                              child: Text(
+                                  _placeDistance != null
+                                      ? 'Request rider'
+                                      : 'Get estimate',
                                   style: TextStyle(
                                       fontSize: 14,
                                       fontFamily: 'Ubuntu',
                                       color: Colors.white,
                                       fontWeight: FontWeight.w400))),
                           onTap: () {
-                            _placeDistance != null ? Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => UserOrder()),
-                            ) : null;
+                            _placeDistance != null
+                                ? Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => UserOrder()),
+                                  )
+                                : null;
                           },
                           splashColor: Colors.grey[300],
                         ),
@@ -478,10 +445,8 @@ class _HomeState extends State<Home> {
     super.dispose();
   }
 
-  // Formula for calculating distance between two coordinates
-  // https://stackoverflow.com/a/54138876/11910277
   double _coordinateDistance(lat1, lon1, lat2, lon2) {
-    var p = 0.017453292519943295;  // var p = 0.028453292519943295;
+    var p = 0.017453292519943295;
     var c = cos;
     var a = 0.5 -
         c((lat2 - lat1) * p) / 2 +
@@ -489,25 +454,7 @@ class _HomeState extends State<Home> {
     return 12742 * asin(sqrt(a));
   }
 
-  void _myDistanceCalc({lat1, lon1, lat2, lon2}) {
-    debugLog('Calculating distance');
-    final myLat.Distance distance = new myLat.Distance();
-
-    // km = 423
-    debugLog('Computing distance ...');
-    final int km = distance.as(
-        myLat.LengthUnit.Kilometer,
-        new myLat.LatLng(52.518611, 13.408056),
-        new myLat.LatLng(51.519475, 7.46694444));
-    debugLog('Distance in km: ${km.toString()}');
-
-    // meter = 422591.551
-    final int meter = distance(new myLat.LatLng(52.518611, 13.408056),
-        new myLat.LatLng(51.519475, 7.46694444));
-    debugLog('Distance in meters: ${meter.toString()}');
-  }
-
-  _billingLayout() => Container(
+  _deliveryDetails() => Container(
         width: MediaQuery.of(context).size.width,
         margin: EdgeInsets.only(left: 20, right: 20, bottom: 15, top: 5),
         child: Row(
@@ -573,7 +520,8 @@ class _HomeState extends State<Home> {
                     fontWeight: FontWeight.w400,
                   ),
                 ),
-                Text(currencyFormatter.format(amount),
+                Text(
+                    currencyFormatter.format(priceCalculator(_distanceCovered)),
                     style: TextStyle(
                       fontSize: 22,
                       fontFamily: "Ubuntu",
