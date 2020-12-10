@@ -42,6 +42,7 @@ class _HomeState extends State<Home> {
   PlaceDetails arrival;
 
   String _placeDistance;
+  String _placeTime;
 
   final currencyFormatter =
       NumberFormat.currency(locale: 'en_US', symbol: '\u20a6');
@@ -140,9 +141,34 @@ class _HomeState extends State<Home> {
       );
     }
 
+    int speed = 30;
+    double time = speed * totalDistance;
+
+    double kms_per_min = 0.5;
+
+    double mins_taken = totalDistance / kms_per_min;
+
+    int totalMinutes = mins_taken.toInt();
+
+    print("ResponseT: kms : $totalDistance, mins: $mins_taken");
+    String totalTime;
+
+    if (totalMinutes<60)
+    {
+      totalTime =  "$totalMinutes mins";
+    }else {
+      String minutes = (totalMinutes % 60).toString();
+      minutes = minutes.length == 1 ? "0$minutes" : minutes;
+      totalTime =  "${totalMinutes ~/ 60} hours, $minutes mins";
+    }
+
     setState(() {
-      _placeDistance = totalDistance.toStringAsFixed(2);
+      _placeDistance = totalDistance.toStringAsFixed(1);
       print('DISTANCE: $_placeDistance km');
+
+      _placeTime = totalTime;
+      print('Time is just $_placeTime');
+
     });
 
     setState(() {
@@ -156,6 +182,22 @@ class _HomeState extends State<Home> {
           startCap: Cap.roundCap,
           endCap: Cap.buttCap));
     });
+
+    mapController.animateCamera(
+      CameraUpdate.newLatLngBounds(
+        LatLngBounds(
+          northeast: LatLng(
+            departure.geometry.location.lat,
+            departure.geometry.location.lng,
+          ),
+          southwest: LatLng(
+            arrival.geometry.location.lat,
+            arrival.geometry.location.lng,
+          ),
+        ),
+        150.0, // padding
+      ),
+    );
   }
 
   @override
@@ -223,13 +265,13 @@ class _HomeState extends State<Home> {
                               color: Colors.grey[300],
                               borderRadius: BorderRadius.circular(16)),
                         ),
-                        _billingLayout(),
-                        // _bottomTitle(),
+                    _placeDistance != null ? _billingLayout()
+                        : _bottomTitle(),
                         Container(
                             height: 50.0,
                             width: double.infinity,
                             margin: EdgeInsets.only(
-                                left: 20, right: 20, bottom: 10, top: 13),
+                                left: 20, right: 20, bottom: 8, top: 13),
                             decoration: BoxDecoration(
                               color: Colors.white,
                               border: Border.fromBorderSide(
@@ -298,6 +340,8 @@ class _HomeState extends State<Home> {
                                       if (routeCoords.isNotEmpty)
                                         routeCoords.clear();
                                       _placeDistance = null;
+                                      _placeTime = null;
+                                      pickupController.clear();
                                     });
                                   },
                                 ),
@@ -307,7 +351,7 @@ class _HomeState extends State<Home> {
                             height: 50.0,
                             width: double.infinity,
                             margin: EdgeInsets.only(
-                                left: 20, right: 20, bottom: 20, top: 10),
+                                left: 20, right: 20, bottom: 18, top: 10),
                             decoration: BoxDecoration(
                               color: Colors.white,
                               border: Border.fromBorderSide(
@@ -375,6 +419,8 @@ class _HomeState extends State<Home> {
                                       if (routeCoords.isNotEmpty)
                                         routeCoords.clear();
                                       _placeDistance = null;
+                                      _placeTime = null;
+                                      destinationController.clear();
                                     });
                                   },
                                 ),
@@ -385,12 +431,12 @@ class _HomeState extends State<Home> {
                               height: 47,
                               alignment: Alignment.center,
                               margin: EdgeInsets.only(
-                                  left: 20, right: 20, bottom: 35),
+                                  left: 20, right: 20, bottom: 25),
                               decoration: BoxDecoration(
-                                color: AppColor.primaryText,
+                                color: _placeDistance != null ? AppColor.primaryText : Colors.grey.withOpacity(0.5),
                                 borderRadius: Radii.k25pxAll,
                               ),
-                              child: Text('Request rider',
+                              child: Text(_placeDistance != null ? 'Request rider' : 'Get estimate',
                                   style: TextStyle(
                                       fontSize: 14,
                                       fontFamily: 'Ubuntu',
@@ -435,7 +481,7 @@ class _HomeState extends State<Home> {
   // Formula for calculating distance between two coordinates
   // https://stackoverflow.com/a/54138876/11910277
   double _coordinateDistance(lat1, lon1, lat2, lon2) {
-    var p = 0.017453292519943295;
+    var p = 0.017453292519943295;  // var p = 0.028453292519943295;
     var c = cos;
     var a = 0.5 -
         c((lat2 - lat1) * p) / 2 +
@@ -480,7 +526,7 @@ class _HomeState extends State<Home> {
                       fontWeight: FontWeight.w400,
                     ),
                   ),
-                  Text('13mins',
+                  Text('$_placeTime',
                       style: TextStyle(
                         fontSize: 16,
                         fontFamily: "Ubuntu",
@@ -546,7 +592,7 @@ class _HomeState extends State<Home> {
             alignment: Alignment.centerLeft,
             margin: EdgeInsets.only(left: 20),
             child: Text(
-              "Hello George,",
+              "Hello dear,",
               textAlign: TextAlign.left,
               style: TextStyle(
                 fontSize: 15,
@@ -558,7 +604,7 @@ class _HomeState extends State<Home> {
           ),
           Container(
             alignment: Alignment.centerLeft,
-            margin: EdgeInsets.only(left: 20, bottom: 5, top: 3),
+            margin: EdgeInsets.only(left: 20, top: 3),
             child: new Text(
               "A rider is ready for you.",
               maxLines: 1,
