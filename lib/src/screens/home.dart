@@ -63,6 +63,8 @@ class _HomeState extends State<Home> {
       final lat = detail.result.geometry.location.lat;
       final lng = detail.result.geometry.location.lng;
 
+
+
       setState(() {
         departure = detail.result;
         destinationController.text = detail.result.name;
@@ -326,13 +328,13 @@ class _HomeState extends State<Home> {
                                             context: context,
                                             apiKey: AppData.mapAPIKey,
                                             mode: Mode.fullscreen,
+                                            logo: Icon(Icons.search, color: Colors.transparent),
                                             language: "en",
                                             hint: 'Search pickup location',
                                             components: [
                                           new Component(Component.country, "ng")
                                         ]);
                                     displayPredictionPickup(p);
-
                                     setState(() {
                                       if (markersList.isNotEmpty)
                                         markersList.clear();
@@ -407,6 +409,7 @@ class _HomeState extends State<Home> {
                                             apiKey: AppData.mapAPIKey,
                                             mode: Mode.fullscreen,
                                             language: "en",
+                                            logo: Icon(Icons.search, color: Colors.transparent),
                                             hint: 'Search destination',
                                             components: [
                                           new Component(Component.country, "ng")
@@ -563,6 +566,7 @@ class _HomeState extends State<Home> {
             Expanded(
                 child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Text(
                   'Fare estimate:',
