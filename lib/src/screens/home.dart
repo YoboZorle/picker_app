@@ -111,8 +111,6 @@ class _HomeState extends State<Home> {
 
   computePath() async {
     // setState(() {
-      if (markersList.isNotEmpty)
-        markersList.clear();
       if (polyline.isNotEmpty) polyline.clear();
       if (routeCoords.isNotEmpty)
         routeCoords.clear();
