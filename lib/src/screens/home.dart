@@ -156,9 +156,7 @@ class _HomeState extends State<Home> {
       _distanceCovered = totalDistance;
       _placeDistance = totalDistance.toStringAsFixed(1);
       _placeTime = totalTime;
-    });
 
-    setState(() {
       polyline.add(Polyline(
           polylineId: PolylineId('iter'),
           visible: true,
@@ -258,7 +256,7 @@ class _HomeState extends State<Home> {
                             height: 50.0,
                             width: double.infinity,
                             margin: EdgeInsets.only(
-                                left: 20, right: 20, bottom: 8, top: 13),
+                                left: 20, right: 20, bottom: 7, top: 13),
                             decoration: BoxDecoration(
                               color: Colors.white,
                               border: Border.fromBorderSide(
@@ -339,7 +337,7 @@ class _HomeState extends State<Home> {
                             height: 50.0,
                             width: double.infinity,
                             margin: EdgeInsets.only(
-                                left: 20, right: 20, bottom: 18, top: 8),
+                                left: 20, right: 20, bottom: 18, top: 7),
                             decoration: BoxDecoration(
                               color: Colors.white,
                               border: Border.fromBorderSide(
@@ -582,4 +580,30 @@ class _HomeState extends State<Home> {
           ),
         ],
       );
+
+  Widget _flightShuttleBuilder(
+    BuildContext flightContext,
+    Animation<double> animation,
+    HeroFlightDirection flightDirection,
+    BuildContext fromHeroContext,
+    BuildContext toHeroContext,
+  ) {
+    return DefaultTextStyle(
+      style: DefaultTextStyle.of(toHeroContext).style,
+      child: toHeroContext.widget,
+    );
+  }
+}
+
+class GetReceiver extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.black.withOpacity(0.3),
+      appBar: AppBar(
+        title: Text('Provide Receiver Details'),
+      ),
+      body: Text('Forever!'),
+    );
+  }
 }

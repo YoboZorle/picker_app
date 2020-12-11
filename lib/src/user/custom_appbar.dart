@@ -10,7 +10,7 @@ class CustomerAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Padding(
-          padding: const EdgeInsets.fromLTRB(14, 15, 16, 8),
+          padding: const EdgeInsets.fromLTRB(14, 8, 16, 8),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
