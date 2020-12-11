@@ -436,19 +436,36 @@ class _HomeState extends State<Home> {
                                       color: Colors.white,
                                       fontWeight: FontWeight.w400))),
                           onTap: () => _placeDistance != null
-                              ? Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          PackageReceiverDetails(
-                                              duration: _placeTime,
-                                              distance: _placeDistance,
-                                              price: priceCalculator(
-                                                  _distanceCovered),
-                                              pickupCoordinate:
-                                                  pickupCoordinate,
-                                              destinationCoordinate:
-                                                  destinationCoordinate)))
+                              ?
+                              // Navigator.push(
+                              //         context,
+                              //         MaterialPageRoute(
+                              //             builder: (context) =>
+                              //                 PackageReceiverDetails(
+                              //                     duration: _placeTime,
+                              //                     distance: _placeDistance,
+                              //                     price: priceCalculator(
+                              //                         _distanceCovered),
+                              //                     pickupCoordinate:
+                              //                         pickupCoordinate,
+                              //                     destinationCoordinate:
+                              //                         destinationCoordinate)))
+
+                              Navigator.of(context).push(
+                                  PageRouteBuilder(
+                                    opaque: false,
+                                    pageBuilder: (BuildContext context, _, __) {
+                                      return PackageReceiverDetails(
+                                          duration: _placeTime,
+                                          distance: _placeDistance,
+                                          price:
+                                              priceCalculator(_distanceCovered),
+                                          pickupCoordinate: pickupCoordinate,
+                                          destinationCoordinate:
+                                              destinationCoordinate);
+                                    },
+                                  ),
+                                )
                               : null,
                           splashColor: Colors.grey[300],
                         ),

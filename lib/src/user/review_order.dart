@@ -63,16 +63,16 @@ class ReviewOrder extends StatelessWidget {
               child: Column(children: <Widget>[
                 Expanded(
                   child: new Container(
+                    color: Colors.grey[100],
                       margin: EdgeInsets.only(top: 5),
                       child: Stack(children: <Widget>[
                         ListView(
                             physics: const BouncingScrollPhysics(),
                             children: <Widget>[
-                              SizedBox(height: 10),
                               Container(
-                                margin: EdgeInsets.symmetric(horizontal: 15),
+                                margin: EdgeInsets.only(left: 15, right: 15, top: 10),
                                 child: Card(
-                                  elevation: 500,
+                                  elevation: 0,
                                   child: Padding(
                                     padding: const EdgeInsets.all(15.0),
                                     child: Column(
@@ -184,7 +184,7 @@ class ReviewOrder extends StatelessWidget {
                               Container(
                                 margin: EdgeInsets.symmetric(horizontal: 15),
                                 child: Card(
-                                  elevation: 500,
+                                  elevation: 0,
                                   child: Padding(
                                     padding: const EdgeInsets.all(15.0),
                                     child: Column(
