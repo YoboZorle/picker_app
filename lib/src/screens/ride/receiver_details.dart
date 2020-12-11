@@ -1,21 +1,33 @@
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:intl/intl.dart';
 import 'package:pickrr_app/src/helpers/constants.dart';
-import 'package:pickrr_app/src/user/review_order.dart';
+import 'package:pickrr_app/src/helpers/utility.dart';
+import 'package:pickrr_app/src/widgets/arguments.dart';
 
-class UserDetails extends StatefulWidget {
+class PackageReceiverDetails extends StatefulWidget {
+  final double price;
+  final Map<String, dynamic> pickupCoordinate;
+  final Map<String, dynamic> destinationCoordinate;
+  final String distance;
+  final String duration;
+
+  PackageReceiverDetails(
+      {this.price, this.pickupCoordinate, this.destinationCoordinate, this.distance, this.duration});
+
   @override
-  _UserDetailsState createState() => _UserDetailsState();
+  _PackageReceiverDetailsState createState() => _PackageReceiverDetailsState();
 }
 
-class _UserDetailsState extends State<UserDetails> {
-  GoogleMapController myMapController;
-  final Set<Marker> _markers = new Set();
-  static const LatLng _mainLocation = const LatLng(4.814340, 7.000848);
-  double amount = 500;
-  final currencyFormatter =
-      NumberFormat.currency(locale: 'en_US', symbol: '\u20a6');
+class _PackageReceiverDetailsState extends State<PackageReceiverDetails> {
+  TextEditingController _receiversFullNameController;
+  TextEditingController _receiversPhoneController;
+
+  @override
+  void initState() {
+    _receiversFullNameController = new TextEditingController();
+    _receiversPhoneController = new TextEditingController();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -30,31 +42,13 @@ class _UserDetailsState extends State<UserDetails> {
           Expanded(
             child: Stack(
               children: [
-                Hero(
-                  tag: 'map',
-                  flightShuttleBuilder: _flightShuttleBuilder,
-                  child: GoogleMap(
-                    initialCameraPosition: CameraPosition(
-                      target: _mainLocation,
-                      zoom: 15.6,
-                    ),
-                    markers: this.myMarker(),
-                    mapType: MapType.normal,
-                    myLocationButtonEnabled: false,
-                    zoomControlsEnabled: false,
-                    onMapCreated: (controller) {
-                      setState(() {
-                        myMapController = controller;
-                      });
-                    },
-                  ),
-                ),
+                Container(),
                 SafeArea(
                   child: Padding(
                       padding: const EdgeInsets.fromLTRB(14, 15, 16, 8),
                       child: Hero(
                         tag: "nav",
-                        flightShuttleBuilder: _flightShuttleBuilder,
+                        flightShuttleBuilder: flightShuttleBuilder,
                         child: GestureDetector(
                             child: Container(
                               // color: Colors.yellow,
@@ -116,6 +110,7 @@ class _UserDetailsState extends State<UserDetails> {
                       color: Colors.grey[500],
                     ),
                     title: TextField(
+                      controller: _receiversFullNameController,
                       decoration: InputDecoration(
                         hintText: "Receiver\'s full name",
                         hintStyle: TextStyle(
@@ -142,6 +137,7 @@ class _UserDetailsState extends State<UserDetails> {
                       color: Colors.grey[500],
                     ),
                     title: TextField(
+                      controller: _receiversPhoneController,
                       keyboardType: TextInputType.number,
                       decoration: InputDecoration(
                         hintText: "Receiver\'s phone number",
@@ -164,16 +160,18 @@ class _UserDetailsState extends State<UserDetails> {
                   ),
                   Hero(
                     tag: "btn",
-                    flightShuttleBuilder: _flightShuttleBuilder,
-                    child: GestureDetector(
+                    flightShuttleBuilder: flightShuttleBuilder,
+                    child: InkWell(
                       child: Container(
                           height: 45,
                           alignment: Alignment.center,
                           margin: EdgeInsets.only(
                               bottom: 18, left: 25, right: 25, top: 30),
                           decoration: BoxDecoration(
-                            color: AppColor.primaryText,
-                            boxShadow: [Shadows.secondaryShadow],
+                            color: _isFormValid()
+                                ? AppColor.primaryText
+                                : Colors.grey.withOpacity(0.5),
+                            boxShadow: _isFormValid() ? [Shadows.secondaryShadow] : null,
                             borderRadius: Radii.kRoundpxRadius,
                           ),
                           child: Text('Continue',
@@ -182,14 +180,17 @@ class _UserDetailsState extends State<UserDetails> {
                                   fontFamily: 'Ubuntu',
                                   color: Colors.white,
                                   fontWeight: FontWeight.w500))),
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  ReviewOrder()),
-                        );
-                      },
+                      onTap: () => _isFormValid()
+                          ? Navigator.pushNamed(
+                              context, '/ReviewOrderPage',
+                              arguments: RideDetailsArguments(
+                                  widget.price,
+                                  widget.pickupCoordinate,
+                                  widget.destinationCoordinate,
+                                  _receiversFullNameController.text,
+                                  _receiversPhoneController.text, widget.distance, widget.duration))
+                          : null,
+                      splashColor: Colors.grey[300],
                     ),
                   ),
                 ],
@@ -199,31 +200,16 @@ class _UserDetailsState extends State<UserDetails> {
     )));
   }
 
-  Set<Marker> myMarker() {
-    setState(() {
-      _markers.add(Marker(
-        markerId: MarkerId(_mainLocation.toString()),
-        position: _mainLocation,
-        infoWindow: InfoWindow(
-          title: 'Bikers City',
-          snippet: 'George Howfa na :)',
-        ),
-        icon: BitmapDescriptor.defaultMarker,
-      ));
-    });
-    return _markers;
-  }
+  _isFormValid() =>
+      _receiversFullNameController.text != null &&
+      _receiversFullNameController.text.isNotEmpty &&
+      _receiversPhoneController.text != null &&
+      _receiversPhoneController.text.isNotEmpty;
 
-  Widget _flightShuttleBuilder(
-    BuildContext flightContext,
-    Animation<double> animation,
-    HeroFlightDirection flightDirection,
-    BuildContext fromHeroContext,
-    BuildContext toHeroContext,
-  ) {
-    return DefaultTextStyle(
-      style: DefaultTextStyle.of(toHeroContext).style,
-      child: toHeroContext.widget,
-    );
+  @override
+  void dispose() {
+    _receiversFullNameController.dispose();
+    _receiversPhoneController.dispose();
+    super.dispose();
   }
 }

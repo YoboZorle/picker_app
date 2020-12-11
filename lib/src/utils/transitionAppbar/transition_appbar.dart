@@ -41,7 +41,6 @@ class _TransitionAppBarDelegate extends SliverPersistentHeaderDelegate {
       BuildContext context, double shrinkOffset, bool overlapsContent) {
     double tempVal = 34 * maxExtent / 100;
     final progress =  shrinkOffset > tempVal ? 1.0 : shrinkOffset / tempVal;
-    print("Objechjkf === ${progress} ${shrinkOffset}");
     final avatarMargin = _avatarMarginTween.lerp(progress);
     final avatarAlign = _avatarAlignTween.lerp(progress);
 

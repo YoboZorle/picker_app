@@ -1,54 +1,65 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_clipboard_manager/flutter_clipboard_manager.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
+import 'package:pickrr_app/src/blocs/authentication/bloc.dart';
 import 'package:pickrr_app/src/helpers/constants.dart';
+import 'package:pickrr_app/src/models/user.dart';
 import 'package:pickrr_app/src/user/your_driver.dart';
 import 'package:dotted_line/dotted_line.dart';
+import 'package:pickrr_app/src/widgets/arguments.dart';
+import 'package:pickrr_app/src/helpers/utility.dart';
 
-class ReviewOrder extends StatefulWidget {
-  @override
-  _ReviewOrderState createState() => _ReviewOrderState();
-}
+class ReviewOrder extends StatelessWidget {
+  final RideDetailsArguments arguments;
 
-class _ReviewOrderState extends State<ReviewOrder> {
-  double amount = 500;
+  ReviewOrder(this.arguments);
+
   final currencyFormatter =
       NumberFormat.currency(locale: 'en_US', symbol: '\u20a6');
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async => false,
-      child: new Scaffold(
-          key: _scaffoldKey,
-          backgroundColor: Colors.white,
-          appBar: AppBar(
-            centerTitle: true,
-            title: Text(
-              'Review Order',
-              style: TextStyle(
-                fontSize: 17,
-                fontFamily: 'Ubuntu',
-                color: Colors.black,
-                fontWeight: FontWeight.w800,
-              ),
+    return new Scaffold(
+        key: _scaffoldKey,
+        backgroundColor: Colors.white,
+        appBar: AppBar(
+          centerTitle: true,
+          title: Text(
+            'Review Order',
+            style: TextStyle(
+              fontSize: 17,
+              fontFamily: 'Ubuntu',
+              color: Colors.black,
+              fontWeight: FontWeight.w800,
             ),
-            leading: IconButton(
-              icon: Icon(Icons.arrow_back_ios, color: Colors.black),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            ),
-            elevation: 0,
-            backgroundColor: Colors.white,
           ),
-          body: GestureDetector(
-            onTap: () {
-              FocusScope.of(context).requestFocus(new FocusNode());
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back_ios, color: Colors.black),
+            onPressed: () {
+              Navigator.pop(context);
             },
-            child: SafeArea(
+          ),
+          elevation: 0,
+          backgroundColor: Colors.white,
+        ),
+        body: GestureDetector(
+          onTap: () {
+            FocusScope.of(context).requestFocus(new FocusNode());
+          },
+          child: BlocBuilder<AuthenticationBloc, AuthenticationState>(
+              builder: (_, state) {
+            if (state is NonLoggedIn) {
+              WidgetsBinding.instance.addPostFrameCallback(
+                  (_) => Navigator.pushReplacementNamed(context, '/'));
+            }
+            if (state.props.isEmpty) {
+              return Container();
+            }
+            User user = state.props[0];
+
+            return SafeArea(
               child: Column(children: <Widget>[
                 Expanded(
                   child: new Container(
@@ -58,54 +69,10 @@ class _ReviewOrderState extends State<ReviewOrder> {
                             physics: const BouncingScrollPhysics(),
                             children: <Widget>[
                               SizedBox(height: 10),
-                              Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: <Widget>[
-                                    SizedBox(width: 20),
-                                    Text(
-                                      'Transaction ID: ',
-                                      textAlign: TextAlign.left,
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        fontFamily: 'Ubuntu',
-                                        color: Colors.black87,
-                                        fontWeight: FontWeight.w400,
-                                      ),
-                                    ),
-                                    Text(
-                                      '87AGB346',
-                                      textAlign: TextAlign.left,
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        fontFamily: 'Ubuntu',
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                    Expanded(child: SizedBox()),
-                                    Container(height: 33,
-                                      margin: EdgeInsets.only(right: 20),
-                                      child: RaisedButton(
-                                        child: Text('COPY ID'),
-                                        onPressed: () {
-                                          final snackBar = SnackBar(
-                                            content: Text('Transaction ID Copied!'),
-                                            action: SnackBarAction(
-                                              label: '87AGB346',
-                                              textColor: Colors.yellowAccent,
-                                              onPressed: () {},
-                                            ),
-                                          );
-                                          _scaffoldKey.currentState.showSnackBar(snackBar);
-                                        },
-                                      ),
-                                    ),
-                                  ]),
-                              SizedBox(height: 15),
-
                               Container(
                                 margin: EdgeInsets.symmetric(horizontal: 15),
-                                child: Card(elevation: 500,
+                                child: Card(
+                                  elevation: 500,
                                   child: Padding(
                                     padding: const EdgeInsets.all(15.0),
                                     child: Column(
@@ -144,12 +111,13 @@ class _ReviewOrderState extends State<ReviewOrder> {
                                             SizedBox(width: 18),
                                             Expanded(
                                               child: Text(
-                                                'Cynthia Morgan',
+                                                user.fullname.capitalize(),
                                                 style: TextStyle(
                                                     fontSize: 14.0,
                                                     fontFamily: "Ubuntu",
                                                     color: Colors.black,
-                                                    fontWeight: FontWeight.w600),
+                                                    fontWeight:
+                                                        FontWeight.w600),
                                               ),
                                             ),
                                           ],
@@ -168,20 +136,23 @@ class _ReviewOrderState extends State<ReviewOrder> {
                                             SizedBox(width: 18),
                                             Expanded(
                                               child: Text(
-                                                '07034287783',
+                                                '+${user.callingCode}${user.phone}',
                                                 style: TextStyle(
                                                     fontSize: 14.0,
                                                     fontFamily: "Ubuntu",
                                                     color: Colors.black,
-                                                    fontWeight: FontWeight.w600),
+                                                    fontWeight:
+                                                        FontWeight.w600),
                                               ),
                                             ),
                                           ],
                                         ),
                                         SizedBox(height: 3),
                                         Row(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          mainAxisAlignment: MainAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
                                           children: [
                                             Text(
                                               'Address',
@@ -194,12 +165,13 @@ class _ReviewOrderState extends State<ReviewOrder> {
                                             SizedBox(width: 18),
                                             Expanded(
                                               child: Text(
-                                                '24 Odilli road, Port harcourt, Nigeria',
+                                                arguments.pickupCoordinate['address'] ?? '',
                                                 style: TextStyle(
                                                     fontSize: 14.0,
                                                     fontFamily: "Ubuntu",
                                                     color: Colors.black,
-                                                    fontWeight: FontWeight.w600),
+                                                    fontWeight:
+                                                        FontWeight.w600),
                                               ),
                                             ),
                                           ],
@@ -211,7 +183,8 @@ class _ReviewOrderState extends State<ReviewOrder> {
                               ),
                               Container(
                                 margin: EdgeInsets.symmetric(horizontal: 15),
-                                child: Card(elevation: 500,
+                                child: Card(
+                                  elevation: 500,
                                   child: Padding(
                                     padding: const EdgeInsets.all(15.0),
                                     child: Column(
@@ -253,12 +226,13 @@ class _ReviewOrderState extends State<ReviewOrder> {
                                             SizedBox(width: 18),
                                             Expanded(
                                               child: Text(
-                                                'George Adowei',
+                                                arguments.receiversFullName.capitalize(),
                                                 style: TextStyle(
                                                     fontSize: 14.0,
                                                     fontFamily: "Ubuntu",
                                                     color: Colors.black,
-                                                    fontWeight: FontWeight.w600),
+                                                    fontWeight:
+                                                        FontWeight.w600),
                                               ),
                                             ),
                                           ],
@@ -277,20 +251,23 @@ class _ReviewOrderState extends State<ReviewOrder> {
                                             SizedBox(width: 18),
                                             Expanded(
                                               child: Text(
-                                                '08034233482',
+                                                arguments.receiversPhone,
                                                 style: TextStyle(
                                                     fontSize: 14.0,
                                                     fontFamily: "Ubuntu",
                                                     color: Colors.black,
-                                                    fontWeight: FontWeight.w600),
+                                                    fontWeight:
+                                                        FontWeight.w600),
                                               ),
                                             ),
                                           ],
                                         ),
                                         SizedBox(height: 3),
                                         Row(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          mainAxisAlignment: MainAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
                                           children: [
                                             Text(
                                               'Address',
@@ -303,12 +280,13 @@ class _ReviewOrderState extends State<ReviewOrder> {
                                             SizedBox(width: 18),
                                             Expanded(
                                               child: Text(
-                                                '7B Sani Abacha road, Phase 3C, Port harcourt, Nigeria',
+                                                arguments.destinationCoordinate['address'] ?? '',
                                                 style: TextStyle(
                                                     fontSize: 14.0,
                                                     fontFamily: "Ubuntu",
                                                     color: Colors.black,
-                                                    fontWeight: FontWeight.w600),
+                                                    fontWeight:
+                                                        FontWeight.w600),
                                               ),
                                             ),
                                           ],
@@ -336,7 +314,7 @@ class _ReviewOrderState extends State<ReviewOrder> {
                                         ),
                                       ),
                                       Text(
-                                        '33 mins',
+                                        arguments.duration,
                                         textAlign: TextAlign.left,
                                         style: TextStyle(
                                           fontSize: 14,
@@ -365,7 +343,7 @@ class _ReviewOrderState extends State<ReviewOrder> {
                                         ),
                                       ),
                                       Text(
-                                        '6km',
+                                        '${arguments.distance} km',
                                         textAlign: TextAlign.left,
                                         style: TextStyle(
                                           fontSize: 14,
@@ -409,7 +387,8 @@ class _ReviewOrderState extends State<ReviewOrder> {
                                         ),
                                       ),
                                       new Text(
-                                        currencyFormatter.format(amount),
+                                        currencyFormatter
+                                            .format(arguments.price),
                                         maxLines: 1,
                                         textAlign: TextAlign.left,
                                         style: TextStyle(
@@ -446,7 +425,9 @@ class _ReviewOrderState extends State<ReviewOrder> {
                             _choosePaymentMethodSheet(context);
                           },
                           color: AppColor.primaryText,
-                          child: Text("Pay " + currencyFormatter.format(amount),
+                          child: Text(
+                              "Pay " +
+                                  currencyFormatter.format(arguments.price),
                               style: TextStyle(
                                   fontFamily: "Roboto",
                                   fontWeight: FontWeight.w600,
@@ -460,9 +441,9 @@ class _ReviewOrderState extends State<ReviewOrder> {
                   ),
                 ),
               ]),
-            ),
-          )),
-    );
+            );
+          }),
+        ));
   }
 
   void _choosePaymentMethodSheet(context) {
@@ -500,8 +481,7 @@ class _ReviewOrderState extends State<ReviewOrder> {
                     margin: EdgeInsets.only(bottom: 15),
                     child: new ListTile(
                       dense: true,
-                      leading:
-                      SvgPicture.asset('assets/svg/cash.svg',
+                      leading: SvgPicture.asset('assets/svg/cash.svg',
                           height: 35, semanticsLabel: 'cash icon'),
                       title: new Text('Pay with Cash',
                           style: TextStyle(
@@ -521,8 +501,7 @@ class _ReviewOrderState extends State<ReviewOrder> {
                   SizedBox(height: 15),
                   new ListTile(
                     dense: true,
-                    leading:
-                    SvgPicture.asset('assets/svg/card.svg',
+                    leading: SvgPicture.asset('assets/svg/card.svg',
                         height: 23, semanticsLabel: 'card icon'),
                     title: new Text('Pay Online',
                         style: TextStyle(

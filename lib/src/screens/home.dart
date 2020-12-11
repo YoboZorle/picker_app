@@ -10,8 +10,8 @@ import 'package:google_maps_webservice/places.dart';
 import 'package:intl/intl.dart';
 import 'package:pickrr_app/src/helpers/constants.dart';
 import 'package:pickrr_app/src/helpers/utility.dart';
+import 'package:pickrr_app/src/screens/ride/receiver_details.dart';
 import 'package:pickrr_app/src/user/custom_appbar.dart';
-import 'package:pickrr_app/src/user/receiver_details.dart';
 import 'package:pickrr_app/src/widgets/nav_drawer.dart';
 
 class Home extends StatefulWidget {
@@ -33,6 +33,8 @@ class _HomeState extends State<Home> {
   final List<Polyline> polyline = [];
   List<LatLng> routeCoords = [];
   Completer<GoogleMapController> __controller = Completer();
+  final Map<String, dynamic> pickupCoordinate = {};
+  final Map<String, dynamic> destinationCoordinate = {};
 
   PlaceDetails destination;
   PlaceDetails pickupPoint;
@@ -70,6 +72,9 @@ class _HomeState extends State<Home> {
             onTap: () {},
             position: LatLng(lat, lng));
         markersList.add(marker);
+        destinationCoordinate['lat'] = lat;
+        destinationCoordinate['lng'] = lng;
+        destinationCoordinate['address'] = destinationController.text;
       });
 
       mapController.animateCamera(CameraUpdate.newCameraPosition(
@@ -100,6 +105,9 @@ class _HomeState extends State<Home> {
             onTap: () {},
             position: LatLng(lat, lng));
         markersList.add(marker);
+        pickupCoordinate['lat'] = lat;
+        pickupCoordinate['lng'] = lng;
+        pickupCoordinate['address'] = pickupController.text;
       });
       mapController.animateCamera(CameraUpdate.newCameraPosition(
           CameraPosition(target: LatLng(lat, lng), zoom: 16.0)));
@@ -430,71 +438,19 @@ class _HomeState extends State<Home> {
                                       color: Colors.white,
                                       fontWeight: FontWeight.w400))),
                           onTap: () => _placeDistance != null
-                              ?
-                              // Navigator.push(
-                              //   context,
-                              //   MaterialPageRoute(
-                              //       builder: (context) => UserDetails()),
-                              // )
-
-                              showModalBottomSheet<void>(
-                                  isScrollControlled: true,
-                                  isDismissible: false,
-                                  enableDrag: true,
-                                  context: context,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(0.0),
-                                        topRight: Radius.circular(0.0)),
-                                  ),
-                                  builder: (BuildContext context) {
-                                    return Padding(
-                                        padding:
-                                            MediaQuery.of(context).viewInsets,
-                                        child: Container(
-                                            color: Colors.white,
-                                            child: Wrap(
-                                              children: <Widget>[
-                                                TextFormField(
-                                                  validator: (value) {
-                                                    if (value.isEmpty) {
-                                                      return "Could not be empty";
-                                                    }
-                                                    return null;
-                                                  },
-                                                  decoration: InputDecoration(
-                                                      labelText: "PASSWORD",
-                                                      border:
-                                                          OutlineInputBorder(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          5))),
-                                                  onFieldSubmitted:
-                                                      (String p) {},
-                                                ),
-                                                TextFormField(
-                                                  validator: (value) {
-                                                    if (value.isEmpty) {
-                                                      return "Could not be empty";
-                                                    }
-                                                    return null;
-                                                  },
-                                                  decoration: InputDecoration(
-                                                      labelText: "PASSWORD",
-                                                      border:
-                                                          OutlineInputBorder(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          5))),
-                                                  onFieldSubmitted:
-                                                      (String p) {},
-                                                ),
-                                              ],
-                                            )));
-                                  },
-                                )
+                              ? Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          PackageReceiverDetails(
+                                              duration: _placeTime,
+                                              distance: _placeDistance,
+                                              price: priceCalculator(
+                                                  _distanceCovered),
+                                              pickupCoordinate:
+                                                  pickupCoordinate,
+                                              destinationCoordinate:
+                                                  destinationCoordinate)))
                               : null,
                           splashColor: Colors.grey[300],
                         ),
