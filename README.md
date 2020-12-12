@@ -1,6 +1,6 @@
 # pickrr_app
 
-For your logistics and delivery hazzles 
+For your logistics and delivery hurdles
 
 ## Getting Started
 
