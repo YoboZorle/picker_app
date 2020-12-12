@@ -16,6 +16,26 @@ class DriverOnboard extends StatelessWidget {
             new FlareActor(bgImage,
                 alignment: Alignment.center, fit: BoxFit.cover),
             Positioned(
+                top: 43,
+                left: 0,
+                right: 0,
+                child: Align(
+                    child: Row(children: [
+                  Expanded(child: SizedBox()),
+                  FlatButton(
+                      child: Text('Cancel',
+                          style: TextStyle(
+                            color: AppColor.primaryText,
+                            fontFamily: 'Ubuntu',
+                            fontSize: 15,
+                            fontWeight: FontWeight.w500,
+                          )),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      }),
+                  SizedBox(width: 5),
+                ]))),
+            Positioned(
               top: 120,
               left: 0,
               right: 0,

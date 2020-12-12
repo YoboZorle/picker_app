@@ -63,6 +63,60 @@ class _PackageReceiverDetailsState extends State<PackageReceiverDetails> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
+                    Container(
+                        alignment: Alignment.center,
+                        height: 47,
+                        margin: EdgeInsets.only(
+                            left: 20, right: 20, bottom: 10),
+                        color: Colors.grey[200],
+                        child:    Expanded(
+                          child: Container(
+                            width: MediaQuery.of(context).size.width,
+                            margin: EdgeInsets.only(left: 0),
+                            child: TextFormField(
+                              keyboardType: TextInputType.name,
+                              cursorColor: AppColor.primaryText,
+                              controller: _receiversFullNameController,
+                              style: TextStyle(
+                                  fontSize: 16.0,
+                                  fontFamily: 'Ubuntu',
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w400),
+                              decoration: InputDecoration(
+                                hintText: 'Input email',
+                                hintStyle: TextStyle(
+                                    fontSize: 16.0,
+                                    fontFamily: 'Ubuntu',
+                                    color: Colors.grey,
+                                    fontWeight: FontWeight.w400),
+                                border: InputBorder.none,
+                                focusedBorder: InputBorder.none,
+                                enabledBorder: InputBorder.none,
+                                errorBorder: InputBorder.none,
+                                disabledBorder: InputBorder.none,
+                                suffixIcon: _receiversFullNameController.text != null &&
+                                    _receiversFullNameController.text.isNotEmpty
+                                    ? Padding(
+                                  padding:
+                                  const EdgeInsetsDirectional.only(start: 12.0),
+                                  child: IconButton(
+                                    iconSize: 16.0,
+                                    icon: Icon(
+                                      Icons.cancel,
+                                      color: Colors.grey,
+                                    ),
+                                    onPressed: () {
+                                      setState(() {
+                                        _receiversFullNameController.clear();
+                                      });
+                                    },
+                                  ),
+                                )
+                                    : null,
+                              ),
+                            ),
+                          ),
+                        )),
                     ListTile(
                       leading: Icon(
                         Icons.person_pin,

@@ -107,23 +107,7 @@ class NavDrawer extends StatelessWidget {
                 );
               },
             ),
-            ListTile(
-              title: Text(
-                'Payment',
-                style: TextStyle(
-                    fontWeight: FontWeight.w400,
-                    fontFamily: "Ubuntu",
-                    fontSize: 18),
-              ),
-              leading: Icon(Icons.account_balance_wallet_outlined),
-              dense: false,
-              onTap: () {
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(builder: (context) => TrackDeliveries()),
-                // );
-              },
-            ),
+
             ListTile(
               title: Text(
                 'Support',
