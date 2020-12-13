@@ -466,14 +466,14 @@ class ReviewOrder extends StatelessWidget {
                     child: Container(
                       height: 8,
                       width: 60,
-                      margin: EdgeInsets.only(top: 15, bottom: 18),
+                      margin: EdgeInsets.only(top: 15, bottom: 15),
                       decoration: BoxDecoration(
                           color: Colors.grey[300],
                           borderRadius: BorderRadius.circular(16)),
                     ),
                   ),
                   Container(
-                      margin: EdgeInsets.only(bottom: 10, top: 5),
+                      margin: EdgeInsets.only(bottom: 15),
                       child: Center(
                         child: Text('Choose Payment Method',
                             textAlign: TextAlign.center,
@@ -489,10 +489,10 @@ class ReviewOrder extends StatelessWidget {
                     child: new ListTile(
                       dense: true,
                       leading: SvgPicture.asset('assets/svg/cash.svg',
-                          height: 35, semanticsLabel: 'cash icon'),
+                          height: 30, semanticsLabel: 'cash icon'),
                       title: new Text('Pay with Cash',
                           style: TextStyle(
-                              fontSize: 16.0,
+                              fontSize: 17.0,
                               fontFamily: "Ubuntu",
                               color: Colors.black,
                               fontWeight: FontWeight.w400)),
@@ -502,6 +502,7 @@ class ReviewOrder extends StatelessWidget {
                             MaterialPageRoute(
                                 builder: (context) => YourDriver()))
                       },
+                      trailing: Icon(Icons.arrow_forward_ios, color: Colors.grey[400], size: 20),
                     ),
                   ),
                   Divider(height: 0.5, color: Colors.grey[400]),
@@ -509,15 +510,17 @@ class ReviewOrder extends StatelessWidget {
                   new ListTile(
                     dense: true,
                     leading: SvgPicture.asset('assets/svg/card.svg',
-                        height: 23, semanticsLabel: 'card icon'),
+                        height: 30, semanticsLabel: 'card icon'),
                     title: new Text('Pay Online',
                         style: TextStyle(
-                            fontSize: 16.0,
+                            fontSize: 17.0,
                             fontFamily: "Ubuntu",
                             color: Colors.black,
                             fontWeight: FontWeight.w400)),
                     onTap: () => {},
+                    trailing: Icon(Icons.arrow_forward_ios, color: Colors.grey[400], size: 20),
                   ),
+                  SizedBox(height: 10),
                 ],
               ),
             ),
