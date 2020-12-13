@@ -428,11 +428,6 @@ class ReviewOrder extends StatelessWidget {
                           ),
                           // onPressed: _submitFormDetails,
                           onPressed: () {
-                            // Navigator.push(
-                            //     context,
-                            //     MaterialPageRoute(
-                            //         builder: (context) => YourDriver()));
-
                             _choosePaymentMethodSheet(context);
                           },
                           color: AppColor.primaryText,
