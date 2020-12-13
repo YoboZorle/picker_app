@@ -26,6 +26,7 @@ class ReviewOrder extends StatelessWidget {
         backgroundColor: Colors.white,
         appBar: AppBar(
           centerTitle: true,
+          brightness: Brightness.light,
           title: Text(
             'Review Order',
             style: TextStyle(
@@ -63,14 +64,15 @@ class ReviewOrder extends StatelessWidget {
               child: Column(children: <Widget>[
                 Expanded(
                   child: new Container(
-                    color: Colors.grey[100],
+                      color: Colors.grey[100],
                       margin: EdgeInsets.only(top: 5),
                       child: Stack(children: <Widget>[
                         ListView(
                             physics: const BouncingScrollPhysics(),
                             children: <Widget>[
                               Container(
-                                margin: EdgeInsets.only(left: 15, right: 15, top: 10),
+                                margin: EdgeInsets.only(
+                                    left: 15, right: 15, top: 10),
                                 child: Card(
                                   elevation: 0,
                                   child: Padding(
@@ -165,7 +167,9 @@ class ReviewOrder extends StatelessWidget {
                                             SizedBox(width: 18),
                                             Expanded(
                                               child: Text(
-                                                arguments.pickupCoordinate['address'] ?? '',
+                                                arguments.pickupCoordinate[
+                                                        'address'] ??
+                                                    '',
                                                 style: TextStyle(
                                                     fontSize: 14.0,
                                                     fontFamily: "Ubuntu",
@@ -226,7 +230,8 @@ class ReviewOrder extends StatelessWidget {
                                             SizedBox(width: 18),
                                             Expanded(
                                               child: Text(
-                                                arguments.receiversFullName.capitalize(),
+                                                arguments.receiversFullName
+                                                    .capitalize(),
                                                 style: TextStyle(
                                                     fontSize: 14.0,
                                                     fontFamily: "Ubuntu",
@@ -280,7 +285,9 @@ class ReviewOrder extends StatelessWidget {
                                             SizedBox(width: 18),
                                             Expanded(
                                               child: Text(
-                                                arguments.destinationCoordinate['address'] ?? '',
+                                                arguments.destinationCoordinate[
+                                                        'address'] ??
+                                                    '',
                                                 style: TextStyle(
                                                     fontSize: 14.0,
                                                     fontFamily: "Ubuntu",
