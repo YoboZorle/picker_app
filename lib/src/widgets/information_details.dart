@@ -89,7 +89,7 @@ class RideInformationWidget extends StatelessWidget {
                 ),
               ),
               Text(
-                rideDetails.rider.ticketNumber,
+                rideDetails.rideId,
                 maxLines: 1,
                 textAlign: TextAlign.left,
                 style: TextStyle(
