@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pickrr_app/src/blocs/authentication/bloc.dart';
 import 'package:pickrr_app/src/blocs/login/bloc.dart';
-import 'package:pickrr_app/src/blocs/ride/ride_details/bloc.dart';
 import 'package:pickrr_app/src/helpers/custom_route.dart';
 import 'package:pickrr_app/src/models/user.dart';
 import 'package:pickrr_app/src/screens/auth/complete_profile_form.dart';
@@ -13,7 +12,8 @@ import 'package:pickrr_app/src/screens/home.dart';
 import 'package:pickrr_app/src/screens/onboard.dart';
 import 'package:pickrr_app/src/screens/driver/main_activity.dart';
 import 'package:pickrr_app/src/screens/driver/driver_form.dart';
-import 'package:pickrr_app/src/user/review_order.dart';
+import 'package:pickrr_app/src/screens/ride/review_order.dart';
+import 'package:pickrr_app/src/screens/ride/ride_details.dart';
 import 'package:pickrr_app/src/user/user_profile/user_profile.dart';
 
 class Routes {
@@ -85,6 +85,9 @@ class Routes {
                 create: (_) => AuthenticationBloc()
                   ..add(AuthenticationEvent.AUTHENTICATED),
                 child: ReviewOrder(settings.arguments)));
+      case "RideDetails":
+        return SlideLeftRoute<bool>(
+            builder: (BuildContext context) => RideDetails(settings.arguments));
       case "HomePage":
         return SlideLeftRoute<bool>(
             builder: (BuildContext context) => BlocProvider<AuthenticationBloc>(

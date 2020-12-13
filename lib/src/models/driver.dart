@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:pickrr_app/src/models/user.dart';
 
 bool _driverStatus(value) {
   if (value == null) return false;
@@ -15,6 +16,7 @@ class Driver extends Equatable {
   final String status;
   final String createdAt;
   final bool blocked;
+  final User details;
 
   Driver(
       {this.id,
@@ -22,7 +24,7 @@ class Driver extends Equatable {
       this.ticketNumber,
       this.companyName,
       this.status,
-      this.blocked, this.createdAt});
+      this.blocked, this.createdAt, this.details});
 
   @override
   List<Object> get props => [id, ticketNumber, companyName, createdAt];
@@ -45,6 +47,7 @@ class Driver extends Equatable {
 
   Driver.fromMap(Map<String, dynamic> mapData)
       : id = mapData['id'] ?? mapData['_userId'] ?? null,
+        details = mapData['user'] ?? '',
         plateNumber = mapData['plateNumber'] ?? '',
         ticketNumber = mapData['ticketNumber'] ?? '',
         companyName = mapData['companyName'] ?? '',

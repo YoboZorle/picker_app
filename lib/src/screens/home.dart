@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_google_places/flutter_google_places.dart';
@@ -11,7 +12,9 @@ import 'package:intl/intl.dart';
 import 'package:pickrr_app/src/helpers/constants.dart';
 import 'package:pickrr_app/src/helpers/utility.dart';
 import 'package:pickrr_app/src/screens/ride/receiver_details.dart';
+import 'package:pickrr_app/src/services/repositories/ride.dart';
 import 'package:pickrr_app/src/user/custom_appbar.dart';
+import 'package:pickrr_app/src/utils/alert_bar.dart';
 import 'package:pickrr_app/src/widgets/nav_drawer.dart';
 
 class Home extends StatefulWidget {
@@ -21,7 +24,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-
+  final RideRepository _rideRepository = RideRepository();
   GoogleMapController mapController;
   TextEditingController destinationController = new TextEditingController();
   TextEditingController pickupController = new TextEditingController();
@@ -183,6 +186,49 @@ class _HomeState extends State<Home> {
         150.0,
       ),
     );
+  }
+
+  void _processLocations() async {
+    AlertBar.dialog(context, 'Processing request...', AppColor.primaryText,
+        showProgressIndicator: true, duration: null);
+
+    try {
+      Map<String, dynamic> formDetails = {
+        'pickup_lat': pickupCoordinate['lat'].toStringAsFixed(6),
+        'pickup_lng': pickupCoordinate['lng'].toStringAsFixed(6),
+        'pickup_address': pickupCoordinate['address'],
+        'destination_lat': destinationCoordinate['lat'].toStringAsFixed(6),
+        'destination_address': destinationCoordinate['address'],
+        'destination_lng': destinationCoordinate['lng'].toStringAsFixed(6),
+      };
+
+      if (!await isInternetConnected()) {
+        Navigator.pop(context);
+        AlertBar.dialog(context,
+            'Please check your internet connection and try again.', Colors.red,
+            icon: Icon(Icons.error), duration: 5);
+        return;
+      }
+      var response = await _rideRepository
+          .submitRideLocation(new FormData.fromMap(formDetails));
+      pickupCoordinate['id'] = response['pickup_id'];
+      destinationCoordinate['id'] = response['destination_id'];
+      Navigator.pop(context);
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => PackageReceiverDetails(
+                  duration: _placeTime,
+                  distance: _placeDistance,
+                  price: priceCalculator(_distanceCovered),
+                  pickupCoordinate: pickupCoordinate,
+                  destinationCoordinate: destinationCoordinate)));
+    } catch (err) {
+      debugLog(err);
+      Navigator.pop(context);
+      AlertBar.dialog(context, err.message, Colors.red,
+          icon: Icon(Icons.error), duration: 5);
+    }
   }
 
   @override
@@ -436,36 +482,7 @@ class _HomeState extends State<Home> {
                                       color: Colors.white,
                                       fontWeight: FontWeight.w400))),
                           onTap: () => _placeDistance != null
-                              ?
-                              // Navigator.push(
-                              //         context,
-                              //         MaterialPageRoute(
-                              //             builder: (context) =>
-                              //                 PackageReceiverDetails(
-                              //                     duration: _placeTime,
-                              //                     distance: _placeDistance,
-                              //                     price: priceCalculator(
-                              //                         _distanceCovered),
-                              //                     pickupCoordinate:
-                              //                         pickupCoordinate,
-                              //                     destinationCoordinate:
-                              //                         destinationCoordinate)))
-
-                              Navigator.of(context).push(
-                                  PageRouteBuilder(
-                                    opaque: false,
-                                    pageBuilder: (BuildContext context, _, __) {
-                                      return PackageReceiverDetails(
-                                          duration: _placeTime,
-                                          distance: _placeDistance,
-                                          price:
-                                              priceCalculator(_distanceCovered),
-                                          pickupCoordinate: pickupCoordinate,
-                                          destinationCoordinate:
-                                              destinationCoordinate);
-                                    },
-                                  ),
-                                )
+                              ? _processLocations()
                               : null,
                           splashColor: Colors.grey[300],
                         ),
@@ -597,19 +614,6 @@ class _HomeState extends State<Home> {
           ),
         ],
       );
-
-  Widget _flightShuttleBuilder(
-    BuildContext flightContext,
-    Animation<double> animation,
-    HeroFlightDirection flightDirection,
-    BuildContext fromHeroContext,
-    BuildContext toHeroContext,
-  ) {
-    return DefaultTextStyle(
-      style: DefaultTextStyle.of(toHeroContext).style,
-      child: toHeroContext.widget,
-    );
-  }
 }
 
 class GetReceiver extends StatelessWidget {

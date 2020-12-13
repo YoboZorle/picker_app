@@ -1,17 +1,21 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 import 'package:pickrr_app/src/blocs/authentication/bloc.dart';
 import 'package:pickrr_app/src/helpers/constants.dart';
+import 'package:pickrr_app/src/models/ride.dart';
 import 'package:pickrr_app/src/models/user.dart';
-import 'package:pickrr_app/src/user/your_driver.dart';
 import 'package:dotted_line/dotted_line.dart';
+import 'package:pickrr_app/src/services/repositories/ride.dart';
+import 'package:pickrr_app/src/utils/alert_bar.dart';
 import 'package:pickrr_app/src/widgets/arguments.dart';
 import 'package:pickrr_app/src/helpers/utility.dart';
 
 class ReviewOrder extends StatelessWidget {
   final RideDetailsArguments arguments;
+  final RideRepository _rideRepository = RideRepository();
 
   ReviewOrder(this.arguments);
 
@@ -453,7 +457,7 @@ class ReviewOrder extends StatelessWidget {
         ));
   }
 
-  void _choosePaymentMethodSheet(context) {
+  void _choosePaymentMethodSheet(BuildContext context) {
     showModalBottomSheet(
         context: context,
         builder: (BuildContext bc) {
@@ -496,13 +500,8 @@ class ReviewOrder extends StatelessWidget {
                               fontFamily: "Ubuntu",
                               color: Colors.black,
                               fontWeight: FontWeight.w400)),
-                      onTap: () => {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => YourDriver()))
-                      },
                       trailing: Icon(Icons.arrow_forward_ios, color: Colors.grey[400], size: 20),
+                      onTap: () => _processOrder(context, 'CASH'),
                     ),
                   ),
                   Divider(height: 0.5, color: Colors.grey[400]),
@@ -526,5 +525,41 @@ class ReviewOrder extends StatelessWidget {
             ),
           );
         });
+  }
+
+  void _processOrder(BuildContext context, String paymentMethod) async {
+    AlertBar.dialog(context, 'Processing request...', AppColor.primaryText,
+        showProgressIndicator: true, duration: null);
+
+    try {
+      Map<String, dynamic> formDetails = {
+        'price': arguments.price,
+        'duration': arguments.duration,
+        'distance': arguments.distance,
+        'receiver_phone': arguments.receiversPhone,
+        'receiver_name': arguments.receiversFullName,
+        'pickup_location': arguments.pickupCoordinate['id'],
+        'delivery_location': arguments.destinationCoordinate['id'],
+        'payment_method': paymentMethod
+      };
+
+      if (!await isInternetConnected()) {
+        Navigator.pop(context);
+        AlertBar.dialog(context,
+            'Please check your internet connection and try again.', Colors.red,
+            icon: Icon(Icons.error), duration: 5);
+        return;
+      }
+
+      var rideDetails = await _rideRepository.processRideOrder(new FormData.fromMap(formDetails));
+      Ride ride = Ride.fromMap(rideDetails);
+      Navigator.pop(context);
+      Navigator.pushReplacementNamed(context, '/RideDetails', arguments: RideArguments(ride));
+    } catch (err) {
+      debugLog(err);
+      Navigator.pop(context);
+      AlertBar.dialog(context, err.message, Colors.red,
+          icon: Icon(Icons.error), duration: 5);
+    }
   }
 }

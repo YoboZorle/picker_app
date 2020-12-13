@@ -4,10 +4,13 @@ import 'dart:math' show cos, sqrt, asin;
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:pickrr_app/src/helpers/constants.dart';
 import 'package:pickrr_app/src/helpers/db/user.dart';
 import 'dart:developer' as developer;
 
 import 'package:pickrr_app/src/models/user.dart';
+import 'package:pickrr_app/src/services/repositories/ride.dart';
+import 'package:pickrr_app/src/utils/alert_bar.dart';
 
 void debugLog(dynamic log, {dynamic param = ""}) {
   final String time = DateFormat("mm:ss:mmm").format(DateTime.now());
@@ -105,17 +108,17 @@ double priceCalculator(double distance) {
   double price = 0;
 
   price = flatRate;
-  if (distanceCovered > 4) price += (perKmCharge * (distanceCovered -4));
+  if (distanceCovered > 4) price += (perKmCharge * (distanceCovered - 4));
   return price;
 }
 
 Widget flightShuttleBuilder(
-    BuildContext flightContext,
-    Animation<double> animation,
-    HeroFlightDirection flightDirection,
-    BuildContext fromHeroContext,
-    BuildContext toHeroContext,
-    ) {
+  BuildContext flightContext,
+  Animation<double> animation,
+  HeroFlightDirection flightDirection,
+  BuildContext fromHeroContext,
+  BuildContext toHeroContext,
+) {
   return DefaultTextStyle(
     style: DefaultTextStyle.of(toHeroContext).style,
     child: toHeroContext.widget,
@@ -134,5 +137,17 @@ double coordinateDistance(lat1, lon1, lat2, lon2) {
 extension StringExtension on String {
   String capitalize() {
     return "${this[0].toUpperCase()}${this.substring(1)}";
+  }
+}
+
+void cancelRide(BuildContext context, rideId) async {
+  AlertBar.dialog(context, 'Requesting...', AppColor.primaryText,
+      showProgressIndicator: true, duration: null);
+  try {
+    await RideRepository().cancelRide(rideId);
+    Navigator.pushNamedAndRemoveUntil(context, '/HomePage', (route) => false);
+  } catch (err) {
+    Navigator.pop(context);
+    debugLog(err);
   }
 }
