@@ -47,10 +47,25 @@ class Driver extends Equatable {
     return map;
   }
 
+  Map<String, dynamic> formatToMap(rawData) {
+    var map = <String, dynamic>{
+      'id': rawData['id'],
+      'user': rawData['user'],
+      'plateNumber': rawData['plate_number'],
+      'ticketNumber': rawData['ticket_number'],
+      'companyName': rawData['company_name'],
+      'status': rawData['status'],
+      'createdAt': rawData['created_at'],
+      'blocked': rawData['blocked']
+    };
+
+    return map;
+  }
+
   Driver.fromMap(Map<String, dynamic> mapData)
       : id = mapData['id'] ?? mapData['_userId'] ?? null,
         details =
-            mapData['user'] != null ? User.fromMap(mapData['user']) : null,
+            mapData['user'] != null ? User.fromMap(User().formatToMap(mapData['user'])) : null,
         plateNumber = mapData['plateNumber'] ?? '',
         ticketNumber = mapData['ticketNumber'] ?? '',
         companyName = mapData['companyName'] ?? '',

@@ -147,12 +147,12 @@ extension StringExtension on String {
   }
 }
 
-void cancelRide(BuildContext context, rideId) async {
+void cancelRide(BuildContext context, rideId, {nextRoute = '/HomePage'}) async {
   AlertBar.dialog(context, 'Requesting...', AppColor.primaryText,
       showProgressIndicator: true, duration: null);
   try {
     await RideRepository().cancelRide(rideId);
-    Navigator.pushNamedAndRemoveUntil(context, '/HomePage', (route) => false);
+    Navigator.pushNamedAndRemoveUntil(context, nextRoute, (route) => false);
   } catch (err) {
     Navigator.pop(context);
     debugLog(err);

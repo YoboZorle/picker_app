@@ -55,6 +55,20 @@ class User extends Equatable {
     return map;
   }
 
+  Map<String, dynamic> formatToMap(rawData) {
+    var map = <String, dynamic>{
+      'userId': rawData['id'],
+      'fullname': rawData['fullname'],
+      'email': rawData['email'],
+      'phone': rawData['phone'],
+      'profileImageUrl': rawData['photo'],
+      'callingCode': rawData['calling_code'].toString(),
+      'is_driver': rawData['is_driver']
+    };
+
+    return map;
+  }
+
   User.fromMap(Map<String, dynamic> mapData)
       : id = mapData['userId'] ?? mapData['_userId'] ?? null,
         fullname = mapData['fullname'] ?? '',

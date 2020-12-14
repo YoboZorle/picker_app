@@ -68,7 +68,7 @@ class Ride {
             : null,
         user = mapData['user'] != null ? User.fromMap(mapData['user']) : null,
         rider =
-            mapData['rider'] != null ? Driver.fromMap(mapData['rider']) : null,
+            mapData['rider'] != null ? Driver.fromMap(Driver().formatToMap(mapData['rider'])) : null,
         createdAt = mapData['created_at'] ?? '',
         price = mapData['price'] != null ? double.parse(mapData['price']) : 0.0,
         distance = mapData['distance'] ?? '',

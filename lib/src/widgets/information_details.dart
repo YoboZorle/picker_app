@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pickrr_app/src/helpers/constants.dart';
 import 'package:pickrr_app/src/helpers/utility.dart';
 import 'package:pickrr_app/src/models/ride.dart';
+import 'package:pickrr_app/src/widgets/image.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class RideInformationWidget extends StatelessWidget {
@@ -43,15 +44,18 @@ class RideInformationWidget extends StatelessWidget {
             children: [
               Expanded(
                 child: Container(
-                    width: 70.0,
-                    height: 70.0,
                     margin: EdgeInsets.only(right: 15),
-                    decoration: new BoxDecoration(
-                        shape: BoxShape.circle,
-                        image: new DecorationImage(
-                            fit: BoxFit.cover,
-                            image: NetworkImage(
-                                "https://monologueblogger.com/wp-content/uploads/2015/05/Brody-At-Dusk-Male-Drama-Monologue.jpg")))),
+                    child: ClipOval(
+                        child: Container(
+                            height: 70.0,
+                            width: 70.0,
+                            child: !rideDetails.rider.details.noProfileImage
+                                ? CustomImage(
+                                    imageUrl:
+                                        '${rideDetails.rider.details.profileImageUrl}',
+                                  )
+                                : Image.asset('assets/images/placeholder.jpg',
+                                    fit: BoxFit.cover)))),
               ),
             ],
           ),
@@ -149,7 +153,8 @@ class RideInformationWidget extends StatelessWidget {
               ],
             ),
           ),
-          onTap: () => launch("tel://${rideDetails.rider.details.callingCode}${rideDetails.rider.details.phone}"),
+          onTap: () => launch(
+              "tel://+${rideDetails.rider.details.callingCode}${rideDetails.rider.details.phone}"),
         ),
         GestureDetector(
           child: Container(
@@ -163,7 +168,7 @@ class RideInformationWidget extends StatelessWidget {
                     color: Colors.black87,
                     fontWeight: FontWeight.w500)),
           ),
-          onTap: () async => cancelRide(context, rideDetails.id),
+          onTap: () async => cancelRide(context, rideDetails.id, nextRoute: '/RideHistory'),
         ),
       ],
     );
