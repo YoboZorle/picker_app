@@ -16,7 +16,7 @@ import 'package:pickrr_app/src/screens/driver/driver_form.dart';
 import 'package:pickrr_app/src/screens/ride/review_order.dart';
 import 'package:pickrr_app/src/screens/ride/ride_details.dart';
 import 'package:pickrr_app/src/screens/ride/ride_history.dart';
-import 'package:pickrr_app/src/user/user_profile/user_profile.dart';
+import 'package:pickrr_app/src/screens/user_profile.dart';
 
 class Routes {
   static dynamic route() {

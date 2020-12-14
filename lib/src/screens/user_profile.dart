@@ -2,10 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_awesome_alert_box/flutter_awesome_alert_box.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pickrr_app/src/blocs/authentication/bloc.dart';
+import 'package:pickrr_app/src/models/user.dart';
 
 class UserProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    return BlocBuilder<AuthenticationBloc, AuthenticationState>(
+    builder: (_, state) {
+    if (state is NonLoggedIn) {
+    WidgetsBinding.instance.addPostFrameCallback(
+    (_) => Navigator.pushReplacementNamed(context, '/'));
+    }
+    if (state.props.isEmpty) {
+    return Container();
+    }
+    User user = state.props[0];
+
     return Scaffold(
       body: SafeArea(
         child: CustomScrollView(
@@ -39,7 +51,7 @@ class UserProfile extends StatelessWidget {
                           vertical: 5.0, horizontal: 20),
                       child: ListTile(
                         title: Text(
-                          'Miller Playman',
+                          user.fullname,
                           style: TextStyle(
                               fontSize: 16.0,
                               fontFamily: "Ubuntu",
@@ -68,7 +80,7 @@ class UserProfile extends StatelessWidget {
                           vertical: 5.0, horizontal: 20),
                       child: ListTile(
                         title: Text(
-                          'millerplayman@gmail.com',
+                          user.email,
                           style: TextStyle(
                               fontSize: 16.0,
                               fontFamily: "Ubuntu",
@@ -97,7 +109,7 @@ class UserProfile extends StatelessWidget {
                           vertical: 5.0, horizontal: 20),
                       child: ListTile(
                         title: Text(
-                          '+2347056606492',
+                          '+${user.callingCode}${user.phone}',
                           style: TextStyle(
                               fontSize: 16.0,
                               fontFamily: "Ubuntu",
@@ -162,6 +174,6 @@ class UserProfile extends StatelessWidget {
           ],
         ),
       ),
-    );
+    ); });
   }
 }

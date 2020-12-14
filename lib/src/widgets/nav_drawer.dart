@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pickrr_app/src/blocs/authentication/bloc.dart';
 import 'package:pickrr_app/src/helpers/constants.dart';
 import 'package:pickrr_app/src/models/user.dart';
-import 'file:///C:/Users/HP/Desktop/Development/MobileDev/picker_app/lib/src/screens/ride/ride_history.dart';
 import 'package:pickrr_app/src/user/track_deliveries/track_deliveries.dart';
 import 'package:pickrr_app/src/widgets/image.dart';
 
