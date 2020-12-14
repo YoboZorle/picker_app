@@ -15,7 +15,7 @@ import 'package:pickrr_app/src/screens/driver/main_activity.dart';
 import 'package:pickrr_app/src/screens/driver/driver_form.dart';
 import 'package:pickrr_app/src/screens/ride/review_order.dart';
 import 'package:pickrr_app/src/screens/ride/ride_details.dart';
-import 'package:pickrr_app/src/user/ride_history/ride_history.dart';
+import 'package:pickrr_app/src/screens/ride/ride_history.dart';
 import 'package:pickrr_app/src/user/user_profile/user_profile.dart';
 
 class Routes {
@@ -93,8 +93,7 @@ class Routes {
       case "RideHistory":
         return CustomRoute<bool>(
             builder: (BuildContext context) => BlocProvider<RideOrdersBloc>(
-                create: (_) => RideOrdersBloc()
-                  ..add(OrdersFetched()),
+                create: (_) => RideOrdersBloc()..add(OrdersFetched()),
                 child: RideHistory()));
       case "HomePage":
         return SlideLeftRoute<bool>(

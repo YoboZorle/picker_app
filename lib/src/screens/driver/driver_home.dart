@@ -85,10 +85,12 @@ class _DriverHomeState extends State<DriverHome> {
                       child: Container(
                         height: 65.0,
                         width: 65.0,
-                        child: CustomImage(
+                        child: !user.noProfileImage
+                            ? CustomImage(
                           imageUrl:
                           '${APIConstants.assetsUrl}${user.profileImageUrl}',
-                        ),
+                        ): Image.asset('placeholder.jpg',
+                            width: double.infinity, height: double.infinity),
                       )),
                   title: Text(
                     user.fullname,

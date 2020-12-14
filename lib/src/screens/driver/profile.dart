@@ -48,10 +48,13 @@ class DriverProfile extends StatelessWidget {
                     child: Container(
                   height: 115.0,
                   width: 115.0,
-                  child: CustomImage(
-                    imageUrl:
-                        '${APIConstants.assetsUrl}${user.profileImageUrl}',
-                  ),
+                  child: !user.noProfileImage
+                      ? CustomImage(
+                          imageUrl:
+                              '${APIConstants.assetsUrl}${user.profileImageUrl}',
+                        )
+                      : Image.asset('placeholder.jpg',
+                          width: double.infinity, height: double.infinity),
                 )),
                 SizedBox(height: 15),
                 Text(user.fullname,
@@ -65,7 +68,8 @@ class DriverProfile extends StatelessWidget {
                 FutureBuilder(
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.none ||
-                        snapshot.hasData == null || !snapshot.hasData) {
+                        snapshot.hasData == null ||
+                        !snapshot.hasData) {
                       return Container();
                     }
                     final driverDetails = snapshot.data;

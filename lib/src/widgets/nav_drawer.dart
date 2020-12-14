@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pickrr_app/src/blocs/authentication/bloc.dart';
 import 'package:pickrr_app/src/helpers/constants.dart';
 import 'package:pickrr_app/src/models/user.dart';
-import 'package:pickrr_app/src/user/ride_history/ride_history.dart';
+import 'file:///C:/Users/HP/Desktop/Development/MobileDev/picker_app/lib/src/screens/ride/ride_history.dart';
 import 'package:pickrr_app/src/user/track_deliveries/track_deliveries.dart';
 import 'package:pickrr_app/src/widgets/image.dart';
 
@@ -34,13 +34,16 @@ class NavDrawer extends StatelessWidget {
                 children: [
                   ClipOval(
                       child: Container(
-                    height: 65.0,
-                    width: 65.0,
-                    child: CustomImage(
-                      imageUrl:
-                          '${APIConstants.assetsUrl}${user.profileImageUrl}',
-                    ),
-                  )),
+                          height: 65.0,
+                          width: 65.0,
+                          child: !user.noProfileImage
+                              ? CustomImage(
+                                  imageUrl:
+                                      '${APIConstants.assetsUrl}${user.profileImageUrl}',
+                                )
+                              : Image.asset('placeholder.jpg',
+                                  width: double.infinity,
+                                  height: double.infinity))),
                   SizedBox(width: 20),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,

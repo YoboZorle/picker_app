@@ -23,6 +23,11 @@ class User extends Equatable {
         profileImageUrl.isNotEmpty;
   }
 
+  bool get noProfileImage {
+    return profileImageUrl == null ||
+        profileImageUrl.isEmpty || profileImageUrl == 'None';
+  }
+
   User(
       {this.id,
       this.fullname,
