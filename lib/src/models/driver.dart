@@ -24,7 +24,9 @@ class Driver extends Equatable {
       this.ticketNumber,
       this.companyName,
       this.status,
-      this.blocked, this.createdAt, this.details});
+      this.blocked,
+      this.createdAt,
+      this.details});
 
   @override
   List<Object> get props => [id, ticketNumber, companyName, createdAt];
@@ -47,7 +49,8 @@ class Driver extends Equatable {
 
   Driver.fromMap(Map<String, dynamic> mapData)
       : id = mapData['id'] ?? mapData['_userId'] ?? null,
-        details = mapData['user'] ?? '',
+        details =
+            mapData['user'] != null ? User.fromMap(mapData['user']) : null,
         plateNumber = mapData['plateNumber'] ?? '',
         ticketNumber = mapData['ticketNumber'] ?? '',
         companyName = mapData['companyName'] ?? '',

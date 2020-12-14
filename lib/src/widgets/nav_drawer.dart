@@ -28,10 +28,7 @@ class NavDrawer extends StatelessWidget {
             SizedBox(height: 30),
             GestureDetector(
               onTap: () {
-                Navigator.pushNamed(
-                  context,
-                 '/ProfileDetails'
-                );
+                Navigator.pushNamed(context, '/ProfileDetails');
               },
               child: Row(
                 children: [
@@ -101,13 +98,9 @@ class NavDrawer extends StatelessWidget {
               ),
               leading: Icon(Icons.history),
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => RideHistory()),
-                );
+                Navigator.pushNamed(context, '/RideHistory');
               },
             ),
-
             ListTile(
               title: Text(
                 'Support',
@@ -117,27 +110,24 @@ class NavDrawer extends StatelessWidget {
                     fontSize: 18),
               ),
               leading: Icon(Icons.help_outline),
-              onTap: (){
-
-              },
+              onTap: () {},
             ),
             ListTile(
-              title: Text(
-                'About',
-                style: TextStyle(
-                    fontWeight: FontWeight.w400,
-                    fontFamily: "Ubuntu",
-                    fontSize: 18),
-              ),
-              leading: Icon(Icons.read_more),
-              onTap:(){
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(
-                //       builder: (context) => UserOrder()),
-                // );
-              }
-            ),
+                title: Text(
+                  'About',
+                  style: TextStyle(
+                      fontWeight: FontWeight.w400,
+                      fontFamily: "Ubuntu",
+                      fontSize: 18),
+                ),
+                leading: Icon(Icons.read_more),
+                onTap: () {
+                  // Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(
+                  //       builder: (context) => UserOrder()),
+                  // );
+                }),
             Expanded(child: SizedBox()),
             Container(
               decoration: BoxDecoration(
@@ -165,7 +155,7 @@ class NavDrawer extends StatelessWidget {
                 trailing: Icon(Icons.arrow_forward_ios,
                     size: 17, color: Colors.grey[200]),
                 onTap: () {
-                  if(!user.isDriver){
+                  if (!user.isDriver) {
                     Navigator.pushNamed(
                       context,
                       '/DriverOnboard',

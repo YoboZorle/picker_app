@@ -101,6 +101,13 @@ String getdob(String date) {
   return dat;
 }
 
+String getFullTime(String date) {
+  if (date == null || date.isEmpty) {
+    return '';
+  }
+  return DateFormat('E d/M/y,').add_jm().format(DateTime.parse(date).toLocal()).toString();
+}
+
 double priceCalculator(double distance) {
   int distanceCovered = distance < 1 ? 1 : distance.round();
   final double flatRate = 300;

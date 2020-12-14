@@ -289,7 +289,6 @@ class _LoginState extends State<Login> {
       Navigator.pop(context);
       _openEnterOTPScreen();
     } catch (err) {
-      print(err);
       Navigator.pop(context);
       AlertBar.dialog(context, 'Request failed. please try again', Colors.red,
           icon: Icon(Icons.error), duration: 5);
