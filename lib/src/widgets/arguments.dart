@@ -19,7 +19,7 @@ class RideDetailsArguments {
 
 
 class RideArguments {
-  final Ride ride;
+  Ride ride;
 
   RideArguments(this.ride);
 }

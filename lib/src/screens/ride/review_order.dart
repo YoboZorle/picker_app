@@ -426,7 +426,6 @@ class ReviewOrder extends StatelessWidget {
                           shape: new RoundedRectangleBorder(
                             borderRadius: new BorderRadius.circular(25.0),
                           ),
-                          // onPressed: _submitFormDetails,
                           onPressed: () {
                             _choosePaymentMethodSheet(context);
                           },

@@ -177,3 +177,134 @@ class NavDrawer extends StatelessWidget {
     });
   }
 }
+
+class RiderNavDrawer extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<AuthenticationBloc, AuthenticationState>(
+        builder: (_, state) {
+          if (state is NonLoggedIn) {
+            WidgetsBinding.instance.addPostFrameCallback(
+                    (_) => Navigator.pushReplacementNamed(context, '/'));
+          }
+          if (state.props.isEmpty) {
+            return Container();
+          }
+          User user = state.props[0];
+          return Drawer(
+            child: SafeArea(
+              child: Container(
+                padding: EdgeInsets.only(left: 15.0, right: 15.0),
+                child: Column(children: <Widget>[
+                  SizedBox(height: 30),
+                  ListTile(
+                    leading: ClipOval(
+                        child: Container(
+                          height: 65.0,
+                          width: 65.0,
+                          child: !user.noProfileImage
+                              ? CustomImage(
+                            imageUrl:
+                            '${APIConstants.assetsUrl}${user.profileImageUrl}',
+                          ): Image.asset('placeholder.jpg',
+                              width: double.infinity, height: double.infinity),
+                        )),
+                    title: Text(
+                      user.fullname,
+                      style: TextStyle(
+                          fontWeight: FontWeight.w700,
+                          fontFamily: "Ubuntu",
+                          fontSize: 18),
+                    ),
+                    subtitle: Text(
+                      'Driver profile',
+                      style: TextStyle(
+                          fontWeight: FontWeight.w400,
+                          fontFamily: "Ubuntu",
+                          fontSize: 15),
+                    ),
+                  ),
+                  Container(
+                      height: 0.7,
+                      margin: EdgeInsets.symmetric(vertical: 20),
+                      width: MediaQuery.of(context).size.width,
+                      color: Colors.grey[300]),
+                  ListTile(
+                    title: Text(
+                      'Track Deliveries',
+                      style: TextStyle(
+                          fontWeight: FontWeight.w400,
+                          fontFamily: "Ubuntu",
+                          fontSize: 18),
+                    ),
+                    leading: Icon(Icons.track_changes),
+                    dense: false,
+                  ),
+                  ListTile(
+                    title: Text(
+                      'Ride History',
+                      style: TextStyle(
+                          fontWeight: FontWeight.w400,
+                          fontFamily: "Ubuntu",
+                          fontSize: 18),
+                    ),
+                    leading: Icon(Icons.history),
+                  ),
+                  ListTile(
+                    title: Text(
+                      'Support',
+                      style: TextStyle(
+                          fontWeight: FontWeight.w400,
+                          fontFamily: "Ubuntu",
+                          fontSize: 18),
+                    ),
+                    leading: Icon(Icons.support_agent),
+                  ),
+                  ListTile(
+                    title: Text(
+                      'About',
+                      style: TextStyle(
+                          fontWeight: FontWeight.w400,
+                          fontFamily: "Ubuntu",
+                          fontSize: 18),
+                    ),
+                    leading: Icon(Icons.read_more),
+                  ),
+                  Expanded(child: SizedBox()),
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: AppColor.primaryText,
+                    ),
+                    margin: EdgeInsets.only(bottom: 40),
+                    child: ListTile(
+                      title: Text(
+                        'Back to user',
+                        style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontFamily: "Ubuntu",
+                            color: Colors.white,
+                            fontSize: 16),
+                      ),
+                      subtitle: Text(
+                        'Go back to ordering rides',
+                        style: TextStyle(
+                            fontWeight: FontWeight.w400,
+                            fontFamily: "Ubuntu",
+                            color: Colors.grey[200],
+                            fontSize: 15),
+                      ),
+                      trailing: Icon(Icons.arrow_forward_ios,
+                          size: 17, color: Colors.grey[200]),
+                      onTap: () {
+                        Navigator.pushNamed(context, '/HomePage');
+                      },
+                    ),
+                  )
+                ]),
+              ),
+            ),
+          );
+        });
+  }
+}
