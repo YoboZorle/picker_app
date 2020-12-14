@@ -415,7 +415,7 @@ class ReviewOrder extends StatelessWidget {
                       ])),
                 ),
                 Container(
-                  margin: EdgeInsets.only(top: 7, bottom: 7),
+                  margin: EdgeInsets.only(top: 7),
                   child: Column(
                     children: <Widget>[
                       SizedBox(
@@ -447,7 +447,7 @@ class ReviewOrder extends StatelessWidget {
                                   height: 1.4)),
                         ),
                       ),
-                      SizedBox(height: 15),
+                      SizedBox(height: 5),
                     ],
                   ),
                 ),
@@ -476,36 +476,35 @@ class ReviewOrder extends StatelessWidget {
                           borderRadius: BorderRadius.circular(16)),
                     ),
                   ),
-                  Container(
-                      margin: EdgeInsets.only(bottom: 15),
-                      child: Center(
-                        child: Text('Choose Payment Method',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                fontSize: 18.0,
-                                fontFamily: "Ubuntu",
-                                color: Colors.black,
-                                fontWeight: FontWeight.w800,
-                                height: 1.35)),
-                      )),
-                  Container(
-                    margin: EdgeInsets.only(bottom: 15),
-                    child: new ListTile(
-                      dense: true,
-                      leading: SvgPicture.asset('assets/svg/cash.svg',
-                          height: 30, semanticsLabel: 'cash icon'),
-                      title: new Text('Pay with Cash',
-                          style: TextStyle(
-                              fontSize: 17.0,
-                              fontFamily: "Ubuntu",
-                              color: Colors.black,
-                              fontWeight: FontWeight.w400)),
-                      trailing: Icon(Icons.arrow_forward_ios, color: Colors.grey[400], size: 20),
-                      onTap: () => _processOrder(context, 'CASH'),
-                    ),
+                  // Container(
+                  //     margin: EdgeInsets.only(bottom: 15),
+                  //     child: Center(
+                  //       child: Text('Choose Payment Method',
+                  //           textAlign: TextAlign.center,
+                  //           style: TextStyle(
+                  //               fontSize: 18.0,
+                  //               fontFamily: "Ubuntu",
+                  //               color: Colors.black,
+                  //               fontWeight: FontWeight.w800,
+                  //               height: 1.35)),
+                  //     )),
+                  new ListTile(
+                    dense: true,
+                    leading: SvgPicture.asset('assets/svg/cash.svg',
+                        height: 30, semanticsLabel: 'cash icon'),
+                    title: new Text('Pay with Cash',
+                        style: TextStyle(
+                            fontSize: 17.0,
+                            fontFamily: "Ubuntu",
+                            color: Colors.black,
+                            fontWeight: FontWeight.w400)),
+                    onTap: () => _processOrder(context, 'CASH'),
+                    trailing: Icon(Icons.arrow_forward_ios,
+                        color: Colors.grey[400], size: 18),
+                    contentPadding:
+                        EdgeInsets.only(top: 15, bottom: 15, left: 15),
                   ),
                   Divider(height: 0.5, color: Colors.grey[400]),
-                  SizedBox(height: 15),
                   new ListTile(
                     dense: true,
                     leading: SvgPicture.asset('assets/svg/card.svg',
@@ -517,9 +516,12 @@ class ReviewOrder extends StatelessWidget {
                             color: Colors.black,
                             fontWeight: FontWeight.w400)),
                     onTap: () => {},
-                    trailing: Icon(Icons.arrow_forward_ios, color: Colors.grey[400], size: 20),
+                    trailing: Icon(Icons.arrow_forward_ios,
+                        color: Colors.grey[400], size: 18),
+                    contentPadding:
+                        EdgeInsets.only(top: 15, bottom: 15, left: 15),
                   ),
-                  SizedBox(height: 10),
+                  // SizedBox(height: 10),
                 ],
               ),
             ),

@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
@@ -16,9 +17,13 @@ class CompleteProfileForm extends StatefulWidget {
 class _CompleteProfileFormState extends State<CompleteProfileForm> {
   TextEditingController _fnameController;
   TextEditingController _emailController;
-  File _profileImage;
   final picker = ImagePicker();
   UserRepository _userRepository;
+
+  PickedFile _profileImage;
+  String _retrieveDataError;
+  dynamic _pickImageError;
+  final ImagePicker _picker = ImagePicker();
 
   @override
   void initState() {
@@ -28,22 +33,11 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
     super.initState();
   }
 
-  Future getImage() async {
-    final pickedFile =
-        await ImagePicker().getImage(source: ImageSource.gallery);
-    if (pickedFile != null) {
-      setState(() {
-        _profileImage = File(pickedFile.path);
-      });
-    }
-  }
-
   bool _hasCompletedForm() {
     return _emailController.text != null &&
         _emailController.text.isNotEmpty &&
         _fnameController.text != null &&
-        _fnameController.text.isNotEmpty &&
-        _profileImage != null;
+        _fnameController.text.isNotEmpty;
   }
 
   updateProfileDetailsHandler() async {
@@ -60,15 +54,17 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
 
     AlertBar.dialog(context, 'Saving information...', AppColor.primaryText,
         showProgressIndicator: true, duration: null);
-
     try {
-      String fileName = _profileImage.path.split('/').last;
       Map<String, dynamic> formDetails = {
         'fullname': _fnameController.text,
         'email': _emailController.text,
-        'photo':
-            await MultipartFile.fromFile(_profileImage.path, filename: fileName)
       };
+
+      if (_profileImage != null) {
+        String fileName = _profileImage.path.split('/').last;
+        formDetails['photo'] = await MultipartFile.fromFile(_profileImage.path,
+            filename: fileName);
+      }
 
       await _userRepository
           .updateProfileDetails(new FormData.fromMap(formDetails));
@@ -87,6 +83,20 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
       onWillPop: () async => false,
       child: new Scaffold(
           backgroundColor: Colors.white,
+          appBar: AppBar(
+              brightness: Brightness.light,
+              backgroundColor: Colors.white,
+              elevation: 0,
+              title: Text(
+                'Set Up Your Profile',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 18,
+                  fontFamily: 'Ubuntu',
+                  color: Colors.black,
+                  fontWeight: FontWeight.w800,
+                ),
+              )),
           body: GestureDetector(
             onTap: () {
               FocusScope.of(context).requestFocus(new FocusNode());
@@ -100,50 +110,66 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
                           child: ListView(
                               physics: const BouncingScrollPhysics(),
                               children: <Widget>[
-                            Text(
-                              'Set Up Your Profile',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontFamily: 'Ubuntu',
-                                color: Colors.black,
-                                fontWeight: FontWeight.w800,
+                            SizedBox(height: 25),
+                            GestureDetector(
+                              onTap: () async {
+                                final pickedFile = await ImagePicker().getImage(
+                                    imageQuality: 10,
+                                    maxHeight: 500,
+                                    maxWidth: 500,
+                                    source: ImageSource.gallery);
+                                if (pickedFile != null) {
+                                  setState(() {
+                                    _profileImage = PickedFile(pickedFile.path);
+                                  });
+                                }
+                              },
+                              child: Column(
+                                children: [
+                                  !kIsWeb &&
+                                          defaultTargetPlatform ==
+                                              TargetPlatform.android
+                                      ? FutureBuilder<void>(
+                                          future: retrieveLostData(),
+                                          builder: (BuildContext context,
+                                              AsyncSnapshot<void> snapshot) {
+                                            switch (snapshot.connectionState) {
+                                              case ConnectionState.none:
+                                              case ConnectionState.waiting:
+                                                return const Text(
+                                                  'You have not yet picked an image.',
+                                                  textAlign: TextAlign.center,
+                                                );
+                                              case ConnectionState.done:
+                                                return _previewImage();
+                                              default:
+                                                if (snapshot.hasError) {
+                                                  return Text(
+                                                    'Pick image/video error: ${snapshot.error}}',
+                                                    textAlign: TextAlign.center,
+                                                  );
+                                                } else {
+                                                  return const Text(
+                                                    'You have not yet picked an image.',
+                                                    textAlign: TextAlign.center,
+                                                  );
+                                                }
+                                            }
+                                          },
+                                        )
+                                      : (_previewImage()),
+                                  SizedBox(height: 16),
+                                  Text('Upload photo',
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        fontFamily: 'Ubuntu',
+                                        color: Colors.grey,
+                                        fontWeight: FontWeight.w400,
+                                      )),
+                                ],
                               ),
                             ),
                             SizedBox(height: 45),
-                            GestureDetector(
-                              onTap: getImage,
-                              child: Container(
-                                  alignment: Alignment.center,
-                                  child: Column(
-                                    children: <Widget>[
-                                      _profileImage == null
-                                          ? ClipOval(
-                                              child: Image.asset(
-                                              'assets/images/placeholder.jpg',
-                                              fit: BoxFit.cover,
-                                              width: 90.0,
-                                              height: 90.0,
-                                            ))
-                                          : ClipOval(
-                                              child: Image.file(
-                                              _profileImage,
-                                              fit: BoxFit.cover,
-                                              width: 90.0,
-                                              height: 90.0,
-                                            )),
-                                      SizedBox(height: 18),
-                                      Text('Upload photo',
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                            fontFamily: 'Ubuntu',
-                                            color: Colors.grey,
-                                            fontWeight: FontWeight.w400,
-                                          )),
-                                    ],
-                                  )),
-                            ),
-                            SizedBox(height: 25),
                             Container(
                                 height: 47,
                                 margin: EdgeInsets.only(
@@ -205,7 +231,6 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
   void dispose() {
     _fnameController.dispose();
     _emailController.dispose();
-    _fnameController.dispose();
     super.dispose();
   }
 
@@ -319,4 +344,60 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
           ],
         ),
       );
+
+  Future<void> retrieveLostData() async {
+    final LostData response = await _picker.getLostData();
+    if (response.isEmpty) {
+      return;
+    }
+    if (response.file != null) {
+      if (response.type == RetrieveType.image) {
+        setState(() {
+          _profileImage = response.file;
+        });
+      } else {
+        return null;
+      }
+    } else {
+      _retrieveDataError = response.exception.code;
+    }
+  }
+
+  Widget _previewImage() {
+    final Text retrieveError = _getRetrieveErrorWidget();
+    if (retrieveError != null) {
+      return retrieveError;
+    }
+    if (_profileImage != null) {
+      if (kIsWeb) {
+        return Image.network(_profileImage.path);
+      } else {
+        return ClipOval(
+            child: Image.file(File(_profileImage.path),
+                height: 90, width: 90, fit: BoxFit.cover));
+      }
+    } else if (_pickImageError != null) {
+      return Text(
+        'Pick image error: $_pickImageError',
+        textAlign: TextAlign.center,
+      );
+    } else {
+      return ClipOval(
+          child: Image.asset(
+        'assets/images/placeholder.jpg',
+        fit: BoxFit.cover,
+        width: 90.0,
+        height: 90.0,
+      ));
+    }
+  }
+
+  Text _getRetrieveErrorWidget() {
+    if (_retrieveDataError != null) {
+      final Text result = Text(_retrieveDataError);
+      _retrieveDataError = null;
+      return result;
+    }
+    return null;
+  }
 }
