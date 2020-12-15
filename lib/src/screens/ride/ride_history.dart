@@ -32,6 +32,7 @@ class _RideHistoryState extends State<RideHistory> {
         return true;
       },
       child: Scaffold(
+        backgroundColor: Colors.grey[100],
         body: SafeArea(
           child:
               // ignore: missing_return
@@ -124,6 +125,50 @@ class _RideHistoryState extends State<RideHistory> {
                                 ),
                                 contentPadding: EdgeInsets.all(0),
                                 dense: true,
+                              ),
+                            ),
+                          ),
+
+
+                          SizedBox(height: 10),
+                          Card(
+                            elevation: 0,
+                            child: Container(height: 150,
+                              color: Colors.grey,
+                              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                              child: Row(
+                                children: [
+                              Expanded(
+                                  child: Text('Mon 14/12/2020, 09:30 PM'),
+                              flex: 7),
+                                  Expanded(child: Container(color: Colors.yellowAccent,
+                                  child: Row(children: [
+                                    Container(height: MediaQuery.of(context).size.height, width: 5,
+                                    color: Colors.red,
+                                    margin: EdgeInsets.symmetric(vertical: 10)),
+                                    Expanded(
+                                      child: Column(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: [
+                                        Column(
+                                          children: [
+                                            Text('Distance'),
+                                            Text('4.3km'),
+                                          ],
+                                        ),
+
+                                        Column(
+                                          children: [
+                                            Text('Travel cost'),
+                                            Text('#500.00'),
+                                          ],
+                                        ),
+
+                                      ]),
+                                    )
+                                  ],)),
+                                  flex: 2)
+
+                                ],
                               ),
                             ),
                           )

@@ -175,14 +175,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
                                 ],
                               ),
                             ),
-                            SizedBox(height: 45),
-                                ClipOval(
-                                    child: Image.asset(
-                                      'assets/images/placeholder.jpg',
-                                      fit: BoxFit.cover,
-                                      width: 90.0,
-                                      height: 90.0,
-                                    )),
+                         SizedBox(height: 25),
                             Container(
                                 height: 47,
                                 margin: EdgeInsets.only(
@@ -231,7 +224,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
                                 height: 1.4)),
                       ),
                     ),
-                    SizedBox(height: 15),
+                    SizedBox(height: 5),
                   ],
                 ),
               ),

@@ -122,9 +122,11 @@ class _HomeState extends State<Home> {
 
   computePath() async {
     LatLng origin = new LatLng(
-        destination.geometry.location.lat, destination.geometry.location.lng);
+        destination.geometry.location.lat,
+        destination.geometry.location.lng);
     LatLng end = new LatLng(
-        pickupPoint.geometry.location.lat, pickupPoint.geometry.location.lng);
+        pickupPoint.geometry.location.lat,
+        pickupPoint.geometry.location.lng);
     routeCoords.addAll(await googleMapPolyline.getCoordinatesWithLocation(
         origin: origin, destination: end, mode: RouteMode.driving));
 
@@ -171,6 +173,27 @@ class _HomeState extends State<Home> {
           endCap: Cap.buttCap));
     });
 
+    // the bounds you want to set
+    LatLngBounds bounds = LatLngBounds(
+      southwest: LatLng(
+          pickupPoint.geometry.location.lat,
+        pickupPoint.geometry.location.lng),
+      northeast: LatLng(  destination.geometry.location.lat,
+        destination.geometry.location.lng),
+    );
+// calculating centre of the bounds
+    LatLng centerBounds = LatLng(
+        (bounds.northeast.latitude + bounds.southwest.latitude)/2,
+        (bounds.northeast.longitude + bounds.southwest.longitude)/2
+    );
+
+// setting map position to centre to start with
+    mapController.moveCamera(CameraUpdate.newCameraPosition(CameraPosition(
+      target: centerBounds,
+      zoom: 17,
+    )));
+    zoomToFit(mapController, bounds, centerBounds);
+
     // mapController.animateCamera(
     //   CameraUpdate.newLatLngBounds(
     //     LatLngBounds(
@@ -183,7 +206,7 @@ class _HomeState extends State<Home> {
     //         pickupPoint.geometry.location.lng,
     //       ),
     //     ),
-    //     150.0,
+    //     100.0,
     //   ),
     // );
   }
@@ -285,208 +308,211 @@ class _HomeState extends State<Home> {
                       ],
                     ),
                     width: MediaQuery.of(context).size.width,
-                    child: Column(
-                      children: [
-                        Container(
-                          height: 8,
-                          width: 60,
-                          margin: EdgeInsets.only(top: 14, bottom: 13),
-                          decoration: BoxDecoration(
-                              color: Colors.grey[300],
-                              borderRadius: BorderRadius.circular(16)),
-                        ),
-                        _placeDistance != null
-                            ? _deliveryDetails()
-                            : _bottomTitle(),
-                        Container(
-                            height: 50.0,
-                            width: double.infinity,
-                            margin: EdgeInsets.only(
-                                left: 20, right: 20, bottom: 6, top: 13),
+                    child: SafeArea(
+                      top: false,
+                      child: Column(
+                        children: [
+                          Container(
+                            height: 8,
+                            width: 60,
+                            margin: EdgeInsets.only(top: 14, bottom: 13),
                             decoration: BoxDecoration(
-                              color: Colors.white,
-                              border: Border.fromBorderSide(
-                                  Borders.globalSearchBorder),
-                              boxShadow: [
-                                Shadows.globalShadowSearch,
-                              ],
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(5)),
-                            ),
-                            child: Column(
-                              children: <Widget>[
-                                TextField(
-                                  readOnly: true,
-                                  decoration: InputDecoration(
-                                    hintText: "Enter Pickup Location",
-                                    hintStyle: TextStyle(
-                                      color: Colors.black45,
-                                      fontFamily: "Ubuntu",
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 17,
-                                    ),
-                                    labelStyle: TextStyle(
-                                      color: Colors.black,
-                                      fontFamily: "Ubuntu",
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 17,
-                                    ),
-                                    border: InputBorder.none,
-                                    prefixIcon: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              left: 8.0, right: 5),
-                                          child: SvgPicture.asset(
-                                              'assets/svg/pin.svg',
-                                              height: 19,
-                                              color: AppColor.primaryText,
-                                              semanticsLabel: 'search icon'),
-                                        ),
-                                      ],
-                                    ),
-                                    contentPadding:
-                                        EdgeInsets.only(left: 15.0, top: 15.0),
-                                  ),
-                                  controller: pickupController,
-                                  onTap: () async {
-                                    Prediction p =
-                                        await PlacesAutocomplete.show(
-                                            context: context,
-                                            apiKey: AppData.mapAPIKey,
-                                            mode: Mode.fullscreen,
-                                            logo: Icon(Icons.search,
-                                                color: Colors.transparent),
-                                            language: "en",
-                                            hint: 'Search pickup location',
-                                            components: [
-                                          new Component(Component.country, "ng")
-                                        ]);
-                                    displayPredictionPickup(p);
-                                    setState(() {
-                                      if (markersList.isNotEmpty)
-                                        markersList.clear();
-                                      if (polyline.isNotEmpty) polyline.clear();
-                                      if (routeCoords.isNotEmpty)
-                                        routeCoords.clear();
-                                      _placeDistance = null;
-                                      _placeTime = null;
-                                      _distanceCovered = null;
-                                    });
-                                  },
-                                ),
-                              ],
-                            )),
-                        Container(
-                            height: 50.0,
-                            width: double.infinity,
-                            margin: EdgeInsets.only(
-                                left: 20, right: 20, bottom: 18, top: 6),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              border: Border.fromBorderSide(
-                                  Borders.globalSearchBorder),
-                              boxShadow: [
-                                Shadows.globalShadowSearch,
-                              ],
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(5)),
-                            ),
-                            child: Column(
-                              children: <Widget>[
-                                TextField(
-                                  readOnly: true,
-                                  decoration: InputDecoration(
-                                    hintText: "Enter Destination Location",
-                                    hintStyle: TextStyle(
-                                      color: Colors.black45,
-                                      fontFamily: "Ubuntu",
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 17,
-                                    ),
-                                    labelStyle: TextStyle(
-                                      color: Colors.black,
-                                      fontFamily: "Ubuntu",
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 17,
-                                    ),
-                                    border: InputBorder.none,
-                                    prefixIcon: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              left: 8.0, right: 5),
-                                          child: SvgPicture.asset(
-                                              'assets/svg/nav.svg',
-                                              height: 19,
-                                              color: AppColor.primaryText,
-                                              semanticsLabel: 'search icon'),
-                                        ),
-                                      ],
-                                    ),
-                                    contentPadding:
-                                        EdgeInsets.only(left: 15.0, top: 15.0),
-                                  ),
-                                  controller: destinationController,
-                                  onTap: () async {
-                                    Prediction p =
-                                        await PlacesAutocomplete.show(
-                                            context: context,
-                                            apiKey: AppData.mapAPIKey,
-                                            mode: Mode.fullscreen,
-                                            language: "en",
-                                            logo: Icon(Icons.search,
-                                                color: Colors.transparent),
-                                            hint: 'Search destination',
-                                            components: [
-                                          new Component(Component.country, "ng")
-                                        ]);
-                                    displayPredictionDestination(p);
-                                    setState(() {
-                                      if (markersList.isNotEmpty)
-                                        markersList.clear();
-                                      if (polyline.isNotEmpty) polyline.clear();
-                                      if (routeCoords.isNotEmpty)
-                                        routeCoords.clear();
-                                      _placeDistance = null;
-                                      _placeTime = null;
-                                      _distanceCovered = null;
-                                    });
-                                  },
-                                ),
-                              ],
-                            )),
-                        InkWell(
-                          child: Container(
-                              height: 47,
-                              alignment: Alignment.center,
+                                color: Colors.grey[300],
+                                borderRadius: BorderRadius.circular(16)),
+                          ),
+                          _placeDistance != null
+                              ? _deliveryDetails()
+                              : _bottomTitle(),
+                          Container(
+                              height: 50.0,
+                              width: double.infinity,
                               margin: EdgeInsets.only(
-                                  left: 20, right: 20, bottom: 8),
+                                  left: 20, right: 20, bottom: 6, top: 13),
                               decoration: BoxDecoration(
-                                color: _placeDistance != null
-                                    ? AppColor.primaryText
-                                    : Colors.grey.withOpacity(0.5),
-                                borderRadius: Radii.k25pxAll,
+                                color: Colors.white,
+                                border: Border.fromBorderSide(
+                                    Borders.globalSearchBorder),
+                                boxShadow: [
+                                  Shadows.globalShadowSearch,
+                                ],
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(5)),
                               ),
-                              child: Text(
-                                  _placeDistance != null
-                                      ? 'Request rider'
-                                      : 'Get estimate',
-                                  style: TextStyle(
-                                      fontSize: 14,
-                                      fontFamily: 'Ubuntu',
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w400))),
-                          onTap: () => _placeDistance != null
-                              ? _processLocations()
-                              : null,
-                          splashColor: Colors.grey[300],
-                        ),
-                      ],
+                              child: Column(
+                                children: <Widget>[
+                                  TextField(
+                                    readOnly: true,
+                                    decoration: InputDecoration(
+                                      hintText: "Enter Pickup Location",
+                                      hintStyle: TextStyle(
+                                        color: Colors.black45,
+                                        fontFamily: "Ubuntu",
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 17,
+                                      ),
+                                      labelStyle: TextStyle(
+                                        color: Colors.black,
+                                        fontFamily: "Ubuntu",
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 17,
+                                      ),
+                                      border: InputBorder.none,
+                                      prefixIcon: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 8.0, right: 5),
+                                            child: SvgPicture.asset(
+                                                'assets/svg/pin.svg',
+                                                height: 19,
+                                                color: AppColor.primaryText,
+                                                semanticsLabel: 'search icon'),
+                                          ),
+                                        ],
+                                      ),
+                                      contentPadding:
+                                          EdgeInsets.only(left: 15.0, top: 15.0),
+                                    ),
+                                    controller: pickupController,
+                                    onTap: () async {
+                                      Prediction p =
+                                          await PlacesAutocomplete.show(
+                                              context: context,
+                                              apiKey: AppData.mapAPIKey,
+                                              mode: Mode.fullscreen,
+                                              logo: Icon(Icons.search,
+                                                  color: Colors.transparent),
+                                              language: "en",
+                                              hint: 'Search pickup location',
+                                              components: [
+                                            new Component(Component.country, "ng")
+                                          ]);
+                                      displayPredictionPickup(p);
+                                      setState(() {
+                                        if (markersList.isNotEmpty)
+                                          markersList.clear();
+                                        if (polyline.isNotEmpty) polyline.clear();
+                                        if (routeCoords.isNotEmpty)
+                                          routeCoords.clear();
+                                        _placeDistance = null;
+                                        _placeTime = null;
+                                        _distanceCovered = null;
+                                      });
+                                    },
+                                  ),
+                                ],
+                              )),
+                          Container(
+                              height: 50.0,
+                              width: double.infinity,
+                              margin: EdgeInsets.only(
+                                  left: 20, right: 20, bottom: 18, top: 6),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                border: Border.fromBorderSide(
+                                    Borders.globalSearchBorder),
+                                boxShadow: [
+                                  Shadows.globalShadowSearch,
+                                ],
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(5)),
+                              ),
+                              child: Column(
+                                children: <Widget>[
+                                  TextField(
+                                    readOnly: true,
+                                    decoration: InputDecoration(
+                                      hintText: "Enter Destination Location",
+                                      hintStyle: TextStyle(
+                                        color: Colors.black45,
+                                        fontFamily: "Ubuntu",
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 17,
+                                      ),
+                                      labelStyle: TextStyle(
+                                        color: Colors.black,
+                                        fontFamily: "Ubuntu",
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 17,
+                                      ),
+                                      border: InputBorder.none,
+                                      prefixIcon: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 8.0, right: 5),
+                                            child: SvgPicture.asset(
+                                                'assets/svg/nav.svg',
+                                                height: 19,
+                                                color: AppColor.primaryText,
+                                                semanticsLabel: 'search icon'),
+                                          ),
+                                        ],
+                                      ),
+                                      contentPadding:
+                                          EdgeInsets.only(left: 15.0, top: 15.0),
+                                    ),
+                                    controller: destinationController,
+                                    onTap: () async {
+                                      Prediction p =
+                                          await PlacesAutocomplete.show(
+                                              context: context,
+                                              apiKey: AppData.mapAPIKey,
+                                              mode: Mode.fullscreen,
+                                              language: "en",
+                                              logo: Icon(Icons.search,
+                                                  color: Colors.transparent),
+                                              hint: 'Search destination',
+                                              components: [
+                                            new Component(Component.country, "ng")
+                                          ]);
+                                      displayPredictionDestination(p);
+                                      setState(() {
+                                        if (markersList.isNotEmpty)
+                                          markersList.clear();
+                                        if (polyline.isNotEmpty) polyline.clear();
+                                        if (routeCoords.isNotEmpty)
+                                          routeCoords.clear();
+                                        _placeDistance = null;
+                                        _placeTime = null;
+                                        _distanceCovered = null;
+                                      });
+                                    },
+                                  ),
+                                ],
+                              )),
+                          InkWell(
+                            child: Container(
+                                height: 47,
+                                alignment: Alignment.center,
+                                margin: EdgeInsets.only(
+                                    left: 20, right: 20, bottom: 8),
+                                decoration: BoxDecoration(
+                                  color: _placeDistance != null
+                                      ? AppColor.primaryText
+                                      : Colors.grey.withOpacity(0.5),
+                                  borderRadius: Radii.k25pxAll,
+                                ),
+                                child: Text(
+                                    _placeDistance != null
+                                        ? 'Request rider'
+                                        : 'Get estimate',
+                                    style: TextStyle(
+                                        fontSize: 14,
+                                        fontFamily: 'Ubuntu',
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w400))),
+                            onTap: () => _placeDistance != null
+                                ? _processLocations()
+                                : null,
+                            splashColor: Colors.grey[300],
+                          ),
+                        ],
+                      ),
                     )),
               ],
             ),
@@ -502,10 +528,15 @@ class _HomeState extends State<Home> {
 
   _deliveryDetails() => Container(
         width: MediaQuery.of(context).size.width,
-        margin: EdgeInsets.only(left: 20, right: 20, bottom: 10, top: 5),
+        margin: EdgeInsets.only(left: 10, right: 20, bottom: 5, top: 5),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
+            SvgPicture.asset(
+                'assets/svg/scooter.svg',
+                height: 55,
+                semanticsLabel: 'search icon'),
+            SizedBox(width: 8),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -519,7 +550,7 @@ class _HomeState extends State<Home> {
                       fontWeight: FontWeight.w400,
                     ),
                   ),
-                  Text('$_placeTime',
+                  Text('$_placeTime'' / ''$_placeDistance' 'km',
                       style: TextStyle(
                         fontSize: 16,
                         fontFamily: "Ubuntu",
@@ -530,29 +561,29 @@ class _HomeState extends State<Home> {
                 ],
               ),
             ),
-            Expanded(
-                child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Total distance:',
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontFamily: "Ubuntu",
-                    color: Colors.black54,
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
-                Text('$_placeDistance' 'km',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontFamily: "Ubuntu",
-                      color: Colors.black,
-                      fontWeight: FontWeight.w800,
-                      height: 1.4,
-                    )),
-              ],
-            )),
+            // Expanded(
+            //     child: Column(
+            //   crossAxisAlignment: CrossAxisAlignment.start,
+            //   children: [
+            //     Text(
+            //       'Total distance:',
+            //       style: TextStyle(
+            //         fontSize: 14,
+            //         fontFamily: "Ubuntu",
+            //         color: Colors.black54,
+            //         fontWeight: FontWeight.w400,
+            //       ),
+            //     ),
+            //     Text('$_placeDistance' 'km',
+            //         style: TextStyle(
+            //           fontSize: 16,
+            //           fontFamily: "Ubuntu",
+            //           color: Colors.black,
+            //           fontWeight: FontWeight.w800,
+            //           height: 1.4,
+            //         )),
+            //   ],
+            // )),
             Expanded(flex: 0,
                 child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -614,6 +645,41 @@ class _HomeState extends State<Home> {
           ),
         ],
       );
+
+  Future<void> zoomToFit(GoogleMapController controller, LatLngBounds bounds, LatLng centerBounds) async {
+    bool keepZoomingOut = true;
+
+    while(keepZoomingOut) {
+      final LatLngBounds screenBounds = await controller.getVisibleRegion();
+      if(fits(bounds, screenBounds)){
+        keepZoomingOut = false;
+        final double zoomLevel = await controller.getZoomLevel() - 0.5;
+        controller.moveCamera(CameraUpdate.newCameraPosition(CameraPosition(
+          target: centerBounds,
+          zoom: zoomLevel,
+        )));
+        break;
+      }
+      else {
+        // Zooming out by 0.1 zoom level per iteration
+        final double zoomLevel = await controller.getZoomLevel() - 0.1;
+        controller.moveCamera(CameraUpdate.newCameraPosition(CameraPosition(
+          target: centerBounds,
+          zoom: zoomLevel,
+        )));
+      }
+    }
+  }
+
+  bool fits(LatLngBounds fitBounds, LatLngBounds screenBounds) {
+    final bool northEastLatitudeCheck = screenBounds.northeast.latitude >= fitBounds.northeast.latitude;
+    final bool northEastLongitudeCheck = screenBounds.northeast.longitude >= fitBounds.northeast.longitude;
+
+    final bool southWestLatitudeCheck = screenBounds.southwest.latitude <= fitBounds.southwest.latitude;
+    final bool southWestLongitudeCheck = screenBounds.southwest.longitude <= fitBounds.southwest.longitude;
+
+    return northEastLatitudeCheck && northEastLongitudeCheck && southWestLatitudeCheck && southWestLongitudeCheck;
+  }
 }
 
 class GetReceiver extends StatelessWidget {

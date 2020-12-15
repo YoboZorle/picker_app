@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:intl/intl.dart';
 import 'package:pickrr_app/src/helpers/constants.dart';
-import 'package:pickrr_app/src/helpers/utility.dart';
 import 'package:pickrr_app/src/widgets/arguments.dart';
 import 'package:pickrr_app/src/widgets/awaiting_ride.dart';
 import 'package:pickrr_app/src/widgets/information_details.dart';
@@ -55,9 +54,7 @@ class _RideDetailsState extends State<RideDetails> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-
             Container(
-
                 width: MediaQuery.of(context).size.width,
                 child: widget.arguments.ride.status != 'PENDING'
                     ? AwaitingRideWidget(
