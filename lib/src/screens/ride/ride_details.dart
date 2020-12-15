@@ -47,12 +47,12 @@ class _RideDetailsState extends State<RideDetails> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Container(
-      color: Colors.white,
-      child: SafeArea(
-        top: false,
+      // appBar: AppBar(title: Text('Ride Details'),
+      // brightness: Brightness.light),
+        body: SafeArea(
+        top: true,
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             Container(
                 width: MediaQuery.of(context).size.width,
@@ -65,6 +65,6 @@ class _RideDetailsState extends State<RideDetails> {
           ],
         ),
       ),
-    ));
+    );
   }
 }
