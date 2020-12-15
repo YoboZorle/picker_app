@@ -136,10 +136,13 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
                                             switch (snapshot.connectionState) {
                                               case ConnectionState.none:
                                               case ConnectionState.waiting:
-                                                return const Text(
-                                                  'You have not yet picked an image.',
-                                                  textAlign: TextAlign.center,
-                                                );
+                                                return ClipOval(
+                                                    child: Image.asset(
+                                                      'assets/images/placeholder.jpg',
+                                                      fit: BoxFit.cover,
+                                                      width: 90.0,
+                                                      height: 90.0,
+                                                    ));
                                               case ConnectionState.done:
                                                 return _previewImage();
                                               default:
@@ -149,10 +152,13 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
                                                     textAlign: TextAlign.center,
                                                   );
                                                 } else {
-                                                  return const Text(
-                                                    'You have not yet picked an image.',
-                                                    textAlign: TextAlign.center,
-                                                  );
+                                                  return ClipOval(
+                                                      child: Image.asset(
+                                                        'assets/images/placeholder.jpg',
+                                                        fit: BoxFit.cover,
+                                                        width: 90.0,
+                                                        height: 90.0,
+                                                      ));
                                                 }
                                             }
                                           },
@@ -170,6 +176,13 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
                               ),
                             ),
                             SizedBox(height: 45),
+                                ClipOval(
+                                    child: Image.asset(
+                                      'assets/images/placeholder.jpg',
+                                      fit: BoxFit.cover,
+                                      width: 90.0,
+                                      height: 90.0,
+                                    )),
                             Container(
                                 height: 47,
                                 margin: EdgeInsets.only(

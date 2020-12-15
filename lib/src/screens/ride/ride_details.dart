@@ -54,49 +54,11 @@ class _RideDetailsState extends State<RideDetails> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Expanded(
-              child: Stack(
-                children: [
-                  Container(),
-                  SafeArea(
-                    child: Padding(
-                        padding: const EdgeInsets.fromLTRB(14, 15, 16, 8),
-                        child: Hero(
-                          tag: "nav",
-                          flightShuttleBuilder: flightShuttleBuilder,
-                          child: GestureDetector(
-                              child: Container(
-                                padding: EdgeInsets.only(right: 10),
-                                child: Card(
-                                    elevation: 8,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(50.0),
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Icon(
-                                        Icons.arrow_back,
-                                        size: 23,
-                                      ),
-                                    )),
-                              ),
-                              onTap: () {
-                                Navigator.pop(context);
-                              }),
-                        )),
-                  ),
-                ],
-              ),
-            ),
+
             Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  boxShadow: [
-                    Shadows.primaryShadow,
-                  ],
-                ),
+
                 width: MediaQuery.of(context).size.width,
-                child: widget.arguments.ride.status == 'PENDING'
+                child: widget.arguments.ride.status != 'PENDING'
                     ? AwaitingRideWidget(
                         rideStatus: widget.arguments.ride.status, rideId: widget.arguments.ride.id,)
                     : RideInformationWidget(widget.arguments.ride)),

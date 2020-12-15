@@ -12,7 +12,7 @@ class RideInformationWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (rideDetails.status == 'CANCELED') {
+    if ('CANCELED' == 'CANCELED') {
       return Container();
     }
     if (rideDetails.status == 'DELIVERED') {

@@ -13,13 +13,6 @@ class AwaitingRideWidget extends StatelessWidget {
     return Column(
       children: [
         Container(
-          height: 8,
-          width: 60,
-          margin: EdgeInsets.only(top: 15, bottom: 18),
-          decoration: BoxDecoration(
-              color: Colors.grey[300], borderRadius: BorderRadius.circular(16)),
-        ),
-        Container(
           height: 200,
           child: new FlareActor('assets/flare/rider.flr',
               alignment: Alignment.center,
@@ -30,7 +23,7 @@ class AwaitingRideWidget extends StatelessWidget {
           "A driver will be assigned\nto you shortly...",
           textAlign: TextAlign.center,
           style: TextStyle(
-              fontSize: 18.0,
+              fontSize: 17.0,
               fontFamily: "Ubuntu",
               color: Colors.black,
               fontWeight: FontWeight.w700,
@@ -46,7 +39,7 @@ class AwaitingRideWidget extends StatelessWidget {
                 style: TextStyle(
                     fontSize: 15,
                     fontFamily: 'Ubuntu',
-                    color: Colors.black87,
+                    color: Colors.red,
                     fontWeight: FontWeight.w500)),
           ),
           onTap: () async => cancelRide(context, rideId),

@@ -171,21 +171,21 @@ class _HomeState extends State<Home> {
           endCap: Cap.buttCap));
     });
 
-    mapController.animateCamera(
-      CameraUpdate.newLatLngBounds(
-        LatLngBounds(
-          northeast: LatLng(
-            destination.geometry.location.lat,
-            destination.geometry.location.lng,
-          ),
-          southwest: LatLng(
-            pickupPoint.geometry.location.lat,
-            pickupPoint.geometry.location.lng,
-          ),
-        ),
-        150.0,
-      ),
-    );
+    // mapController.animateCamera(
+    //   CameraUpdate.newLatLngBounds(
+    //     LatLngBounds(
+    //       northeast: LatLng(
+    //         destination.geometry.location.lat,
+    //         destination.geometry.location.lng,
+    //       ),
+    //       southwest: LatLng(
+    //         pickupPoint.geometry.location.lat,
+    //         pickupPoint.geometry.location.lng,
+    //       ),
+    //     ),
+    //     150.0,
+    //   ),
+    // );
   }
 
   void _processLocations() async {
@@ -302,7 +302,7 @@ class _HomeState extends State<Home> {
                             height: 50.0,
                             width: double.infinity,
                             margin: EdgeInsets.only(
-                                left: 20, right: 20, bottom: 7, top: 13),
+                                left: 20, right: 20, bottom: 6, top: 13),
                             decoration: BoxDecoration(
                               color: Colors.white,
                               border: Border.fromBorderSide(
@@ -383,7 +383,7 @@ class _HomeState extends State<Home> {
                             height: 50.0,
                             width: double.infinity,
                             margin: EdgeInsets.only(
-                                left: 20, right: 20, bottom: 18, top: 7),
+                                left: 20, right: 20, bottom: 18, top: 6),
                             decoration: BoxDecoration(
                               color: Colors.white,
                               border: Border.fromBorderSide(
@@ -465,7 +465,7 @@ class _HomeState extends State<Home> {
                               height: 47,
                               alignment: Alignment.center,
                               margin: EdgeInsets.only(
-                                  left: 20, right: 20, bottom: 20),
+                                  left: 20, right: 20, bottom: 8),
                               decoration: BoxDecoration(
                                 color: _placeDistance != null
                                     ? AppColor.primaryText
@@ -502,7 +502,7 @@ class _HomeState extends State<Home> {
 
   _deliveryDetails() => Container(
         width: MediaQuery.of(context).size.width,
-        margin: EdgeInsets.only(left: 20, right: 20, bottom: 15, top: 5),
+        margin: EdgeInsets.only(left: 20, right: 20, bottom: 10, top: 5),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -553,10 +553,10 @@ class _HomeState extends State<Home> {
                     )),
               ],
             )),
-            Expanded(
+            Expanded(flex: 0,
                 child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Text(
                   'Fare estimate:',
