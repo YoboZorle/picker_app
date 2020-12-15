@@ -53,16 +53,8 @@ class DriverRepository extends APIClient {
 
   Future<void> _persistDriverDetails(rawData) async {
     DriverProvider helper = DriverProvider.instance;
-    Map<String, dynamic> driverDetails = {
-      'id': rawData['user']['id'],
-      'plateNumber': rawData['plate_number'],
-      'ticketNumber': rawData['ticket_number'],
-      'companyName': rawData['company_name'],
-      'status': rawData['status'],
-      'blocked': rawData['blocked'],
-      'createdAt': rawData['created_at'],
-    };
-    Driver driver = Driver.fromMap(driverDetails);
+    rawData['id'] = rawData['user']['id'];
+    Driver driver = Driver.fromMap(Driver().formatToMap(rawData));
     await helper.updateOrInsert(driver);
   }
 

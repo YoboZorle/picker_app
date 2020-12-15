@@ -87,8 +87,23 @@ class _DriverHomeState extends State<DriverHome> {
   Widget build(BuildContext context) {
     return MultiBlocListener(
         listeners: [
+          BlocListener<AuthenticationBloc, AuthenticationState>(
+            listener: (__, state) async {
+              if (state is LoggedIn || state is DetailsUpdate) {
+                Driver driver = await _driverDetails();
+                if (driver != null) {
+                  if (state is DetailsUpdate && driver.blocked) {
+                    BlocProvider.of<RiderDetailsBloc>(context).add(RiderDetailsEvent.BLOCKED_RIDER);
+                  } else if (driver.isDelivering) {
+                    BlocProvider.of<RiderDetailsBloc>(context)
+                        .add(RiderDetailsEvent.RIDER_IS_DELIVERING);
+                  }
+                }
+              }
+            },
+          ),
           BlocListener<RiderDetailsBloc, RiderDetailsState>(
-            listener: (_, state) async {
+            listener: (__, state) async {
               if (state is IsBlocked) {
                 Scaffold.of(context).showSnackBar(
                   new SnackBar(
@@ -97,38 +112,28 @@ class _DriverHomeState extends State<DriverHome> {
                   ),
                 );
 
-                new Future<Null>.delayed(Duration(seconds: 7), () {
+                new Future<Null>.delayed(Duration(seconds: 3), () {
                   Navigator.pushNamedAndRemoveUntil(
                       context, '/HomePage', (route) => false);
                 });
+                return;
               }
 
               if (state is IsRiding) {
                 if (await isInternetConnected()) {
-                  var rawRideDetails = await RideRepository().getActiveRide();
-                  if (rawRideDetails != null){
-                    Ride ride = Ride.fromMap(rawRideDetails);
-                    _chooseOrderInteractiveSheet(ride);
+                  try{
+                    var rawRideDetails = await RideRepository().getActiveRide();
+                    if (rawRideDetails != null){
+                      Ride ride = Ride.fromMap(rawRideDetails);
+                      _chooseOrderInteractiveSheet(ride);
+                    }
+                  }catch(err) {
+                    cprint(err.message, errorIn: 'DriverBlocListener');
                   }
                 }
               }
             },
           ),
-          BlocListener<AuthenticationBloc, AuthenticationState>(
-            listener: (__, state) async {
-              if (state is LoggedIn || state is DetailsUpdate) {
-                Driver driver = await _driverDetails();
-                if (driver != null) {
-                  if (driver.blocked) {
-                    RiderDetailsBloc().add(RiderDetailsEvent.BLOCKED_RIDER);
-                  } else if (driver.isDelivering) {
-                    RiderDetailsBloc()
-                        .add(RiderDetailsEvent.RIDER_IS_DELIVERING);
-                  }
-                }
-              }
-            },
-          )
         ],
         child: Scaffold(
             key: _scaffoldKey,

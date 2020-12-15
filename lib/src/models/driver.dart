@@ -59,7 +59,7 @@ class Driver extends Equatable {
       'status': rawData['status'],
       'createdAt': rawData['created_at'],
       'blocked': rawData['blocked'],
-      'isDelivering': rawData['isDelivering'],
+      'isDelivering': rawData['is_delivering'],
     };
 
     return map;

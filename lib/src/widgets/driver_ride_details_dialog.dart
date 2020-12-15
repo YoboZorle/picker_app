@@ -42,19 +42,22 @@ class _RiderOrderInteractiveLayoutState
   }
 
   _getRideUpdates() async {
+    Driver riderDetails = await _driverRepository.getDriverDetailsFromStorage();
+    print('riderDetails =============================================================================================');
+    print(riderDetails);
+    print(ride.rider.details);
     if (ride.status == 'CANCELED' ||
-        ride.status == 'DELIVERED' && ride.rider.id != ride.id) {
+        ride.status == 'DELIVERED' && ride.rider.details.id != riderDetails.id) {
       Navigator.pop(context);
       AlertBar.dialog(context, 'Ride already taken!', Colors.orange,
           icon: Icon(Icons.info), duration: 5);
     }
-    if (ride.status == 'INPROGRESS' && ride.rider.id != ride.id) {
+    if (ride.status == 'INPROGRESS' && ride.rider.details.id != riderDetails.id) {
       Navigator.pop(context);
       AlertBar.dialog(context, 'Ride already taken!', Colors.orange,
           icon: Icon(Icons.info), duration: 5);
     }
     final String jwtToken = await _storage.read(key: 'accessToken');
-    Driver riderDetails = await _driverRepository.getDriverDetailsFromStorage();
     _channel = IOWebSocketChannel.connect(
         "${APIConstants.wsUrl}/ws/delivery/ride-details/${widget.ride.id}/?token=$jwtToken");
     _channel.stream.listen((response) async {
