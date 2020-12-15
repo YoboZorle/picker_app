@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pickrr_app/src/blocs/driver/driver_status/bloc.dart';
+import 'package:pickrr_app/src/blocs/driver/rider_details/bloc.dart';
 import 'package:pickrr_app/src/blocs/ride/orders/bloc.dart';
 import 'package:pickrr_app/src/helpers/constants.dart';
 import 'driver_home.dart';
@@ -17,6 +18,7 @@ class _DriverTabsState extends State<DriverTabs> {
   final List<Widget> _navPages = [
     MultiBlocProvider(providers: [
       BlocProvider<DriverStatusBloc>(create: (_) => DriverStatusBloc()),
+      BlocProvider<RiderDetailsBloc>(create: (_) => RiderDetailsBloc()),
       BlocProvider<RideOrdersBloc>(
           create: (_) => RideOrdersBloc()..add(OrdersFetched()))
     ], child: DriverHome(key: PageStorageKey('DriverHome'))),

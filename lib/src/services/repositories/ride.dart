@@ -107,4 +107,15 @@ class RideRepository extends APIClient {
       throw ServiceError('Request failed please try again.');
     }
   }
+
+  getActiveRide() async {
+    final String url = '/active-ride';
+    try {
+      Response response = await dio.get(url);
+      final responseBody = response.data;
+      return responseBody;
+    } catch (e) {
+      throw ServiceError('Request failed please try again.');
+    }
+  }
 }

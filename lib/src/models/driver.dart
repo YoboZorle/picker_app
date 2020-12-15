@@ -17,6 +17,7 @@ class Driver extends Equatable {
   final String createdAt;
   final bool blocked;
   final User details;
+  final bool isDelivering;
 
   Driver(
       {this.id,
@@ -26,7 +27,7 @@ class Driver extends Equatable {
       this.status,
       this.blocked,
       this.createdAt,
-      this.details});
+      this.details, this.isDelivering});
 
   @override
   List<Object> get props => [id, ticketNumber, companyName, createdAt];
@@ -38,7 +39,8 @@ class Driver extends Equatable {
       'companyName': companyName,
       'status': status,
       'createdAt': createdAt,
-      'blocked': blocked == true ? 1 : 0
+      'blocked': blocked == true ? 1 : 0,
+      'isDelivering': isDelivering == true ? 1 : 0
     };
     if (id != null) {
       map['_userId'] = id;
@@ -56,7 +58,8 @@ class Driver extends Equatable {
       'companyName': rawData['company_name'],
       'status': rawData['status'],
       'createdAt': rawData['created_at'],
-      'blocked': rawData['blocked']
+      'blocked': rawData['blocked'],
+      'isDelivering': rawData['isDelivering'],
     };
 
     return map;
@@ -71,6 +74,7 @@ class Driver extends Equatable {
         companyName = mapData['companyName'] ?? '',
         status = mapData['status'],
         createdAt = mapData['createdAt'],
+        isDelivering = _driverStatus(mapData['isDelivering']),
         blocked = _driverStatus(mapData['blocked']);
 
   @override

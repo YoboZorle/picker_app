@@ -12,6 +12,7 @@ final String columnTicketNumber = 'ticketNumber';
 final String columnCompanyName = 'companyName';
 final String columnStatus = 'status';
 final String columnBlocked = 'blocked';
+final String columnIsDelivering = 'isDelivering';
 final String columnCreatedAt = 'createdAt';
 
 class DriverProvider {
@@ -38,6 +39,7 @@ create table $tableDriver (
   $columnTicketNumber text,
   $columnCompanyName text,
   $columnStatus text,
+  $columnIsDelivering integer,
   $columnCreatedAt text,
   $columnBlocked integer)
 ''');

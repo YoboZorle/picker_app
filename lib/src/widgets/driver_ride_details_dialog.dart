@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:pickrr_app/src/helpers/constants.dart';
 import 'package:pickrr_app/src/helpers/utility.dart';
+import 'package:pickrr_app/src/services/repositories/user.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:pickrr_app/src/models/ride.dart';
 import 'package:pickrr_app/src/models/driver.dart';
@@ -56,7 +57,7 @@ class _RiderOrderInteractiveLayoutState
     Driver riderDetails = await _driverRepository.getDriverDetailsFromStorage();
     _channel = IOWebSocketChannel.connect(
         "${APIConstants.wsUrl}/ws/delivery/ride-details/${widget.ride.id}/?token=$jwtToken");
-    _channel.stream.listen((response) {
+    _channel.stream.listen((response) async {
       var decodedResponse = json.decode(response)['ride'];
       Ride rideDetails = Ride.fromMap(decodedResponse);
       if (rideDetails.status == 'CANCELED' ||
@@ -75,6 +76,11 @@ class _RiderOrderInteractiveLayoutState
       setState(() {
         ride = rideDetails;
       });
+
+      if(ride.status == 'DELIVERED' &&
+          rideDetails.rider.details.id == riderDetails.id){
+        await UserRepository().getUserDetails(rideDetails.rider.details.id);
+      }
     });
   }
 
