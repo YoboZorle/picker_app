@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:pickrr_app/src/blocs/driver/driver_history/bloc.dart';
 import 'package:pickrr_app/src/helpers/utility.dart';
 import 'package:pickrr_app/src/models/driver.dart';
@@ -18,6 +19,8 @@ class DriverWallet extends StatefulWidget {
 class _DriverWalletState extends State<DriverWallet> {
   final DriverRepository _driverRepository = DriverRepository();
   final _scrollController = ScrollController();
+  final currencyFormatter =
+  NumberFormat.currency(locale: 'en_US', symbol: '\u20a6');
   final _scrollThreshold = 200.0;
   DriverHistoryBloc _historyBloc;
 

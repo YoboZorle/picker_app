@@ -14,6 +14,9 @@ final String columnStatus = 'status';
 final String columnBlocked = 'blocked';
 final String columnIsDelivering = 'isDelivering';
 final String columnCreatedAt = 'createdAt';
+final String columnTotalRides = 'totalRides';
+final String columnOngoingRides = 'ongoingRides';
+final String columnCompletedRides = 'completedRides';
 
 class DriverProvider {
   Database db;
@@ -41,7 +44,10 @@ create table $tableDriver (
   $columnStatus text,
   $columnIsDelivering integer,
   $columnCreatedAt text,
-  $columnBlocked integer)
+  $columnBlocked integer,
+  $columnTotalRides integer,
+  $columnOngoingRides integer,
+  $columnCompletedRides integer)
 ''');
         });
   }

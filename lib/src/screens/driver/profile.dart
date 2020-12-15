@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:pickrr_app/src/blocs/authentication/bloc.dart';
 import 'package:pickrr_app/src/helpers/constants.dart';
 import 'package:pickrr_app/src/helpers/utility.dart';
@@ -9,6 +10,7 @@ import 'package:pickrr_app/src/widgets/image.dart';
 
 class DriverProfile extends StatelessWidget {
   final DriverRepository _driverRepository = DriverRepository();
+  final numberFormat = new NumberFormat("#,##,###", "en_US");
 
   DriverProfile({Key key}) : super(key: key);
 
@@ -75,7 +77,7 @@ class DriverProfile extends StatelessWidget {
                     final driverDetails = snapshot.data;
                     return Column(
                       children: [
-                        Text('1,320 finished rides',
+                        Text('${numberFormat.format(driverDetails.totalRides)} finished rides',
                             style: TextStyle(
                               fontSize: 15,
                               color: Colors.grey,
