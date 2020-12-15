@@ -110,8 +110,8 @@ String getFullTime(String date) {
 
 double priceCalculator(double distance) {
   int distanceCovered = distance < 1 ? 1 : distance.round();
-  final double flatRate = 300;
-  final double perKmCharge = 70;
+  final double flatRate = 400;
+  final double perKmCharge = 50;
   double price = 0;
 
   price = flatRate;

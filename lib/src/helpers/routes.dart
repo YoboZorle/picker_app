@@ -41,10 +41,11 @@ class Routes {
         return CustomRoute<bool>(builder: (BuildContext context) => Onboard());
       case "DriversHomePage":
         return SlideLeftRoute<bool>(
-            builder: (BuildContext context) => BlocProvider<AuthenticationBloc>(
-                create: (_) => AuthenticationBloc()
-                  ..add(AuthenticationEvent.AUTHENTICATED),
-                child: DriverTabs()));
+            builder: (BuildContext context) => MultiBlocProvider(providers: [
+              BlocProvider<AuthenticationBloc>(
+                  create: (_) => AuthenticationBloc()
+                    ..add(AuthenticationEvent.AUTHENTICATED))
+            ], child: DriverTabs()));
       case "Login":
         return SlideLeftRoute<bool>(builder: (BuildContext context) => Login());
       case "DriverOnboard":

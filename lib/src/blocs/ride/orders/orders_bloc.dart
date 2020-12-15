@@ -22,6 +22,15 @@ class RideOrdersBloc extends Bloc<OrdersEvent, RideOrdersState> {
         yield* _mapOrdersFetchedToState(currentState);
       }
     }
+
+    if(event is OrdersAdded){
+      yield* _mapOrdersAddedToState(event.ride, currentState);
+    }
+  }
+
+  Stream<RideOrdersState> _mapOrdersAddedToState(Ride ride, currentState) async* {
+    List<Ride> rides = currentState.rides.insert(0, ride);
+    yield currentState.copyWith(rides: rides);
   }
 
   Stream<RideOrdersState> _mapOrdersFetchedToState(
@@ -55,8 +64,6 @@ class RideOrdersBloc extends Bloc<OrdersEvent, RideOrdersState> {
         hasReachedMax: hasReachedMax,
       );
     } catch (e) {
-      print('Heu erroorororo');
-      print(e);
       yield RideOrdersState.failure();
     }
   }

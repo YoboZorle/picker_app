@@ -66,7 +66,7 @@ class Ride {
         deliveryLocation = mapData['delivery_location'] != null
             ? Location.fromMap(mapData['delivery_location'])
             : null,
-        user = mapData['user'] != null ? User.fromMap(mapData['user']) : null,
+        user = mapData['user'] != null ? User.fromMap(User().formatToMap(mapData['user'])) : null,
         rider =
             mapData['rider'] != null ? Driver.fromMap(Driver().formatToMap(mapData['rider'])) : null,
         createdAt = mapData['created_at'] ?? '',

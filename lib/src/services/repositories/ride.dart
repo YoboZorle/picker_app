@@ -65,4 +65,46 @@ class RideRepository extends APIClient {
       throw ServiceError('Request failed please try again.');
     }
   }
+
+  processAcceptRide(int rideId) async {
+    final String url = '/order/$rideId/accept';
+    try {
+      await dio.post(url);
+    } catch (e) {
+      cprint(e.response, errorIn: 'processAcceptRide');
+      if (e.response.data != null &&
+          e.response.data['non_field_errors'] != null) {
+        throw ServiceError(e.response.data['non_field_errors']);
+      }
+      throw ServiceError('Request failed please try again.');
+    }
+  }
+
+  processPackagePicked(int rideId) async {
+    final String url = '/order/$rideId/package-pickedup';
+    try {
+      await dio.post(url);
+    } catch (e) {
+      cprint(e.response, errorIn: 'processPackagePicked');
+      if (e.response.data != null &&
+          e.response.data['non_field_errors'] != null) {
+        throw ServiceError(e.response.data['non_field_errors']);
+      }
+      throw ServiceError('Request failed please try again.');
+    }
+  }
+
+  processPackageDelivered(int rideId) async {
+    final String url = '/order/$rideId/package-delivered';
+    try {
+      await dio.post(url);
+    } catch (e) {
+      cprint(e.response, errorIn: 'processPackageDelivered');
+      if (e.response.data != null &&
+          e.response.data['non_field_errors'] != null) {
+        throw ServiceError(e.response.data['non_field_errors']);
+      }
+      throw ServiceError('Request failed please try again.');
+    }
+  }
 }
