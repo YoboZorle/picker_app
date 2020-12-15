@@ -179,12 +179,6 @@ class _PackageReceiverDetailsState extends State<PackageReceiverDetails> {
             )));
   }
 
-  _isFormValid() =>
-      _receiversFullNameController.text != null &&
-      _receiversFullNameController.text.isNotEmpty &&
-      _receiversPhoneController.text != null &&
-      _receiversPhoneController.text.isNotEmpty;
-
   @override
   void dispose() {
     _receiversFullNameController.dispose();

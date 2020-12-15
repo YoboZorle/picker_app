@@ -1,4 +1,3 @@
-import 'package:circular_profile_avatar/circular_profile_avatar.dart';
 import 'package:flutter/material.dart';
 import 'package:pickrr_app/src/helpers/constants.dart';
 import 'package:pickrr_app/src/utils/transitionAppbar/transition_appbar.dart';
@@ -6,85 +5,6 @@ import 'package:pickrr_app/src/utils/transitionAppbar/transition_appbar.dart';
 class TrackDeliveries extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    cryptoPortfolioItem(String img, String name, double amount, String rate,
-            String percentage) =>
-        Card(
-          elevation: 0,
-          child: InkWell(
-            onTap: () => print("tapped"),
-            child: Container(
-              padding: EdgeInsets.only(top: 15.0, bottom: 15.0, right: 15.0),
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(22.0)),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  Padding(
-                      padding: EdgeInsets.only(left: 10.0, right: 15.0),
-                      // child: Icon(icon, color: Colors.grey),
-                      child: CircularProfileAvatar(
-                        img,
-                        radius: 25,
-                        backgroundColor: Colors.grey[200],
-                        // sets initials text, set your own style, default Text('')
-                        borderColor: Colors
-                            .brown, // sets border color, default Colors.white
-                        elevation:
-                            0.0, // sets elevation (shadow of the profile picture), default value is 0.0
-                        cacheImage:
-                            true, // allow widget to cache image against provided url
-                        onTap: () {
-                          print('yea');
-                        }, // sets on tap
-                        showInitialTextAbovePicture:
-                            false, // setting it true will show initials text above profile picture, default false
-                      )),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Text(
-                              name,
-                              style: TextStyle(
-                                  fontFamily: "Ubuntu",
-                                  fontSize: 17.0,
-                                  fontWeight: FontWeight.w800),
-                            ),
-                            Text("\u20A6$amount",
-                                style: TextStyle(
-                                    fontSize: 16.0,
-                                    fontFamily: "Ubuntu",
-                                    fontWeight: FontWeight.bold))
-                          ],
-                        ),
-                        SizedBox(height: 3),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Text("$rate",
-                                style: TextStyle(
-                                    fontSize: 13.0,
-                                    fontWeight: FontWeight.normal)),
-                            Text("+ \u20A6$percentage",
-                                style: TextStyle(
-                                  fontSize: 14.0,
-                                  color: Colors.red[500],
-                                ))
-                          ],
-                        )
-                      ],
-                    ),
-                    flex: 3,
-                  ),
-                ],
-              ),
-            ),
-          ),
-        );
     return Scaffold(backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
