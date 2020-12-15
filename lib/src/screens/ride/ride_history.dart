@@ -33,6 +33,24 @@ class _RideHistoryState extends State<RideHistory> {
       },
       child: Scaffold(
         backgroundColor: Colors.grey[100],
+        appBar: AppBar(
+          elevation: 0,
+          brightness: Brightness.light,
+            backgroundColor: Colors.white,
+            title:  Text(
+          'Order History',
+          style: TextStyle(
+              fontFamily: "Ubuntu",
+              fontSize: 17.0,
+              color: Colors.black,
+              fontWeight: FontWeight.w800),
+        ),
+          centerTitle: true,
+          leading: IconButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              icon: Icon(Icons.arrow_back_ios, color: Colors.black))),
         body: SafeArea(
           child:
               // ignore: missing_return
@@ -63,24 +81,6 @@ class _RideHistoryState extends State<RideHistory> {
             if (state.isSuccess) {
               return CustomScrollView(controller: _scrollController, slivers: <
                   Widget>[
-                SliverAppBar(
-                  brightness: Brightness.light,
-                  backgroundColor: Colors.white,
-                  title: Text(
-                    'Order History',
-                    style: TextStyle(
-                        fontFamily: "Ubuntu",
-                        fontSize: 17.0,
-                        color: Colors.black,
-                        fontWeight: FontWeight.w800),
-                  ),
-                  centerTitle: true,
-                  leading: IconButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      icon: Icon(Icons.arrow_back_ios, color: Colors.black)),
-                ),
                 SliverList(
                     delegate: SliverChildBuilderDelegate(
                   (BuildContext context, int index) {
@@ -128,50 +128,6 @@ class _RideHistoryState extends State<RideHistory> {
                               ),
                             ),
                           ),
-
-
-                          SizedBox(height: 10),
-                          Card(
-                            elevation: 0,
-                            child: Container(height: 150,
-                              color: Colors.grey,
-                              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                              child: Row(
-                                children: [
-                              Expanded(
-                                  child: Text('Mon 14/12/2020, 09:30 PM'),
-                              flex: 7),
-                                  Expanded(child: Container(color: Colors.yellowAccent,
-                                  child: Row(children: [
-                                    Container(height: MediaQuery.of(context).size.height, width: 5,
-                                    color: Colors.red,
-                                    margin: EdgeInsets.symmetric(vertical: 10)),
-                                    Expanded(
-                                      child: Column(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          children: [
-                                        Column(
-                                          children: [
-                                            Text('Distance'),
-                                            Text('4.3km'),
-                                          ],
-                                        ),
-
-                                        Column(
-                                          children: [
-                                            Text('Travel cost'),
-                                            Text('#500.00'),
-                                          ],
-                                        ),
-
-                                      ]),
-                                    )
-                                  ],)),
-                                  flex: 2)
-
-                                ],
-                              ),
-                            ),
-                          )
                         ],
                       ),
                     );

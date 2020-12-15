@@ -12,11 +12,11 @@ class RideInformationWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if ('CANCELED' == 'CANCELED') {
-      return Container();
+    if (rideDetails.status == 'CANCELED') {
+      return Container(child: Text("Ride Canceled"));
     }
     if (rideDetails.status == 'DELIVERED') {
-      return Container();
+      return Container(child: Text("Package Delivered"));
     }
     return Column(
       children: [

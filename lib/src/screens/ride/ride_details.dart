@@ -56,7 +56,7 @@ class _RideDetailsState extends State<RideDetails> {
           children: <Widget>[
             Container(
                 width: MediaQuery.of(context).size.width,
-                child: widget.arguments.ride.status != 'PENDING'
+                child: widget.arguments.ride.status == 'PENDING'
                     ? AwaitingRideWidget(
                         rideStatus: widget.arguments.ride.status,
                         rideId: widget.arguments.ride.id,
