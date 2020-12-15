@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pickrr_app/src/blocs/driver/driver_history/bloc.dart';
 import 'package:pickrr_app/src/blocs/driver/driver_status/bloc.dart';
 import 'package:pickrr_app/src/blocs/driver/rider_details/bloc.dart';
 import 'package:pickrr_app/src/blocs/ride/orders/bloc.dart';
@@ -22,7 +23,9 @@ class _DriverTabsState extends State<DriverTabs> {
       BlocProvider<RideOrdersBloc>(
           create: (_) => RideOrdersBloc()..add(OrdersFetched()))
     ], child: DriverHome(key: PageStorageKey('DriverHome'))),
-    DriverWallet(key: PageStorageKey('DriverWallet')),
+    BlocProvider<DriverHistoryBloc>(
+        create: (_) => DriverHistoryBloc()..add(DriverHistoryFetched()),
+        child: DriverWallet(key: PageStorageKey('DriverWallet'))),
     DriverProfile(key: PageStorageKey('DriverProfile'))
   ];
   int tabIndex = 0;

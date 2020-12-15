@@ -1,200 +1,210 @@
-import 'package:circular_profile_avatar/circular_profile_avatar.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:pickrr_app/src/helpers/constants.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pickrr_app/src/blocs/driver/driver_history/bloc.dart';
+import 'package:pickrr_app/src/helpers/utility.dart';
+import 'package:pickrr_app/src/models/driver.dart';
+import 'package:pickrr_app/src/services/repositories/driver.dart';
 import 'package:pickrr_app/src/utils/transitionAppbar/transition_appbar.dart';
+import 'package:pickrr_app/src/widgets/preloader.dart';
 
-class DriverWallet extends StatelessWidget {
+class DriverWallet extends StatefulWidget {
   DriverWallet({Key key}) : super(key: key);
 
   @override
+  _DriverWalletState createState() => _DriverWalletState();
+}
+
+class _DriverWalletState extends State<DriverWallet> {
+  final DriverRepository _driverRepository = DriverRepository();
+  final _scrollController = ScrollController();
+  final _scrollThreshold = 200.0;
+  DriverHistoryBloc _historyBloc;
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(_onScroll);
+    _historyBloc = BlocProvider.of<DriverHistoryBloc>(context);
+  }
+
+  @override
   Widget build(BuildContext context) {
-    cryptoPortfolioItem(String img, String name, double amount, String rate,
-            String percentage) =>
-        Card(
-          elevation: 0,
-          child: InkWell(
-            onTap: () => print("tapped"),
-            child: Container(
-              padding: EdgeInsets.only(top: 15.0, bottom: 15.0, right: 15.0),
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(22.0)),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  Padding(
-                      padding: EdgeInsets.only(left: 10.0, right: 15.0),
-                      // child: Icon(icon, color: Colors.grey),
-                      child: CircularProfileAvatar(
-                        img,
-                        radius: 25,
-                        backgroundColor: Colors.grey[200],
-                        // sets initials text, set your own style, default Text('')
-                        borderColor: Colors.brown,
-                        // sets border color, default Colors.white
-                        elevation: 0.0,
-                        // sets elevation (shadow of the profile picture), default value is 0.0
-                        cacheImage: true,
-                        // allow widget to cache image against provided url
-                        onTap: () {
-                          print('yea');
-                        },
-                        // sets on tap
-                        showInitialTextAbovePicture:
-                            false, // setting it true will show initials text above profile picture, default false
+    return WillPopScope(
+        onWillPop: () async {
+          _historyBloc.add(DriverHistoryReset());
+          return true;
+        },
+        child: Scaffold(
+          body: SafeArea(
+            child: CustomScrollView(
+              slivers: <Widget>[
+                TransitionAppBar(
+                  extent: 100,
+                  avatar: Text("Total balance",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w400,
+                        fontFamily: 'Ubuntu',
+                        fontSize: 15,
                       )),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Text(
-                              name,
+                  title: Container(
+                    margin: EdgeInsets.only(left: 20.0, right: 20),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(5.0))),
+                    child: Row(children: <Widget>[
+                      FutureBuilder(
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                                  ConnectionState.none ||
+                              snapshot.hasData == null ||
+                              !snapshot.hasData) {
+                            return SizedBox(
+                              width: 15,
+                              height: 15,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 1.5,
+                              ),
+                            );
+                          }
+                          final driverDetails = snapshot.data;
+                          return Text("\u20A6 ${driverDetails['balance']}",
                               style: TextStyle(
-                                  fontFamily: "Ubuntu",
-                                  fontSize: 17.0,
-                                  fontWeight: FontWeight.w800),
-                            ),
-                            Text("\u20A6$amount",
-                                style: TextStyle(
-                                    fontSize: 16.0,
-                                    fontFamily: "Ubuntu",
-                                    fontWeight: FontWeight.bold))
-                          ],
-                        ),
-                        SizedBox(height: 3),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Text("$rate",
-                                style: TextStyle(
-                                    fontSize: 13.0,
-                                    fontWeight: FontWeight.normal)),
-                            Text("+ \u20A6$percentage",
-                                style: TextStyle(
-                                  fontSize: 14.0,
-                                  color: Colors.red[500],
-                                ))
-                          ],
-                        )
-                      ],
-                    ),
-                    flex: 3,
+                                fontWeight: FontWeight.w800,
+                                fontFamily: 'Ubuntu',
+                                fontSize: 27,
+                              ));
+                        },
+                        future: _driverRepository.getDriverWalletDetails(),
+                      ),
+                      Expanded(child: SizedBox()),
+                    ]),
                   ),
-                ],
-              ),
+                ),
+                SliverList(
+                  delegate: SliverChildListDelegate(
+                    [
+                      SizedBox(height: 10),
+                      BlocBuilder<DriverHistoryBloc, DriverHistoryState>(
+                          // ignore: missing_return
+                          builder: (_, state) {
+                        if (state.isFailure) {
+                          return Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Container(
+                                child: Text("No history!"),
+                                alignment: Alignment.center,
+                              ),
+                            ],
+                          );
+                        }
+                        if (state.isInitial ||
+                            !state.isSuccess && state.isLoading) {
+                          return Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Center(
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 1.5,
+                                ),
+                              ),
+                            ],
+                          );
+                        }
+                        if (state.isSuccess) {
+                          return ListView.builder(
+                              controller: _scrollController,
+                              padding: EdgeInsets.all(8.0),
+                              reverse: true,
+                              shrinkWrap: true,
+                              itemCount: state.hasReachedMax
+                                  ? state.histories.length
+                                  : state.histories.length + 1,
+                              physics: const BouncingScrollPhysics(),
+                              dragStartBehavior: DragStartBehavior.down,
+                              itemBuilder: (_, index) {
+                                if (index >= state.histories.length) {
+                                  return PreLoader();
+                                }
+                                History history = state.histories[index];
+                                return historyDetails(history);
+                              });
+                        }
+                      })
+                    ],
+                  ),
+                )
+              ],
             ),
           ),
-        );
-    return Scaffold(
-      body: SafeArea(
-        child: CustomScrollView(
-          slivers: <Widget>[
-            TransitionAppBar(
-              extent: 100,
-              avatar: Text("Total balance",
-                  style: TextStyle(
-                    fontWeight: FontWeight.w400,
-                    fontFamily: 'Ubuntu',
-                    fontSize: 15,
-                  )),
-              title: Container(
-                margin: EdgeInsets.only(left: 20.0, right: 20),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(5.0))),
-                child: Row(children: <Widget>[
-                  Text("\u20A6500.00",
-                      style: TextStyle(
-                        fontWeight: FontWeight.w800,
-                        fontFamily: 'Ubuntu',
-                        fontSize: 27,
-                      )),
-                  Expanded(child: SizedBox()),
-                  RaisedButton(
-                    elevation: 15,
-                    child: Padding(
-                      padding: const EdgeInsets.only(
-                          top: 10, bottom: 10, right: 8, left: 8),
-                      child: Text('Withdraw',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 17.0,
-                              fontFamily: "Ubuntu",
-                              fontWeight: FontWeight.w600)),
+        ));
+  }
+
+  historyDetails(History history) =>
+      Card(
+        elevation: 0,
+        child: Container(
+          padding: EdgeInsets.only(top: 15.0, bottom: 15.0, right: 15.0),
+          decoration: BoxDecoration(
+              color: Colors.white, borderRadius: BorderRadius.circular(22.0)),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Container(),
+                        Text("\u20A6 ${history.balance}",
+                            style: TextStyle(
+                                fontSize: 16.0,
+                                fontFamily: "Ubuntu",
+                                fontWeight: FontWeight.bold))
+                      ],
                     ),
-                    color: AppColor.primaryText,
-                    textColor: AppColor.primaryText,
-                    onPressed: () {},
-                  ),
-                ]),
+                    SizedBox(height: 3),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Text(getFullTime(history.createdAt),
+                            style: TextStyle(
+                                fontSize: 13.0,
+                                fontWeight: FontWeight.normal)),
+                        history.type == 'DEDUCTION' ? Text("- \u20A6 ${history.amount}",
+                            style: TextStyle(
+                              fontSize: 14.0,
+                              color: Colors.red[500],
+                            )) : Text("+ \u20A6 ${history.amount}",
+                            style: TextStyle(
+                              fontSize: 14.0,
+                              color: Colors.green[500],
+                            ))
+                      ],
+                    )
+                  ],
+                ),
+                flex: 3,
               ),
-            ),
-            SliverList(
-              delegate: SliverChildListDelegate(
-                [
-                  SizedBox(height: 10),
-                  cryptoPortfolioItem(
-                      'https://www.bellanaija.com/wp-content/uploads/2016/04/seunlogan_topnigerianmodel_bellanaija_2016_01.jpg',
-                      "Uche Chijioke",
-                      410.80,
-                      'Oct 31, 2020',
-                      "82.19(92%)"),
-                  cryptoPortfolioItem(
-                      'https://i.pinimg.com/originals/1d/70/5a/1d705a159905b3e2d7af4b27299be216.jpg',
-                      "Eyin Nwig",
-                      1089.86,
-                      'Nov 1, 2020',
-                      "13.10(2.3%)"),
-                  cryptoPortfolioItem(
-                      'https://images.unsplash.com/photo-1586171984069-1dbce3573a10?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80',
-                      "Amarachi Chris",
-                      22998.13,
-                      '3 Nov, 2020',
-                      "120(3.6%)"),
-                  cryptoPortfolioItem(
-                      'https://asset1.modelmanagement.com/mm-eyJ0Ijp7InIiOiIzMjAi/fSwiaWQiOiJpNjYyMTM5/MyIsImYiOiJqcGcifQ;;.jpg',
-                      "Cindy Stevie",
-                      410.80,
-                      '3 Nov, 2020',
-                      "82.19(92%)"),
-                  cryptoPortfolioItem(
-                      'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTOjDgqRFB7Aqe20oFvMqdH9SLR8_GyumBxZw&usqp=CAU',
-                      "Enel Amadi",
-                      1089.86,
-                      '4 Nov, 2020',
-                      "13.10(2.3%)"),
-                  cryptoPortfolioItem(
-                      'https://modelstalk.ng/wp-content/uploads/2019/05/IMG-20190509-WA0009.jpg',
-                      "Clara Bassey",
-                      22998.13,
-                      '5 Nov, 2020',
-                      "120(3.6%)"),
-                  cryptoPortfolioItem(
-                      'https://shutterfinger.typepad.com/.a/6a00e551a6244a8833019affd0eb14970d-pi',
-                      "Dave Smith",
-                      410.80,
-                      '6 Nov, 2020',
-                      "82.19(92%)"),
-                  cryptoPortfolioItem(
-                      'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSPiXY1VKY8ZFJjPPVRCR6J13DMji3czuNdFQ&usqp=CAU',
-                      "Jack Bara",
-                      1089.86,
-                      '6 Nov, 2020',
-                      "13.10(2.3%)"),
-                  cryptoPortfolioItem(
-                      'https://sbly-web-prod-shareably.netdna-ssl.com/wp-content/uploads/2018/11/26204648/nigerian13.jpg',
-                      "Cassie Tassie",
-                      22998.13,
-                      '6 Nov, 2020',
-                      "120(3.6%)"),
-                ],
-              ),
-            )
-          ],
+            ],
+          ),
         ),
-      ),
-    );
+      );
+
+  @override
+  void dispose() {
+    _historyBloc.add(DriverHistoryReset());
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  void _onScroll() {
+    final maxScroll = _scrollController.position.maxScrollExtent;
+    final currentScroll = _scrollController.position.pixels;
+    if (maxScroll - currentScroll <= _scrollThreshold) {
+      _historyBloc.add(DriverHistoryFetched());
+    }
   }
 }

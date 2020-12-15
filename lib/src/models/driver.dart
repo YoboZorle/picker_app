@@ -27,7 +27,8 @@ class Driver extends Equatable {
       this.status,
       this.blocked,
       this.createdAt,
-      this.details, this.isDelivering});
+      this.details,
+      this.isDelivering});
 
   @override
   List<Object> get props => [id, ticketNumber, companyName, createdAt];
@@ -67,8 +68,9 @@ class Driver extends Equatable {
 
   Driver.fromMap(Map<String, dynamic> mapData)
       : id = mapData['id'] ?? mapData['_userId'] ?? null,
-        details =
-            mapData['user'] != null ? User.fromMap(User().formatToMap(mapData['user'])) : null,
+        details = mapData['user'] != null
+            ? User.fromMap(User().formatToMap(mapData['user']))
+            : null,
         plateNumber = mapData['plateNumber'] ?? '',
         ticketNumber = mapData['ticketNumber'] ?? '',
         companyName = mapData['companyName'] ?? '',
@@ -80,4 +82,24 @@ class Driver extends Equatable {
   @override
   String toString() =>
       'Driver { id: $id, ticketNumber: $ticketNumber, companyName: $companyName }';
+}
+
+class History {
+  final double amount;
+  final String type;
+  final String createdAt;
+  final double balance;
+
+  History({this.amount, this.type, this.createdAt, this.balance});
+
+  History.fromMap(Map<String, dynamic> mapData)
+      : amount =
+            mapData['amount'] != null ? double.parse(mapData['amount']) : 0.0,
+        type = mapData['transaction_type'] ?? '',
+        createdAt = mapData['created_at'] ?? '',
+        balance =
+            mapData['balance'] != null ? double.parse(mapData['balance']) : 0.0;
+
+  @override
+  String toString() => 'History { amount: $amount, createdAt: $createdAt }';
 }
