@@ -68,7 +68,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
 
       await _userRepository
           .updateProfileDetails(new FormData.fromMap(formDetails));
-      Navigator.pushReplacementNamed(context, '/HomePage');
+      Navigator.popAndPushNamed(context, '/HomePage');
     } catch (err) {
       debugLog(err);
       Navigator.pop(context);

@@ -34,110 +34,115 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<AuthenticationBloc, AuthenticationState>(
-      listener: (__, state) {
-        if (state is LoggedIn) {
-          User user = state.props[0];
-
-          Navigator.pop(context);
-          if (!user.isCompleteDetails) {
-            Navigator.pushReplacementNamed(context, '/CompleteProfileDetails');
-            return;
-          }
-
-          if(user.isDriver){
-            Navigator.pushReplacementNamed(context, '/DriversHomePage');
-            return;
-          }
-
-          Navigator.pushReplacementNamed(context, '/HomePage');
-        }
+    return WillPopScope(
+      onWillPop: () async {
+        return false;
       },
-      child: new Scaffold(
-          backgroundColor: Colors.white,
-          body: GestureDetector(
-            onTap: () {
-              FocusScope.of(context).requestFocus(new FocusNode());
-            },
-            child: Column(children: <Widget>[
-              Expanded(
-                child: new Container(
-                    margin: EdgeInsets.only(top: 5, right: 10, left: 10),
-                    child: Stack(children: <Widget>[
-                      SafeArea(
-                          child: ListView(children: <Widget>[
-                        Row(
-                          children: [
-                            GestureDetector(
-                              child: Container(
-                                alignment: Alignment.centerLeft,
-                                padding: const EdgeInsets.only(left: 15.0),
-                                height: 40,
-                                width: 100,
-                                child: Text(
-                                  'Cancel',
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontFamily: 'Ubuntu',
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w500,
+      child: BlocListener<AuthenticationBloc, AuthenticationState>(
+        listener: (__, state) {
+          if (state is LoggedIn) {
+            User user = state.props[0];
+
+            Navigator.pop(context);
+            if (!user.isCompleteDetails) {
+              Navigator.popAndPushNamed(context, '/CompleteProfileDetails');
+              return;
+            }
+
+            if(user.isDriver){
+              Navigator.popAndPushNamed(context, '/DriversHomePage');
+              return;
+            }
+
+            Navigator.popAndPushNamed(context, '/HomePage');
+          }
+        },
+        child: new Scaffold(
+            backgroundColor: Colors.white,
+            body: GestureDetector(
+              onTap: () {
+                FocusScope.of(context).requestFocus(new FocusNode());
+              },
+              child: Column(children: <Widget>[
+                Expanded(
+                  child: new Container(
+                      margin: EdgeInsets.only(top: 5, right: 10, left: 10),
+                      child: Stack(children: <Widget>[
+                        SafeArea(
+                            child: ListView(children: <Widget>[
+                          Row(
+                            children: [
+                              GestureDetector(
+                                child: Container(
+                                  alignment: Alignment.centerLeft,
+                                  padding: const EdgeInsets.only(left: 15.0),
+                                  height: 40,
+                                  width: 100,
+                                  child: Text(
+                                    'Cancel',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontFamily: 'Ubuntu',
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w500,
+                                    ),
                                   ),
                                 ),
+                                onTap: () {
+                                  Navigator.pop(context);
+                                },
                               ),
-                              onTap: () {
-                                Navigator.pop(context);
-                              },
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 110),
-                        Hero(
-                          tag: 'input_phon_auth_title',
-                          child: Container(
-                            margin: EdgeInsets.only(left: 22),
-                            child: Text(
-                              'Let\'s Get Started!',
-                              textAlign: TextAlign.left,
-                              style: TextStyle(
-                                fontSize: 24,
-                                fontFamily: 'Ubuntu',
-                                color: Colors.black,
-                                fontWeight: FontWeight.w800,
-                                height: 1.2,
+                            ],
+                          ),
+                          SizedBox(height: 110),
+                          Hero(
+                            tag: 'input_phon_auth_title',
+                            child: Container(
+                              margin: EdgeInsets.only(left: 22),
+                              child: Text(
+                                'Let\'s Get Started!',
+                                textAlign: TextAlign.left,
+                                style: TextStyle(
+                                  fontSize: 24,
+                                  fontFamily: 'Ubuntu',
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w800,
+                                  height: 1.2,
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                        _terms(),
-                        SizedBox(height: 25),
-                        Container(
-                            height: 47,
-                            margin:
-                                EdgeInsets.only(left: 20, right: 20, bottom: 20),
-                            color: Colors.grey[200],
-                            child: _phoneInput()),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              'An SMS code will be sent to you\nto verify your number',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontFamily: 'Ubuntu',
-                                color: Colors.grey,
-                                fontWeight: FontWeight.w400,
-                                height: 1.3,
+                          _terms(),
+                          SizedBox(height: 25),
+                          Container(
+                              height: 47,
+                              margin:
+                                  EdgeInsets.only(left: 20, right: 20, bottom: 20),
+                              color: Colors.grey[200],
+                              child: _phoneInput()),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                'An SMS code will be sent to you\nto verify your number',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  fontFamily: 'Ubuntu',
+                                  color: Colors.grey,
+                                  fontWeight: FontWeight.w400,
+                                  height: 1.3,
+                                ),
                               ),
-                            ),
-                          ],
-                        ),
+                            ],
+                          ),
+                        ])),
                       ])),
-                    ])),
-              ),
-              _proceedBtn(),
-            ]),
-          )),
+                ),
+                _proceedBtn(),
+              ]),
+            )),
+      ),
     );
   }
 
@@ -274,7 +279,7 @@ class _LoginState extends State<Login> {
                 ),
                 onPressed: () => _processLogin(),
                 color: AppColor.primaryText,
-                child: Text("Send code",
+                child: Text("Login",
                     style: TextStyle(
                         fontFamily: 'Ubuntu',
                         fontWeight: FontWeight.w600,
