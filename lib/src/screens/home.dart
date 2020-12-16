@@ -70,7 +70,7 @@ class _HomeState extends State<Home> {
             markerId: MarkerId('distanceMarker'),
             draggable: false,
             infoWindow: InfoWindow(
-              title: "This is where you will arrive",
+              title: "Delivery destination",
             ),
             onTap: () {},
             position: LatLng(lat, lng));
