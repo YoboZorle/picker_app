@@ -41,6 +41,7 @@ class Ride {
   final String receiverPhone;
   final String status;
   final String rideId;
+  final String duration;
   final bool isPickedUp;
 
   Ride(
@@ -56,6 +57,7 @@ class Ride {
       this.receiverPhone,
       this.status,
       this.rideId,
+        this.duration,
       this.isPickedUp});
 
   Ride.fromMap(Map<String, dynamic> mapData)
@@ -76,6 +78,7 @@ class Ride {
         receiverPhone = mapData['receiver_phone'] ?? '',
         status = mapData['status'] ?? '',
         rideId = mapData['ride_id'] ?? '',
+        duration = mapData['duration'] ?? '',
         isPickedUp = mapData['picked_up'] ?? false;
 
   @override
@@ -94,6 +97,7 @@ class Ride {
       'receiver_phone': receiverPhone,
       'status': status,
       'ride_id': rideId,
+      'duration': duration,
       'picked_up': isPickedUp
     };
     if (id != null) {
