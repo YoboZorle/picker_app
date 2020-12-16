@@ -75,23 +75,6 @@ class NavDrawer extends StatelessWidget {
                 color: Colors.grey[300]),
             ListTile(
               title: Text(
-                'Track Deliveries',
-                style: TextStyle(
-                    fontWeight: FontWeight.w400,
-                    fontFamily: "Ubuntu",
-                    fontSize: 18),
-              ),
-              leading: Icon(Icons.add_road),
-              dense: false,
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => TrackDeliveries()),
-                );
-              },
-            ),
-            ListTile(
-              title: Text(
                 'Order History',
                 style: TextStyle(
                     fontWeight: FontWeight.w400,
