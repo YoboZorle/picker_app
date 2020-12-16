@@ -86,14 +86,14 @@ class Shadows {
 }
 
 class APIConstants {
-  static final String httpUrl = 'http://192.168.43.105';
-  static final String wsUrl = 'ws://192.168.43.105';
+  static final String httpUrl = 'http://pickrr-logistics-env.eba-wt4nx4vz.us-east-1.elasticbeanstalk.com';
+  static final String wsUrl = 'ws://pickrr-logistics-env.eba-wt4nx4vz.us-east-1.elasticbeanstalk.com';
   static final String assetsUrl = 'https://pickrr-storage.s3.amazonaws.com/logistics-a9e77482c84e16/';
   static final String apiUrl = '$httpUrl/api/';
 }
 
 class AppData {
-  static final String messageFrom = 'Oddstackr';
+  static final String messageFrom = 'Yarner';
   static final String mapAPIKey = 'AIzaSyAPV3djPp_HceZIbgK4M4jRadHA-d08ECg';
   static final String placeholderImageUrl = '';
 }

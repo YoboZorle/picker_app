@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:pickrr_app/src/helpers/constants.dart';
 import 'package:pickrr_app/src/helpers/utility.dart';
 import 'package:pickrr_app/src/models/ride.dart';
@@ -15,13 +16,17 @@ class RideInformationWidget extends StatefulWidget {
 }
 
 class _RideInformationWidgetState extends State<RideInformationWidget> {
+
+  final currencyFormatter =
+  NumberFormat.currency(locale: 'en_US', symbol: '\u20a6');
+
   @override
   Widget build(BuildContext context) {
     if (widget.rideDetails.status == 'CANCELED') {
       return cancelRideWidge();
     }
     if (widget.rideDetails.status == 'DELIVERED') {
-      return Container(child: Text("Package Delivered"));
+      return deliveredRideWidget();
     }
     return Column(
       children: [
@@ -351,7 +356,7 @@ class _RideInformationWidgetState extends State<RideInformationWidget> {
                                     color: Colors.black45,
                                     fontWeight: FontWeight.w400)),
                             SizedBox(height: 4),
-                            Text('3.2 km',
+                            Text(widget.rideDetails.distance+' km',
                                 style: TextStyle(
                                     fontSize: 16,
                                     fontFamily: 'Ubuntu',
@@ -370,7 +375,8 @@ class _RideInformationWidgetState extends State<RideInformationWidget> {
                                     color: Colors.black45,
                                     fontWeight: FontWeight.w400)),
                             SizedBox(height: 4),
-                            Text('#400.00',
+                            Text(
+                                currencyFormatter.format(widget.rideDetails.price),
                                 style: TextStyle(
                                     fontSize: 16,
                                     fontFamily: 'Ubuntu',
@@ -401,4 +407,225 @@ class _RideInformationWidgetState extends State<RideInformationWidget> {
                   ])),
         ],
       );
+
+  Widget deliveredRideWidget() => Column(
+    children: [
+      Container(
+          color: Colors.white,
+          child: Row(children: [
+            GestureDetector(
+                child: Row(
+                  children: [
+                    IconButton(
+                      icon: Icon(Icons.arrow_back_ios_outlined,
+                          size: 21, color: Colors.black),
+                    ),
+                    Text('Ride Details',
+                        style: TextStyle(
+                            fontSize: 18,
+                            fontFamily: 'Ubuntu',
+                            color: Colors.black,
+                            fontWeight: FontWeight.w600)),
+                  ],
+                ),
+                onTap: () {
+                  Navigator.pop(context);
+                }),
+          ])),
+      Container(
+          color: Colors.white,
+          margin: EdgeInsets.only(top: 15),
+          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+          child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Text('From where:',
+                    style: TextStyle(
+                        fontSize: 14,
+                        fontFamily: 'Ubuntu',
+                        color: Colors.black45,
+                        fontWeight: FontWeight.w400)),
+                SizedBox(height: 8),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(top: 4.0),
+                      child: Icon(Icons.circle, size: 12, color: Colors.green),
+                    ),
+                    SizedBox(width: 13),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(widget.rideDetails.pickupLocation.address,
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  fontFamily: 'Ubuntu',
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w500)),
+                          SizedBox(height: 4),
+                          Text(widget.rideDetails.user.fullname,
+                              style: TextStyle(
+                                  fontSize: 15,
+                                  fontFamily: 'Ubuntu',
+                                  color: Colors.black87,
+                                  fontWeight: FontWeight.w400)),
+                          SizedBox(height: 4),
+                          Text('+${widget.rideDetails.user.callingCode + widget.rideDetails.user.phone}',
+                              style: TextStyle(
+                                  fontSize: 15,
+                                  fontFamily: 'Ubuntu',
+                                  color: Colors.black87,
+                                  fontWeight: FontWeight.w400)),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ])),
+
+      Container(
+          color: Colors.white,
+          margin: EdgeInsets.only(top: 15),
+          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+          child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Text('To where:',
+                    style: TextStyle(
+                        fontSize: 14,
+                        fontFamily: 'Ubuntu',
+                        color: Colors.black45,
+                        fontWeight: FontWeight.w400)),
+                SizedBox(height: 8),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(top: 4.0),
+                      child: Icon(Icons.circle, size: 12, color: Colors.orangeAccent),
+                    ),
+                    SizedBox(width: 13),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(widget.rideDetails.deliveryLocation.address,
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  fontFamily: 'Ubuntu',
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w500)),
+                          SizedBox(height: 4),
+                          Text(widget.rideDetails.receiverName,
+                              style: TextStyle(
+                                  fontSize: 15,
+                                  fontFamily: 'Ubuntu',
+                                  color: Colors.black87,
+                                  fontWeight: FontWeight.w400)),
+                          SizedBox(height: 4),
+                          Text('+${widget.rideDetails.user.callingCode + widget.rideDetails.receiverPhone}',
+                              style: TextStyle(
+                                  fontSize: 15,
+                                  fontFamily: 'Ubuntu',
+                                  color: Colors.black87,
+                                  fontWeight: FontWeight.w400)),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+
+                SizedBox(height: 18),
+                Container(width: MediaQuery.of(context).size.width,
+                    height: 0.5,
+                    margin: EdgeInsets.only(bottom: 18),
+                    color: Colors.grey[300]),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('Time',
+                            style: TextStyle(
+                                fontSize: 14,
+                                fontFamily: 'Ubuntu',
+                                color: Colors.black45,
+                                fontWeight: FontWeight.w400)),
+                        SizedBox(height: 4),
+                        Text('15 mins',
+                            style: TextStyle(
+                                fontSize: 16,
+                                fontFamily: 'Ubuntu',
+                                color: Colors.black,
+                                fontWeight: FontWeight.w600)),
+                      ],
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('Distance',
+                            style: TextStyle(
+                                fontSize: 13,
+                                fontFamily: 'Ubuntu',
+                                color: Colors.black45,
+                                fontWeight: FontWeight.w400)),
+                        SizedBox(height: 4),
+                        Text(widget.rideDetails.distance+' km',
+                            style: TextStyle(
+                                fontSize: 16,
+                                fontFamily: 'Ubuntu',
+                                color: Colors.black,
+                                fontWeight: FontWeight.w600)),
+                      ],
+                    ),
+
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('Amount',
+                            style: TextStyle(
+                                fontSize: 13,
+                                fontFamily: 'Ubuntu',
+                                color: Colors.black45,
+                                fontWeight: FontWeight.w400)),
+                        SizedBox(height: 4),
+                        Text(
+                            currencyFormatter.format(widget.rideDetails.price),
+                            style: TextStyle(
+                                fontSize: 16,
+                                fontFamily: 'Ubuntu',
+                                color: Colors.black,
+                                fontWeight: FontWeight.w600)),
+                      ],
+                    ),
+                  ],
+                ),
+                SizedBox(height: 18),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(getFullTime(widget.rideDetails.createdAt),
+                        style: TextStyle(
+                            fontSize: 14,
+                            fontFamily: 'Ubuntu',
+                            color: Colors.black45,
+                            fontWeight: FontWeight.w400)),
+                    Text('DELIVERED',
+                        style: TextStyle(
+                            fontSize: 17,
+                            fontFamily: 'Ubuntu',
+                            color: Colors.green,
+                            fontWeight: FontWeight.w600)),
+                  ],
+                ),
+              ])),
+    ],
+  );
 }
