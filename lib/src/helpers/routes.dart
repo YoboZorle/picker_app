@@ -47,7 +47,9 @@ class Routes {
                     ..add(AuthenticationEvent.AUTHENTICATED))
             ], child: DriverTabs()));
       case "Login":
-        return SlideLeftRoute<bool>(builder: (BuildContext context) => Login());
+        return SlideLeftRoute<bool>(builder: (BuildContext context) => BlocProvider<AuthenticationBloc>(
+            create: (_) => AuthenticationBloc(),
+            child: Login()));
       case "DriverOnboard":
         return SlideLeftRoute<bool>(
             builder: (BuildContext context) => DriverOnboard());

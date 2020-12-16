@@ -85,7 +85,9 @@ class UserRepository extends APIClient {
     final String url = '${APIConstants.apiUrl}users/obtain-otp';
 
     try {
-      await dio.post(url, data: formData);
+      response = await dio.post(url, data: formData);
+      final responseBody = response.data;
+      await this.persistToken(responseBody['access']);
     } catch (e) {
       print(e);
       throw ServiceError(e);
