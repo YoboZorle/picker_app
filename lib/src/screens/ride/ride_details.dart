@@ -51,8 +51,7 @@ class _RideDetailsState extends State<RideDetails> {
       // brightness: Brightness.light),
         body: SafeArea(
         top: true,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
+        child: ListView(
           children: <Widget>[
             Container(
                 width: MediaQuery.of(context).size.width,

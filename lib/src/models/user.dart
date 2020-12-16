@@ -18,9 +18,7 @@ class User extends Equatable {
 
   bool get isCompleteDetails {
     return email != null &&
-        email.isNotEmpty &&
-        profileImageUrl != null &&
-        profileImageUrl.isNotEmpty;
+        email.isNotEmpty;
   }
 
   bool get noProfileImage {

@@ -214,12 +214,6 @@ class _RideInformationWidgetState extends State<RideInformationWidget> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Text(getFullTime(widget.rideDetails.createdAt),
-                        style: TextStyle(
-                            fontSize: 14,
-                            fontFamily: 'Ubuntu',
-                            color: Colors.black45,
-                            fontWeight: FontWeight.w400)),
                     Text('From where:',
                         style: TextStyle(
                             fontSize: 14,
@@ -248,14 +242,14 @@ class _RideInformationWidgetState extends State<RideInformationWidget> {
                               SizedBox(height: 4),
                               Text(widget.rideDetails.user.fullname,
                                   style: TextStyle(
-                                      fontSize: 16,
+                                      fontSize: 15,
                                       fontFamily: 'Ubuntu',
                                       color: Colors.black87,
                                       fontWeight: FontWeight.w400)),
                               SizedBox(height: 4),
                               Text('+${widget.rideDetails.user.callingCode + widget.rideDetails.user.phone}',
                                   style: TextStyle(
-                                      fontSize: 16,
+                                      fontSize: 15,
                                       fontFamily: 'Ubuntu',
                                       color: Colors.black87,
                                       fontWeight: FontWeight.w400)),
@@ -264,8 +258,23 @@ class _RideInformationWidgetState extends State<RideInformationWidget> {
                         ),
                       ],
                     ),
+                  ])),
 
-                    SizedBox(height: 10),
+          Container(
+              color: Colors.white,
+              margin: EdgeInsets.only(top: 15),
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text('To where:',
+                        style: TextStyle(
+                            fontSize: 14,
+                            fontFamily: 'Ubuntu',
+                            color: Colors.black45,
+                            fontWeight: FontWeight.w400)),
+                    SizedBox(height: 8),
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -275,30 +284,120 @@ class _RideInformationWidgetState extends State<RideInformationWidget> {
                         ),
                         SizedBox(width: 13),
                         Expanded(
-                          child: Text(widget.rideDetails.deliveryLocation.address,
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  fontFamily: 'Ubuntu',
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w500)),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(widget.rideDetails.deliveryLocation.address,
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontFamily: 'Ubuntu',
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w500)),
+                              SizedBox(height: 4),
+                              Text(widget.rideDetails.receiverName,
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      fontFamily: 'Ubuntu',
+                                      color: Colors.black87,
+                                      fontWeight: FontWeight.w400)),
+                              SizedBox(height: 4),
+                              Text('+${widget.rideDetails.user.callingCode + widget.rideDetails.receiverPhone}',
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      fontFamily: 'Ubuntu',
+                                      color: Colors.black87,
+                                      fontWeight: FontWeight.w400)),
+                            ],
+                          ),
                         ),
                       ],
                     ),
 
                     SizedBox(height: 18),
+                    Container(width: MediaQuery.of(context).size.width,
+                    height: 0.5,
+                    margin: EdgeInsets.only(bottom: 18),
+                    color: Colors.grey[300]),
                     Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text('CANCELLED',
-                              style: TextStyle(
-                                  fontSize: 14.5,
-                                  fontFamily: 'Ubuntu',
-                                  color: Colors.red,
-                                  fontWeight: FontWeight.w400)),
+
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('Time',
+                                style: TextStyle(
+                                    fontSize: 14,
+                                    fontFamily: 'Ubuntu',
+                                    color: Colors.black45,
+                                    fontWeight: FontWeight.w400)),
+                            SizedBox(height: 4),
+                            Text('15 mins',
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    fontFamily: 'Ubuntu',
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w600)),
+                          ],
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('Distance',
+                                style: TextStyle(
+                                    fontSize: 13,
+                                    fontFamily: 'Ubuntu',
+                                    color: Colors.black45,
+                                    fontWeight: FontWeight.w400)),
+                            SizedBox(height: 4),
+                            Text('3.2 km',
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    fontFamily: 'Ubuntu',
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w600)),
+                          ],
+                        ),
+
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('Amount',
+                                style: TextStyle(
+                                    fontSize: 13,
+                                    fontFamily: 'Ubuntu',
+                                    color: Colors.black45,
+                                    fontWeight: FontWeight.w400)),
+                            SizedBox(height: 4),
+                            Text('#400.00',
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    fontFamily: 'Ubuntu',
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w600)),
+                          ],
+                        ),
                       ],
                     ),
-
+                    SizedBox(height: 18),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(getFullTime(widget.rideDetails.createdAt),
+                            style: TextStyle(
+                                fontSize: 14,
+                                fontFamily: 'Ubuntu',
+                                color: Colors.black45,
+                                fontWeight: FontWeight.w400)),
+                        Text('CANCELLED',
+                            style: TextStyle(
+                                fontSize: 17,
+                                fontFamily: 'Ubuntu',
+                                color: Colors.red,
+                                fontWeight: FontWeight.w600)),
+                      ],
+                    ),
                   ])),
         ],
       );
