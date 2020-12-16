@@ -231,16 +231,6 @@ class RiderNavDrawer extends StatelessWidget {
                       color: Colors.grey[300]),
                   ListTile(
                     title: Text(
-                      'Ride History',
-                      style: TextStyle(
-                          fontWeight: FontWeight.w400,
-                          fontFamily: "Ubuntu",
-                          fontSize: 18),
-                    ),
-                    leading: Icon(Icons.history),
-                  ),
-                  ListTile(
-                    title: Text(
                       'Support',
                       style: TextStyle(
                           fontWeight: FontWeight.w400,
