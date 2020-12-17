@@ -61,7 +61,7 @@ class Driver extends Equatable {
 
   Map<String, dynamic> formatToMap(rawData) {
     var map = <String, dynamic>{
-      'id': rawData['id'],
+      'id': rawData['user']['id'],
       'user': rawData['user'],
       'plateNumber': rawData['plate_number'],
       'ticketNumber': rawData['ticket_number'],

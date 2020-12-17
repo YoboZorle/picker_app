@@ -35,21 +35,21 @@ class _RiderOrderInteractiveLayoutState
   @override
   void initState() {
     super.initState();
-    setState(() {
-      ride = widget.ride;
-    });
+    ride = widget.ride;
     _getRideUpdates();
   }
 
   _getRideUpdates() async {
     Driver riderDetails = await _driverRepository.getDriverDetailsFromStorage();
     if (ride.status == 'CANCELED' ||
-        ride.status == 'DELIVERED' && ride.rider.details.id != riderDetails.id) {
+        ride.status == 'DELIVERED' &&
+            ride.rider.details.id != riderDetails.id) {
       Navigator.pop(context);
       AlertBar.dialog(context, 'Ride already taken!', Colors.orange,
           icon: Icon(Icons.info), duration: 5);
     }
-    if (ride.status == 'INPROGRESS' && ride.rider.details.id != riderDetails.id) {
+    if (ride.status == 'INPROGRESS' &&
+        ride.rider.details.id != riderDetails.id) {
       Navigator.pop(context);
       AlertBar.dialog(context, 'Ride already taken!', Colors.orange,
           icon: Icon(Icons.info), duration: 5);
@@ -60,27 +60,7 @@ class _RiderOrderInteractiveLayoutState
     _channel.stream.listen((response) async {
       var decodedResponse = json.decode(response)['ride'];
       Ride rideDetails = Ride.fromMap(decodedResponse);
-      if (rideDetails.status == 'CANCELED' ||
-          rideDetails.status == 'DELIVERED' &&
-              rideDetails.rider.details.id != riderDetails.id) {
-        Navigator.pop(context);
-        AlertBar.dialog(context, 'Ride already taken!', Colors.orange,
-            icon: Icon(Icons.info), duration: 5);
-      }
-      if (rideDetails.status == 'INPROGRESS' &&
-          rideDetails.rider.details.id != riderDetails.id) {
-        Navigator.pop(context);
-        AlertBar.dialog(context, 'Ride already taken!', Colors.orange,
-            icon: Icon(Icons.info), duration: 5);
-      }
-      setState(() {
-        ride = rideDetails;
-      });
-
-      if(ride.status == 'DELIVERED' &&
-          rideDetails.rider.details.id == riderDetails.id){
-        await UserRepository().getUserDetails(rideDetails.rider.details.id);
-      }
+      await _rideDetailsCheck(rideDetails);
     });
   }
 
@@ -333,19 +313,23 @@ class _RiderOrderInteractiveLayoutState
         return;
       }
 
-      Ride rideDetails = Ride.fromMap(await _rideRepository
-          .processAcceptRide(ride.id));
-      _rideDetailsCheck(rideDetails);
+      var rawDetails = await _rideRepository.processAcceptRide(ride.id);
+      Ride rideDetails = Ride.fromMap(rawDetails);
+      await _rideDetailsCheck(rideDetails);
       Navigator.pop(context);
     } catch (err) {
       debugLog(err);
       Navigator.pop(context);
-      AlertBar.dialog(context, err.message, Colors.red,
+      if (err.message != null) {
+        AlertBar.dialog(context, err.message, Colors.red,
+            icon: Icon(Icons.error), duration: 5);
+      }
+      AlertBar.dialog(context, 'Request could not be completed', Colors.red,
           icon: Icon(Icons.error), duration: 5);
     }
   }
 
-  _rideDetailsCheck(Ride rideDetails) {
+  _rideDetailsCheck(Ride rideDetails) async {
     if (rideDetails.status == 'CANCELED' ||
         rideDetails.status == 'DELIVERED' &&
             rideDetails.rider.details.id != ride.rider.id) {
@@ -362,6 +346,11 @@ class _RiderOrderInteractiveLayoutState
     setState(() {
       ride = rideDetails;
     });
+
+    if (ride.status == 'DELIVERED' &&
+        rideDetails.rider.details.id == ride.rider.id) {
+      await UserRepository().getUserDetails(rideDetails.rider.details.id);
+    }
   }
 
   _processPackagePicked() async {
@@ -377,14 +366,18 @@ class _RiderOrderInteractiveLayoutState
         return;
       }
 
-      Ride rideDetails = Ride.fromMap(await _rideRepository
-          .processPackagePicked(ride.id));
+      Ride rideDetails =
+          Ride.fromMap(await _rideRepository.processPackagePicked(ride.id));
       Navigator.pop(context);
-      _rideDetailsCheck(rideDetails);
+      await _rideDetailsCheck(rideDetails);
     } catch (err) {
       debugLog(err);
       Navigator.pop(context);
-      AlertBar.dialog(context, err.message, Colors.red,
+      if (err.message != null) {
+        AlertBar.dialog(context, err.message, Colors.red,
+            icon: Icon(Icons.error), duration: 5);
+      }
+      AlertBar.dialog(context, 'Request could not be completed', Colors.red,
           icon: Icon(Icons.error), duration: 5);
     }
   }
@@ -402,14 +395,18 @@ class _RiderOrderInteractiveLayoutState
         return;
       }
 
-      Ride rideDetails = Ride.fromMap(await _rideRepository
-          .processPackageDelivered(ride.id));
+      Ride rideDetails =
+          Ride.fromMap(await _rideRepository.processPackageDelivered(ride.id));
       Navigator.pop(context);
-      _rideDetailsCheck(rideDetails);
+      await _rideDetailsCheck(rideDetails);
     } catch (err) {
       debugLog(err);
       Navigator.pop(context);
-      AlertBar.dialog(context, err.message, Colors.red,
+      if (err.message != null) {
+        AlertBar.dialog(context, err.message, Colors.red,
+            icon: Icon(Icons.error), duration: 5);
+      }
+      AlertBar.dialog(context, 'Request could not be completed', Colors.red,
           icon: Icon(Icons.error), duration: 5);
     }
   }
