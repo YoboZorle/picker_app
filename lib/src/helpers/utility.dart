@@ -154,7 +154,13 @@ void cancelRide(BuildContext context, rideId, {nextRoute = '/HomePage'}) async {
     await RideRepository().cancelRide(rideId);
     Navigator.pushNamedAndRemoveUntil(context, nextRoute, (route) => false);
   } catch (err) {
-    Navigator.pop(context);
     debugLog(err);
+    Navigator.pop(context);
+    if (err.message != null) {
+      AlertBar.dialog(context, err.message, Colors.red,
+          icon: Icon(Icons.error), duration: 5);
+    }
+    AlertBar.dialog(context, 'Request could not be completed', Colors.red,
+        icon: Icon(Icons.error), duration: 5);
   }
 }

@@ -49,7 +49,7 @@ class RideRepository extends APIClient {
       cprint(e.response, errorIn: 'cancelRide');
       if (e.response.data != null &&
           e.response.data['non_field_errors'] != null) {
-        throw ServiceError(e.response.data['non_field_errors'].first);
+        throw ServiceError(e.response.data['non_field_errors']);
       }
       throw ServiceError('Request failed please try again.');
     }
