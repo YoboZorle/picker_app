@@ -161,7 +161,6 @@ class UserProfile extends StatelessWidget {
                             onPressedYes: (){
                               BlocProvider.of<AuthenticationBloc>(context)
                                   .add(AuthenticationEvent.LOGGED_OUT);
-                              Navigator.pushReplacementNamed(context, '/');
                             }
                           );
                         },
