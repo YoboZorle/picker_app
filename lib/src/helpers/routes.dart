@@ -16,6 +16,7 @@ import 'package:pickrr_app/src/screens/driver/driver_form.dart';
 import 'package:pickrr_app/src/screens/ride/review_order.dart';
 import 'package:pickrr_app/src/screens/ride/ride_details.dart';
 import 'package:pickrr_app/src/screens/ride/ride_history.dart';
+import 'package:pickrr_app/src/screens/terms.dart';
 import 'package:pickrr_app/src/screens/user_profile.dart';
 
 class Routes {
@@ -84,6 +85,12 @@ class Routes {
                 create: (_) => AuthenticationBloc()
                   ..add(AuthenticationEvent.AUTHENTICATED),
                 child: UserProfile()));
+      case "Terms":
+        return SlideLeftRoute<bool>(
+            builder: (BuildContext context) => BlocProvider<AuthenticationBloc>(
+                create: (_) => AuthenticationBloc()
+                  ..add(AuthenticationEvent.AUTHENTICATED),
+                child: Terms()));
       case "ReviewOrderPage":
         return SlideLeftRoute<bool>(
             builder: (BuildContext context) => BlocProvider<AuthenticationBloc>(

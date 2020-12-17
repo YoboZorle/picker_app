@@ -98,19 +98,15 @@ class NavDrawer extends StatelessWidget {
             ),
             ListTile(
                 title: Text(
-                  'About',
+                  'Legal Policy',
                   style: TextStyle(
                       fontWeight: FontWeight.w400,
                       fontFamily: "Ubuntu",
                       fontSize: 18),
                 ),
-                leading: Icon(Icons.read_more),
+                leading: Icon(Icons.verified_user_outlined),
                 onTap: () {
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(
-                  //       builder: (context) => UserOrder()),
-                  // );
+                  Navigator.pushNamed(context, '/Terms');
                 }),
             Expanded(child: SizedBox()),
             Container(
