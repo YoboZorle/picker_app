@@ -293,7 +293,22 @@ class _RiderOrderInteractiveLayoutState
             ],
           ));
     }
-    return Container(child: Text("Package delivered!"));
+    return Container(
+      height: 150,
+        width: MediaQuery.of(context).size.width,
+        child: Column(
+      children: [
+        SizedBox(height: 25),
+        Icon(Icons.check_circle, color: Colors.green, size: 70),
+        SizedBox(height: 8),
+        Padding(
+          padding: const EdgeInsets.only(left: 15.0, right: 15.0),
+          child: Text("Package delivered Successfully!",
+          style: TextStyle(fontWeight: FontWeight.w600,
+          color: Colors.black, fontFamily: 'Ubuntu', fontSize: 20)),
+        ),
+      ],
+    ));
   }
 
   _processAcceptRide() async {
