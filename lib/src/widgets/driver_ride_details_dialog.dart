@@ -43,9 +43,6 @@ class _RiderOrderInteractiveLayoutState
 
   _getRideUpdates() async {
     Driver riderDetails = await _driverRepository.getDriverDetailsFromStorage();
-    print('riderDetails =============================================================================================');
-    print(riderDetails);
-    print(ride.rider.details);
     if (ride.status == 'CANCELED' ||
         ride.status == 'DELIVERED' && ride.rider.details.id != riderDetails.id) {
       Navigator.pop(context);
@@ -336,8 +333,9 @@ class _RiderOrderInteractiveLayoutState
         return;
       }
 
-      await _rideRepository
-          .processAcceptRide(ride.id);
+      Ride rideDetails = Ride.fromMap(await _rideRepository
+          .processAcceptRide(ride.id));
+      _rideDetailsCheck(rideDetails);
       Navigator.pop(context);
     } catch (err) {
       debugLog(err);
@@ -345,6 +343,25 @@ class _RiderOrderInteractiveLayoutState
       AlertBar.dialog(context, err.message, Colors.red,
           icon: Icon(Icons.error), duration: 5);
     }
+  }
+
+  _rideDetailsCheck(Ride rideDetails) {
+    if (rideDetails.status == 'CANCELED' ||
+        rideDetails.status == 'DELIVERED' &&
+            rideDetails.rider.details.id != ride.rider.id) {
+      Navigator.pop(context);
+      AlertBar.dialog(context, 'Ride already taken!', Colors.orange,
+          icon: Icon(Icons.info), duration: 5);
+    }
+    if (rideDetails.status == 'INPROGRESS' &&
+        rideDetails.rider.details.id != ride.rider.id) {
+      Navigator.pop(context);
+      AlertBar.dialog(context, 'Ride already taken!', Colors.orange,
+          icon: Icon(Icons.info), duration: 5);
+    }
+    setState(() {
+      ride = rideDetails;
+    });
   }
 
   _processPackagePicked() async {
@@ -360,9 +377,10 @@ class _RiderOrderInteractiveLayoutState
         return;
       }
 
-      await _rideRepository
-          .processPackagePicked(ride.id);
+      Ride rideDetails = Ride.fromMap(await _rideRepository
+          .processPackagePicked(ride.id));
       Navigator.pop(context);
+      _rideDetailsCheck(rideDetails);
     } catch (err) {
       debugLog(err);
       Navigator.pop(context);
@@ -384,9 +402,10 @@ class _RiderOrderInteractiveLayoutState
         return;
       }
 
-      await _rideRepository
-          .processPackageDelivered(ride.id);
+      Ride rideDetails = Ride.fromMap(await _rideRepository
+          .processPackageDelivered(ride.id));
       Navigator.pop(context);
+      _rideDetailsCheck(rideDetails);
     } catch (err) {
       debugLog(err);
       Navigator.pop(context);

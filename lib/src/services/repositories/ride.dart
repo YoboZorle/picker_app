@@ -69,7 +69,9 @@ class RideRepository extends APIClient {
   processAcceptRide(int rideId) async {
     final String url = '/order/$rideId/accept';
     try {
-      await dio.post(url);
+      Response response = await dio.post(url);
+      final responseBody = response.data;
+      return responseBody;
     } catch (e) {
       cprint(e.response, errorIn: 'processAcceptRide');
       if (e.response.data != null &&
@@ -83,7 +85,9 @@ class RideRepository extends APIClient {
   processPackagePicked(int rideId) async {
     final String url = '/order/$rideId/package-pickedup';
     try {
-      await dio.post(url);
+      Response response = await dio.post(url);
+      final responseBody = response.data;
+      return responseBody;
     } catch (e) {
       cprint(e.response, errorIn: 'processPackagePicked');
       if (e.response.data != null &&
@@ -97,7 +101,9 @@ class RideRepository extends APIClient {
   processPackageDelivered(int rideId) async {
     final String url = '/order/$rideId/package-delivered';
     try {
-      await dio.post(url);
+      Response response = await dio.post(url);
+      final responseBody = response.data;
+      return responseBody;
     } catch (e) {
       cprint(e.response, errorIn: 'processPackageDelivered');
       if (e.response.data != null &&
