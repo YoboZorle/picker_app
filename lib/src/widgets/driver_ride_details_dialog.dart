@@ -70,9 +70,6 @@ class _RiderOrderInteractiveLayoutState
       return Container(
           decoration: BoxDecoration(
             color: Colors.white,
-            boxShadow: [
-              Shadows.primaryShadow,
-            ],
           ),
           width: MediaQuery.of(context).size.width,
           child: Column(
@@ -102,35 +99,30 @@ class _RiderOrderInteractiveLayoutState
               ),
               SizedBox(height: 10),
               ListTile(
-                trailing: Column(
-                  children: [
-                    Expanded(
-                      child: ClipOval(
-                          child: Container(
-                              height: 70.0,
-                              width: 70.0,
-                              child: !ride.user.noProfileImage
-                                  ? CustomImage(
-                                      imageUrl: '${ride.user.profileImageUrl}',
-                                    )
-                                  : Image.asset('assets/images/placeholder.jpg',
-                                      fit: BoxFit.cover))),
-                    ),
-                  ],
-                ),
                 title: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                   ClipOval(
+                          child: Container(
+                              height: 65.0,
+                              width: 65.0,
+                              child: !ride.user.noProfileImage
+                                  ? CustomImage(
+                                imageUrl: '${ride.user.profileImageUrl}',
+                              )
+                                  : Image.asset('assets/images/placeholder.jpg',
+                                  fit: BoxFit.cover))),
+                    SizedBox(height: 4),
                     RichText(
                       text: TextSpan(
                         children: [
                           TextSpan(
                             text: 'Name: ',
                             style: TextStyle(
-                                fontSize: 16.0,
+                                fontSize: 15.0,
                                 fontFamily: "Ubuntu",
                                 color: Colors.grey,
-                                fontWeight: FontWeight.w500,
+                                fontWeight: FontWeight.w400,
                                 height: 1.5),
                           ),
                           TextSpan(
@@ -147,57 +139,61 @@ class _RiderOrderInteractiveLayoutState
                     ),
                   ],
                 ),
-                subtitle: RichText(
-                  text: TextSpan(children: [
-                    TextSpan(
-                      text: 'Pickup: ',
-                      style: TextStyle(
-                          fontSize: 16.0,
-                          fontFamily: "Ubuntu",
-                          color: Colors.grey,
-                          fontWeight: FontWeight.w500,
-                          height: 1.5),
+                subtitle: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    RichText(
+                      text: TextSpan(children: [
+                        TextSpan(
+                          text: 'Pickup: ',
+                          style: TextStyle(
+                              fontSize: 15.0,
+                              fontFamily: "Ubuntu",
+                              color: Colors.grey,
+                              fontWeight: FontWeight.w400,
+                              height: 1.5),
+                        ),
+                        TextSpan(
+                          text: ride.pickupLocation.address,
+                          style: TextStyle(
+                              fontSize: 16.0,
+                              fontFamily: "Ubuntu",
+                              color: Colors.black,
+                              fontWeight: FontWeight.w500,
+                              height: 1.6),
+                        ),
+                      ]),
                     ),
-                    TextSpan(
-                      text: ride.pickupLocation.address,
-                      style: TextStyle(
-                          fontSize: 16.0,
-                          fontFamily: "Ubuntu",
-                          color: Colors.black,
-                          fontWeight: FontWeight.w400,
-                          height: 1.6),
+                    GestureDetector(
+                      child: Container(
+                        height: 30,
+                        alignment: Alignment.centerLeft,
+                        margin:
+                        EdgeInsets.only(top: 5, right: 50),
+                        decoration: BoxDecoration(
+                          borderRadius: Radii.kRoundpxRadius,
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Icon(Icons.phone_rounded, color: Colors.green, size: 20),
+                            SizedBox(width: 8),
+                            Text('Call +${ride.user.callingCode}${ride.user.phone}',
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    fontFamily: 'Ubuntu',
+                                    color: Colors.green,
+                                    fontWeight: FontWeight.w500)),
+                          ],
+                        ),
+                      ),
+                      onTap: () =>
+                          launch("tel://+${ride.user.callingCode}${ride.user.phone}"),
                     ),
-                  ]),
+                  ],
                 ),
                 contentPadding: EdgeInsets.only(left: 20),
                 dense: true,
-              ),
-              GestureDetector(
-                child: Container(
-                  height: 45,
-                  alignment: Alignment.center,
-                  margin:
-                      EdgeInsets.only(bottom: 5, left: 25, right: 25, top: 10),
-                  decoration: BoxDecoration(
-                    color: Colors.grey[300],
-                    borderRadius: Radii.kRoundpxRadius,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(Icons.phone_rounded, color: Colors.black, size: 20),
-                      SizedBox(width: 8),
-                      Text('Call +${ride.user.callingCode}${ride.user.phone}',
-                          style: TextStyle(
-                              fontSize: 16,
-                              fontFamily: 'Ubuntu',
-                              color: Colors.black,
-                              fontWeight: FontWeight.w500)),
-                    ],
-                  ),
-                ),
-                onTap: () =>
-                    launch("tel://+${ride.user.callingCode}${ride.user.phone}"),
               ),
               Builder(builder: (BuildContext context) {
                 return ride.status == 'INPROGRESS'
@@ -259,7 +255,7 @@ class _RiderOrderInteractiveLayoutState
                               height: 45,
                               alignment: Alignment.center,
                               margin: EdgeInsets.only(
-                                  bottom: 10, left: 25, right: 25, top: 18),
+                                  bottom: 5, left: 25, right: 25, top: 15),
                               decoration: BoxDecoration(
                                 color: AppColor.primaryText,
                                 boxShadow: [Shadows.secondaryShadow],
@@ -282,9 +278,9 @@ class _RiderOrderInteractiveLayoutState
                                   bottom: 10, left: 25, right: 25, top: 0),
                               child: Text('Decline ride',
                                   style: TextStyle(
-                                      fontSize: 15,
+                                      fontSize: 16,
                                       fontFamily: 'Ubuntu',
-                                      color: Colors.black87,
+                                      color: Colors.red,
                                       fontWeight: FontWeight.w500)),
                             ),
                             onTap: () {
