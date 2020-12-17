@@ -4,6 +4,7 @@ import 'package:pickrr_app/src/blocs/authentication/bloc.dart';
 import 'package:pickrr_app/src/helpers/constants.dart';
 import 'package:pickrr_app/src/models/user.dart';
 import 'package:pickrr_app/src/widgets/image.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class NavDrawer extends StatelessWidget {
   @override
@@ -175,33 +176,50 @@ class RiderNavDrawer extends StatelessWidget {
                 padding: EdgeInsets.only(left: 15.0, right: 15.0),
                 child: Column(children: <Widget>[
                   SizedBox(height: 30),
-                  ListTile(
-                    leading: ClipOval(
-                        child: Container(
-                          height: 65.0,
-                          width: 65.0,
-                          child: !user.noProfileImage
-                              ? CustomImage(
-                            imageUrl:
-                            '${APIConstants.assetsUrl}${user.profileImageUrl}',
-                          ): Image.asset('placeholder.jpg',
-                              width: double.infinity, height: double.infinity),
-                        )),
-                    title: Text(
-                      user.fullname,
-                      style: TextStyle(
-                          fontWeight: FontWeight.w700,
-                          fontFamily: "Ubuntu",
-                          fontSize: 18),
-                    ),
-                    subtitle: Text(
-                      'Driver profile',
-                      style: TextStyle(
-                          fontWeight: FontWeight.w400,
-                          fontFamily: "Ubuntu",
-                          fontSize: 15),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(context, '/ProfileDetails');
+                    },
+                    child: Row(
+                      children: [
+                        ClipOval(
+                            child: Container(
+                                height: 65.0,
+                                width: 65.0,
+                                child: !user.noProfileImage
+                                    ? CustomImage(
+                                  imageUrl:
+                                  '${APIConstants.assetsUrl}${user.profileImageUrl}',
+                                )
+                                    : Image.asset('placeholder.jpg',
+                                    width: double.infinity,
+                                    height: double.infinity))),
+                        SizedBox(width: 20),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              user.fullname,
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w700,
+                                  fontFamily: "Ubuntu",
+                                  fontSize: 18),
+                            ),
+                            SizedBox(height: 3),
+                            Text(
+                              'Driver profile',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w400,
+                                  fontFamily: "Ubuntu",
+                                  height: 1.5,
+                                  fontSize: 14),
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
                   ),
+
                   Container(
                       height: 0.7,
                       margin: EdgeInsets.symmetric(vertical: 20),
@@ -216,6 +234,7 @@ class RiderNavDrawer extends StatelessWidget {
                           fontSize: 18),
                     ),
                     leading: Icon(Icons.support_agent),
+                    onTap: () => launch("tel://2348076048409"),
                   ),
                   ListTile(
                     title: Text(
