@@ -68,6 +68,7 @@ class UserRepository extends APIClient {
       }
       return responseBody;
     } catch (e) {
+      print(e);
       throw ServiceError(e);
     }
   }
