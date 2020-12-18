@@ -681,16 +681,3 @@ class _HomeState extends State<Home> {
     return northEastLatitudeCheck && northEastLongitudeCheck && southWestLatitudeCheck && southWestLongitudeCheck;
   }
 }
-
-class GetReceiver extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.black.withOpacity(0.3),
-      appBar: AppBar(
-        title: Text('Provide Receiver Details'),
-      ),
-      body: Text('Forever!'),
-    );
-  }
-}

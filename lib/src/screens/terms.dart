@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_awesome_alert_box/flutter_awesome_alert_box.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pickrr_app/src/blocs/authentication/bloc.dart';
 import 'package:pickrr_app/src/models/user.dart';
@@ -9,15 +8,6 @@ class Terms extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<AuthenticationBloc, AuthenticationState>(
         builder: (_, state) {
-          if (state is NonLoggedIn) {
-            WidgetsBinding.instance.addPostFrameCallback(
-                    (_) => Navigator.pushReplacementNamed(context, '/'));
-          }
-          if (state.props.isEmpty) {
-            return Container();
-          }
-          User user = state.props[0];
-
           return Scaffold(
             body: SafeArea(
               child: CustomScrollView(

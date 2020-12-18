@@ -38,6 +38,10 @@ class _RideDetailsState extends State<RideDetails> {
     _channel.stream.listen((response) {
       var decodedResponse = json.decode(response)['ride'];
       Ride ride = Ride.fromMap(decodedResponse);
+      if(ride.status == 'INPROGRESS' && ride.isPickedUp){
+        WidgetsBinding.instance.addPostFrameCallback(
+                (_) => Navigator.pushReplacementNamed(context, '/RideHistory'));
+      }
       setState(() {
         widget.arguments.ride = ride;
       });
@@ -47,8 +51,6 @@ class _RideDetailsState extends State<RideDetails> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(title: Text('Ride Details'),
-      // brightness: Brightness.light),
         body: SafeArea(
         top: true,
         child: ListView(
