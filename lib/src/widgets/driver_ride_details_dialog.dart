@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:pickrr_app/src/helpers/constants.dart';
 import 'package:pickrr_app/src/helpers/utility.dart';
+import 'package:pickrr_app/src/services/exceptions.dart';
 import 'package:pickrr_app/src/services/repositories/user.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:pickrr_app/src/models/ride.dart';
@@ -31,6 +32,7 @@ class _RiderOrderInteractiveLayoutState
   final RideRepository _rideRepository = RideRepository();
   var _channel;
   Ride ride;
+  Driver _driver;
 
   @override
   void initState() {
@@ -39,17 +41,28 @@ class _RiderOrderInteractiveLayoutState
     _getRideUpdates();
   }
 
+  _getRideDetails() async {
+    var rawDetails = await _rideRepository.getRideDetails(ride.id);
+    Ride rideDetails = Ride.fromMap(rawDetails);
+    if(rideDetails != null){
+      setState(() => {
+        ride = rideDetails
+      });
+    }
+  }
+
   _getRideUpdates() async {
-    Driver riderDetails = await _driverRepository.getDriverDetailsFromStorage();
+    _getRideDetails();
+    _driver = await _driverRepository.getDriverDetailsFromStorage();
     if (ride.status == 'CANCELED' ||
         ride.status == 'DELIVERED' &&
-            ride.rider.details.id != riderDetails.id) {
+            ride.rider.details.id != _driver.id) {
       Navigator.pop(context);
       AlertBar.dialog(context, 'Ride already taken!', Colors.orange,
           icon: Icon(Icons.info), duration: 5);
     }
     if (ride.status == 'INPROGRESS' &&
-        ride.rider.details.id != riderDetails.id) {
+        ride.rider.details.id != _driver.id) {
       Navigator.pop(context);
       AlertBar.dialog(context, 'Ride already taken!', Colors.orange,
           icon: Icon(Icons.info), duration: 5);
@@ -66,6 +79,10 @@ class _RiderOrderInteractiveLayoutState
 
   @override
   Widget build(BuildContext context) {
+    if(ride.status == 'CANCELED'){
+      WidgetsBinding.instance.addPostFrameCallback(
+              (_) => Navigator.pushNamed(context, '/DriversHomePage'));
+    }
     if (ride.status == 'INPROGRESS' || ride.status == 'PENDING') {
       return Container(
           decoration: BoxDecoration(
@@ -329,9 +346,8 @@ class _RiderOrderInteractiveLayoutState
       await _rideDetailsCheck(rideDetails);
       Navigator.pop(context);
     } catch (err) {
-      debugLog(err);
       Navigator.pop(context);
-      if (err.message != null) {
+      if (err is ServiceError) {
         AlertBar.dialog(context, err.message, Colors.red,
             icon: Icon(Icons.error), duration: 5);
       }
@@ -343,23 +359,24 @@ class _RiderOrderInteractiveLayoutState
   _rideDetailsCheck(Ride rideDetails) async {
     if (rideDetails.status == 'CANCELED' ||
         rideDetails.status == 'DELIVERED' &&
-            rideDetails.rider.details.id != ride.rider.id) {
+            rideDetails.rider.details.id != _driver.id) {
       Navigator.pop(context);
       AlertBar.dialog(context, 'Ride already taken!', Colors.orange,
           icon: Icon(Icons.info), duration: 5);
     }
     if (rideDetails.status == 'INPROGRESS' &&
-        rideDetails.rider.details.id != ride.rider.id) {
+        rideDetails.rider.details.id != _driver.id) {
       Navigator.pop(context);
       AlertBar.dialog(context, 'Ride already taken!', Colors.orange,
           icon: Icon(Icons.info), duration: 5);
     }
+
     setState(() {
       ride = rideDetails;
     });
 
     if (ride.status == 'DELIVERED' &&
-        rideDetails.rider.details.id == ride.rider.id) {
+        rideDetails.rider.details.id == _driver.id) {
       await UserRepository().getUserDetails(rideDetails.rider.details.id);
     }
   }
@@ -384,7 +401,7 @@ class _RiderOrderInteractiveLayoutState
     } catch (err) {
       debugLog(err);
       Navigator.pop(context);
-      if (err.message != null) {
+      if (err is ServiceError) {
         AlertBar.dialog(context, err.message, Colors.red,
             icon: Icon(Icons.error), duration: 5);
       }
@@ -413,7 +430,7 @@ class _RiderOrderInteractiveLayoutState
     } catch (err) {
       debugLog(err);
       Navigator.pop(context);
-      if (err.message != null) {
+      if (err is ServiceError) {
         AlertBar.dialog(context, err.message, Colors.red,
             icon: Icon(Icons.error), duration: 5);
       }

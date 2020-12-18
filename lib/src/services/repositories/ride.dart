@@ -67,7 +67,7 @@ class RideRepository extends APIClient {
   }
 
   processAcceptRide(int rideId) async {
-    final String url = '/order/$rideId/accept';
+    final String url = '/order/${rideId.toString()}/accept';
     try {
       Response response = await dio.post(url);
       final responseBody = response.data;
@@ -102,10 +102,28 @@ class RideRepository extends APIClient {
     final String url = '/order/$rideId/package-delivered';
     try {
       Response response = await dio.post(url);
+      print('FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF');
+      print(response);
       final responseBody = response.data;
       return responseBody;
     } catch (e) {
       cprint(e.response, errorIn: 'processPackageDelivered');
+      if (e.response.data != null &&
+          e.response.data['non_field_errors'] != null) {
+        throw ServiceError(e.response.data['non_field_errors']);
+      }
+      throw ServiceError('Request failed please try again.');
+    }
+  }
+
+  getRideDetails(int rideId) async {
+    final String url = '/$rideId/ride-details';
+    try {
+      Response response = await dio.get(url);
+      final responseBody = response.data;
+      return responseBody;
+    } catch (e) {
+      cprint(e.response, errorIn: 'getRideDetails');
       if (e.response.data != null &&
           e.response.data['non_field_errors'] != null) {
         throw ServiceError(e.response.data['non_field_errors']);

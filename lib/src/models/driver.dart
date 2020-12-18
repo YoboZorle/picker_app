@@ -72,14 +72,14 @@ class Driver extends Equatable {
       'isDelivering': rawData['is_delivering'],
       'totalRides': rawData['rides'],
       'ongoingRides': rawData['ongoing_rides'],
-      'completedRides': rawData['completed_rides'],
+      'completedRides': rawData['completed_rides']
     };
 
     return map;
   }
 
   Driver.fromMap(Map<String, dynamic> mapData)
-      : id = mapData['id'] ?? mapData['_userId'] ?? null,
+      : id = mapData['_userId'] ?? mapData['id'] ?? null,
         details = mapData['user'] != null
             ? User.fromMap(User().formatToMap(mapData['user']))
             : null,
