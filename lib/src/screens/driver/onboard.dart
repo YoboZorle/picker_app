@@ -106,7 +106,7 @@ class DriverOnboard extends StatelessWidget {
                                     ]),
                                 child: Center(
                                   child: Text(
-                                    'Send Package',
+                                    'Apply Now',
                                     textAlign: TextAlign.left,
                                     style: TextStyle(
                                       fontFamily: "Ubuntu",

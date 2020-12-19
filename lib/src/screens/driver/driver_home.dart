@@ -183,6 +183,17 @@ class _DriverHomeState extends State<DriverHome> {
                       );
                     }
                     if (state.isSuccess) {
+                      if (state.rides.isEmpty) {
+                        return Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Container(
+                              child: Text("No orders!"),
+                              alignment: Alignment.center,
+                            ),
+                          ],
+                        );
+                      }
                       return ListView.builder(
                         itemCount: state.hasReachedMax
                             ? state.rides.length
