@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pickrr_app/src/blocs/authentication/bloc.dart';
-import 'package:pickrr_app/src/models/user.dart';
 
 class Terms extends StatelessWidget {
   @override
