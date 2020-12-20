@@ -2,6 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:flutterwave/flutterwave.dart';
+import 'package:flutterwave/models/responses/charge_response.dart';
 import 'package:intl/intl.dart';
 import 'package:pickrr_app/src/blocs/authentication/bloc.dart';
 import 'package:pickrr_app/src/helpers/constants.dart';
@@ -22,6 +24,8 @@ class ReviewOrder extends StatelessWidget {
   final currencyFormatter =
       NumberFormat.currency(locale: 'en_US', symbol: '\u20a6');
   final _scaffoldKey = GlobalKey<ScaffoldState>();
+  final String currency = FlutterwaveCurrency.NGN;
+
 
   Future<bool> _onBackPressed(context) async {
     Navigator.of(context).popAndPushNamed('/HomePage');
@@ -434,7 +438,7 @@ class ReviewOrder extends StatelessWidget {
                               borderRadius: new BorderRadius.circular(25.0),
                             ),
                             onPressed: () {
-                              _choosePaymentMethodSheet(context);
+                              _choosePaymentMethodSheet(context, user);
                             },
                             color: AppColor.primaryText,
                             child: Text(
@@ -459,7 +463,7 @@ class ReviewOrder extends StatelessWidget {
     );
   }
 
-  void _choosePaymentMethodSheet(BuildContext context) {
+  void _choosePaymentMethodSheet(BuildContext context, User user) {
     showModalBottomSheet(
         context: context,
         builder: (BuildContext bc) {
@@ -519,7 +523,7 @@ class ReviewOrder extends StatelessWidget {
                             color: Colors.grey,
                             fontWeight: FontWeight.w400,
                             height: 1.4)),
-                    onTap: () => {},
+                    onTap: () => beginPayment(context, user),
                     trailing: Icon(Icons.arrow_forward_ios,
                         color: Colors.grey[400], size: 18),
                     contentPadding:
@@ -533,7 +537,69 @@ class ReviewOrder extends StatelessWidget {
         });
   }
 
-  void _processOrder(BuildContext context, String paymentMethod) async {
+  beginPayment(BuildContext context, User user) async {
+    final String transactionRef = getRandomString(9);
+    final Flutterwave flutterwave = Flutterwave.forUIPayment(
+        context: context,
+        encryptionKey: AppData.flutterWaveEncryptionKey,
+        publicKey: AppData.flutterWavePublicKey,
+        currency: this.currency,
+        amount: this.arguments.price.toString(),
+        email: user.email,
+        fullName: user.fullname,
+        txRef: transactionRef,
+        isDebugMode: true,
+        phoneNumber: user.phone,
+        acceptCardPayment: true,
+        acceptUSSDPayment: true,
+        acceptAccountPayment: true,
+        acceptFrancophoneMobileMoney: false,
+        acceptGhanaPayment: false,
+        acceptMpesaPayment: false,
+        acceptRwandaMoneyPayment: false,
+        acceptUgandaPayment: false,
+        acceptZambiaPayment: false);
+
+    try {
+      final ChargeResponse response = await flutterwave.initializeForUiPayments();
+      if (response == null) {
+        debugLog('User canceled transaction');
+        // user didn't complete the transaction. Payment wasn't successful.
+      } else {
+        final isSuccessful = checkPaymentIsSuccessful(response, transactionRef);
+        if (isSuccessful) {
+          debugLog('***********************************************************************');
+          debugLog('Payment was successful');
+        } else {
+          Navigator.pop(context);
+          AlertBar.dialog(context,
+              response.message, Colors.red,
+              icon: Icon(Icons.error), duration: 5);
+          debugLog(response.message);
+          debugLog(response.data.processorResponse);
+        }
+      }
+    } catch (error, stacktrace) {
+      Navigator.pop(context);
+      AlertBar.dialog(context,
+          'Payment could not be processed. Please try again.', Colors.red,
+          icon: Icon(Icons.error), duration: 5);
+      debugLog('Request failed');
+      debugLog(error);
+      debugLog(stacktrace);
+    }
+  }
+
+  bool checkPaymentIsSuccessful(final ChargeResponse response, String transactionRef) {
+    debugLog('***********************************************************************');
+    debugLog('Verifying payment...');
+    return response != null && response.data.status == FlutterwaveConstants.SUCCESSFUL &&
+        response.data.currency == this.currency &&
+        response.data.amount == this.arguments.price.toString() &&
+        response.data.txRef == transactionRef;
+  }
+
+  void _processOrder(BuildContext context, String paymentMethod, {transactionId}) async {
     AlertBar.dialog(context, 'Processing request...', AppColor.primaryText,
         showProgressIndicator: true, duration: null);
 
@@ -548,6 +614,10 @@ class ReviewOrder extends StatelessWidget {
         'delivery_location': arguments.destinationCoordinate['id'],
         'payment_method': paymentMethod
       };
+
+      if(transactionId != null) {
+        formDetails['transaction_id'] = transactionId;
+      }
 
       if (!await isInternetConnected()) {
         Navigator.pop(context);

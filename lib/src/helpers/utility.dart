@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
-import 'dart:math' show cos, sqrt, asin;
+import 'dart:math' show Random, asin, cos, sqrt;
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -11,6 +11,9 @@ import 'dart:developer' as developer;
 import 'package:pickrr_app/src/models/user.dart';
 import 'package:pickrr_app/src/services/repositories/ride.dart';
 import 'package:pickrr_app/src/utils/alert_bar.dart';
+
+Random _rnd = Random();
+const _chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
 
 void debugLog(dynamic log, {dynamic param = ""}) {
   final String time = DateFormat("mm:ss:mmm").format(DateTime.now());
@@ -164,3 +167,6 @@ void cancelRide(BuildContext context, rideId, {nextRoute = '/HomePage'}) async {
         icon: Icon(Icons.error), duration: 5);
   }
 }
+
+String getRandomString(int length) => String.fromCharCodes(Iterable.generate(
+    length, (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length))));

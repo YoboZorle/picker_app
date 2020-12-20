@@ -96,5 +96,7 @@ class AppData {
   static final String messageFrom = 'Yarner';
   static final String mapAPIKey = 'AIzaSyAPV3djPp_HceZIbgK4M4jRadHA-d08ECg';
   static final String placeholderImageUrl = '';
+  static final String flutterWaveEncryptionKey = 'FLWSECK_TEST96492f6f57f4';
+  static final String flutterWavePublicKey = 'FLWPUBK_TEST-9dbb56cadb2094e1176ec9257a61e89d-X';
 }
 

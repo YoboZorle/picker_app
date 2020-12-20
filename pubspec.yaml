@@ -62,6 +62,7 @@ dependencies:
   flutter_clipboard_manager: ^0.0.2
   web_socket_channel: ^1.1.0
   great_circle_distance_calculator: ^1.0.3
+  flutterwave: ^0.0.2
 
 dev_dependencies:
   flutter_test:
