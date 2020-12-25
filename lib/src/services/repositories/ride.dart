@@ -132,6 +132,22 @@ class RideRepository extends APIClient {
     }
   }
 
+  trackRide(String rideId) async {
+    final String url = '/$rideId/track';
+    try {
+      Response response = await dio.get(url);
+      final responseBody = response.data;
+      return responseBody;
+    } catch (e) {
+      cprint(e.response, errorIn: 'trackRide');
+      if (e.response.data != null &&
+          e.response.data['non_field_errors'] != null) {
+        throw ServiceError(e.response.data['non_field_errors']);
+      }
+      throw ServiceError('Request failed please try again.');
+    }
+  }
+
   getActiveRide() async {
     final String url = '/active-ride';
     try {

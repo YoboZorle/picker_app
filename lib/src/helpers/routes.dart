@@ -16,6 +16,7 @@ import 'package:pickrr_app/src/screens/driver/driver_form.dart';
 import 'package:pickrr_app/src/screens/ride/review_order.dart';
 import 'package:pickrr_app/src/screens/ride/ride_details.dart';
 import 'package:pickrr_app/src/screens/ride/ride_history.dart';
+import 'package:pickrr_app/src/screens/ride/track_deliveries.dart';
 import 'package:pickrr_app/src/screens/terms.dart';
 import 'package:pickrr_app/src/screens/user_profile.dart';
 
@@ -105,6 +106,9 @@ class Routes {
             builder: (BuildContext context) => BlocProvider<RideOrdersBloc>(
                 create: (_) => RideOrdersBloc()..add(OrdersFetched()),
                 child: RideHistory()));
+      case "TrackDeliveries":
+        return SlideLeftRoute<bool>(
+            builder: (BuildContext context) => TrackDeliveries());
       case "HomePage":
         return SlideLeftRoute<bool>(
             builder: (BuildContext context) => BlocProvider<AuthenticationBloc>(

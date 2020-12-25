@@ -86,8 +86,8 @@ class Shadows {
 }
 
 class APIConstants {
-  static final String httpUrl = 'http://pickrr-webapp-env.eba-f5va3dav.us-east-1.elasticbeanstalk.com';
-  static final String wsUrl = 'ws://pickrr-webapp-env.eba-f5va3dav.us-east-1.elasticbeanstalk.com';
+  static final String httpUrl = 'http://pickrr-webapp-env-new.eba-f5va3dav.us-east-1.elasticbeanstalk.com';
+  static final String wsUrl = 'ws://pickrr-webapp-env-new.eba-f5va3dav.us-east-1.elasticbeanstalk.com';
   static final String assetsUrl = 'https://pickrr-storage.s3.amazonaws.com/logistics-a9e77482c84e16/';
   static final String apiUrl = '$httpUrl/api/';
 }

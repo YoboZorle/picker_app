@@ -350,6 +350,7 @@ class _RiderOrderInteractiveLayoutState
       if (err is ServiceError) {
         AlertBar.dialog(context, err.message, Colors.red,
             icon: Icon(Icons.error), duration: 5);
+        return;
       }
       AlertBar.dialog(context, 'Request could not be completed', Colors.red,
           icon: Icon(Icons.error), duration: 5);
@@ -404,6 +405,7 @@ class _RiderOrderInteractiveLayoutState
       if (err is ServiceError) {
         AlertBar.dialog(context, err.message, Colors.red,
             icon: Icon(Icons.error), duration: 5);
+        return;
       }
       AlertBar.dialog(context, 'Request could not be completed', Colors.red,
           icon: Icon(Icons.error), duration: 5);
@@ -433,6 +435,7 @@ class _RiderOrderInteractiveLayoutState
       if (err is ServiceError) {
         AlertBar.dialog(context, err.message, Colors.red,
             icon: Icon(Icons.error), duration: 5);
+        return;
       }
       AlertBar.dialog(context, 'Request could not be completed', Colors.red,
           icon: Icon(Icons.error), duration: 5);
