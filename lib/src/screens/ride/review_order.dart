@@ -2,8 +2,6 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:flutterwave/flutterwave.dart';
-import 'package:flutterwave/models/responses/charge_response.dart';
 import 'package:intl/intl.dart';
 import 'package:pickrr_app/src/blocs/authentication/bloc.dart';
 import 'package:pickrr_app/src/helpers/constants.dart';
@@ -12,6 +10,7 @@ import 'package:pickrr_app/src/models/user.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:pickrr_app/src/services/repositories/ride.dart';
 import 'package:pickrr_app/src/utils/alert_bar.dart';
+import 'package:pickrr_app/src/utils/online_payment.dart';
 import 'package:pickrr_app/src/widgets/arguments.dart';
 import 'package:pickrr_app/src/helpers/utility.dart';
 
@@ -24,7 +23,6 @@ class ReviewOrder extends StatelessWidget {
   final currencyFormatter =
       NumberFormat.currency(locale: 'en_US', symbol: '\u20a6');
   final _scaffoldKey = GlobalKey<ScaffoldState>();
-  final String currency = FlutterwaveCurrency.NGN;
 
 
   Future<bool> _onBackPressed(context) async {
@@ -123,7 +121,8 @@ class ReviewOrder extends StatelessWidget {
                                                     fontSize: 13.0,
                                                     fontFamily: "Ubuntu",
                                                     color: Colors.black87,
-                                                    fontWeight: FontWeight.w400),
+                                                    fontWeight:
+                                                        FontWeight.w400),
                                               ),
                                               SizedBox(width: 18),
                                               Expanded(
@@ -148,7 +147,8 @@ class ReviewOrder extends StatelessWidget {
                                                     fontSize: 13.0,
                                                     fontFamily: "Ubuntu",
                                                     color: Colors.black87,
-                                                    fontWeight: FontWeight.w400),
+                                                    fontWeight:
+                                                        FontWeight.w400),
                                               ),
                                               SizedBox(width: 18),
                                               Expanded(
@@ -177,7 +177,8 @@ class ReviewOrder extends StatelessWidget {
                                                     fontSize: 13.0,
                                                     fontFamily: "Ubuntu",
                                                     color: Colors.black87,
-                                                    fontWeight: FontWeight.w400),
+                                                    fontWeight:
+                                                        FontWeight.w400),
                                               ),
                                               SizedBox(width: 18),
                                               Expanded(
@@ -240,7 +241,8 @@ class ReviewOrder extends StatelessWidget {
                                                     fontSize: 13.0,
                                                     fontFamily: "Ubuntu",
                                                     color: Colors.black87,
-                                                    fontWeight: FontWeight.w400),
+                                                    fontWeight:
+                                                        FontWeight.w400),
                                               ),
                                               SizedBox(width: 18),
                                               Expanded(
@@ -266,7 +268,8 @@ class ReviewOrder extends StatelessWidget {
                                                     fontSize: 13.0,
                                                     fontFamily: "Ubuntu",
                                                     color: Colors.black87,
-                                                    fontWeight: FontWeight.w400),
+                                                    fontWeight:
+                                                        FontWeight.w400),
                                               ),
                                               SizedBox(width: 18),
                                               Expanded(
@@ -295,7 +298,8 @@ class ReviewOrder extends StatelessWidget {
                                                     fontSize: 13.0,
                                                     fontFamily: "Ubuntu",
                                                     color: Colors.black87,
-                                                    fontWeight: FontWeight.w400),
+                                                    fontWeight:
+                                                        FontWeight.w400),
                                               ),
                                               SizedBox(width: 18),
                                               Expanded(
@@ -492,13 +496,13 @@ class ReviewOrder extends StatelessWidget {
                             fontFamily: "Ubuntu",
                             color: Colors.black,
                             fontWeight: FontWeight.w400)),
-                   subtitle: Text('Pay cash to bike rider before delivery',
-                       style: TextStyle(
-                           fontSize: 15.0,
-                           fontFamily: "Ubuntu",
-                           color: Colors.grey,
-                           fontWeight: FontWeight.w400,
-                       height: 1.4)),
+                    subtitle: Text('Pay cash to bike rider before delivery',
+                        style: TextStyle(
+                            fontSize: 15.0,
+                            fontFamily: "Ubuntu",
+                            color: Colors.grey,
+                            fontWeight: FontWeight.w400,
+                            height: 1.4)),
                     onTap: () => _processOrder(context, 'CASH'),
                     trailing: Icon(Icons.arrow_forward_ios,
                         color: Colors.grey[400], size: 18),
@@ -523,7 +527,7 @@ class ReviewOrder extends StatelessWidget {
                             color: Colors.grey,
                             fontWeight: FontWeight.w400,
                             height: 1.4)),
-                    onTap: () => beginPayment(context, user),
+                    onTap: () => _initiateOnlinePayment(context, user),
                     trailing: Icon(Icons.arrow_forward_ios,
                         color: Colors.grey[400], size: 18),
                     contentPadding:
@@ -537,69 +541,24 @@ class ReviewOrder extends StatelessWidget {
         });
   }
 
-  beginPayment(BuildContext context, User user) async {
-    final String transactionRef = getRandomString(9);
-    final Flutterwave flutterwave = Flutterwave.forUIPayment(
-        context: context,
-        encryptionKey: AppData.flutterWaveEncryptionKey,
-        publicKey: AppData.flutterWavePublicKey,
-        currency: this.currency,
-        amount: this.arguments.price.toString(),
-        email: user.email,
-        fullName: user.fullname,
-        txRef: transactionRef,
-        isDebugMode: true,
-        phoneNumber: user.phone,
-        acceptCardPayment: true,
-        acceptUSSDPayment: true,
-        acceptAccountPayment: true,
-        acceptFrancophoneMobileMoney: false,
-        acceptGhanaPayment: false,
-        acceptMpesaPayment: false,
-        acceptRwandaMoneyPayment: false,
-        acceptUgandaPayment: false,
-        acceptZambiaPayment: false);
+  _initiateOnlinePayment(BuildContext context, User user) async {
+    final paymentMethod = 'CARD';
+    final onlinePayment = OnlinePayment(
+      context: context,
+      userName: user.fullname,
+      userEmail: user.email,
+      userPhone: '0${user.phone}',
+      amount: arguments.price.toString(),
+      onCompletePayment: (String transactionRef) =>
+          _processOrder(context, paymentMethod, transactionId: transactionRef),
+    );
 
-    try {
-      final ChargeResponse response = await flutterwave.initializeForUiPayments();
-      if (response == null) {
-        debugLog('User canceled transaction');
-        // user didn't complete the transaction. Payment wasn't successful.
-      } else {
-        final isSuccessful = checkPaymentIsSuccessful(response, transactionRef);
-        if (isSuccessful) {
-          debugLog('***********************************************************************');
-          debugLog('Payment was successful');
-        } else {
-          Navigator.pop(context);
-          AlertBar.dialog(context,
-              response.message, Colors.red,
-              icon: Icon(Icons.error), duration: 5);
-          debugLog(response.message);
-          debugLog(response.data.processorResponse);
-        }
-      }
-    } catch (error, stacktrace) {
-      Navigator.pop(context);
-      AlertBar.dialog(context,
-          'Payment could not be processed. Please try again.', Colors.red,
-          icon: Icon(Icons.error), duration: 5);
-      debugLog('Request failed');
-      debugLog(error);
-      debugLog(stacktrace);
-    }
+    return await onlinePayment.processPayment();
   }
 
-  bool checkPaymentIsSuccessful(final ChargeResponse response, String transactionRef) {
-    debugLog('***********************************************************************');
-    debugLog('Verifying payment...');
-    return response != null && response.data.status == FlutterwaveConstants.SUCCESSFUL &&
-        response.data.currency == this.currency &&
-        response.data.amount == this.arguments.price.toString() &&
-        response.data.txRef == transactionRef;
-  }
+  void _processOrder(BuildContext context, String paymentMethod,
+      {transactionId}) async {
 
-  void _processOrder(BuildContext context, String paymentMethod, {transactionId}) async {
     AlertBar.dialog(context, 'Processing request...', AppColor.primaryText,
         showProgressIndicator: true, duration: null);
 
@@ -615,10 +574,9 @@ class ReviewOrder extends StatelessWidget {
         'payment_method': paymentMethod
       };
 
-      if(transactionId != null) {
+      if (transactionId != null) {
         formDetails['transaction_id'] = transactionId;
       }
-
       if (!await isInternetConnected()) {
         Navigator.pop(context);
         AlertBar.dialog(context,
@@ -627,10 +585,12 @@ class ReviewOrder extends StatelessWidget {
         return;
       }
 
-      var rideDetails = await _rideRepository.processRideOrder(new FormData.fromMap(formDetails));
+      var rideDetails = await _rideRepository
+          .processRideOrder(new FormData.fromMap(formDetails));
       Ride ride = Ride.fromMap(rideDetails);
       Navigator.pop(context);
-      Navigator.popAndPushNamed(context, '/RideDetails', arguments: RideArguments(ride));
+      Navigator.popAndPushNamed(context, '/RideDetails',
+          arguments: RideArguments(ride));
     } catch (err) {
       debugLog(err);
       Navigator.pop(context);
