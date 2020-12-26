@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pickrr_app/src/blocs/authentication/bloc.dart';
+import 'package:pickrr_app/src/blocs/driver/orders/bloc.dart';
 import 'package:pickrr_app/src/blocs/login/bloc.dart';
 import 'package:pickrr_app/src/blocs/ride/orders/bloc.dart';
 import 'package:pickrr_app/src/helpers/custom_route.dart';
@@ -9,6 +10,7 @@ import 'package:pickrr_app/src/screens/auth/complete_profile_form.dart';
 import 'package:pickrr_app/src/screens/auth/login.dart';
 import 'package:pickrr_app/src/screens/auth/otp_verification.dart';
 import 'package:pickrr_app/src/screens/driver/onboard.dart';
+import 'package:pickrr_app/src/screens/driver/order_history.dart';
 import 'package:pickrr_app/src/screens/home.dart';
 import 'package:pickrr_app/src/screens/onboard.dart';
 import 'package:pickrr_app/src/screens/driver/main_activity.dart';
@@ -44,14 +46,14 @@ class Routes {
       case "DriversHomePage":
         return SlideLeftRoute<bool>(
             builder: (BuildContext context) => MultiBlocProvider(providers: [
-              BlocProvider<AuthenticationBloc>(
-                  create: (_) => AuthenticationBloc()
-                    ..add(AuthenticationEvent.AUTHENTICATED))
-            ], child: DriverTabs()));
+                  BlocProvider<AuthenticationBloc>(
+                      create: (_) => AuthenticationBloc()
+                        ..add(AuthenticationEvent.AUTHENTICATED))
+                ], child: DriverTabs()));
       case "Login":
-        return SlideLeftRoute<bool>(builder: (BuildContext context) => BlocProvider<AuthenticationBloc>(
-            create: (_) => AuthenticationBloc(),
-            child: Login()));
+        return SlideLeftRoute<bool>(
+            builder: (BuildContext context) => BlocProvider<AuthenticationBloc>(
+                create: (_) => AuthenticationBloc(), child: Login()));
       case "DriverOnboard":
         return SlideLeftRoute<bool>(
             builder: (BuildContext context) => DriverOnboard());
@@ -106,6 +108,13 @@ class Routes {
             builder: (BuildContext context) => BlocProvider<RideOrdersBloc>(
                 create: (_) => RideOrdersBloc()..add(OrdersFetched()),
                 child: RideHistory()));
+      case "RiderHistory":
+        return CustomRoute<bool>(
+            builder: (BuildContext context) =>
+                BlocProvider<RiderOrdersHistoryBloc>(
+                    create: (_) =>
+                        RiderOrdersHistoryBloc()..add(RiderOrdersFetched()),
+                    child: RiderOrderHistory()));
       case "TrackDeliveries":
         return SlideLeftRoute<bool>(
             builder: (BuildContext context) => TrackDeliveries());

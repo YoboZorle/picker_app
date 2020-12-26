@@ -66,6 +66,17 @@ class RideRepository extends APIClient {
     }
   }
 
+  Future<dynamic> getRiderOrders({@required int page}) async {
+    final String url = '/rider-history?page=$page';
+    try {
+      Response response = await dio.get(url);
+      final responseBody = response.data;
+      return responseBody;
+    } catch (e) {
+      throw ServiceError('Request failed please try again.');
+    }
+  }
+
   processAcceptRide(int rideId) async {
     final String url = '/order/${rideId.toString()}/accept';
     try {

@@ -91,18 +91,6 @@ class NavDrawer extends StatelessWidget {
                   },
                 ),
                 ListTile(
-                  onTap: () => Navigator.pushNamed(context, '/TrackDeliveries'),
-                  title: Text(
-                    'Track Deliveries',
-                    style: TextStyle(
-                        fontWeight: FontWeight.w400,
-                        fontFamily: "Ubuntu",
-                        fontSize: 18),
-                  ),
-                  leading: Icon(Icons.track_changes),
-                  dense: false,
-                ),
-                ListTile(
                   title: Text(
                     'Support',
                     style: TextStyle(
@@ -111,7 +99,7 @@ class NavDrawer extends StatelessWidget {
                         fontSize: 18),
                   ),
                   leading: Icon(Icons.help_outline),
-                  onTap: () {},
+                  onTap: () => launch("tel://+2348076048409"),
                 ),
                 ListTile(
                     title: Text(
@@ -246,6 +234,19 @@ class RiderNavDrawer extends StatelessWidget {
                       color: Colors.grey[300]),
                   ListTile(
                     title: Text(
+                      'Order History',
+                      style: TextStyle(
+                          fontWeight: FontWeight.w400,
+                          fontFamily: "Ubuntu",
+                          fontSize: 18),
+                    ),
+                    leading: Icon(Icons.history),
+                    onTap: () {
+                      Navigator.pushNamed(context, '/RiderHistory');
+                    },
+                  ),
+                  ListTile(
+                    title: Text(
                       'Support',
                       style: TextStyle(
                           fontWeight: FontWeight.w400,
@@ -253,17 +254,7 @@ class RiderNavDrawer extends StatelessWidget {
                           fontSize: 18),
                     ),
                     leading: Icon(Icons.support_agent),
-                    onTap: () => launch("tel://2348076048409"),
-                  ),
-                  ListTile(
-                    title: Text(
-                      'About',
-                      style: TextStyle(
-                          fontWeight: FontWeight.w400,
-                          fontFamily: "Ubuntu",
-                          fontSize: 18),
-                    ),
-                    leading: Icon(Icons.read_more),
+                    onTap: () => launch("tel://+2348076048409"),
                   ),
                   Expanded(child: SizedBox()),
                   Container(
