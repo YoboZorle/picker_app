@@ -8,7 +8,6 @@ import 'package:pickrr_app/src/helpers/custom_route.dart';
 import 'package:pickrr_app/src/models/user.dart';
 import 'package:pickrr_app/src/screens/auth/complete_profile_form.dart';
 import 'package:pickrr_app/src/screens/auth/login.dart';
-import 'package:pickrr_app/src/screens/auth/otp_verification.dart';
 import 'package:pickrr_app/src/screens/driver/onboard.dart';
 import 'package:pickrr_app/src/screens/driver/order_history.dart';
 import 'package:pickrr_app/src/screens/home.dart';
@@ -60,25 +59,6 @@ class Routes {
       case "DriverApplication":
         return CustomRoute<bool>(
             builder: (BuildContext context) => DriverApplication());
-      case "OTPVerification":
-        String phone;
-        String callingCode;
-        if (pathElements.length > 2) {
-          phone = pathElements[2];
-          callingCode = pathElements[3];
-        }
-        return SlideLeftRoute<bool>(
-            builder: (BuildContext context) => MultiBlocProvider(
-                  providers: [
-                    BlocProvider<LoginBloc>(create: (_) => LoginBloc()),
-                    BlocProvider<AuthenticationBloc>(
-                        create: (_) => AuthenticationBloc())
-                  ],
-                  child: OTPVerification(
-                    phone: phone,
-                    callingCode: callingCode,
-                  ),
-                ));
       case "CompleteProfileDetails":
         return SlideLeftRoute<bool>(
             builder: (BuildContext context) => CompleteProfileForm());

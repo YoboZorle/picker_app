@@ -30,7 +30,6 @@ dependencies:
 
   flare_flutter: ^2.0.6
   country_code_picker: ^1.1.7
-  pin_view: ^1.0.1
   image_picker: ^0.6.7+12
   google_maps_flutter: ^0.5.30
   location: ^3.0.2
