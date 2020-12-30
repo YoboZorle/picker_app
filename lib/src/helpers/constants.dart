@@ -98,7 +98,7 @@ class AppData {
   static final String mapAPIKey = 'AIzaSyAPV3djPp_HceZIbgK4M4jRadHA-d08ECg';
   static final String placeholderImageUrl = '';
   static final String currency = FlutterwaveCurrency.NGN;
-  static final String flutterWaveEncryptionKey = 'FLWSECK_TEST96492f6f57f4';
-  static final String flutterWavePublicKey = 'FLWPUBK_TEST-9dbb56cadb2094e1176ec9257a61e89d-X';
+  static final String flutterWaveEncryptionKey = 'db10212d5c965cc55e922ed4';
+  static final String flutterWavePublicKey = 'FLWPUBK-3bc543698de65afc2bcea532aee80c6d-X';
 }
 

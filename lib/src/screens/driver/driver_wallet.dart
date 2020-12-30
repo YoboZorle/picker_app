@@ -73,7 +73,6 @@ class _DriverWalletState extends State<DriverWallet> {
                           return Text("\u20A6 ${driverDetails['balance']}",
                               style: TextStyle(
                                 fontWeight: FontWeight.w800,
-                                fontFamily: 'Ubuntu',
                                 fontSize: 27,
                               ));
                         },
