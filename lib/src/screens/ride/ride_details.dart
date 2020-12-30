@@ -48,9 +48,16 @@ class _RideDetailsState extends State<RideDetails> {
     });
   }
 
+  Future<bool> _onBackPressed() async {
+    Navigator.of(context).popAndPushNamed('/RideHistory');
+    return true;
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return WillPopScope(
+      onWillPop: _onBackPressed,
+      child: Scaffold(
         body: SafeArea(
         top: true,
         child: ListView(
@@ -66,6 +73,6 @@ class _RideDetailsState extends State<RideDetails> {
           ],
         ),
       ),
-    );
+    ));
   }
 }
