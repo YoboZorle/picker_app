@@ -29,7 +29,7 @@ class OnlinePayment {
         email: userEmail,
         fullName: userName,
         txRef: transactionRef,
-        isDebugMode: true,
+        isDebugMode: false,
         phoneNumber: userPhone,
         acceptCardPayment: true,
         acceptUSSDPayment: true,

@@ -503,7 +503,10 @@ class ReviewOrder extends StatelessWidget {
                             color: Colors.grey,
                             fontWeight: FontWeight.w400,
                             height: 1.4)),
-                    onTap: () => _processOrder(context, 'CASH'),
+                    onTap: () {
+                      Navigator.pop(context);
+                      return _processOrder(context, 'CASH');
+                    },
                     trailing: Icon(Icons.arrow_forward_ios,
                         color: Colors.grey[400], size: 18),
                     contentPadding:
@@ -542,6 +545,7 @@ class ReviewOrder extends StatelessWidget {
   }
 
   _initiateOnlinePayment(BuildContext context, User user) async {
+    Navigator.pop(context);
     final paymentMethod = 'CARD';
     final onlinePayment = OnlinePayment(
       context: context,

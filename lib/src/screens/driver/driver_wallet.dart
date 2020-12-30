@@ -163,7 +163,6 @@ class _DriverWalletState extends State<DriverWallet> {
                         Text("\u20A6 ${history.balance}",
                             style: TextStyle(
                                 fontSize: 16.0,
-                                fontFamily: "Ubuntu",
                                 fontWeight: FontWeight.bold))
                       ],
                     ),

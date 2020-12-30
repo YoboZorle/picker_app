@@ -166,7 +166,7 @@ class _PackageReceiverDetailsState extends State<PackageReceiverDetails> {
                                         color: Colors.white,
                                         fontWeight: FontWeight.w500))),
                             onTap: () => _enableBtn
-                                ? Navigator.pushNamed(context, '/ReviewOrderPage',
+                                ? Navigator.popAndPushNamed(context, '/ReviewOrderPage',
                                     arguments: RideDetailsArguments(
                                         widget.price,
                                         widget.pickupCoordinate,
