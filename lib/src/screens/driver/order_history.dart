@@ -88,48 +88,45 @@ class _RiderOrderHistoryState extends State<RiderOrderHistory> {
                           return PreLoader();
                         }
                         Ride ride = state.rides[index];
-                        return InkWell(
-                          onTap: () => Navigator.pushNamed(context, '/RideDetails', arguments: RideArguments(ride)),
-                          child: Column(
-                            children: [
-                              SizedBox(height: 10),
-                              Card(
-                                elevation: 0,
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 10.0, horizontal: 20),
-                                  child: ListTile(
-                                    title: Text(
-                                      ride.deliveryLocation.address,
-                                      style: TextStyle(
-                                          fontSize: 16.0,
-                                          fontFamily: "Ubuntu",
-                                          color: Colors.black87,
-                                          fontWeight: FontWeight.w500,
-                                          height: 1.6),
-                                    ),
-                                    subtitle: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          getFullTime(ride.createdAt),
-                                          style: TextStyle(
-                                              fontSize: 16.0,
-                                              fontFamily: "Ubuntu",
-                                              color: Colors.grey,
-                                              fontWeight: FontWeight.w400,
-                                              height: 1.6),
-                                        ),
-                                        RideStatusText(ride.status)
-                                      ],
-                                    ),
-                                    contentPadding: EdgeInsets.all(0),
-                                    dense: true,
+                        return Column(
+                          children: [
+                            SizedBox(height: 10),
+                            Card(
+                              elevation: 0,
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 10.0, horizontal: 20),
+                                child: ListTile(
+                                  title: Text(
+                                    ride.deliveryLocation.address,
+                                    style: TextStyle(
+                                        fontSize: 16.0,
+                                        fontFamily: "Ubuntu",
+                                        color: Colors.black87,
+                                        fontWeight: FontWeight.w500,
+                                        height: 1.6),
                                   ),
+                                  subtitle: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        getFullTime(ride.createdAt),
+                                        style: TextStyle(
+                                            fontSize: 16.0,
+                                            fontFamily: "Ubuntu",
+                                            color: Colors.grey,
+                                            fontWeight: FontWeight.w400,
+                                            height: 1.6),
+                                      ),
+                                      RideStatusText(ride.status)
+                                    ],
+                                  ),
+                                  contentPadding: EdgeInsets.all(0),
+                                  dense: true,
                                 ),
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         );
                       },
                       childCount: state.hasReachedMax
