@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pickrr_app/src/blocs/driver/orders/bloc.dart';
 import 'package:pickrr_app/src/models/ride.dart';
 import 'package:pickrr_app/src/helpers/utility.dart';
+import 'package:pickrr_app/src/widgets/preloader.dart';
 import 'package:pickrr_app/src/widgets/ride_status.dart';
 
 class RiderOrderHistory extends StatefulWidget {

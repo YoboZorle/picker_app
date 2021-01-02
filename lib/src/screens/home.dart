@@ -36,8 +36,8 @@ class _HomeState extends State<Home> {
   final List<Polyline> polyline = [];
   List<LatLng> routeCoords = [];
   Completer<GoogleMapController> __controller = Completer();
-  final Map<String, dynamic> pickupCoordinate = {};
-  final Map<String, dynamic> destinationCoordinate = {};
+  Map<String, dynamic> pickupCoordinate = {};
+  Map<String, dynamic> destinationCoordinate = {};
 
   PlaceDetails destination;
   PlaceDetails pickupPoint;
@@ -122,11 +122,9 @@ class _HomeState extends State<Home> {
 
   computePath() async {
     LatLng origin = new LatLng(
-        destination.geometry.location.lat,
-        destination.geometry.location.lng);
+        destination.geometry.location.lat, destination.geometry.location.lng);
     LatLng end = new LatLng(
-        pickupPoint.geometry.location.lat,
-        pickupPoint.geometry.location.lng);
+        pickupPoint.geometry.location.lat, pickupPoint.geometry.location.lng);
     routeCoords.addAll(await googleMapPolyline.getCoordinatesWithLocation(
         origin: origin, destination: end, mode: RouteMode.driving));
 
@@ -176,16 +174,14 @@ class _HomeState extends State<Home> {
     // the bounds you want to set
     LatLngBounds bounds = LatLngBounds(
       southwest: LatLng(
-          pickupPoint.geometry.location.lat,
-        pickupPoint.geometry.location.lng),
-      northeast: LatLng(  destination.geometry.location.lat,
-        destination.geometry.location.lng),
+          pickupPoint.geometry.location.lat, pickupPoint.geometry.location.lng),
+      northeast: LatLng(
+          destination.geometry.location.lat, destination.geometry.location.lng),
     );
 // calculating centre of the bounds
     LatLng centerBounds = LatLng(
-        (bounds.northeast.latitude + bounds.southwest.latitude)/2,
-        (bounds.northeast.longitude + bounds.southwest.longitude)/2
-    );
+        (bounds.northeast.latitude + bounds.southwest.latitude) / 2,
+        (bounds.northeast.longitude + bounds.southwest.longitude) / 2);
 
 // setting map position to centre to start with
     mapController.moveCamera(CameraUpdate.newCameraPosition(CameraPosition(
@@ -220,12 +216,12 @@ class _HomeState extends State<Home> {
           .submitRideLocation(new FormData.fromMap(formDetails));
       pickupCoordinate['id'] = response['pickup_id'];
       destinationCoordinate['id'] = response['destination_id'];
-      _resetState();
       final duration = _placeTime;
       final locationDistance = _placeDistance;
       final price = priceCalculator(_distanceCovered);
       final pickupDetails = pickupCoordinate;
       final destinationDetails = destinationCoordinate;
+      _resetState();
       Navigator.pop(context);
       Navigator.push(
           context,
@@ -362,8 +358,8 @@ class _HomeState extends State<Home> {
                                           ),
                                         ],
                                       ),
-                                      contentPadding:
-                                          EdgeInsets.only(left: 15.0, top: 15.0),
+                                      contentPadding: EdgeInsets.only(
+                                          left: 15.0, top: 15.0),
                                     ),
                                     controller: pickupController,
                                     onTap: () async {
@@ -377,13 +373,15 @@ class _HomeState extends State<Home> {
                                               language: "en",
                                               hint: 'Search pickup location',
                                               components: [
-                                            new Component(Component.country, "ng")
+                                            new Component(
+                                                Component.country, "ng")
                                           ]);
                                       displayPredictionPickup(p);
                                       setState(() {
                                         if (markersList.isNotEmpty)
                                           markersList.clear();
-                                        if (polyline.isNotEmpty) polyline.clear();
+                                        if (polyline.isNotEmpty)
+                                          polyline.clear();
                                         if (routeCoords.isNotEmpty)
                                           routeCoords.clear();
                                         _placeDistance = null;
@@ -443,8 +441,8 @@ class _HomeState extends State<Home> {
                                           ),
                                         ],
                                       ),
-                                      contentPadding:
-                                          EdgeInsets.only(left: 15.0, top: 15.0),
+                                      contentPadding: EdgeInsets.only(
+                                          left: 15.0, top: 15.0),
                                     ),
                                     controller: destinationController,
                                     onTap: () async {
@@ -458,13 +456,15 @@ class _HomeState extends State<Home> {
                                                   color: Colors.transparent),
                                               hint: 'Search destination',
                                               components: [
-                                            new Component(Component.country, "ng")
+                                            new Component(
+                                                Component.country, "ng")
                                           ]);
                                       displayPredictionDestination(p);
                                       setState(() {
                                         if (markersList.isNotEmpty)
                                           markersList.clear();
-                                        if (polyline.isNotEmpty) polyline.clear();
+                                        if (polyline.isNotEmpty)
+                                          polyline.clear();
                                         if (routeCoords.isNotEmpty)
                                           routeCoords.clear();
                                         _placeDistance = null;
@@ -517,7 +517,7 @@ class _HomeState extends State<Home> {
     _distanceCovered = null;
     _placeTime = null;
     pickupCoordinate = {};
-  destinationCoordinate = {};
+    destinationCoordinate = {};
     markersList.clear();
     routeCoords.clear();
     polyline.clear();
@@ -538,10 +538,8 @@ class _HomeState extends State<Home> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            SvgPicture.asset(
-                'assets/svg/scooter.svg',
-                height: 55,
-                semanticsLabel: 'search icon'),
+            SvgPicture.asset('assets/svg/scooter.svg',
+                height: 55, semanticsLabel: 'search icon'),
             SizedBox(width: 8),
             Expanded(
               child: Column(
@@ -556,7 +554,7 @@ class _HomeState extends State<Home> {
                       fontWeight: FontWeight.w400,
                     ),
                   ),
-                  Text('$_placeTime'' / ''$_placeDistance' 'km',
+                  Text('$_placeTime' ' / ' '$_placeDistance' 'km',
                       style: TextStyle(
                         fontSize: 16,
                         fontFamily: "Ubuntu",
@@ -590,30 +588,32 @@ class _HomeState extends State<Home> {
             //         )),
             //   ],
             // )),
-            Expanded(flex: 0,
+            Expanded(
+                flex: 0,
                 child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Text(
-                  'Fare estimate:',
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontFamily: "Ubuntu",
-                    color: Colors.black54,
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
-                Text(
-                    currencyFormatter.format(priceCalculator(_distanceCovered)),
-                    style: TextStyle(
-                      fontSize: 22,
-                      fontFamily: "Roboto",
-                      color: AppColor.primaryText,
-                      fontWeight: FontWeight.w800,
-                    )),
-              ],
-            )),
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Fare estimate:',
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontFamily: "Ubuntu",
+                        color: Colors.black54,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                    Text(
+                        currencyFormatter
+                            .format(priceCalculator(_distanceCovered)),
+                        style: TextStyle(
+                          fontSize: 22,
+                          fontFamily: "Roboto",
+                          color: AppColor.primaryText,
+                          fontWeight: FontWeight.w800,
+                        )),
+                  ],
+                )),
           ],
         ),
       );
@@ -652,12 +652,13 @@ class _HomeState extends State<Home> {
         ],
       );
 
-  Future<void> zoomToFit(GoogleMapController controller, LatLngBounds bounds, LatLng centerBounds) async {
+  Future<void> zoomToFit(GoogleMapController controller, LatLngBounds bounds,
+      LatLng centerBounds) async {
     bool keepZoomingOut = true;
 
-    while(keepZoomingOut) {
+    while (keepZoomingOut) {
       final LatLngBounds screenBounds = await controller.getVisibleRegion();
-      if(fits(bounds, screenBounds)){
+      if (fits(bounds, screenBounds)) {
         keepZoomingOut = false;
         final double zoomLevel = await controller.getZoomLevel() - 0.5;
         controller.moveCamera(CameraUpdate.newCameraPosition(CameraPosition(
@@ -665,8 +666,7 @@ class _HomeState extends State<Home> {
           zoom: zoomLevel,
         )));
         break;
-      }
-      else {
+      } else {
         // Zooming out by 0.1 zoom level per iteration
         final double zoomLevel = await controller.getZoomLevel() - 0.1;
         controller.moveCamera(CameraUpdate.newCameraPosition(CameraPosition(
@@ -678,12 +678,19 @@ class _HomeState extends State<Home> {
   }
 
   bool fits(LatLngBounds fitBounds, LatLngBounds screenBounds) {
-    final bool northEastLatitudeCheck = screenBounds.northeast.latitude >= fitBounds.northeast.latitude;
-    final bool northEastLongitudeCheck = screenBounds.northeast.longitude >= fitBounds.northeast.longitude;
+    final bool northEastLatitudeCheck =
+        screenBounds.northeast.latitude >= fitBounds.northeast.latitude;
+    final bool northEastLongitudeCheck =
+        screenBounds.northeast.longitude >= fitBounds.northeast.longitude;
 
-    final bool southWestLatitudeCheck = screenBounds.southwest.latitude <= fitBounds.southwest.latitude;
-    final bool southWestLongitudeCheck = screenBounds.southwest.longitude <= fitBounds.southwest.longitude;
+    final bool southWestLatitudeCheck =
+        screenBounds.southwest.latitude <= fitBounds.southwest.latitude;
+    final bool southWestLongitudeCheck =
+        screenBounds.southwest.longitude <= fitBounds.southwest.longitude;
 
-    return northEastLatitudeCheck && northEastLongitudeCheck && southWestLatitudeCheck && southWestLongitudeCheck;
+    return northEastLatitudeCheck &&
+        northEastLongitudeCheck &&
+        southWestLatitudeCheck &&
+        southWestLongitudeCheck;
   }
 }

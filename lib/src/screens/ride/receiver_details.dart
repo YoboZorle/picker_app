@@ -84,9 +84,6 @@ class _PackageReceiverDetailsState extends State<PackageReceiverDetails> {
                           ),
                           title: TextFormField(
                             autofocus: true,
-                            validator: (value) => value.length < 5
-                                ? 'Name must be at least 5 digits'
-                                : null,
                             controller: _receiversFullNameController,
                             keyboardType: TextInputType.name,
                             decoration: InputDecoration(
@@ -117,7 +114,7 @@ class _PackageReceiverDetailsState extends State<PackageReceiverDetails> {
                           ),
                           title: TextFormField(
                             validator: (value) => value.length < 10
-                                ? 'Phone number must be ore than 10'
+                                ? 'Phone number must be more than 10'
                                 : null,
                             controller: _receiversPhoneController,
                             keyboardType: TextInputType.number,
