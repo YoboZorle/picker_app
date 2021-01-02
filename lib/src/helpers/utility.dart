@@ -155,7 +155,8 @@ void cancelRide(BuildContext context, rideId, {nextRoute = '/HomePage'}) async {
       showProgressIndicator: true, duration: null);
   try {
     await RideRepository().cancelRide(rideId);
-    Navigator.pushNamedAndRemoveUntil(context, nextRoute, (route) => false);
+    Navigator.pop(context);
+    Navigator.popAndPushNamed(context, nextRoute);
   } catch (err) {
     debugLog(err);
     Navigator.pop(context);
