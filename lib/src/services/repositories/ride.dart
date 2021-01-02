@@ -55,8 +55,8 @@ class RideRepository extends APIClient {
     }
   }
 
-  Future<dynamic> getOrders({@required int page}) async {
-    final String url = '/orders?page=$page';
+  Future<dynamic> getOrders({@required int page, isUser=true}) async {
+    final String url = '/orders?page=$page&is_user=$isUser';
     try {
       Response response = await dio.get(url);
       final responseBody = response.data;

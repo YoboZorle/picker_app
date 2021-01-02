@@ -193,22 +193,6 @@ class _HomeState extends State<Home> {
       zoom: 17,
     )));
     zoomToFit(mapController, bounds, centerBounds);
-
-    // mapController.animateCamera(
-    //   CameraUpdate.newLatLngBounds(
-    //     LatLngBounds(
-    //       northeast: LatLng(
-    //         destination.geometry.location.lat,
-    //         destination.geometry.location.lng,
-    //       ),
-    //       southwest: LatLng(
-    //         pickupPoint.geometry.location.lat,
-    //         pickupPoint.geometry.location.lng,
-    //       ),
-    //     ),
-    //     100.0,
-    //   ),
-    // );
   }
 
   void _processLocations() async {
@@ -236,16 +220,22 @@ class _HomeState extends State<Home> {
           .submitRideLocation(new FormData.fromMap(formDetails));
       pickupCoordinate['id'] = response['pickup_id'];
       destinationCoordinate['id'] = response['destination_id'];
+      _resetState();
+      final duration = _placeTime;
+      final locationDistance = _placeDistance;
+      final price = priceCalculator(_distanceCovered);
+      final pickupDetails = pickupCoordinate;
+      final destinationDetails = destinationCoordinate;
       Navigator.pop(context);
       Navigator.push(
           context,
           MaterialPageRoute(
               builder: (context) => PackageReceiverDetails(
-                  duration: _placeTime,
-                  distance: _placeDistance,
-                  price: priceCalculator(_distanceCovered),
-                  pickupCoordinate: pickupCoordinate,
-                  destinationCoordinate: destinationCoordinate)));
+                  duration: duration,
+                  distance: locationDistance,
+                  price: price,
+                  pickupCoordinate: pickupDetails,
+                  destinationCoordinate: destinationDetails)));
     } catch (err) {
       debugLog(err);
       Navigator.pop(context);
@@ -520,9 +510,25 @@ class _HomeState extends State<Home> {
         ));
   }
 
+  void _resetState() {
+    destination = null;
+    pickupPoint = null;
+    _placeDistance = null;
+    _distanceCovered = null;
+    _placeTime = null;
+    pickupCoordinate = {};
+  destinationCoordinate = {};
+    markersList.clear();
+    routeCoords.clear();
+    polyline.clear();
+  }
+
   @override
   void dispose() {
     mapController.dispose();
+    destinationController.dispose();
+    pickupController.dispose();
+    _resetState();
     super.dispose();
   }
 
