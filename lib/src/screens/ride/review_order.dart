@@ -24,7 +24,6 @@ class ReviewOrder extends StatelessWidget {
       NumberFormat.currency(locale: 'en_US', symbol: '\u20a6');
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
-
   Future<bool> _onBackPressed(context) async {
     Navigator.of(context).popAndPushNamed('/HomePage');
     return true;
@@ -59,21 +58,10 @@ class ReviewOrder extends StatelessWidget {
             backgroundColor: Colors.white,
           ),
           body: GestureDetector(
-            onTap: () {
-              FocusScope.of(context).requestFocus(new FocusNode());
-            },
-            child: BlocBuilder<AuthenticationBloc, AuthenticationState>(
-                builder: (_, state) {
-              if (state is NonLoggedIn) {
-                WidgetsBinding.instance.addPostFrameCallback(
-                    (_) => Navigator.pushReplacementNamed(context, '/'));
-              }
-              if (state.props.isEmpty) {
-                return Container();
-              }
-              User user = state.props[0];
-
-              return SafeArea(
+              onTap: () {
+                FocusScope.of(context).requestFocus(new FocusNode());
+              },
+              child: SafeArea(
                 child: Column(children: <Widget>[
                   Expanded(
                     child: new Container(
@@ -126,15 +114,33 @@ class ReviewOrder extends StatelessWidget {
                                               ),
                                               SizedBox(width: 18),
                                               Expanded(
-                                                child: Text(
-                                                  user.fullname.capitalize(),
-                                                  style: TextStyle(
-                                                      fontSize: 14.0,
-                                                      fontFamily: "Ubuntu",
-                                                      color: Colors.black,
-                                                      fontWeight:
-                                                          FontWeight.w600),
-                                                ),
+                                                child: BlocBuilder<
+                                                        AuthenticationBloc,
+                                                        AuthenticationState>(
+                                                    builder: (_, state) {
+                                                  if (state is NonLoggedIn) {
+                                                    WidgetsBinding.instance
+                                                        .addPostFrameCallback(
+                                                            (_) => Navigator
+                                                                .pushReplacementNamed(
+                                                                    context,
+                                                                    '/'));
+                                                  }
+                                                  if (state.props.isEmpty) {
+                                                    return Container();
+                                                  }
+                                                  User user = state.props[0];
+
+                                                  return Text(
+                                                    user.fullname.capitalize(),
+                                                    style: TextStyle(
+                                                        fontSize: 14.0,
+                                                        fontFamily: "Ubuntu",
+                                                        color: Colors.black,
+                                                        fontWeight:
+                                                            FontWeight.w600),
+                                                  );
+                                                }),
                                               ),
                                             ],
                                           ),
@@ -152,15 +158,33 @@ class ReviewOrder extends StatelessWidget {
                                               ),
                                               SizedBox(width: 18),
                                               Expanded(
-                                                child: Text(
-                                                  '+${user.callingCode}${user.phone}',
-                                                  style: TextStyle(
-                                                      fontSize: 14.0,
-                                                      fontFamily: "Ubuntu",
-                                                      color: Colors.black,
-                                                      fontWeight:
-                                                          FontWeight.w600),
-                                                ),
+                                                child: BlocBuilder<
+                                                        AuthenticationBloc,
+                                                        AuthenticationState>(
+                                                    builder: (_, state) {
+                                                  if (state is NonLoggedIn) {
+                                                    WidgetsBinding.instance
+                                                        .addPostFrameCallback(
+                                                            (_) => Navigator
+                                                                .pushReplacementNamed(
+                                                                    context,
+                                                                    '/'));
+                                                  }
+                                                  if (state.props.isEmpty) {
+                                                    return Container();
+                                                  }
+                                                  User user = state.props[0];
+
+                                                  return Text(
+                                                    '+${user.callingCode}${user.phone}',
+                                                    style: TextStyle(
+                                                        fontSize: 14.0,
+                                                        fontFamily: "Ubuntu",
+                                                        color: Colors.black,
+                                                        fontWeight:
+                                                            FontWeight.w600),
+                                                  );
+                                                }),
                                               ),
                                             ],
                                           ),
@@ -436,34 +460,45 @@ class ReviewOrder extends StatelessWidget {
                         SizedBox(
                           height: 46,
                           width: MediaQuery.of(context).size.width / 1.1,
-                          child: FlatButton(
-                            splashColor: Colors.white,
-                            shape: new RoundedRectangleBorder(
-                              borderRadius: new BorderRadius.circular(25.0),
-                            ),
-                            onPressed: () {
-                              _choosePaymentMethodSheet(context, user);
-                            },
-                            color: AppColor.primaryText,
-                            child: Text(
-                                "Pay " +
-                                    currencyFormatter.format(arguments.price),
-                                style: TextStyle(
-                                    fontFamily: "Roboto",
-                                    fontWeight: FontWeight.w600,
-                                    color: Color(0xFFFFFFFF),
-                                    fontSize: 15,
-                                    height: 1.4)),
-                          ),
+                          child: BlocBuilder<AuthenticationBloc,
+                              AuthenticationState>(builder: (_, state) {
+                            if (state is NonLoggedIn) {
+                              WidgetsBinding.instance.addPostFrameCallback(
+                                  (_) => Navigator.pushReplacementNamed(
+                                      context, '/'));
+                            }
+                            if (state.props.isEmpty) {
+                              return Container();
+                            }
+                            User user = state.props[0];
+
+                            return FlatButton(
+                              splashColor: Colors.white,
+                              shape: new RoundedRectangleBorder(
+                                borderRadius: new BorderRadius.circular(25.0),
+                              ),
+                              onPressed: () {
+                                _choosePaymentMethodSheet(context, user);
+                              },
+                              color: AppColor.primaryText,
+                              child: Text(
+                                  "Pay " +
+                                      currencyFormatter.format(arguments.price),
+                                  style: TextStyle(
+                                      fontFamily: "Roboto",
+                                      fontWeight: FontWeight.w600,
+                                      color: Color(0xFFFFFFFF),
+                                      fontSize: 15,
+                                      height: 1.4)),
+                            );
+                          }),
                         ),
                         SizedBox(height: 5),
                       ],
                     ),
                   ),
                 ]),
-              );
-            }),
-          )),
+              ))),
     );
   }
 
@@ -512,30 +547,30 @@ class ReviewOrder extends StatelessWidget {
                     contentPadding:
                         EdgeInsets.only(top: 15, bottom: 15, left: 15),
                   ),
-                  Divider(height: 0.5, color: Colors.grey[400]),
-                  new ListTile(
-                    dense: true,
-                    leading: SvgPicture.asset('assets/svg/card.svg',
-                        height: 30, semanticsLabel: 'card icon'),
-                    title: new Text('Pay Online',
-                        style: TextStyle(
-                            fontSize: 17.0,
-                            fontFamily: "Ubuntu",
-                            color: Colors.black,
-                            fontWeight: FontWeight.w400)),
-                    subtitle: Text('Pay using your card details',
-                        style: TextStyle(
-                            fontSize: 15.0,
-                            fontFamily: "Ubuntu",
-                            color: Colors.grey,
-                            fontWeight: FontWeight.w400,
-                            height: 1.4)),
-                    onTap: () => _initiateOnlinePayment(context, user),
-                    trailing: Icon(Icons.arrow_forward_ios,
-                        color: Colors.grey[400], size: 18),
-                    contentPadding:
-                        EdgeInsets.only(top: 15, bottom: 15, left: 15),
-                  ),
+//                  Divider(height: 0.5, color: Colors.grey[400]),
+//                  new ListTile(
+//                    dense: true,
+//                    leading: SvgPicture.asset('assets/svg/card.svg',
+//                        height: 30, semanticsLabel: 'card icon'),
+//                    title: new Text('Pay Online',
+//                        style: TextStyle(
+//                            fontSize: 17.0,
+//                            fontFamily: "Ubuntu",
+//                            color: Colors.black,
+//                            fontWeight: FontWeight.w400)),
+//                    subtitle: Text('Pay using your card details',
+//                        style: TextStyle(
+//                            fontSize: 15.0,
+//                            fontFamily: "Ubuntu",
+//                            color: Colors.grey,
+//                            fontWeight: FontWeight.w400,
+//                            height: 1.4)),
+//                    onTap: () => _initiateOnlinePayment(context, user),
+//                    trailing: Icon(Icons.arrow_forward_ios,
+//                        color: Colors.grey[400], size: 18),
+//                    contentPadding:
+//                        EdgeInsets.only(top: 15, bottom: 15, left: 15),
+//                  ),
                   // SizedBox(height: 10),
                 ],
               ),
@@ -544,25 +579,24 @@ class ReviewOrder extends StatelessWidget {
         });
   }
 
-  _initiateOnlinePayment(BuildContext context, User user) async {
-    Navigator.pop(context);
-    final paymentMethod = 'CARD';
-    final onlinePayment = OnlinePayment(
-      context: context,
-      userName: user.fullname,
-      userEmail: user.email,
-      userPhone: '0${user.phone}',
-      amount: arguments.price.toString(),
-      onCompletePayment: (String transactionRef) =>
-          _processOrder(context, paymentMethod, transactionId: transactionRef),
-    );
-
-    return await onlinePayment.processPayment();
-  }
+//  _initiateOnlinePayment(BuildContext context, User user) async {
+//    Navigator.pop(context);
+//    final paymentMethod = 'CARD';
+//    final onlinePayment = OnlinePayment(
+//      context: context,
+//      userName: user.fullname,
+//      userEmail: user.email,
+//      userPhone: '0${user.phone}',
+//      amount: arguments.price.toString(),
+//      onCompletePayment: (String transactionRef) =>
+//          _processOrder(context, paymentMethod, transactionId: transactionRef),
+//    );
+//
+//    return await onlinePayment.processPayment();
+//  }
 
   void _processOrder(BuildContext context, String paymentMethod,
       {transactionId}) async {
-
     AlertBar.dialog(context, 'Processing request...', AppColor.primaryText,
         showProgressIndicator: true, duration: null);
 

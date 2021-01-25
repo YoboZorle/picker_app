@@ -14,29 +14,25 @@ class CustomerAppBar extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Hero(
-                tag: "nav",
-                flightShuttleBuilder: _flightShuttleBuilder,
-                child: GestureDetector(
-                    child: Container(
-                      padding: EdgeInsets.only(right: 10),
-                      child: Card(
-                          elevation: 8,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(50.0),
+              GestureDetector(
+                  child: Container(
+                    padding: EdgeInsets.only(right: 10),
+                    child: Card(
+                        elevation: 8,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(50.0),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Icon(
+                            Icons.menu_sharp,
+                            size: 23,
                           ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Icon(
-                              Icons.menu_sharp,
-                              size: 23,
-                            ),
-                          )),
-                    ),
-                    onTap: () {
-                      Scaffold.of(context).openDrawer();
-                    }),
-              ),
+                        )),
+                  ),
+                  onTap: () {
+                    Scaffold.of(context).openDrawer();
+                  }),
               BlocBuilder<AuthenticationBloc, AuthenticationState>(
                   builder: (_, state) {
                 if (state is NonLoggedIn) {
@@ -93,19 +89,6 @@ class CustomerAppBar extends StatelessWidget {
               }),
             ],
           )),
-    );
-  }
-
-  Widget _flightShuttleBuilder(
-    BuildContext flightContext,
-    Animation<double> animation,
-    HeroFlightDirection flightDirection,
-    BuildContext fromHeroContext,
-    BuildContext toHeroContext,
-  ) {
-    return DefaultTextStyle(
-      style: DefaultTextStyle.of(toHeroContext).style,
-      child: toHeroContext.widget,
     );
   }
 }
