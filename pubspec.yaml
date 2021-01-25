@@ -15,7 +15,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 1.0.1+4
+version: 1.0.2+5
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
@@ -27,12 +27,9 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.0
-
   flare_flutter: ^2.0.6
   country_code_picker: ^1.1.7
   image_picker: ^0.6.7+12
-  google_maps_flutter: ^0.5.30
-  location: ^3.0.2
   flutter_svg: ^0.19.0
   badges: ^1.1.4
   intl: ^0.15.8
@@ -40,14 +37,13 @@ dependencies:
   url_launcher: ^5.7.10
   circular_profile_avatar: ^1.0.8
   lite_rolling_switch: ^0.1.1
+  flutter_awesome_alert_box: ^1.0.1
+
+  google_maps_flutter: ^0.5.30
   geolocator: ^6.1.7
-  geocoding: ^1.0.5
-  flutter_polyline_points: ^0.2.1
   google_map_polyline: ^0.2.0
   google_maps_webservice: ^0.0.16
   flutter_google_places: ^0.2.6
-  http: ^0.12.2
-  flutter_awesome_alert_box: ^1.0.1
 
   bloc: ^6.1.0
   flutter_bloc: ^6.1.1
@@ -55,13 +51,12 @@ dependencies:
   meta: ^1.2.4
   sqflite: ^1.3.2+1
   dio: ^3.0.10
-  shared_preferences: ^0.5.12
   flutter_secure_storage: ^3.3.5
   flushbar: ^1.10.4
   flutter_clipboard_manager: ^0.0.2
   web_socket_channel: ^1.1.0
-  great_circle_distance_calculator: ^1.0.3
   flutterwave: ^0.0.2
+  firebase_messaging: ^7.0.3
 
 dev_dependencies:
   flutter_test:

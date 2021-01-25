@@ -73,7 +73,7 @@ class RideOrdersBloc extends Bloc<OrdersEvent, RideOrdersState> {
 
   Future<Map<String, dynamic>> _fetchOrdersAndGetPages(nextPage) async {
     try {
-      final response = await _rideRepository.getOrders(page: nextPage);
+      final response = await _rideRepository.getOrders(page: nextPage, isUser: 0);
       if (response == null) {
         return {'orders': [], 'currentPage': 1, 'lastPage': 1};
       }

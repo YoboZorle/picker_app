@@ -81,8 +81,8 @@ class UserRepository extends APIClient {
   }
 
   Future<void> requestOTP(
-      {@required phone, @required String callingCode}) async {
-    var formData = {'phone': phone, 'calling_code': callingCode};
+      {@required phone, @required String callingCode, deviceToken}) async {
+    var formData = {'phone': phone, 'calling_code': callingCode, 'device_token': deviceToken};
     final String url = '${APIConstants.apiUrl}users/obtain-otp';
 
     try {

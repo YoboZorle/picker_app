@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -312,8 +313,12 @@ class _LoginState extends State<Login> {
         showProgressIndicator: true, duration: null);
 
     try {
+      final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
+      _firebaseMessaging.requestNotificationPermissions();
+      _firebaseMessaging.configure();
+      String deviceToken = await _firebaseMessaging.getToken();
       await _userRepository.requestOTP(
-          callingCode: _callingCode, phone: _phoneController.text);
+          callingCode: _callingCode, phone: _phoneController.text, deviceToken: deviceToken);
       Navigator.pop(context);
       BlocProvider.of<AuthenticationBloc>(context).add(AuthenticationEvent.AUTHENTICATED);
     } catch (err) {

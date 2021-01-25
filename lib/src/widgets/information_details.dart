@@ -379,7 +379,6 @@ class _RideInformationWidgetState extends State<RideInformationWidget> {
                                 currencyFormatter.format(widget.rideDetails.price),
                                 style: TextStyle(
                                     fontSize: 16,
-                                    fontFamily: 'Ubuntu',
                                     color: Colors.black,
                                     fontWeight: FontWeight.w600)),
                           ],
@@ -600,7 +599,6 @@ class _RideInformationWidgetState extends State<RideInformationWidget> {
                             currencyFormatter.format(widget.rideDetails.price),
                             style: TextStyle(
                                 fontSize: 16,
-                                fontFamily: 'Ubuntu',
                                 color: Colors.black,
                                 fontWeight: FontWeight.w600)),
                       ],
