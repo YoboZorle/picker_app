@@ -52,7 +52,7 @@ class DriverOnboard extends StatelessWidget {
                               tag: 'input_phon_auth_title',
                               flightShuttleBuilder: _flightShuttleBuilder,
                               child: Text(
-                                'Gentle hands,\nfast tyres',
+                                'Want to be your own boss?',
                                 style: TextStyle(
                                     color: Colors.black,
                                     fontSize: 27,
@@ -67,7 +67,7 @@ class DriverOnboard extends StatelessWidget {
                             child: Hero(
                                 tag: 'body_text_splash',
                                 child: Text(
-                                  'We are the people you call for when you want your package delivered safe and fast.',
+                                  'The Pickrr Rider Portal helps you earn smarter with realtime information on orders.',
                                   style: TextStyle(
                                       color: Colors.black,
                                       fontSize: 16,
@@ -125,11 +125,100 @@ class DriverOnboard extends StatelessWidget {
                             ),
                             delay: delayAmount + 2400,
                           ),
+                          SizedBox(height: 20),
+                          ShowUp(
+                            child: GestureDetector(
+                              child: Container(
+                                height: 47,
+                                decoration: BoxDecoration(
+                                    gradient: LinearGradient(
+                                      colors: [
+                                        AppColor.primaryText,
+                                        AppColor.primaryText,
+                                        Colors.lightBlueAccent
+                                      ],
+                                      begin: Alignment.centerLeft,
+                                      end: Alignment.centerRight,
+                                    ),
+                                    borderRadius: const BorderRadius.all(
+                                      Radius.circular(35.0),
+                                    ),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: AppColor.primaryText
+                                            .withOpacity(0.25),
+                                        spreadRadius: 2,
+                                        blurRadius: 20,
+                                        offset: Offset(0, 10),
+                                      )
+                                    ]),
+                                child: Center(
+                                  child: Text(
+                                    'Apply Nowm',
+                                    textAlign: TextAlign.left,
+                                    style: TextStyle(
+                                      fontFamily: "Ubuntu",
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 16,
+                                      letterSpacing: 0.0,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              onTap: () {
+                                // Navigator.pushNamed(
+                                //     context, '/DriverApplication');
+
+                                _settingModalBottomSheet(context);
+                              },
+                            ),
+                            delay: delayAmount + 2400,
+                          ),
                         ])),
               ),
             ),
           ],
         ));
+  }
+
+  void _settingModalBottomSheet(context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext bc) {
+          return Container(
+            child: new Wrap(
+              children: <Widget>[
+                Card(
+                  elevation: 0,
+                  child: new ListTile(
+                      leading: new Icon(Icons.music_note),
+                      title: new Text('Personal account',
+                      style: TextStyle(
+                        fontFamily: 'Ubuntu',
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500)),
+                      subtitle: Text('Manage your bike and earnings'),
+                      trailing: Icon(Icons.arrow_forward_ios, size: 22, color: Colors.grey[400],),
+                      onTap: () => {}),
+                ),
+                Card(
+                  elevation: 0,
+                  child: new ListTile(
+                      leading: new Icon(Icons.music_note),
+                      title: new Text('Business account',
+                          style: TextStyle(
+                              fontFamily: 'Ubuntu',
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500)),
+                      subtitle: Text('Manage all your bikes'),
+                      trailing: Icon(Icons.arrow_forward_ios, size: 22, color: Colors.grey[400],),
+                      onTap: () => {}),
+                ),
+              ],
+            ),
+          );
+        });
   }
 }
 
