@@ -53,7 +53,7 @@ class _DriverApplicationState extends State<DriverApplication> {
                                   },
                                 ),
                                 Text(
-                                  'Become A Pickrr',
+                                  'Personal account',
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     fontSize: 18,

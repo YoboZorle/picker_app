@@ -1,5 +1,6 @@
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:pickrr_app/src/utils/show_up_animation.dart';
 import 'package:pickrr_app/src/helpers/constants.dart';
 
@@ -77,6 +78,7 @@ class DriverOnboard extends StatelessWidget {
                                 )),
                             delay: delayAmount + 1500,
                           ),
+
                           SizedBox(height: 20),
                           ShowUp(
                             child: GestureDetector(
@@ -119,57 +121,6 @@ class DriverOnboard extends StatelessWidget {
                                 ),
                               ),
                               onTap: () {
-                                Navigator.pushNamed(
-                                    context, '/DriverApplication');
-                              },
-                            ),
-                            delay: delayAmount + 2400,
-                          ),
-                          SizedBox(height: 20),
-                          ShowUp(
-                            child: GestureDetector(
-                              child: Container(
-                                height: 47,
-                                decoration: BoxDecoration(
-                                    gradient: LinearGradient(
-                                      colors: [
-                                        AppColor.primaryText,
-                                        AppColor.primaryText,
-                                        Colors.lightBlueAccent
-                                      ],
-                                      begin: Alignment.centerLeft,
-                                      end: Alignment.centerRight,
-                                    ),
-                                    borderRadius: const BorderRadius.all(
-                                      Radius.circular(35.0),
-                                    ),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: AppColor.primaryText
-                                            .withOpacity(0.25),
-                                        spreadRadius: 2,
-                                        blurRadius: 20,
-                                        offset: Offset(0, 10),
-                                      )
-                                    ]),
-                                child: Center(
-                                  child: Text(
-                                    'Apply Nowm',
-                                    textAlign: TextAlign.left,
-                                    style: TextStyle(
-                                      fontFamily: "Ubuntu",
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 16,
-                                      letterSpacing: 0.0,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              onTap: () {
-                                // Navigator.pushNamed(
-                                //     context, '/DriverApplication');
-
                                 _settingModalBottomSheet(context);
                               },
                             ),
@@ -189,30 +140,71 @@ class DriverOnboard extends StatelessWidget {
           return Container(
             child: new Wrap(
               children: <Widget>[
-                Card(
-                  elevation: 0,
-                  child: new ListTile(
-                      leading: new Icon(Icons.music_note),
-                      title: new Text('Personal account',
-                      style: TextStyle(
-                        fontFamily: 'Ubuntu',
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500)),
-                      subtitle: Text('Manage your bike and earnings'),
-                      trailing: Icon(Icons.arrow_forward_ios, size: 22, color: Colors.grey[400],),
-                      onTap: () => {}),
+                Container(
+                  margin: EdgeInsets.only(bottom: 0, top: 12),
+                  child: ListTile(
+                    leading: new Text('Select Your Plan',
+                        style: TextStyle(
+                            fontFamily: 'Ubuntu',
+                            fontSize: 17,
+                            color: AppColor.primaryText,
+                            fontWeight: FontWeight.w600)),
+                  ),
                 ),
                 Card(
                   elevation: 0,
                   child: new ListTile(
-                      leading: new Icon(Icons.music_note),
+                      leading: Padding(
+                        padding: const EdgeInsets.only(left: 2, right: 3),
+                        child: SvgPicture.asset('assets/svg/personal.svg',
+                            height: 37, semanticsLabel: 'search icon'),
+                      ),
+                      title: new Text('Personal account',
+                          style: TextStyle(
+                              fontFamily: 'Ubuntu',
+                              fontSize: 16,
+                              color: Colors.black,
+                              fontWeight: FontWeight.w500)),
+                      subtitle: Text('Manage your bike and earnings',
+                          style: TextStyle(
+                              fontFamily: 'Ubuntu',
+                              fontSize: 15,
+                              color: Colors.grey,
+                              fontWeight: FontWeight.w400)),
+                      trailing: Icon(
+                        Icons.arrow_forward_ios,
+                        size: 20,
+                        color: Colors.grey[400],
+                      ),
+                      onTap: () {
+                        Navigator.pushNamed(context, '/DriverApplication');
+                      }),
+                ),
+                Card(
+                  elevation: 0,
+                  child: new ListTile(
+                      leading: Padding(
+                        padding: const EdgeInsets.only(left: 2, right: 3),
+                        child: SvgPicture.asset('assets/svg/business.svg',
+                            height: 37, semanticsLabel: 'search icon'),
+                      ),
                       title: new Text('Business account',
                           style: TextStyle(
                               fontFamily: 'Ubuntu',
                               fontSize: 16,
+                              color: Colors.black,
                               fontWeight: FontWeight.w500)),
-                      subtitle: Text('Manage all your bikes'),
-                      trailing: Icon(Icons.arrow_forward_ios, size: 22, color: Colors.grey[400],),
+                      subtitle: Text('Register and manage all your bikes.',
+                          style: TextStyle(
+                              fontFamily: 'Ubuntu',
+                              fontSize: 15,
+                              color: Colors.grey,
+                              fontWeight: FontWeight.w400)),
+                      trailing: Icon(
+                        Icons.arrow_forward_ios,
+                        size: 20,
+                        color: Colors.grey[400],
+                      ),
                       onTap: () => {}),
                 ),
               ],
