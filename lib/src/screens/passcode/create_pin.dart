@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pickrr_app/src/helpers/constants.dart';
 import 'package:pickrr_app/src/screens/driver/onboard.dart';
 import 'package:pickrr_app/src/screens/onboard.dart';
+import 'package:pickrr_app/src/screens/passcode/enter_pin.dart';
 import 'package:pinput/pin_put/pin_put.dart';
 
 class CreatePin extends StatefulWidget {
@@ -190,7 +191,7 @@ class CreatePinState extends State<CreatePin> {
           ),
           onTap: () {
             Navigator.of(context)
-                .push(MaterialPageRoute(builder: (context) => DriverOnboard()));
+                .push(MaterialPageRoute(builder: (context) => EnterPin()));
           },
         ),
       );
