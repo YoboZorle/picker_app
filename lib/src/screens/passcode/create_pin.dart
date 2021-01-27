@@ -28,9 +28,10 @@ class CreatePinState extends State<CreatePin> {
       home: Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
+          brightness: Brightness.light,
             automaticallyImplyLeading: true,
             backgroundColor: Colors.white,
-            elevation: 0,
+            elevation: 0.5,
             title: Text('Create PIN',
                 style: TextStyle(
                     fontFamily: 'Ubuntu',

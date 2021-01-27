@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:pickrr_app/src/helpers/constants.dart';
 import 'package:pickrr_app/src/screens/driver/onboard.dart';
+import 'package:pickrr_app/src/screens/passcode/forgot_pin.dart';
 import 'package:pickrr_app/src/utils/show_up_animation.dart';
 import 'package:pinput/pin_put/pin_put.dart';
 
@@ -48,36 +49,44 @@ class EnterPinState extends State<EnterPin> {
                                 physics: BouncingScrollPhysics(),
                                 children: <Widget>[
                                   Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
                                       ShowUp(
-                                        child: Text('Welcome back Yobo,\nenter your PIN',
+                                        child: Text(
+                                            'Welcome back Yobo,\nenter your PIN',
                                             style: TextStyle(
                                                 fontFamily: 'Ubuntu',
                                                 fontSize: 20,
                                                 height: 1.36,
                                                 color: Colors.black,
                                                 fontWeight: FontWeight.w700)),
-                                        delay: delayAmount + 700,
+                                        delay: delayAmount + 600,
                                       ),
                                       ShowUp(
                                         child: Padding(
-                                          padding: const EdgeInsets.only(left: 2),
-                                          child: SvgPicture.asset('assets/svg/pickrr.svg',
+                                          padding:
+                                              const EdgeInsets.only(left: 2),
+                                          child: SvgPicture.asset(
+                                              'assets/svg/pickrr.svg',
                                               color: Colors.grey[300],
-                                              height: 55, semanticsLabel: 'search icon'),
+                                              height: 55,
+                                              semanticsLabel: 'search icon'),
                                         ),
-                                        delay: delayAmount + 500,
+                                        delay: delayAmount + 1000,
                                       ),
                                     ],
                                   ),
-
                                   ShowUp(
                                     child: Row(
                                       children: [
                                         Container(
-                                          margin: const EdgeInsets.only(top: 30.0, bottom: 25),
-                                          width: MediaQuery.of(context).size.width / 1.6,
+                                          margin: const EdgeInsets.only(
+                                              top: 30.0, bottom: 25),
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width /
+                                              1.6,
                                           child: PinPut(
                                             fieldsCount: 5,
                                             eachFieldHeight: 55,
@@ -86,29 +95,35 @@ class EnterPinState extends State<EnterPin> {
                                             focusNode: _pinPutFocusNode,
                                             controller: _pinPutController,
                                             submittedFieldDecoration:
-                                            _pinPutDecoration.copyWith(
-                                              borderRadius: BorderRadius.circular(20.0),
+                                                _pinPutDecoration.copyWith(
+                                              borderRadius:
+                                                  BorderRadius.circular(20.0),
                                             ),
-                                            selectedFieldDecoration: _pinPutDecoration,
+                                            selectedFieldDecoration:
+                                                _pinPutDecoration,
                                             followingFieldDecoration:
-                                            _pinPutDecoration.copyWith(
-                                              borderRadius: BorderRadius.circular(5.0),
+                                                _pinPutDecoration.copyWith(
+                                              borderRadius:
+                                                  BorderRadius.circular(5.0),
                                               border: Border.all(
-                                                color: AppColor.primaryText.withOpacity(.5),
+                                                color: AppColor.primaryText
+                                                    .withOpacity(.5),
                                               ),
                                             ),
                                           ),
                                         ),
                                       ],
                                     ),
-                                    delay: delayAmount + 800,
+                                    delay: delayAmount + 1200,
                                   ),
-                                  Row(
-                                    children: [
-                                      GestureDetector(
-                                        child: Container(
-                                          height: 30,
-                                          child: Text(
+                                  ShowUp(
+                                    delay: delayAmount + 1400,
+                                    child: Row(
+                                      children: [
+                                        GestureDetector(
+                                          child: Container(
+                                            height: 30,
+                                            child: Text(
                                               'Forgot login PIN?',
                                               textAlign: TextAlign.start,
                                               style: TextStyle(
@@ -119,14 +134,16 @@ class EnterPinState extends State<EnterPin> {
                                                 color: AppColor.primaryText,
                                               ),
                                             ),
-
+                                          ),
+                                          onTap: () {
+                                            Navigator.of(context).push(
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        ForgotPin()));
+                                          },
                                         ),
-                                        onTap: () {
-                                          Navigator.of(context)
-                                              .push(MaterialPageRoute(builder: (context) => DriverOnboard()));
-                                        },
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
                                 ]),
                           ])),
