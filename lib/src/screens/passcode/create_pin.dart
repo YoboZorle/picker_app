@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:pickrr_app/src/helpers/constants.dart';
+import 'package:pickrr_app/src/screens/driver/onboard.dart';
+import 'package:pickrr_app/src/screens/onboard.dart';
 import 'package:pinput/pin_put/pin_put.dart';
 
 class CreatePin extends StatefulWidget {
@@ -7,253 +10,188 @@ class CreatePin extends StatefulWidget {
 }
 
 class CreatePinState extends State<CreatePin> {
-  final _formKey = GlobalKey<FormState>();
-  final _pinPutController = TextEditingController();
-  final _pinPutFocusNode = FocusNode();
-  final _pageController = PageController();
+  final TextEditingController _pinPutController = TextEditingController();
+  final FocusNode _pinPutFocusNode = FocusNode();
 
-  int _pageIndex = 0;
-
-  final List<Widget> _pinPuts = [];
-
-  final List<Color> _bgColors = [
-    Colors.white,
-    const Color.fromRGBO(43, 36, 198, 1),
-    Colors.white,
-    const Color.fromRGBO(75, 83, 214, 1),
-    const Color.fromRGBO(43, 46, 66, 1),
-  ];
-
-  @override
-  void initState() {
-    _pinPuts.addAll([
-      onlySelectedBorderPinPut(),
-      darkRoundedPinPut(),
-      animatingBorders(),
-      boxedPinPutWithPreFilledSymbol(),
-      justRoundedCornersPinPut(),
-    ]);
-    super.initState();
+  BoxDecoration get _pinPutDecoration {
+    return BoxDecoration(
+      border: Border.all(color: AppColor.primaryText),
+      borderRadius: BorderRadius.circular(15.0),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      fit: StackFit.passthrough,
-      children: <Widget>[
-        AnimatedContainer(
-          color: _bgColors[_pageIndex],
-          duration: const Duration(milliseconds: 200),
-          padding: const EdgeInsets.all(40.0),
-          child: PageView(
-            scrollDirection: Axis.vertical,
-            controller: _pageController,
-            onPageChanged: (index) {
-              setState(() => _pageIndex = index);
-            },
-            children: _pinPuts.map((p) {
-              return FractionallySizedBox(
-                heightFactor: 1.0,
-                child: Center(child: p),
-              );
-            }).toList(),
-          ),
-        ),
-        _bottomAppBar,
-      ],
-    );
-  }
-
-  Widget onlySelectedBorderPinPut() {
-    final BoxDecoration pinPutDecoration = BoxDecoration(
-      color: const Color.fromRGBO(235, 236, 237, 1),
-      borderRadius: BorderRadius.circular(5.0),
-    );
-    return Form(
-      key: _formKey,
-      child: GestureDetector(
-        onLongPress: () {
-          print(_formKey.currentState.validate());
-        },
-        child: PinPut(
-          validator: (s) {
-            if (s.contains('1')) return null;
-            return 'NOT VALID';
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        backgroundColor: Colors.white,
+        appBar: AppBar(
+            automaticallyImplyLeading: true,
+            backgroundColor: Colors.white,
+            elevation: 0,
+            title: Text('Create PIN',
+                style: TextStyle(
+                    fontFamily: 'Ubuntu',
+                    fontSize: 18,
+                    color: Colors.black,
+                    fontWeight: FontWeight.w700)),
+            centerTitle: true),
+        body: GestureDetector(
+          onTap: () {
+            FocusScope.of(context).requestFocus(new FocusNode());
           },
-          autovalidateMode: AutovalidateMode.onUserInteraction,
-          withCursor: true,
-          fieldsCount: 5,
-          fieldsAlignment: MainAxisAlignment.spaceAround,
-          textStyle: const TextStyle(fontSize: 25.0, color: Colors.black),
-          eachFieldMargin: EdgeInsets.all(0),
-          eachFieldWidth: 45.0,
-          eachFieldHeight: 55.0,
-          onSubmit: (String pin) => _showSnackBar(pin),
-          focusNode: _pinPutFocusNode,
-          controller: _pinPutController,
-          submittedFieldDecoration: pinPutDecoration,
-          selectedFieldDecoration: pinPutDecoration.copyWith(
-            color: Colors.white,
-            border: Border.all(
-              width: 2,
-              color: const Color.fromRGBO(160, 215, 220, 1),
-            ),
+          child: Builder(
+            builder: (context) {
+              return Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Expanded(
+                    child: new Container(
+                        margin: EdgeInsets.only(top: 20, right: 20, left: 20),
+                        child: Stack(children: <Widget>[
+                        ListView(
+                          physics: BouncingScrollPhysics(),
+                            children: <Widget>[
+                            Text('Enter New PIN',
+                                style: TextStyle(
+                                    fontFamily: 'Ubuntu',
+                                    fontSize: 15,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w500)),
+                            Row(
+                              children: [
+                                Container(
+                                  margin: const EdgeInsets.only(top: 8.0, bottom: 30),
+                                  width: MediaQuery.of(context).size.width / 1.6,
+                                  child: PinPut(
+                                    fieldsCount: 5,
+                                    eachFieldHeight: 55,
+                                    onSubmit: (String pin) =>
+                                        _showSnackBar(pin, context),
+                                    focusNode: _pinPutFocusNode,
+                                    controller: _pinPutController,
+                                    submittedFieldDecoration:
+                                        _pinPutDecoration.copyWith(
+                                      borderRadius: BorderRadius.circular(20.0),
+                                    ),
+                                    selectedFieldDecoration: _pinPutDecoration,
+                                    followingFieldDecoration:
+                                        _pinPutDecoration.copyWith(
+                                      borderRadius: BorderRadius.circular(5.0),
+                                      border: Border.all(
+                                        color: AppColor.primaryText.withOpacity(.5),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+
+                            Text('Re enter PIN',
+                                style: TextStyle(
+                                    fontFamily: 'Ubuntu',
+                                    fontSize: 15,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w500)),
+                            Row(
+                              children: [
+                                Container(
+                                  color: Colors.white,
+                                  margin: const EdgeInsets.only(top: 8.0, bottom: 20),
+                                  width: MediaQuery.of(context).size.width / 1.6,
+                                  child: PinPut(
+                                    fieldsCount: 5,
+                                    eachFieldHeight: 55,
+                                    onSubmit: (String pin) =>
+                                        _showSnackBar(pin, context),
+                                    focusNode: _pinPutFocusNode,
+                                    controller: _pinPutController,
+                                    submittedFieldDecoration:
+                                        _pinPutDecoration.copyWith(
+                                      borderRadius: BorderRadius.circular(20.0),
+                                    ),
+                                    selectedFieldDecoration: _pinPutDecoration,
+                                    followingFieldDecoration:
+                                        _pinPutDecoration.copyWith(
+                                      borderRadius: BorderRadius.circular(5.0),
+                                      border: Border.all(
+                                        color: AppColor.primaryText.withOpacity(.5),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Text(
+                                'This code will be required whenever you try to access your account.',
+                                style: TextStyle(
+                                    fontFamily: 'Ubuntu',
+                                    fontSize: 14,
+                                    color: AppColor.grey,
+                                    fontWeight: FontWeight.w400)),
+                          ]),
+                        ])),
+                  ),
+                  _continueBtn(),
+                ],
+              );
+            },
           ),
-          followingFieldDecoration: pinPutDecoration,
-          pinAnimationType: PinAnimationType.scale,
         ),
       ),
     );
   }
 
-  Widget darkRoundedPinPut() {
-    final BoxDecoration pinPutDecoration = BoxDecoration(
-      color: const Color.fromRGBO(25, 21, 99, 1),
-      borderRadius: BorderRadius.circular(20.0),
-    );
-    return PinPut(
-      eachFieldWidth: 65.0,
-      eachFieldHeight: 65.0,
-      withCursor: true,
-      fieldsCount: 4,
-      focusNode: _pinPutFocusNode,
-      controller: _pinPutController,
-      onSubmit: (String pin) => _showSnackBar(pin),
-      submittedFieldDecoration: pinPutDecoration,
-      selectedFieldDecoration: pinPutDecoration,
-      followingFieldDecoration: pinPutDecoration,
-      pinAnimationType: PinAnimationType.scale,
-      textStyle: const TextStyle(color: Colors.white, fontSize: 20.0),
-    );
-  }
-
-  Widget animatingBorders() {
-    final BoxDecoration pinPutDecoration = BoxDecoration(
-      border: Border.all(color: Colors.deepPurpleAccent),
-      borderRadius: BorderRadius.circular(15.0),
-    );
-    return PinPut(
-      fieldsCount: 5,
-      eachFieldHeight: 40.0,
-      withCursor: true,
-      onSubmit: (String pin) => _showSnackBar(pin),
-      focusNode: _pinPutFocusNode,
-      controller: _pinPutController,
-      submittedFieldDecoration: pinPutDecoration.copyWith(
-        borderRadius: BorderRadius.circular(20.0),
-      ),
-      selectedFieldDecoration: pinPutDecoration,
-      followingFieldDecoration: pinPutDecoration.copyWith(
-        borderRadius: BorderRadius.circular(5.0),
-        border: Border.all(
-          color: Colors.deepPurpleAccent.withOpacity(.5),
-        ),
-      ),
-    );
-  }
-
-  Widget boxedPinPutWithPreFilledSymbol() {
-    final BoxDecoration pinPutDecoration = BoxDecoration(
-      color: const Color.fromRGBO(119, 125, 226, 1),
-      borderRadius: BorderRadius.circular(5.0),
-    );
-
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(3.0),
-        border: Border.all(color: Colors.white),
-      ),
-      padding: const EdgeInsets.all(20.0),
-      child: PinPut(
-        withCursor: true,
-        fieldsCount: 5,
-        preFilledWidget: FlutterLogo(),
-        textStyle: const TextStyle(fontSize: 25.0, color: Colors.white),
-        eachFieldWidth: 50.0,
-        eachFieldHeight: 50.0,
-        onSubmit: (String pin) => _showSnackBar(pin),
-        focusNode: _pinPutFocusNode,
-        controller: _pinPutController,
-        submittedFieldDecoration: pinPutDecoration,
-        selectedFieldDecoration: pinPutDecoration.copyWith(color: Colors.white),
-        followingFieldDecoration: pinPutDecoration,
-      ),
-    );
-  }
-
-  Widget justRoundedCornersPinPut() {
-    final BoxDecoration pinPutDecoration = BoxDecoration(
-      color: const Color.fromRGBO(43, 46, 66, 1),
-      borderRadius: BorderRadius.circular(10.0),
-      border: Border.all(
-        color: const Color.fromRGBO(126, 203, 224, 1),
-      ),
-    );
-
-    return Padding(
-      padding: const EdgeInsets.all(30.0),
-      child: PinPut(
-        fieldsCount: 4,
-        withCursor: true,
-        textStyle: const TextStyle(fontSize: 25.0, color: Colors.white),
-        eachFieldWidth: 40.0,
-        eachFieldHeight: 55.0,
-        onSubmit: (String pin) => _showSnackBar(pin),
-        focusNode: _pinPutFocusNode,
-        controller: _pinPutController,
-        submittedFieldDecoration: pinPutDecoration,
-        selectedFieldDecoration: pinPutDecoration,
-        followingFieldDecoration: pinPutDecoration,
-        pinAnimationType: PinAnimationType.fade,
-      ),
-    );
-  }
-
-  Widget get _bottomAppBar {
-    return Positioned(
-      bottom: 0,
-      left: 0,
-      right: 0,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: <Widget>[
-          FlatButton(
-            onPressed: () => _pinPutFocusNode.requestFocus(),
-            child: const Text('Focus'),
-          ),
-          FlatButton(
-            onPressed: () => _pinPutFocusNode.unfocus(),
-            child: const Text('Unfocus'),
-          ),
-          FlatButton(
-            onPressed: () => _pinPutController.text = '',
-            child: const Text('Clear All'),
-          ),
-          FlatButton(
-            child: Text('Paste'),
-            onPressed: () => _pinPutController.text = '234',
-          ),
-        ],
-      ),
-    );
-  }
-
-  void _showSnackBar(String pin) {
+  void _showSnackBar(String pin, BuildContext context) {
     final snackBar = SnackBar(
       duration: const Duration(seconds: 3),
       content: Container(
-        height: 80.0,
+        height: 25.0,
         child: Center(
           child: Text(
-            'Pin Submitted. Value: $pin',
-            style: const TextStyle(fontSize: 25.0),
+            'Pin values: $pin and $pin',
+            style: const TextStyle(fontSize: 13.0),
           ),
         ),
       ),
-      backgroundColor: Colors.deepPurpleAccent,
+      backgroundColor: AppColor.primaryText,
     );
     Scaffold.of(context)
       ..hideCurrentSnackBar()
       ..showSnackBar(snackBar);
   }
+
+  _continueBtn() => Container(
+        margin: EdgeInsets.only(left: 20, right: 20, bottom: 8),
+        child: GestureDetector(
+          child: Container(
+            height: 47,
+            decoration: BoxDecoration(
+              color: AppColor.primaryText,
+                borderRadius: const BorderRadius.all(
+                  Radius.circular(35.0),
+                ),
+            ),
+            child: Center(
+              child: Text(
+                'Continue',
+                textAlign: TextAlign.left,
+                style: TextStyle(
+                  fontFamily: "Ubuntu",
+                  fontWeight: FontWeight.w400,
+                  fontSize: 16,
+                  letterSpacing: 0.0,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          ),
+          onTap: () {
+            Navigator.of(context)
+                .push(MaterialPageRoute(builder: (context) => DriverOnboard()));
+          },
+        ),
+      );
 }

@@ -55,6 +55,11 @@ class _LoginState extends State<Login> {
               return;
             }
 
+            if(user.isBusiness){
+              Navigator.popAndPushNamed(context, '/PasswordPrompt');
+              return;
+            }
+
             Navigator.popAndPushNamed(context, '/HomePage');
           }
         },

@@ -7,6 +7,7 @@ import 'package:pickrr_app/src/helpers/custom_route.dart';
 import 'package:pickrr_app/src/models/user.dart';
 import 'package:pickrr_app/src/screens/auth/complete_profile_form.dart';
 import 'package:pickrr_app/src/screens/auth/login.dart';
+import 'package:pickrr_app/src/screens/business/password_prompt.dart';
 import 'package:pickrr_app/src/screens/driver/onboard.dart';
 import 'package:pickrr_app/src/screens/driver/order_history.dart';
 import 'package:pickrr_app/src/screens/home.dart';
@@ -39,6 +40,8 @@ class Routes {
       return null;
     }
     switch (pathElements[1]) {
+      case "PasswordPrompt":
+        return SlideLeftRoute<bool>(builder:(BuildContext context) => PasswordPrompt());
       case "Onboard":
         return CustomRoute<bool>(builder: (BuildContext context) => Onboard());
       case "DriversHomePage":
@@ -131,6 +134,10 @@ Widget homePage(BuildContext context, AuthenticationState state) {
 
   if (user.isDriver) {
     return DriverTabs();
+  }
+
+  if(user.isBusiness) {
+    return PasswordPrompt();
   }
 
   return Home();

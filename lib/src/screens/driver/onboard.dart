@@ -1,6 +1,7 @@
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:pickrr_app/src/screens/passcode/create_pin.dart';
 import 'package:pickrr_app/src/utils/show_up_animation.dart';
 import 'package:pickrr_app/src/helpers/constants.dart';
 
@@ -123,6 +124,56 @@ class DriverOnboard extends StatelessWidget {
                             ),
                             delay: delayAmount + 2400,
                           ),
+
+                          SizedBox(height: 20),
+                          ShowUp(
+                            child: GestureDetector(
+                              child: Container(
+                                height: 47,
+                                decoration: BoxDecoration(
+                                    gradient: LinearGradient(
+                                      colors: [
+                                        AppColor.primaryText,
+                                        AppColor.primaryText,
+                                        Colors.lightBlueAccent
+                                      ],
+                                      begin: Alignment.centerLeft,
+                                      end: Alignment.centerRight,
+                                    ),
+                                    borderRadius: const BorderRadius.all(
+                                      Radius.circular(35.0),
+                                    ),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: AppColor.primaryText
+                                            .withOpacity(0.25),
+                                        spreadRadius: 2,
+                                        blurRadius: 20,
+                                        offset: Offset(0, 10),
+                                      )
+                                    ]),
+                                child: Center(
+                                  child: Text(
+                                    'To PIN',
+                                    textAlign: TextAlign.left,
+                                    style: TextStyle(
+                                      fontFamily: "Ubuntu",
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 16,
+                                      letterSpacing: 0.0,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              onTap: () {
+                                Navigator.of(context).push(MaterialPageRoute(builder: (context) => CreatePin()));
+                              },
+                            ),
+                            delay: delayAmount + 2400,
+                          ),
+
+
                         ])),
               ),
             ),
