@@ -38,6 +38,7 @@ dependencies:
   circular_profile_avatar: ^1.0.8
   lite_rolling_switch: ^0.1.1
   flutter_awesome_alert_box: ^1.0.1
+  pinput: ^1.0.0
 
   google_maps_flutter: ^0.5.30
   geolocator: ^6.1.7
