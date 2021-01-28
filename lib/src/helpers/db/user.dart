@@ -14,6 +14,7 @@ final String columnProfileImageUrl = 'profileImageUrl';
 final String columnIsDriver = 'is_driver';
 final String columnCallingCode = 'callingCode';
 final String columnIsBusiness = 'is_business';
+final String columnIsNewBusiness = 'is_new_business';
 
 class UserProvider {
   Database db;
@@ -41,7 +42,8 @@ create table $tableUser (
   $columnEmail text,
   $columnIsDriver integer,
   $columnCallingCode text,
-  $columnIsBusiness integer)
+  $columnIsBusiness integer,
+  $columnIsNewBusiness integer)
 ''');
     });
   }

@@ -137,7 +137,7 @@ Widget homePage(BuildContext context, AuthenticationState state) {
   }
 
   if(user.isBusiness) {
-    return PasswordPrompt();
+    return PasswordPrompt(user.isNewBusiness);
   }
 
   return Home();
