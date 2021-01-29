@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-
+import 'package:pickrr_app/src/screens/business/tabs/business_drivers.dart';
+import 'package:pickrr_app/src/screens/business/tabs/business_wallet.dart';
+import 'package:pickrr_app/src/screens/business/tabs/new_request.dart';
 
 class BusinessHome extends StatefulWidget {
   BusinessHome({Key key}) : super(key: key);
@@ -13,8 +15,8 @@ class _BusinessHomeState extends State<BusinessHome> {
   @override
   void initState() {
     super.initState();
-    _myPage = PageController(initialPage: 1);
-    selectedPage = 1;
+    _myPage = PageController(initialPage: 0);
+    selectedPage = 0;
   }
 
   @override
@@ -24,27 +26,9 @@ class _BusinessHomeState extends State<BusinessHome> {
           physics: NeverScrollableScrollPhysics(),
           controller: _myPage,
           children: <Widget>[
-            Center(
-              child: Text("Another Page"),
-            ),
-            Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Text("Page 1"),
-                    RaisedButton(
-                      onPressed: () {
-                        _myPage.jumpToPage(0);
-                        setState(() {
-                          selectedPage = 0;
-                        });
-                      },
-                      child: Text("Go to another page"),
-                    )
-                  ],
-                )),
-            Center(child: Text("Page 2")),
-            Center(child: Text("Page 3")),
+            NewRequest(),
+BusinessDrivers(),
+            BusinessWallet(),
           ],
         ),
         bottomNavigationBar: BottomAppBar(
@@ -53,6 +37,16 @@ class _BusinessHomeState extends State<BusinessHome> {
             children: <Widget>[
               IconButton(
                 icon: Icon(Icons.home),
+                color: selectedPage == 0 ? Colors.blue : Colors.grey,
+                onPressed: () {
+                  _myPage.jumpToPage(0);
+                  setState(() {
+                    selectedPage = 0;
+                  });
+                },
+              ),
+              IconButton(
+                icon: Icon(Icons.star),
                 color: selectedPage == 1 ? Colors.blue : Colors.grey,
                 onPressed: () {
                   _myPage.jumpToPage(1);
@@ -62,24 +56,14 @@ class _BusinessHomeState extends State<BusinessHome> {
                 },
               ),
               IconButton(
-                icon: Icon(Icons.star),
+                icon: Icon(
+                  Icons.settings,
+                ),
                 color: selectedPage == 2 ? Colors.blue : Colors.grey,
                 onPressed: () {
                   _myPage.jumpToPage(2);
                   setState(() {
                     selectedPage = 2;
-                  });
-                },
-              ),
-              IconButton(
-                icon: Icon(
-                  Icons.settings,
-                ),
-                color: selectedPage == 3 ? Colors.blue : Colors.grey,
-                onPressed: () {
-                  _myPage.jumpToPage(3);
-                  setState(() {
-                    selectedPage = 3;
                   });
                 },
               ),
