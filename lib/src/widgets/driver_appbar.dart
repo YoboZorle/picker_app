@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:lite_rolling_switch/lite_rolling_switch.dart';
 import 'package:pickrr_app/src/blocs/driver/driver_status/bloc.dart';
 import 'package:pickrr_app/src/helpers/constants.dart';
 import 'package:pickrr_app/src/services/repositories/driver.dart';
+import 'package:pickrr_app/src/utils/switch/lite_rolling_switch.dart';
 
 class CustomerAppBar extends StatelessWidget {
   final DriverRepository _driverRepository = DriverRepository();
@@ -39,7 +39,7 @@ class CustomerAppBar extends StatelessWidget {
                 return Row(
                   children: [
                     SizedBox(
-                        height: 45,
+                        height: 38,
                         child: FutureBuilder(
                           builder: (context, snapshot) {
                             if (snapshot.connectionState ==
