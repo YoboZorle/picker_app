@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:pickrr_app/src/helpers/constants.dart';
-import 'package:pickrr_app/src/screens/driver/onboard.dart';
-import 'package:pickrr_app/src/screens/passcode/forgot_pin.dart';
 import 'package:pickrr_app/src/utils/show_up_animation.dart';
 import 'package:pinput/pin_put/pin_put.dart';
 
-class EnterPin extends StatefulWidget {
+class EnterPinWidget extends StatefulWidget {
+  final String nextRoute;
+
+  EnterPinWidget({@required this.nextRoute});
+
   @override
-  EnterPinState createState() => EnterPinState();
+  EnterPinWidgetState createState() => EnterPinWidgetState();
 }
 
-class EnterPinState extends State<EnterPin> {
+class EnterPinWidgetState extends State<EnterPinWidget> {
   final TextEditingController _pinPutController = TextEditingController();
   final FocusNode _pinPutFocusNode = FocusNode();
 
@@ -135,12 +137,7 @@ class EnterPinState extends State<EnterPin> {
                                               ),
                                             ),
                                           ),
-                                          onTap: () {
-                                            Navigator.of(context).push(
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        ForgotPin()));
-                                          },
+                                          onTap: () {},
                                         ),
                                       ],
                                     ),

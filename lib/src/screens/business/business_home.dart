@@ -3,12 +3,12 @@ import 'package:pickrr_app/src/screens/business/tabs/business_drivers.dart';
 import 'package:pickrr_app/src/screens/business/tabs/business_wallet.dart';
 import 'package:pickrr_app/src/screens/business/tabs/new_request.dart';
 
-class BusinessHome extends StatefulWidget {
-  BusinessHome({Key key}) : super(key: key);
-  _BusinessHomeState createState() => _BusinessHomeState();
+class BusinessHomePage extends StatefulWidget {
+  BusinessHomePage({Key key}) : super(key: key);
+  _BusinessHomePageState createState() => _BusinessHomePageState();
 }
 
-class _BusinessHomeState extends State<BusinessHome> {
+class _BusinessHomePageState extends State<BusinessHomePage> {
   PageController _myPage;
   var selectedPage;
 

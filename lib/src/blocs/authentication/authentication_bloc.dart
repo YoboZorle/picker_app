@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pickrr_app/src/helpers/db/user.dart';
 import 'package:pickrr_app/src/helpers/utility.dart';
@@ -32,7 +33,7 @@ class AuthenticationBloc
     final upToDateUserDetailsMap =
         await _userRepository.getUserDetails(user.id);
     final upToDateUserDetails = User.fromMap(upToDateUserDetailsMap);
-    persistUserDetails(upToDateUserDetails);
+    await persistUserDetails(upToDateUserDetails);
     yield DetailsUpdate(upToDateUserDetails);
   }
 

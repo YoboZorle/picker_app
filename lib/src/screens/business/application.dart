@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:pickrr_app/src/helpers/constants.dart';
 import 'package:pickrr_app/src/services/repositories/business.dart';
 import 'package:pickrr_app/src/widgets/input.dart';
@@ -12,16 +15,21 @@ class BusinessApplication extends StatefulWidget {
 }
 
 class _BusinessApplicationState extends State<BusinessApplication> {
-  TextEditingController _plateNumberController;
-  TextEditingController _ticketNumberController;
-  TextEditingController _companyNameController;
+  TextEditingController _nameController;
+  TextEditingController _locationController;
+  TextEditingController _phoneController;
+  TextEditingController _emailController;
   BusinessRepository _businessRepository;
+  PickedFile _businessLogo;
+  dynamic _imageUploadError;
+  String _retrieveDataError;
 
   @override
   void initState() {
-    _plateNumberController = new TextEditingController();
-    _ticketNumberController = new TextEditingController();
-    _companyNameController = new TextEditingController();
+    _nameController = new TextEditingController();
+    _locationController = new TextEditingController();
+    _phoneController = new TextEditingController();
+    _emailController = new TextEditingController();
     _businessRepository = BusinessRepository();
     super.initState();
   }
@@ -43,84 +51,126 @@ class _BusinessApplicationState extends State<BusinessApplication> {
                           child: ListView(
                               physics: const BouncingScrollPhysics(),
                               children: <Widget>[
-                                Row(
-                                  children: [
-                                    IconButton(
-                                      icon: Icon(Icons.arrow_back_ios,
-                                          color: Colors.black),
-                                      onPressed: () {
-                                        Navigator.pop(context);
-                                      },
-                                    ),
-                                    Text(
-                                      'Business account',
-                                      textAlign: TextAlign.center,
+                            Row(
+                              children: [
+                                IconButton(
+                                  icon: Icon(Icons.arrow_back_ios,
+                                      color: Colors.black),
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                ),
+                                Text(
+                                  'Business account',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontFamily: 'Ubuntu',
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w800,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 45),
+                            GestureDetector(
+                              onTap: () async {
+                                final pickedFile = await ImagePicker().getImage(
+                                    imageQuality: 10,
+                                    maxHeight: 500,
+                                    maxWidth: 500,
+                                    source: ImageSource.gallery);
+                                if (pickedFile != null) {
+                                  setState(() {
+                                    _businessLogo = PickedFile(pickedFile.path);
+                                  });
+                                }
+                              },
+                              child: Column(
+                                children: [
+                                  _previewImage(),
+                                  SizedBox(height: 16),
+                                  Text('Business logo',
                                       style: TextStyle(
-                                        fontSize: 18,
+                                        fontSize: 14,
                                         fontFamily: 'Ubuntu',
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.w800,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(height: 45),
-                                Container(
-                                    height: 47,
-                                    margin: EdgeInsets.only(
-                                        left: 20, right: 20, bottom: 20),
-                                    color: Colors.grey[200],
-                                    child: InputField(
-                                      inputController: _plateNumberController,
-                                      hintText: 'Enter Plate Number',
-                                      onPressed: () {
-                                        setState(() {
-                                          _plateNumberController.clear();
-                                        });
-                                      },
-                                    )),
-                                Container(
-                                    alignment: Alignment.center,
-                                    height: 47,
-                                    margin: EdgeInsets.only(
-                                        left: 20, right: 20, bottom: 20),
-                                    color: Colors.grey[200],
-                                    child: InputField(
-                                      inputController: _ticketNumberController,
-                                      hintText: 'Enter Ticket Number',
-                                      onPressed: () {
-                                        setState(() {
-                                          _ticketNumberController.clear();
-                                        });
-                                      },
-                                    )),
-                                Container(
-                                    alignment: Alignment.center,
-                                    height: 47,
-                                    margin: EdgeInsets.only(
-                                        left: 20, right: 20, bottom: 10),
-                                    color: Colors.grey[200],
-                                    child: InputField(
-                                      inputController: _companyNameController,
-                                      hintText: 'Enter Company Name',
-                                      onPressed: () {
-                                        setState(() {
-                                          _companyNameController.clear();
-                                        });
-                                      },
-                                    )),
-                                Container(
-                                  alignment: Alignment.center,
-                                  margin: EdgeInsets.only(left: 20),
-                                  child: Text(
-                                      'We\'ll contact you as soon as your request is received.',
-                                      style: TextStyle(
-                                          fontFamily: 'Ubuntu',
-                                          fontWeight: FontWeight.w400,
-                                          color: Colors.grey,
-                                          fontSize: 13)),
-                                ),
-                              ])),
+                                        color: Colors.grey,
+                                        fontWeight: FontWeight.w400,
+                                      )),
+                                ],
+                              ),
+                            ),
+                            SizedBox(height: 20),
+                            Container(
+                                height: 47,
+                                margin: EdgeInsets.only(
+                                    left: 20, right: 20, bottom: 20),
+                                color: Colors.grey[200],
+                                child: InputField(
+                                  inputController: _nameController,
+                                  hintText: 'Business Name',
+                                  onPressed: () {
+                                    setState(() {
+                                      _nameController.clear();
+                                    });
+                                  },
+                                )),
+                            Container(
+                                height: 47,
+                                margin: EdgeInsets.only(
+                                    left: 20, right: 20, bottom: 20),
+                                color: Colors.grey[200],
+                                child: InputField(
+                                  inputController: _locationController,
+                                  hintText: 'Enter State/City',
+                                  onPressed: () {
+                                    setState(() {
+                                      _locationController.clear();
+                                    });
+                                  },
+                                )),
+                            Container(
+                                alignment: Alignment.center,
+                                height: 47,
+                                margin: EdgeInsets.only(
+                                    left: 20, right: 20, bottom: 20),
+                                color: Colors.grey[200],
+                                child: InputField(
+                                  inputController: _phoneController,
+                                  hintText: 'Enter Phone Number',
+                                  onPressed: () {
+                                    setState(() {
+                                      _phoneController.clear();
+                                    });
+                                  },
+                                )),
+                            Container(
+                                alignment: Alignment.center,
+                                height: 47,
+                                margin: EdgeInsets.only(
+                                    left: 20, right: 20, bottom: 10),
+                                color: Colors.grey[200],
+                                child: InputField(
+                                  inputController: _emailController,
+                                  hintText: 'Enter Business Email Address',
+                                  onPressed: () {
+                                    setState(() {
+                                      _emailController.clear();
+                                    });
+                                  },
+                                )),
+                            Container(
+                              alignment: Alignment.center,
+                              margin: EdgeInsets.only(left: 20),
+                              child: Text(
+                                  'We\'ll contact you as soon as your request is received.',
+                                  style: TextStyle(
+                                      fontFamily: 'Ubuntu',
+                                      fontWeight: FontWeight.w400,
+                                      color: Colors.grey,
+                                      fontSize: 13)),
+                            ),
+                          ])),
                     ])),
               ),
               Container(
@@ -154,12 +204,39 @@ class _BusinessApplicationState extends State<BusinessApplication> {
   }
 
   _isFormValid() =>
-      _companyNameController.text != null &&
-          _companyNameController.text.isNotEmpty &&
-          _plateNumberController.text != null &&
-          _plateNumberController.text.isNotEmpty &&
-          _ticketNumberController.text != null &&
-          _ticketNumberController.text.isNotEmpty;
+      _nameController.text != null &&
+      _nameController.text.isNotEmpty &&
+      _locationController.text != null &&
+      _locationController.text.isNotEmpty &&
+      _phoneController.text != null &&
+      _phoneController.text.isNotEmpty &&
+      _emailController.text != null &&
+      _emailController.text.isNotEmpty;
+
+  Widget _previewImage() {
+    final Text retrieveError = _getRetrieveErrorWidget();
+    if (retrieveError != null) {
+      return retrieveError;
+    }
+    if (_businessLogo != null) {
+      return ClipOval(
+          child: Image.file(File(_businessLogo.path),
+              height: 90, width: 90, fit: BoxFit.cover));
+    } else if (_imageUploadError != null) {
+      return Text(
+        'Pick image error: $_imageUploadError',
+        textAlign: TextAlign.center,
+      );
+    } else {
+      return ClipOval(
+          child: Image.asset(
+        'assets/images/placeholder.jpg',
+        fit: BoxFit.cover,
+        width: 90.0,
+        height: 90.0,
+      ));
+    }
+  }
 
   _submitRequest() async {
     if (!_isFormValid()) {
@@ -178,12 +255,20 @@ class _BusinessApplicationState extends State<BusinessApplication> {
 
     try {
       Map<String, dynamic> formDetails = {
-        'plate_number': _plateNumberController.text,
-        'ticket_number': _ticketNumberController.text,
-        'company_name': _companyNameController.text,
+        'name': _nameController.text,
+        'location': _locationController.text,
+        'phone': _phoneController.text,
+        'email': _emailController.text
       };
 
-      await _businessRepository.driverRequest(new FormData.fromMap(formDetails));
+      if (_businessLogo != null) {
+        String fileName = _businessLogo.path.split('/').last;
+        formDetails['logo'] = await MultipartFile.fromFile(_businessLogo.path,
+            filename: fileName);
+      }
+
+      await _businessRepository
+          .applicationRequest(new FormData.fromMap(formDetails));
       AlertBar.dialog(context,
           'Request has been sent. You will be contacted soon.', Colors.green,
           icon: Icon(
@@ -204,9 +289,19 @@ class _BusinessApplicationState extends State<BusinessApplication> {
 
   @override
   void dispose() {
-    _plateNumberController.dispose();
-    _ticketNumberController.dispose();
-    _companyNameController.dispose();
+    _nameController.dispose();
+    _locationController.dispose();
+    _phoneController.dispose();
+    _emailController.dispose();
     super.dispose();
+  }
+
+  Text _getRetrieveErrorWidget() {
+    if (_retrieveDataError != null) {
+      final Text result = Text(_retrieveDataError);
+      _retrieveDataError = null;
+      return result;
+    }
+    return null;
   }
 }

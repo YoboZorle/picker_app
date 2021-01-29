@@ -95,6 +95,11 @@ Future<void> persistUserDetails(User user) async {
   await helper.updateOrInsert(user);
 }
 
+Future<User> getPersistedUserDetails(int userId) async {
+  UserProvider helper = UserProvider.instance;
+  return await helper.getUser(userId);
+}
+
 String getdob(String date) {
   if (date == null || date.isEmpty) {
     return '';

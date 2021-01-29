@@ -7,7 +7,9 @@ import 'package:pickrr_app/src/helpers/custom_route.dart';
 import 'package:pickrr_app/src/models/user.dart';
 import 'package:pickrr_app/src/screens/auth/complete_profile_form.dart';
 import 'package:pickrr_app/src/screens/auth/login.dart';
+import 'package:pickrr_app/src/screens/business/application.dart';
 import 'package:pickrr_app/src/screens/business/password_prompt.dart';
+import 'package:pickrr_app/src/screens/business/business_home.dart';
 import 'package:pickrr_app/src/screens/driver/onboard.dart';
 import 'package:pickrr_app/src/screens/driver/order_history.dart';
 import 'package:pickrr_app/src/screens/home.dart';
@@ -40,8 +42,18 @@ class Routes {
       return null;
     }
     switch (pathElements[1]) {
+      case "BusinessHomePage":
+        return SlideLeftRoute<bool>(builder: (BuildContext context) => BusinessHomePage());
+      case "BusinessApplication":
+        return SlideLeftRoute<bool>(
+            builder: (BuildContext context) => BusinessApplication());
       case "PasswordPrompt":
-        return SlideLeftRoute<bool>(builder:(BuildContext context) => PasswordPrompt());
+        bool isNewBusiness;
+        if (pathElements.length > 2) {
+          isNewBusiness = pathElements[2].toLowerCase() == 'true';
+        }
+        return SlideLeftRoute<bool>(
+            builder: (BuildContext context) => PasswordPrompt(isNewBusiness));
       case "Onboard":
         return CustomRoute<bool>(builder: (BuildContext context) => Onboard());
       case "DriversHomePage":
@@ -136,7 +148,7 @@ Widget homePage(BuildContext context, AuthenticationState state) {
     return DriverTabs();
   }
 
-  if(user.isBusiness) {
+  if (user.isBusiness) {
     return PasswordPrompt(user.isNewBusiness);
   }
 
