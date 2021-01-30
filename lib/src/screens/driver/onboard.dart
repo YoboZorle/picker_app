@@ -16,6 +16,7 @@ class DriverOnboard extends StatelessWidget {
           backgroundColor: Colors.white,
           automaticallyImplyLeading: false,
           elevation: 0,
+          brightness: Brightness.light,
           actions: [
             FlatButton(
                 child: Text('Cancel',
@@ -51,7 +52,7 @@ class DriverOnboard extends StatelessWidget {
                               tag: 'input_phon_auth_title',
                               flightShuttleBuilder: _flightShuttleBuilder,
                               child: Text(
-                                'Want to be your own boss?',
+                                'Want to be your own\nboss?',
                                 style: TextStyle(
                                     color: Colors.black,
                                     fontSize: 27,

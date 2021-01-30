@@ -38,6 +38,28 @@ class _BusinessApplicationState extends State<BusinessApplication> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.white,
+        appBar: AppBar(
+          leading:    IconButton(
+            icon: Icon(Icons.arrow_back_ios,
+                color: Colors.black),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+          title:   Text(
+            'Business account',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 18,
+              fontFamily: 'Ubuntu',
+              color: Colors.black,
+              fontWeight: FontWeight.w800,
+            ),
+          ),
+          brightness: Brightness.light,
+          backgroundColor: Colors.white,
+          elevation: 0,
+        ),
         body: GestureDetector(
             onTap: () {
               FocusScope.of(context).requestFocus(new FocusNode());
@@ -51,27 +73,6 @@ class _BusinessApplicationState extends State<BusinessApplication> {
                           child: ListView(
                               physics: const BouncingScrollPhysics(),
                               children: <Widget>[
-                            Row(
-                              children: [
-                                IconButton(
-                                  icon: Icon(Icons.arrow_back_ios,
-                                      color: Colors.black),
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                  },
-                                ),
-                                Text(
-                                  'Business account',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    fontFamily: 'Ubuntu',
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w800,
-                                  ),
-                                ),
-                              ],
-                            ),
                             SizedBox(height: 45),
                             GestureDetector(
                               onTap: () async {
