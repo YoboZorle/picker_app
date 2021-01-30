@@ -56,7 +56,7 @@ class _LoginState extends State<Login> {
             }
 
             if(user.isBusiness){
-              Navigator.popAndPushNamed(context, '/PasswordPrompt');
+              Navigator.popAndPushNamed(context, '/PasswordPrompt/${user.isNewBusiness}');
               return;
             }
 

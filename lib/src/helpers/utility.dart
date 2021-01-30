@@ -95,6 +95,11 @@ Future<void> persistUserDetails(User user) async {
   await helper.updateOrInsert(user);
 }
 
+Future<User> getPersistedUserDetails(int userId) async {
+  UserProvider helper = UserProvider.instance;
+  return await helper.getUser(userId);
+}
+
 String getdob(String date) {
   if (date == null || date.isEmpty) {
     return '';
@@ -108,7 +113,10 @@ String getFullTime(String date) {
   if (date == null || date.isEmpty) {
     return '';
   }
-  return DateFormat('E d/M/y,').add_jm().format(DateTime.parse(date).toLocal()).toString();
+  return DateFormat('E d/M/y,')
+      .add_jm()
+      .format(DateTime.parse(date).toLocal())
+      .toString();
 }
 
 double priceCalculator(double distance) {
@@ -171,3 +179,10 @@ void cancelRide(BuildContext context, rideId, {nextRoute = '/HomePage'}) async {
 
 String getRandomString(int length) => String.fromCharCodes(Iterable.generate(
     length, (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length))));
+
+bool pinMatched(String pin, String otherPin) =>
+    pin != null &&
+    otherPin != null &&
+    pin.isNotEmpty &&
+    otherPin.isNotEmpty &&
+    pin == otherPin;

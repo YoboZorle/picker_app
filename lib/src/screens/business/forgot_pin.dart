@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pickrr_app/src/helpers/constants.dart';
 import 'package:pickrr_app/src/screens/business/business_home.dart';
-import 'package:pickrr_app/src/screens/passcode/enter_pin.dart';
 import 'package:pickrr_app/src/widgets/input.dart';
 
 class ForgotPin extends StatefulWidget {
@@ -10,7 +9,6 @@ class ForgotPin extends StatefulWidget {
 }
 
 class ForgotPinState extends State<ForgotPin> {
-
   TextEditingController _forgotEmailController;
 
   @override
@@ -141,8 +139,8 @@ class ForgotPinState extends State<ForgotPin> {
         ),
       ),
       onTap: () {
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => BusinessHome()));
+        // Navigator.of(context)
+        //     .push(MaterialPageRoute(builder: (context) => BusinessHome()));
       },
     ),
   );

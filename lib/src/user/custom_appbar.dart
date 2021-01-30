@@ -63,7 +63,12 @@ class CustomerAppBar extends StatelessWidget {
                                   fontSize: 14,
                                   fontFamily: 'Ubuntu',
                                   color: Colors.white,
-                                  fontWeight: FontWeight.w400)) : Text('Become a rider',
+                                  fontWeight: FontWeight.w400)) : user.isBusiness ? Text('Open as business',
+                              style: TextStyle(
+                                  fontSize: 14,
+                                  fontFamily: 'Ubuntu',
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w400)): Text('Become a rider',
                               style: TextStyle(
                                   fontSize: 14,
                                   fontFamily: 'Ubuntu',
@@ -73,16 +78,23 @@ class CustomerAppBar extends StatelessWidget {
                         ],
                       )),
                   onTap: () {
-                    if(!user.isDriver){
+                    if (user.isDriver) {
                       Navigator.pushNamed(
                         context,
-                        '/DriverOnboard',
+                        '/DriversHomePage',
+                      );
+                      return;
+                    }
+                    if(user.isBusiness){
+                      Navigator.pushNamed(
+                        context,
+                        '/BusinessHomePage',
                       );
                       return;
                     }
                     Navigator.pushNamed(
                       context,
-                      '/DriversHomePage',
+                      '/DriverOnboard',
                     );
                   },
                 );

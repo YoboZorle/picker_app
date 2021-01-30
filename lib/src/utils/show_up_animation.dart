@@ -18,7 +18,6 @@ class _ShowUpState extends State<ShowUp> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-
     _animController =
         AnimationController(vsync: this, duration: Duration(milliseconds: 500));
     final curve =

@@ -19,7 +19,6 @@ class NavDrawer extends StatelessWidget {
             return Container();
           }
           User user = state.props[0];
-
           return SafeArea(
             child: Container(
               padding: EdgeInsets.only(left: 15.0, right: 15.0),
@@ -122,7 +121,7 @@ class NavDrawer extends StatelessWidget {
                   margin: EdgeInsets.only(bottom: 40),
                   child: ListTile(
                     title: Text(
-                      !user.isDriver ? 'Become a rider' : 'Open as rider',
+                      !user.isDriver && !user.isBusiness ? 'Become a rider' : user.isDriver ? 'Open as rider': 'Open as business',
                       style: TextStyle(
                           fontWeight: FontWeight.w500,
                           fontFamily: "Ubuntu",
@@ -140,16 +139,23 @@ class NavDrawer extends StatelessWidget {
                     trailing: Icon(Icons.arrow_forward_ios,
                         size: 17, color: Colors.grey[200]),
                     onTap: () {
-                      if (!user.isDriver) {
+                      if (user.isDriver) {
                         Navigator.pushNamed(
                           context,
-                          '/DriverOnboard',
+                          '/DriversHomePage',
+                        );
+                        return;
+                      }
+                      if(user.isBusiness){
+                        Navigator.pushNamed(
+                          context,
+                          '/BusinessHomePage',
                         );
                         return;
                       }
                       Navigator.pushNamed(
                         context,
-                        '/DriversHomePage',
+                        '/DriverOnboard',
                       );
                     },
                   ),

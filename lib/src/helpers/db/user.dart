@@ -13,7 +13,8 @@ final String columnEmail = 'email';
 final String columnProfileImageUrl = 'profileImageUrl';
 final String columnIsDriver = 'is_driver';
 final String columnCallingCode = 'callingCode';
-final String columnIsBusiness = 'is_business';
+final String columnIsBusiness = 'is_company';
+final String columnIsNewBusiness = 'is_new_business';
 
 class UserProvider {
   Database db;
@@ -41,7 +42,8 @@ create table $tableUser (
   $columnEmail text,
   $columnIsDriver integer,
   $columnCallingCode text,
-  $columnIsBusiness integer)
+  $columnIsBusiness integer,
+  $columnIsNewBusiness integer)
 ''');
     });
   }
@@ -54,7 +56,8 @@ create table $tableUser (
   Future<void> updateOrInsert(User user) async {
     var result = await getUser(user.id);
     if (result != null) {
-      await update(user);
+      await delete(user.id);
+      await insert(user);
     }
     if (result == null) {
       await insert(user);
