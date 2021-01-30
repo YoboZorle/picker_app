@@ -76,8 +76,6 @@ class CreatePinWidgetState extends State<CreatePinWidget> {
                                 child: PinPut(
                                   fieldsCount: 5,
                                   eachFieldHeight: 55,
-                                  onSubmit: (String pin) =>
-                                      _validateAndSubmitPin(),
                                   focusNode: _pinFocusNode,
                                   controller: _pinController,
                                   submittedFieldDecoration:
@@ -113,8 +111,6 @@ class CreatePinWidgetState extends State<CreatePinWidget> {
                                 child: PinPut(
                                   fieldsCount: 5,
                                   eachFieldHeight: 55,
-                                  onSubmit: (String pin) =>
-                                      _validateAndSubmitPin(),
                                   focusNode: _retypedPinFocusNode,
                                   controller: _retypedPinController,
                                   submittedFieldDecoration:
@@ -178,17 +174,29 @@ class CreatePinWidgetState extends State<CreatePinWidget> {
               ),
             ),
           ),
-          onTap: () {},
+          onTap: () => _processRequest(),
         ),
       );
 
-  _validateAndSubmitPin() {
-    print('IN here');
-    print('Pin one: ${_pinController.text}');
-    print('Pin two: ${_retypedPinController.text}');
-  }
+  bool _isPinValid() =>
+      this._pinController.text != null &&
+      this._pinController.text.isNotEmpty &&
+      this._retypedPinController.text != null &&
+      this._retypedPinController.text.isNotEmpty;
 
   _processRequest() async {
+    if (!_isPinValid()) {
+      AlertBar.dialog(
+          context, 'Please enter your pin and re-enter it again.', Colors.red,
+          icon: Icon(Icons.error), duration: 5);
+      return;
+    }
+    if (!pinMatched(_pinController.text, _retypedPinController.text)) {
+      AlertBar.dialog(
+          context, 'Both pin and re-entered pin do not match.', Colors.red,
+          icon: Icon(Icons.error), duration: 5);
+      return;
+    }
     try {
       AlertBar.dialog(context, 'Processing request...', AppColor.primaryText,
           showProgressIndicator: true, duration: null);
@@ -200,11 +208,22 @@ class CreatePinWidgetState extends State<CreatePinWidget> {
             icon: Icon(Icons.error), duration: 5);
       }
       await _businessRepository.createPin(FormData.fromMap(formDetails));
+      Navigator.popUntil(context, (Route<dynamic> route) => route is PageRoute);
+      Navigator.pushNamedAndRemoveUntil(
+          context, widget.nextRoute, (route) => false);
     } catch (err) {
-      cprint(err);
-      Navigator.pop(context);
+      cprint(err.message);
+      Navigator.popUntil(context, (Route<dynamic> route) => route is PageRoute);
+      Navigator.popUntil(context, (Route<dynamic> route) => route is PageRoute);
       AlertBar.dialog(context, err.message, Colors.red,
           icon: Icon(Icons.error), duration: 5);
     }
+  }
+
+  @override
+  void dispose() {
+    _pinController.dispose();
+    _retypedPinController.dispose();
+    super.dispose();
   }
 }

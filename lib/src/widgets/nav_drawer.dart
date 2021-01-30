@@ -19,12 +19,6 @@ class NavDrawer extends StatelessWidget {
             return Container();
           }
           User user = state.props[0];
-
-          print('Hey man-------------------------------------------------------------------');
-          print('((((((((((((((((((((((((((Hey man-------------------------------------------------------------------');
-          print(user.isBusiness);
-          print(user.isDriver);
-
           return SafeArea(
             child: Container(
               padding: EdgeInsets.only(left: 15.0, right: 15.0),

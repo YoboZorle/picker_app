@@ -29,7 +29,7 @@ class BusinessRepository extends APIClient {
     final String url = '/business/details';
 
     try {
-      await dio.post(url, data: details);
+      await dio.patch(url, data: details);
     } catch (err) {
       cprint(err.response, errorIn: 'createPin');
       if (err.response.data != null &&
@@ -44,7 +44,24 @@ class BusinessRepository extends APIClient {
     final String url = '/business/verify-pin';
 
     try {
-      response = await dio.put(url, data: details);
+      response = await dio.post(url, data: details);
+      final responseBody = response.data;
+      return responseBody;
+    } catch (err) {
+      cprint(err.response, errorIn: 'verifyPin');
+      if (err.response.data != null &&
+          err.response.data['non_field_errors'] != null) {
+        throw ServiceError(err.response.data['non_field_errors'].first);
+      }
+      throw ServiceError('Request failed, please try again.');
+    }
+  }
+
+  forgotPin() async {
+    final String url = '/business/forgot-pin';
+
+    try {
+      response = await dio.post(url);
       final responseBody = response.data;
       return responseBody;
     } catch (err) {
