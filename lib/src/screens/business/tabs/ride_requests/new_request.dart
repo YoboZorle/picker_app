@@ -2,21 +2,66 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:pickrr_app/src/helpers/constants.dart';
+import 'package:pickrr_app/src/screens/business/tabs/ride_requests/request_models.dart';
 
 class NewRequest extends StatelessWidget {
   final String title;
 
   NewRequest({Key key, this.title}) : super(key: key);
 
-  final europeanCountries = [
-    'Albania',
-    'Andorra',
-    'Armenia',
-    'Austria',
-    'Azerbaijan',
-    'Belarus',
-    'Belgium',
-  ];
+
+  static List<RequestModels> allRequests() {
+    var lstOfRequests = new List<RequestModels>();
+
+    lstOfRequests.add(new RequestModels(
+        fromAddress: "20 Egbema Street, Borikiri, Port harcourt, Nigeria",
+        toAddress: "66-4 Parkhurst Rd, Chelmsford MA 1824 ",
+        rideAmount: "N400.00",
+        rideDistance: "6.3km",
+        rideTime: "9mins",
+        date: "Mon 14/12/2020, 2:11 PM "
+    ));
+    lstOfRequests.add(new RequestModels(
+        fromAddress: "137 Teaticket Hwy, East Falmouth MA 2536",
+        toAddress: "1775 Washington St, Hanover MA 2339",
+        rideAmount: "N650.00",
+        rideDistance: "10km",
+        rideTime: "14mins",
+        date: "Mon 14/12/2020, 2:11 PM "
+    ));
+    lstOfRequests.add(new RequestModels(
+        fromAddress: "34 Plymouth Street, Halifax MA 2338",
+        toAddress: "301 Massachusetts Ave, Lunenburg MA 1462",
+        rideAmount: "N700.00",
+        rideDistance: "8mins",
+        rideTime: "18mins",
+        date: "Mon 14/12/2020, 2:11 PM "
+    ));
+    lstOfRequests.add(new RequestModels(
+        fromAddress: "742 Main Street, North Oxford MA 1537",
+        toAddress: "1180 Fall River Avenue, Seekonk MA 2771",
+        rideAmount: "N800.00",
+        rideDistance: "8km",
+        rideTime: "23mins",
+        date: "Mon 14/12/2020, 2:11 PM "
+    ));
+    lstOfRequests.add(new RequestModels(
+        fromAddress: "3005 Cranberry Hwy Rt 6 28, Wareham MA 2538",
+        toAddress: "141 Washington Ave Extension, Albany NY 12205",
+        rideAmount: "N1,200.00",
+        rideDistance: "11km",
+        rideTime: "15mins",
+        date: "Mon 14/12/2020, 2:11 PM "));
+    lstOfRequests.add(new RequestModels(
+        fromAddress: "333 Main Street, Tewksbury MA 1876",
+        toAddress: "62 Swansea Mall Dr, Swansea MA 2777",
+        rideAmount: "N950.00",
+        rideDistance: "4.8km",
+        rideTime: "9mins",
+        date: "Mon 14/12/2020, 2:11 PM "
+    ));
+    return lstOfRequests;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +69,13 @@ class NewRequest extends StatelessWidget {
       backgroundColor: Colors.grey[100],
       body: ListView.builder(
         physics: BouncingScrollPhysics(),
-        itemCount: europeanCountries.length,
+
+        itemCount: allRequests().length,
+        // itemBuilder: _getItemUI,
+        padding: EdgeInsets.all(0.0),
+
+
+        // itemCount: europeanCountries.length,
         itemBuilder: (context, index) {
           return Container(
             color: Colors.white,
@@ -45,7 +96,7 @@ class NewRequest extends StatelessWidget {
                                     size: 16, color: Colors.grey)),
                           ),
                           TextSpan(
-                              text: " 6.7km",
+                              text: ' '+allRequests()[index].rideDistance,
                               style: TextStyle(
                                   color: Colors.grey,
                                   fontFamily: 'Ubuntu',
@@ -62,7 +113,7 @@ class NewRequest extends StatelessWidget {
                                 size: 15, color: Colors.grey),
                           ),
                           TextSpan(
-                              text: " 14mins",
+                              text: ' '+allRequests()[index].rideTime,
                               style: TextStyle(
                                   color: Colors.grey,
                                   fontFamily: 'Ubuntu',
@@ -75,7 +126,7 @@ class NewRequest extends StatelessWidget {
                       text: TextSpan(
                         children: [
                           TextSpan(
-                              text: " N600.00",
+                              text: allRequests()[index].rideAmount,
                               style:
                                   TextStyle(color: Colors.grey, fontSize: 13)),
                         ],
@@ -92,7 +143,7 @@ class NewRequest extends StatelessWidget {
                           fontWeight: FontWeight.w400,
                           fontFamily: 'Ubuntu')),
                   visualDensity: VisualDensity(horizontal: 0, vertical: -4),
-                  title: Text('10 Sani Abacha road, Port Harcourt, Nigeria',
+                  title: Text(allRequests()[index].fromAddress,
                       style: TextStyle(
                           color: Colors.black,
                           fontWeight: FontWeight.w500,
@@ -110,7 +161,8 @@ class NewRequest extends StatelessWidget {
                           fontWeight: FontWeight.w400,
                           fontFamily: 'Ubuntu')),
                   visualDensity: VisualDensity(horizontal: 0, vertical: -4),
-                  title: Text('106 Victoria Street, Port Harcourt, Town, Nigeria',
+                  title: Text(
+                      allRequests()[index].toAddress,
                       style: TextStyle(
                           color: Colors.black,
                           fontSize: 15,
@@ -126,7 +178,7 @@ class NewRequest extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('Mon 14/12/2020, 2:11 PM ',
+                    Text(   allRequests()[index].date,
                         style: TextStyle(
                             color: Colors.grey,
                             fontSize: 13,
@@ -147,7 +199,7 @@ class NewRequest extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(height: 12)
+                SizedBox(height: 12),
               ],
             ),
           );

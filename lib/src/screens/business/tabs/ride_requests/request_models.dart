@@ -6,6 +6,6 @@ class RequestModels {
   final String rideTime;
   final String date;
 
-  RequestModels(this.fromAddress, this.toAddress, this.rideAmount,
-      this.rideDistance, this.rideTime, this.date);
+  RequestModels({this.fromAddress, this.toAddress, this.rideAmount,
+      this.rideDistance, this.rideTime, this.date});
 }
