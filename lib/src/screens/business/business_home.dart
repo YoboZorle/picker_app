@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pickrr_app/src/helpers/constants.dart';
 import 'package:pickrr_app/src/screens/business/tabs/business_drivers.dart';
 import 'package:pickrr_app/src/screens/business/tabs/business_wallet.dart';
 import 'package:pickrr_app/src/screens/business/tabs/new_request.dart';
@@ -28,49 +29,100 @@ class _BusinessHomePageState extends State<BusinessHomePage> {
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
+        backgroundColor: Colors.white,
           appBar: AppBar(
-            title: Text(title),
+            title: Text(title,
+            style: TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.w600,
+              fontFamily: 'Ubuntu'
+            )),
             brightness: Brightness.light,
+            backgroundColor: Colors.white,
+            elevation: 0,
             actions: [
-              selectedPage == 0
-                  ? Container()
-                  : FlatButton(
-                      onPressed: () {},
-                      color: selectedPage == 1 ? Colors.yellow : Colors.green,
-                      child: Text(selectedPage == 1 ? 'Add driver' : 'Withdraw')),
+              Row(
+                children: [
+                  selectedPage == 0
+                      ? Container()
+                      : RaisedButton(
+                    elevation: 8,
+                            onPressed: () {},
+                            color: selectedPage == 1 ? AppColor.primaryText : AppColor.primaryText,
+                            child: Text(selectedPage == 1 ? 'Add driver' : 'Withdraw',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 14,
+                                    fontFamily: 'Ubuntu'
+                                ) )),
+                  SizedBox(width: 20)
+
+                ],
+              ),
             ],
             leading: Builder(
               builder: (context) => IconButton(
-                icon: Icon(Icons.menu_rounded, color: Colors.brown,),
+                icon: Icon(Icons.menu_rounded, color: Colors.black),
                 onPressed: () => Scaffold.of(context).openDrawer(),
               ),
             ),
           ),
           drawer: Drawer(
-            child: ListView(
-              padding: EdgeInsets.zero,
-              children: <Widget>[
-                DrawerHeader(
-                  child: Text('Drawer Header'),
-                  decoration: BoxDecoration(
-                    color: Colors.blue,
+              elevation: 20.0,
+              child: ListView(
+                padding: EdgeInsets.zero,
+                children: <Widget>[
+                  UserAccountsDrawerHeader(
+                    accountName: Text('Ruzz Logistics',
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 17,
+                            fontFamily: 'Ubuntu',
+                            height: 1.3
+                        )),
+                    accountEmail: Text('Business account',
+                        style: TextStyle(
+                            color: Colors.grey,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
+                            fontFamily: 'Ubuntu'
+                        )
+                    ),
+                    currentAccountPicture:
+                    Image.network('https://bcassetcdn.com/public/blog/wp-content/uploads/2019/06/18095404/cube-logistics.png'),
+                    decoration: BoxDecoration(color: Colors.white),
                   ),
-                ),
-                ListTile(
-                  title: Text('Item 1'),
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                ),
-                ListTile(
-                  title: Text('Item 2'),
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                ),
-              ],
-            ),
-          ),
+                  ListTile(
+                    leading: Icon(Icons.account_circle),
+                    title: Text('Drawer layout Item 1'),
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                  Divider(
+                    height: 2.0,
+                  ),
+                  ListTile(
+                    leading: Icon(Icons.accessibility),
+                    title: Text('Drawer layout Item 2'),
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                  Divider(
+                    height: 2.0,
+                  ),
+                  ListTile(
+                    leading: Icon(Icons.account_box),
+                    title: Text('Drawer layout Item 3'),
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                  )
+                ],
+              )),
           body: PageView(
             physics: NeverScrollableScrollPhysics(),
             controller: _myPage,
@@ -80,7 +132,8 @@ class _BusinessHomePageState extends State<BusinessHomePage> {
               BusinessWallet(),
             ],
           ),
-          bottomNavigationBar: BottomAppBar(
+          bottomNavigationBar: BottomAppBar(elevation: 0,
+            color: Colors.white,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
@@ -96,7 +149,7 @@ class _BusinessHomePageState extends State<BusinessHomePage> {
                   },
                 ),
                 IconButton(
-                  icon: Icon(Icons.star),
+                  icon: Icon(Icons.directions_bike_rounded),
                   color: selectedPage == 1 ? Colors.blue : Colors.grey,
                   onPressed: () {
                     _myPage.jumpToPage(1);
@@ -109,7 +162,7 @@ class _BusinessHomePageState extends State<BusinessHomePage> {
                 ),
                 IconButton(
                   icon: Icon(
-                    Icons.settings,
+                    Icons.account_balance_wallet_rounded,
                   ),
                   color: selectedPage == 2 ? Colors.blue : Colors.grey,
                   onPressed: () {
