@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pickrr_app/src/helpers/constants.dart';
 import 'package:pickrr_app/src/screens/business/tabs/business_drivers.dart';
 import 'package:pickrr_app/src/screens/business/tabs/business_wallet.dart';
-import 'package:pickrr_app/src/screens/business/tabs/new_request.dart';
+import 'package:pickrr_app/src/screens/business/tabs/ride_requests/new_request.dart';
 
 class BusinessHomePage extends StatefulWidget {
   BusinessHomePage({Key key}) : super(key: key);
@@ -71,6 +71,7 @@ class _BusinessHomePageState extends State<BusinessHomePage> {
           drawer: Drawer(
               elevation: 20.0,
               child: ListView(
+                physics: BouncingScrollPhysics(),
                 padding: EdgeInsets.zero,
                 children: <Widget>[
                   UserAccountsDrawerHeader(
@@ -91,7 +92,8 @@ class _BusinessHomePageState extends State<BusinessHomePage> {
                         )
                     ),
                     currentAccountPicture:
-                    Image.network('https://bcassetcdn.com/public/blog/wp-content/uploads/2019/06/18095404/cube-logistics.png'),
+                    Image.network('https://bcassetcdn.com/public/blog/wp-content/uploads/2019/06/18095404/cube-logistics.png',
+                    fit: BoxFit.cover),
                     decoration: BoxDecoration(color: Colors.white),
                   ),
                   ListTile(
@@ -144,7 +146,7 @@ class _BusinessHomePageState extends State<BusinessHomePage> {
                     _myPage.jumpToPage(0);
                     setState(() {
                       selectedPage = 0;
-                      title = 'New Requests';
+                      title = 'Ride Requests';
                     });
                   },
                 ),
@@ -155,7 +157,7 @@ class _BusinessHomePageState extends State<BusinessHomePage> {
                     _myPage.jumpToPage(1);
                     setState(() {
                       selectedPage = 1;
-                      title = 'Drivers';
+                      title = 'My Drivers';
                       btnText = 'Add drivers';
                     });
                   },
@@ -169,7 +171,7 @@ class _BusinessHomePageState extends State<BusinessHomePage> {
                     _myPage.jumpToPage(2);
                     setState(() {
                       selectedPage = 2;
-                      title = 'Wallet';
+                      title = 'My Wallet';
                       btnText = 'Withdraw';
                     });
                   },
