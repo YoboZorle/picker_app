@@ -69,7 +69,7 @@ class NewRequest extends StatelessWidget {
           return Container(
             color: Colors.white,
             margin: EdgeInsets.only(bottom: 15),
-            padding: EdgeInsets.only(left: 20, right: 20, top: 15),
+            padding: EdgeInsets.only(left: 20, right: 20, top: 20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -123,7 +123,7 @@ class NewRequest extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(height: 3),
+                SizedBox(height: 5),
                 ListTile(
                   leading: Text('From:',
                       style: TextStyle(
@@ -138,8 +138,6 @@ class NewRequest extends StatelessWidget {
                           fontWeight: FontWeight.w500,
                           fontFamily: 'Ubuntu',
                           fontSize: 15)),
-                  // subtitle:
-                  //     Text('100 Sani Abacha road, Port Harcourt, Nigeria'),
                   contentPadding: EdgeInsets.all(0),
                 ),
                 ListTile(

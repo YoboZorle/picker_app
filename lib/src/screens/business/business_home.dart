@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pickrr_app/src/helpers/constants.dart';
-import 'package:pickrr_app/src/screens/business/tabs/business_drivers.dart';
-import 'package:pickrr_app/src/screens/business/tabs/business_wallet.dart';
+import 'package:pickrr_app/src/screens/business/tabs/business_drivers/business_drivers.dart';
+import 'package:pickrr_app/src/screens/business/tabs/business_wallet/business_wallet.dart';
 import 'package:pickrr_app/src/screens/business/tabs/ride_requests/new_request.dart';
 
 class BusinessHomePage extends StatefulWidget {
@@ -34,7 +34,7 @@ class _BusinessHomePageState extends State<BusinessHomePage> {
             title: Text(title,
             style: TextStyle(
               color: Colors.black,
-              fontWeight: FontWeight.w600,
+              fontWeight: FontWeight.w700,
               fontFamily: 'Ubuntu'
             )),
             brightness: Brightness.light,
@@ -171,7 +171,7 @@ class _BusinessHomePageState extends State<BusinessHomePage> {
                     _myPage.jumpToPage(2);
                     setState(() {
                       selectedPage = 2;
-                      title = 'My Wallet';
+                      title = 'My Balance';
                       btnText = 'Withdraw';
                     });
                   },
