@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:pickrr_app/src/helpers/constants.dart';
+import 'package:pickrr_app/src/screens/business/tabs/ride_requests/assign_driver.dart';
 import 'package:pickrr_app/src/screens/business/tabs/ride_requests/request_models.dart';
 
 class NewRequest extends StatelessWidget {
@@ -175,7 +176,16 @@ class NewRequest extends StatelessWidget {
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(35.0),
                             side: BorderSide(color: AppColor.primaryText)),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute<Null>(
+                                builder: (BuildContext context) {
+                                  return AssignDriver();
+                                },
+                                fullscreenDialog: true,
+                              ));
+                        },
                         color: AppColor.primaryText,
                         textColor: Colors.white,
                         child: Text("Assign driver",
