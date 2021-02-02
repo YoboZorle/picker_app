@@ -151,7 +151,7 @@ class NewRequest extends StatelessWidget {
                   children: [
                     Text(allRequests()[index].rideAmount,
                         style: TextStyle(
-                            color: Color(0xFF16B9BB),
+                            color: Colors.black,
                             fontSize: 14,
                             fontFamily: 'Ubuntu')),
                     InkWell(
@@ -164,12 +164,12 @@ class NewRequest extends StatelessWidget {
                             Text("ASSIGN DRIVER",
                                 style: TextStyle(
                                     fontSize: 13,
-                                    color: Color(0xFF7057D2),
+                                    color: AppColor.primaryText,
                                     fontFamily: 'Ubuntu',
                                     fontWeight: FontWeight.w500)),
                             SizedBox(width: 5),
                             Icon(Icons.arrow_forward_ios_outlined,
-                                color: Color(0xFF7057D2), size: 16)
+                                color: AppColor.primaryText, size: 16)
                           ],
                         ),
                       ),

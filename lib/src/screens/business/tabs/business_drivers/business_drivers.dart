@@ -36,7 +36,7 @@ class BusinessDrivers extends StatelessWidget {
                   Text(
                     'Driver is available',
                     style: TextStyle(
-                        fontSize: 14.0,
+                        fontSize: 13.0,
                         fontWeight: FontWeight.w400,
                         color: Colors.black87,
                         height: 1.3,

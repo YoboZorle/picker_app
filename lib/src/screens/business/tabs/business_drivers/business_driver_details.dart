@@ -7,7 +7,7 @@ class BusinessDriverDetails extends StatefulWidget {
 }
 
 class BusinessDriverDetailsWidget extends State {
-  bool _switchValues = false;
+  bool _switchValues = true;
 
   @override
   Widget build(BuildContext context) {
