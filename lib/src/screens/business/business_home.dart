@@ -5,6 +5,8 @@ import 'package:pickrr_app/src/screens/business/tabs/business_wallet/business_wa
 import 'package:pickrr_app/src/screens/business/tabs/ride_requests/new_request.dart';
 import 'package:pickrr_app/src/screens/star_rating/rate_driver.dart';
 
+import 'tabs/business_details.dart';
+
 class BusinessHomePage extends StatefulWidget {
   BusinessHomePage({Key key}) : super(key: key);
   _BusinessHomePageState createState() => _BusinessHomePageState();
@@ -30,14 +32,13 @@ class _BusinessHomePageState extends State<BusinessHomePage> {
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
-        backgroundColor: Colors.white,
+          backgroundColor: Colors.white,
           appBar: AppBar(
             title: Text(title,
-            style: TextStyle(
-              color: Colors.black,
-              fontWeight: FontWeight.w700,
-              fontFamily: 'Ubuntu'
-            )),
+                style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.w700,
+                    fontFamily: 'Ubuntu')),
             brightness: Brightness.light,
             backgroundColor: Colors.white,
             elevation: 0,
@@ -47,18 +48,19 @@ class _BusinessHomePageState extends State<BusinessHomePage> {
                   selectedPage == 0
                       ? Container()
                       : RaisedButton(
-                    elevation: 8,
-                            onPressed: () {},
-                            color: selectedPage == 1 ? AppColor.primaryText : AppColor.primaryText,
-                            child: Text(selectedPage == 1 ? 'Add driver' : 'Withdraw',
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 14,
-                                    fontFamily: 'Ubuntu'
-                                ) )),
+                          elevation: 8,
+                          onPressed: () {},
+                          color: selectedPage == 1
+                              ? AppColor.primaryText
+                              : AppColor.primaryText,
+                          child: Text(
+                              selectedPage == 1 ? 'Add driver' : 'Withdraw',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 14,
+                                  fontFamily: 'Ubuntu'))),
                   SizedBox(width: 20)
-
                 ],
               ),
             ],
@@ -75,57 +77,70 @@ class _BusinessHomePageState extends State<BusinessHomePage> {
                 physics: BouncingScrollPhysics(),
                 padding: EdgeInsets.zero,
                 children: <Widget>[
-                  UserAccountsDrawerHeader(
-                    accountName: Text('Ruzz Logistics',
+                  InkWell(
+                    splashColor: Colors.grey[300],
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute<Null>(
+                            builder: (BuildContext context) {
+                              return BusinessDetails();
+                            },
+                            fullscreenDialog: true,
+                          ));
+                    },
+                    child: UserAccountsDrawerHeader(
+                      accountName: Text('Ruzz Logistics',
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 17,
+                              fontFamily: 'Ubuntu',
+                              height: 1.3)),
+                      accountEmail: Text('Business account',
+                          style: TextStyle(
+                              color: Colors.grey,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400,
+                              fontFamily: 'Ubuntu')),
+                      currentAccountPicture: Container(
+                          width: 100.0,
+                          height: 100.0,
+                          decoration: new BoxDecoration(
+                              shape: BoxShape.circle,
+                              image: new DecorationImage(
+                                  fit: BoxFit.cover,
+                                  image: NetworkImage(
+                                      "https://i.pinimg.com/originals/30/3c/1d/303c1d159727b81dc4ef644bd079af82.jpg")))),
+                      decoration: BoxDecoration(color: Colors.white),
+                    ),
+                  ),
+
+                  ListTile(
+                    leading: Icon(
+                      Icons.account_circle_rounded,
+                      color: Colors.grey[400],
+                    ),
+                    title: Text('Support',
                         style: TextStyle(
                             color: Colors.black,
-                            fontWeight: FontWeight.w600,
-                            fontSize: 17,
-                            fontFamily: 'Ubuntu',
-                            height: 1.3
-                        )),
-                    accountEmail: Text('Business account',
-                        style: TextStyle(
-                            color: Colors.grey,
-                            fontSize: 14,
                             fontWeight: FontWeight.w400,
-                            fontFamily: 'Ubuntu'
-                        )
+                            fontSize: 16,
+                            fontFamily: 'Ubuntu')),
+                    onTap: () {
+                    },
+                  ),
+                  ListTile(
+                    leading: Icon(
+                      Icons.star_rate_rounded,
+                      color: Colors.grey[400],
                     ),
-                    currentAccountPicture:
-                    Image.network('https://bcassetcdn.com/public/blog/wp-content/uploads/2019/06/18095404/cube-logistics.png',
-                    fit: BoxFit.cover),
-                    decoration: BoxDecoration(color: Colors.white),
-                  ),
-                  ListTile(
-                    leading: Icon(Icons.account_circle),
-                    title: Text('Drawer layout Item 1'),
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                  ),
-                  Divider(
-                    height: 2.0,
-                  ),
-                  ListTile(
-                    leading: Icon(Icons.accessibility),
-                    title: Text('Drawer layout Item 2'),
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                  ),
-                  Divider(
-                    height: 2.0,
-                  ),
-                  ListTile(
-                    leading: Icon(Icons.star_rate_rounded, color: Colors.grey[400],),
                     title: Text('Star rating',
                         style: TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.w400,
                             fontSize: 16,
-                            fontFamily: 'Ubuntu'
-                        )),
+                            fontFamily: 'Ubuntu')),
                     onTap: () {
                       Navigator.push(
                           context,
@@ -136,7 +151,24 @@ class _BusinessHomePageState extends State<BusinessHomePage> {
                             fullscreenDialog: true,
                           ));
                     },
-                  )
+                  ),
+                  SizedBox(height: 35),
+                  Container(
+                    margin: EdgeInsets.only(left: 20, right: 20, bottom: 25),
+                    child: RaisedButton(
+                        elevation: 12,
+                        onPressed: () {},
+                        color: AppColor.primaryText,
+                        child: Container(
+                          margin: EdgeInsets.only(top: 15, bottom: 15),
+                          child: Text('Go back to Personal account',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 14,
+                                  fontFamily: 'Ubuntu')),
+                        )),
+                  ),
                 ],
               )),
           body: PageView(
@@ -148,7 +180,8 @@ class _BusinessHomePageState extends State<BusinessHomePage> {
               BusinessWallet(),
             ],
           ),
-          bottomNavigationBar: BottomAppBar(elevation: 0,
+          bottomNavigationBar: BottomAppBar(
+            elevation: 0,
             color: Colors.white,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,

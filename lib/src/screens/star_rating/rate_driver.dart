@@ -33,7 +33,8 @@ class RatingBarWidget extends State {
                   fontWeight: FontWeight.w600,
                   fontSize: 20)),
         ),
-        body: Container(width: MediaQuery.of(context).size.width,
+        body: Container(
+          width: MediaQuery.of(context).size.width,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             // mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -47,14 +48,13 @@ class RatingBarWidget extends State {
               Container(
                   width: 70.0,
                   height: 70.0,
-                  margin: EdgeInsets.only( top: 20, bottom: 18),
+                  margin: EdgeInsets.only(top: 20, bottom: 18),
                   decoration: new BoxDecoration(
                       shape: BoxShape.circle,
                       image: new DecorationImage(
                           fit: BoxFit.cover,
                           image: NetworkImage(
                               "https://blog.bolt.eu/wp-content/uploads/2020/06/1200x628_Oaksure-Financial-Services-insurance-covers-Bolt-passengers-and-drivers-on-all-rides.jpg")))),
-
               Text('George Adowei',
                   style: TextStyle(
                       color: Colors.black,
@@ -73,19 +73,20 @@ class RatingBarWidget extends State {
                 rating: rating,
                 size: 35.0,
                 color: Colors.amber,
-                borderColor: Colors.grey[300],
+                borderColor: Colors.grey[400],
                 spacing: 5.0,
               ),
-              SizedBox(height: 10),
-              Text('Rating = ' + '$rating',  style: TextStyle(
-                  color: Colors.grey,
-                  fontFamily: 'Ubuntu',
-                  fontWeight: FontWeight.w400,
-                  fontSize: 12)),
+              // SizedBox(height: 10),
+              // Text('Rating = ' + '$rating',
+              //     style: TextStyle(
+              //         color: Colors.grey,
+              //         fontFamily: 'Ubuntu',
+              //         fontWeight: FontWeight.w400,
+              //         fontSize: 12)),
               Expanded(child: SizedBox()),
               DropdownButton(
                 hint: Text(
-                  'Leave your feedback',
+                  'Select a review here...',
                   style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w400,
@@ -111,39 +112,37 @@ class RatingBarWidget extends State {
                 }).toList(),
               ),
               GestureDetector(
-                onTap: (){
-
-                },
+                onTap: () {},
                 child: Container(
-                  height: 45,
-                  width: MediaQuery.of(context).size.width,
-                  color: AppColor.primaryText,
-                  margin: EdgeInsets.only(left: 20, right: 20, top: 13),
-                  child: Center(child: Text('Submit feedback',
-                      style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.white,
-                          fontFamily: 'Ubuntu')))
-                ),
+                    height: 45,
+                    width: MediaQuery.of(context).size.width,
+                    color: AppColor.primaryText,
+                    margin: EdgeInsets.only(left: 20, right: 20, top: 13),
+                    child: Center(
+                        child: Text('Submit feedback',
+                            style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.white,
+                                fontFamily: 'Ubuntu')))),
               ),
-
               GestureDetector(
-                onTap: (){
-Navigator.pop(context);
+                onTap: () {
+                  Navigator.pop(context);
                 },
                 child: Container(
                     height: 43,
                     width: MediaQuery.of(context).size.width,
                     color: Colors.white,
-                    margin: EdgeInsets.only(left: 30, right: 30, top: 10, bottom: 10),
-                    child: Center(child: Text('Skip feedback',
-                        style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.black,
-                            fontFamily: 'Ubuntu')))
-                ),
+                    margin: EdgeInsets.only(
+                        left: 30, right: 30, top: 10, bottom: 10),
+                    child: Center(
+                        child: Text('Skip feedback',
+                            style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.black,
+                                fontFamily: 'Ubuntu')))),
               ),
             ],
           ),
