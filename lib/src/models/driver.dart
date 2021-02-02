@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:pickrr_app/src/models/business.dart';
 import 'package:pickrr_app/src/models/user.dart';
 
 bool _driverStatus(value) {
@@ -12,7 +13,10 @@ class Driver extends Equatable {
   final int id;
   final String plateNumber;
   final String ticketNumber;
-  final String companyName;
+  final String bikeBrand;
+  final String driversLicence;
+  Business company;
+  final int businessId;
   final String status;
   final String createdAt;
   final bool blocked;
@@ -26,7 +30,10 @@ class Driver extends Equatable {
       {this.id,
       this.plateNumber,
       this.ticketNumber,
-      this.companyName,
+      this.company,
+      this.businessId,
+      this.bikeBrand,
+      this.driversLicence,
       this.status,
       this.blocked,
       this.createdAt,
@@ -36,14 +43,20 @@ class Driver extends Equatable {
       this.ongoingRides,
       this.completedRides});
 
+  set setCompany(Business business) {
+    company = business;
+  }
+
   @override
-  List<Object> get props => [id, ticketNumber, companyName, createdAt];
+  List<Object> get props => [id, ticketNumber, bikeBrand, createdAt];
 
   Map<String, dynamic> toMap() {
     var map = <String, dynamic>{
       'plateNumber': plateNumber,
       'ticketNumber': ticketNumber,
-      'companyName': companyName,
+      'bikeBrand': bikeBrand,
+      'driversLicence': driversLicence,
+      'businessId': businessId,
       'status': status,
       'createdAt': createdAt,
       'blocked': blocked == true ? 1 : 0,
@@ -65,7 +78,10 @@ class Driver extends Equatable {
       'user': rawData['user'],
       'plateNumber': rawData['plate_number'],
       'ticketNumber': rawData['ticket_number'],
-      'companyName': rawData['company_name'],
+      'company': rawData['company'],
+      'businessId': rawData['company'] != null ? rawData['company']['id'] : null,
+      'bikeBrand': rawData['bike_brand'],
+      'driversLicence': rawData['drivers_licence'],
       'status': rawData['status'],
       'createdAt': rawData['created_at'],
       'blocked': rawData['blocked'],
@@ -85,7 +101,13 @@ class Driver extends Equatable {
             : null,
         plateNumber = mapData['plateNumber'] ?? '',
         ticketNumber = mapData['ticketNumber'] ?? '',
-        companyName = mapData['companyName'] ?? '',
+        bikeBrand = mapData['bikeBrand'] ?? '',
+        driversLicence = mapData['driversLicence'] ?? '',
+        company = mapData['company'] == null
+            ? null
+            : Business.fromMap(mapData['company']),
+        businessId =
+            mapData['company'] == null ? null : mapData['company']['id'],
         status = mapData['status'],
         createdAt = mapData['createdAt'],
         isDelivering = _driverStatus(mapData['isDelivering']),
@@ -96,7 +118,7 @@ class Driver extends Equatable {
 
   @override
   String toString() =>
-      'Driver { id: $id, ticketNumber: $ticketNumber, companyName: $companyName }';
+      'Driver { id: $id, ticketNumber: $ticketNumber, bikeBrand: $bikeBrand }';
 }
 
 class History {

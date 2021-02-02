@@ -45,9 +45,9 @@ class _RiderOrderInteractiveLayoutState
     var rawDetails = await _rideRepository.getRideDetails(ride.id);
     Ride rideDetails = Ride.fromMap(rawDetails);
     if(rideDetails != null){
-      setState(() => {
-        ride = rideDetails
-      });
+      // setState(() => {
+        ride = rideDetails;
+      // });
     }
   }
 

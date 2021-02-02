@@ -157,7 +157,9 @@ class _BusinessHomePageState extends State<BusinessHomePage> {
                     margin: EdgeInsets.only(left: 20, right: 20, bottom: 25),
                     child: RaisedButton(
                         elevation: 12,
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/HomePage');
+                        },
                         color: AppColor.primaryText,
                         child: Container(
                           margin: EdgeInsets.only(top: 15, bottom: 15),

@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:pickrr_app/src/helpers/constants.dart';
 import 'package:pickrr_app/src/services/repositories/driver.dart';
 import 'package:pickrr_app/src/widgets/input.dart';
@@ -14,14 +17,41 @@ class DriverApplication extends StatefulWidget {
 class _DriverApplicationState extends State<DriverApplication> {
   TextEditingController _plateNumberController;
   TextEditingController _ticketNumberController;
-  TextEditingController _companyNameController;
+  TextEditingController _bikeBrandController;
+  File _driversLicenceImage;
+  final picker = ImagePicker();
   DriverRepository _driverRepository;
+
+  Future getImage() async {
+    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+    setState(() {
+      if (pickedFile != null) {
+        _driversLicenceImage = File(pickedFile.path);
+      } else {
+        print('No image selected.');
+      }
+    });
+  }
+
+  Future<void> retrieveLostData() async {
+    final LostData response = await picker.getLostData();
+    if (response.isEmpty) {
+      return;
+    }
+    if (response.file != null) {
+      setState(() {
+        if (response.type == RetrieveType.image) {
+          _driversLicenceImage = File(response.file.path);
+        }
+      });
+    }
+  }
 
   @override
   void initState() {
     _plateNumberController = new TextEditingController();
     _ticketNumberController = new TextEditingController();
-    _companyNameController = new TextEditingController();
+    _bikeBrandController = new TextEditingController();
     _driverRepository = DriverRepository();
     super.initState();
   }
@@ -101,13 +131,26 @@ class _DriverApplicationState extends State<DriverApplication> {
                                     left: 20, right: 20, bottom: 10),
                                 color: Colors.grey[200],
                                 child: InputField(
-                                  inputController: _companyNameController,
-                                  hintText: 'Enter Company Name',
+                                  inputController: _bikeBrandController,
+                                  hintText: 'Enter Brand of bike',
                                   onPressed: () {
                                     setState(() {
-                                      _companyNameController.clear();
+                                      _bikeBrandController.clear();
                                     });
                                   },
+                                )),
+                            Container(
+                                alignment: Alignment.center,
+                                height: 47,
+                                margin: EdgeInsets.only(
+                                    left: 20, right: 20, bottom: 10),
+                                color: Colors.grey[200],
+                                child: GestureDetector(
+                                  child: _driversLicenceImage == null
+                                      ? Text(
+                                          'Provide Drivers Licence(supported type: image).')
+                                      : Text('Drivers licence selected'),
+                                  onTap: getImage,
                                 )),
                             Container(
                               alignment: Alignment.center,
@@ -154,8 +197,9 @@ class _DriverApplicationState extends State<DriverApplication> {
   }
 
   _isFormValid() =>
-      _companyNameController.text != null &&
-      _companyNameController.text.isNotEmpty &&
+      _driversLicenceImage != null &&
+      _bikeBrandController.text != null &&
+      _bikeBrandController.text.isNotEmpty &&
       _plateNumberController.text != null &&
       _plateNumberController.text.isNotEmpty &&
       _ticketNumberController.text != null &&
@@ -180,8 +224,12 @@ class _DriverApplicationState extends State<DriverApplication> {
       Map<String, dynamic> formDetails = {
         'plate_number': _plateNumberController.text,
         'ticket_number': _ticketNumberController.text,
-        'company_name': _companyNameController.text,
+        'bike_brand': _bikeBrandController.text,
       };
+      String fileName = _driversLicenceImage.path.split('/').last;
+      formDetails['drivers_licence'] = await MultipartFile.fromFile(
+          _driversLicenceImage.path,
+          filename: fileName);
 
       await _driverRepository.driverRequest(new FormData.fromMap(formDetails));
       AlertBar.dialog(context,
@@ -206,7 +254,7 @@ class _DriverApplicationState extends State<DriverApplication> {
   void dispose() {
     _plateNumberController.dispose();
     _ticketNumberController.dispose();
-    _companyNameController.dispose();
+    _bikeBrandController.dispose();
     super.dispose();
   }
 }
