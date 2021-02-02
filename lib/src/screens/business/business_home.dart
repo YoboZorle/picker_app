@@ -3,6 +3,7 @@ import 'package:pickrr_app/src/helpers/constants.dart';
 import 'package:pickrr_app/src/screens/business/tabs/business_drivers/business_drivers.dart';
 import 'package:pickrr_app/src/screens/business/tabs/business_wallet/business_wallet.dart';
 import 'package:pickrr_app/src/screens/business/tabs/ride_requests/new_request.dart';
+import 'package:pickrr_app/src/screens/star_rating/rate_driver.dart';
 
 class BusinessHomePage extends StatefulWidget {
   BusinessHomePage({Key key}) : super(key: key);
@@ -117,10 +118,23 @@ class _BusinessHomePageState extends State<BusinessHomePage> {
                     height: 2.0,
                   ),
                   ListTile(
-                    leading: Icon(Icons.account_box),
-                    title: Text('Drawer layout Item 3'),
+                    leading: Icon(Icons.star_rate_rounded, color: Colors.grey[400],),
+                    title: Text('Star rating',
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.w400,
+                            fontSize: 16,
+                            fontFamily: 'Ubuntu'
+                        )),
                     onTap: () {
-                      Navigator.pop(context);
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute<Null>(
+                            builder: (BuildContext context) {
+                              return RateDriver();
+                            },
+                            fullscreenDialog: true,
+                          ));
                     },
                   )
                 ],

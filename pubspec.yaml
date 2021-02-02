@@ -40,6 +40,7 @@ dependencies:
   flutter_awesome_alert_box: ^1.0.1
   pinput: ^1.0.0
   persistent_bottom_nav_bar: ^3.1.0
+  smooth_star_rating: 1.0.3
 
   google_maps_flutter: ^0.5.30
   geolocator: ^6.1.7
