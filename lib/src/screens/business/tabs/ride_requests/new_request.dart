@@ -75,127 +75,118 @@ class NewRequest extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
-                  children: [
-                    RichText(
-                      text: TextSpan(
-                        children: [
-                          WidgetSpan(
-                            child: Transform.rotate(
-                                angle: 180 * pi / 80,
-                                child: Icon(Icons.navigation_outlined,
-                                    size: 16, color: Colors.grey)),
-                          ),
-                          TextSpan(
-                              text: ' ' + allRequests()[index].rideDistance,
-                              style: TextStyle(
-                                  color: Colors.grey,
-                                  fontFamily: 'Ubuntu',
-                                  fontSize: 13)),
-                        ],
-                      ),
-                    ),
-                    SizedBox(width: 20),
-                    RichText(
-                      text: TextSpan(
-                        children: [
-                          WidgetSpan(
-                            child: Icon(Icons.access_time_rounded,
-                                size: 15, color: Colors.grey),
-                          ),
-                          TextSpan(
-                              text: ' ' + allRequests()[index].rideTime,
-                              style: TextStyle(
-                                  color: Colors.grey,
-                                  fontFamily: 'Ubuntu',
-                                  fontSize: 13)),
-                        ],
-                      ),
-                    ),
-                    SizedBox(width: 20),
-                    RichText(
-                      text: TextSpan(
-                        children: [
-                          TextSpan(
-                              text: allRequests()[index].rideAmount,
-                              style:
-                                  TextStyle(color: Colors.grey, fontSize: 13)),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 5),
-                ListTile(
-                  leading: Text('From:',
-                      style: TextStyle(
-                          color: Colors.grey,
-                          fontSize: 13,
-                          fontWeight: FontWeight.w400,
-                          fontFamily: 'Ubuntu')),
-                  visualDensity: VisualDensity(horizontal: 0, vertical: -4),
-                  title: Text(allRequests()[index].fromAddress,
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.w500,
-                          fontFamily: 'Ubuntu',
-                          fontSize: 15)),
-                  contentPadding: EdgeInsets.all(0),
-                ),
-                ListTile(
-                  leading: Text('To:',
-                      style: TextStyle(
-                          color: Colors.grey,
-                          fontSize: 13,
-                          fontWeight: FontWeight.w400,
-                          fontFamily: 'Ubuntu')),
-                  visualDensity: VisualDensity(horizontal: 0, vertical: -4),
-                  title: Text(allRequests()[index].toAddress,
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 15,
-                          fontWeight: FontWeight.w500,
-                          fontFamily: 'Ubuntu')),
-                  contentPadding: EdgeInsets.all(0),
-                ),
-                Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: .7,
-                    margin: EdgeInsets.only(top: 8, bottom: 12),
-                    color: Colors.grey[200]),
-                Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
+                    Text(
+                        allRequests()[index].rideDistance +
+                            '/' +
+                            allRequests()[index].rideTime,
+                        style: TextStyle(
+                            color: Colors.grey,
+                            fontSize: 13,
+                            fontFamily: 'Ubuntu')),
                     Text(allRequests()[index].date,
                         style: TextStyle(
                             color: Colors.grey,
                             fontSize: 13,
                             fontFamily: 'Ubuntu')),
-                    SizedBox(
-                      height: 35,
-                      child: FlatButton(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(35.0),
-                            side: BorderSide(color: AppColor.primaryText)),
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute<Null>(
-                                builder: (BuildContext context) {
-                                  return AssignDriver();
-                                },
-                                fullscreenDialog: true,
-                              ));
-                        },
-                        color: AppColor.primaryText,
-                        textColor: Colors.white,
-                        child: Text("Assign driver",
-                            style:
-                                TextStyle(fontSize: 13, fontFamily: 'Ubuntu')),
-                      ),
+                  ],
+                ),
+                SizedBox(height: 10),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      width: 40,
+                      margin: EdgeInsets.only(right: 8),
+                      child: Text("From: ",
+                          style: TextStyle(
+                              fontSize: 13,
+                              color: Colors.grey,
+                              fontFamily: 'Ubuntu',
+                              fontWeight: FontWeight.w400)),
+                    ),
+                    Flexible(
+                      child: Text(allRequests()[index].fromAddress,
+                          style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.black,
+                              fontFamily: 'Ubuntu',
+                              fontWeight: FontWeight.w400)),
                     ),
                   ],
                 ),
-                SizedBox(height: 12),
+                SizedBox(height: 8),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      width: 40,
+                      margin: EdgeInsets.only(right: 8),
+                      child: Text("To: ",
+                          style: TextStyle(
+                              fontSize: 13,
+                              color: Colors.grey,
+                              fontFamily: 'Ubuntu',
+                              fontWeight: FontWeight.w400)),
+                    ),
+                    Flexible(
+                      child: Text(allRequests()[index].toAddress,
+                          style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.black,
+                              fontFamily: 'Ubuntu',
+                              fontWeight: FontWeight.w400)),
+                    ),
+                  ],
+                ),
+                Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: 0.7,
+                    margin: EdgeInsets.only(top: 18),
+                    color: Colors.grey[200]),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(allRequests()[index].rideAmount,
+                        style: TextStyle(
+                            color: Color(0xFF16B9BB),
+                            fontSize: 14,
+                            fontFamily: 'Ubuntu')),
+                    InkWell(
+                      child: Container(
+                        height: 35,
+                        padding: EdgeInsets.only(left: 30),
+                        margin: EdgeInsets.symmetric(vertical: 8),
+                        child: Row(
+                          children: [
+                            Text("ASSIGN DRIVER",
+                                style: TextStyle(
+                                    fontSize: 13,
+                                    color: Color(0xFF7057D2),
+                                    fontFamily: 'Ubuntu',
+                                    fontWeight: FontWeight.w500)),
+                            SizedBox(width: 5),
+                            Icon(Icons.arrow_forward_ios_outlined,
+                                color: Color(0xFF7057D2), size: 16)
+                          ],
+                        ),
+                      ),
+                      onTap: (){
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute<Null>(
+                              builder: (BuildContext context) {
+                                return AssignDriver();
+                              },
+                              fullscreenDialog: true,
+                            ));
+                      },
+                      splashColor: Colors.grey[300],
+                    ),
+                  ],
+                ),
               ],
             ),
           );

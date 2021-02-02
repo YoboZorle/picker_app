@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pickrr_app/src/screens/business/tabs/business_drivers/business_driver_activity.dart';
 import 'package:pickrr_app/src/screens/business/tabs/ride_requests/request_models.dart';
 
 import 'business_driver_details.dart';
@@ -17,7 +18,7 @@ class BusinessDrivers extends StatelessWidget {
         itemCount: 7,
         itemBuilder: (context, index) {
           return Container(
-            padding: EdgeInsets.only(top: 15, bottom: 15),
+            padding: EdgeInsets.only(top: 5, bottom: 5),
             margin: EdgeInsets.only(bottom: 10),
             color: Colors.white,
             child: ListTile(
@@ -41,15 +42,6 @@ class BusinessDrivers extends StatelessWidget {
                         height: 1.3,
                         fontFamily: 'Ubuntu'),
                   ),
-                  Text(
-                    '1,200 completed rides',
-                    style: TextStyle(
-                        fontSize: 12.0,
-                        fontWeight: FontWeight.w400,
-                        color: Colors.grey,
-                        height: 1.3,
-                        fontFamily: 'Ubuntu'),
-                  ),
                 ],
               ),
               leading: Container(
@@ -67,7 +59,7 @@ class BusinessDrivers extends StatelessWidget {
                     context,
                     MaterialPageRoute<Null>(
                       builder: (BuildContext context) {
-                        return BusinessDriverDetails();
+                        return BusinessDriverActivity();
                       },
                       fullscreenDialog: true,
                     ));
