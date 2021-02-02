@@ -1,6 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:meta/meta.dart';
+import 'package:pickrr_app/src/helpers/db/business.dart';
 import 'package:pickrr_app/src/helpers/utility.dart';
+import 'package:pickrr_app/src/models/business.dart';
 import 'package:pickrr_app/src/services/exceptions.dart';
 import 'package:pickrr_app/src/services/http_client.dart';
 import 'package:pickrr_app/src/helpers/db/driver.dart';
@@ -40,6 +42,11 @@ class DriverRepository extends APIClient {
     Map tokenPayload = await UserRepository().getTokenPayload();
     DriverProvider helper = DriverProvider.instance;
     Driver driver = await helper.getDriver(tokenPayload['userId']);
+    if(driver.businessId != null){
+      BusinessProvider businessDBHelper = BusinessProvider.instance;
+      Business business = await businessDBHelper.getBusiness(driver.businessId);
+      driver.setCompany = business;
+    }
     return driver;
   }
 
@@ -56,6 +63,11 @@ class DriverRepository extends APIClient {
     DriverProvider helper = DriverProvider.instance;
     rawData['id'] = rawData['user']['id'];
     Driver driver = Driver.fromMap(Driver().formatToMap(rawData));
+    if(driver.businessId != null){
+      Business business = Business.fromMap(driver.company.toMap());
+      BusinessProvider businessDBHelper = BusinessProvider.instance;
+      await businessDBHelper.updateOrInsert(business);
+    }
     await helper.updateOrInsert(driver);
   }
 

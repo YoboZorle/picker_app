@@ -77,7 +77,8 @@ class DriverProfile extends StatelessWidget {
                     final driverDetails = snapshot.data;
                     return Column(
                       children: [
-                        Text('${numberFormat.format(driverDetails.totalRides)} finished rides',
+                        Text(
+                            '${numberFormat.format(driverDetails.totalRides)} finished rides',
                             style: TextStyle(
                               fontSize: 15,
                               color: Colors.grey,
@@ -97,13 +98,15 @@ class DriverProfile extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text(driverDetails.companyName,
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  color: Colors.black,
-                                  fontFamily: "Ubuntu",
-                                  fontWeight: FontWeight.w700,
-                                )),
+                            driverDetails.company != null
+                                ? Text(driverDetails.company.name,
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      color: Colors.black,
+                                      fontFamily: "Ubuntu",
+                                      fontWeight: FontWeight.w700,
+                                    ))
+                                : Container(),
                             Container(
                               height: 5,
                               width: 5,
@@ -113,6 +116,13 @@ class DriverProfile extends StatelessWidget {
                                   color: Colors.black, shape: BoxShape.circle),
                             ),
                             Text(driverDetails.ticketNumber,
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  color: Colors.black,
+                                  fontFamily: "Ubuntu",
+                                  fontWeight: FontWeight.w700,
+                                )),
+                            Text(driverDetails.bikeBrand,
                                 style: TextStyle(
                                   fontSize: 20,
                                   color: Colors.black,

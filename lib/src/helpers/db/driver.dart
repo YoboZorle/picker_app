@@ -4,12 +4,14 @@ import 'package:pickrr_app/src/models/driver.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path_provider/path_provider.dart';
 
-final String databaseName = "yarner.driver.db";
+final String databaseName = "logistics.driver.db";
 final String tableDriver = 'driver';
 final String columnId = '_userId';
 final String columnPlateNumber = 'plateNumber';
 final String columnTicketNumber = 'ticketNumber';
-final String columnCompanyName = 'companyName';
+final String columnBikeBrand = 'bikeBrand';
+final String columnDriversLicence = 'driversLicence';
+final String columnBusinessId = 'businessId';
 final String columnStatus = 'status';
 final String columnBlocked = 'blocked';
 final String columnIsDelivering = 'isDelivering';
@@ -40,8 +42,10 @@ create table $tableDriver (
   $columnId integer primary key autoincrement, 
   $columnPlateNumber text,
   $columnTicketNumber text,
-  $columnCompanyName text,
+  $columnBikeBrand text,
+  $columnDriversLicence text,
   $columnStatus text,
+  $columnBusinessId integer,
   $columnIsDelivering integer,
   $columnCreatedAt text,
   $columnBlocked integer,

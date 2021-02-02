@@ -12,13 +12,13 @@ class Business {
 
   Business(
       {this.id,
-      this.name,
-      this.logo,
-      this.location,
-      this.email,
-      this.phone,
-      this.blocked,
-      this.wallet});
+        this.name,
+        this.logo,
+        this.location,
+        this.email,
+        this.phone,
+        this.blocked,
+        this.wallet});
 
   Business.fromMap(Map<String, dynamic> mapData)
       : id = mapData['id'] ?? null,
@@ -28,7 +28,7 @@ class Business {
         email = mapData['email'] ?? null,
         phone = mapData['phone'] ?? null,
         blocked = mapData['blocked'] ?? null,
-        wallet = mapData['wallet'] ?? null;
+        wallet = mapData['wallet'] == null ? null : Wallet.fromMap(mapData['wallet']);
 
   Map<String, dynamic> toMap() {
     var map = {

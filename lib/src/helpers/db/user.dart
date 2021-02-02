@@ -4,7 +4,7 @@ import 'package:pickrr_app/src/models/user.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path_provider/path_provider.dart';
 
-final String databaseName = "yarner.user.db";
+final String databaseName = "logistics.user.db";
 final String tableUser = 'user';
 final String columnId = '_userId';
 final String columnFullname = 'fullname';
