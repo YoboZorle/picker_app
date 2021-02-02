@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_awesome_alert_box/flutter_awesome_alert_box.dart';
+import 'package:list_tile_switch/list_tile_switch.dart';
 
-class BusinessDetails extends StatefulWidget {
-  BusinessDetailsWidget createState() => BusinessDetailsWidget();
+class BusinessDriverDetails extends StatefulWidget {
+  BusinessDriverDetailsWidget createState() => BusinessDriverDetailsWidget();
 }
 
-class BusinessDetailsWidget extends State {
+class BusinessDriverDetailsWidget extends State {
+  bool _switchValues = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,7 +21,7 @@ class BusinessDetailsWidget extends State {
                 brightness: Brightness.light,
                 centerTitle: true,
                 title: Text(
-                  'Business Profile',
+                  'Your Driver\'s Profile',
                   style: TextStyle(
                       fontFamily: "Ubuntu",
                       fontSize: 17.0,
@@ -29,7 +32,11 @@ class BusinessDetailsWidget extends State {
                     onPressed: () {
                       Navigator.pop(context);
                     },
-                    icon: Icon(Icons.arrow_back_ios_outlined, color: Colors.black, size: 20,)),
+                    icon: Icon(
+                      Icons.arrow_back_ios_outlined,
+                      color: Colors.black,
+                      size: 20,
+                    )),
               ),
               SliverList(
                 delegate: SliverChildListDelegate(
@@ -136,27 +143,31 @@ class BusinessDetailsWidget extends State {
                       child: Padding(
                         padding: const EdgeInsets.symmetric(
                             vertical: 5.0, horizontal: 20),
-                        child: ListTile(
-                          title: Text(
-                            'Port harcourt',
-                            style: TextStyle(
-                                fontSize: 16.0,
-                                fontFamily: "Ubuntu",
-                                color: Colors.black87,
-                                fontWeight: FontWeight.w500,
-                                height: 1.6),
-                          ),
-                          subtitle: Text(
-                            'State/City',
-                            style: TextStyle(
-                                fontSize: 14.0,
-                                fontFamily: "Ubuntu",
-                                color: Colors.grey,
-                                fontWeight: FontWeight.w400,
-                                height: 1.5),
-                          ),
+                        child: ListTileSwitch(
                           contentPadding: EdgeInsets.all(0),
-                          dense: true,
+                          value: _switchValues,
+                          onChanged: (value) {
+                            setState(() {
+                              _switchValues = value;
+                            });
+                          },
+                          toggleSelectedOnValueChange: true,
+                          subtitle: Text(
+                              'Toggle button to activate or deactivate your driver.',
+                              style: TextStyle(
+                                  fontSize: 14.0,
+                                  fontFamily: "Ubuntu",
+                                  color: Colors.grey,
+                                  fontWeight: FontWeight.w400,
+                                  height: 1.5)),
+                          switchActiveColor: Colors.green,
+                          switchType: SwitchType.material,
+                          title: Text(  _switchValues == false ?  'Driver Unavailable' : 'Driver Available',
+                              style: TextStyle(
+                                  fontSize: 16.0,
+                                  fontFamily: "Ubuntu",
+                                  fontWeight: FontWeight.w500,
+                                  height: 1.6)),
                         ),
                       ),
                     ),

@@ -366,6 +366,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.6.2"
+  list_tile_switch:
+    dependency: "direct main"
+    description:
+      name: list_tile_switch
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.2"
   lite_rolling_switch:
     dependency: "direct main"
     description:
