@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:pickrr_app/src/screens/business/tabs/business_drivers/business_driver_activity.dart';
-import 'package:pickrr_app/src/screens/business/tabs/ride_requests/request_models.dart';
-
-import 'business_driver_details.dart';
 
 class BusinessDrivers extends StatelessWidget {
   final String title;
@@ -53,8 +50,9 @@ class BusinessDrivers extends StatelessWidget {
                           fit: BoxFit.cover,
                           image: NetworkImage(
                               "https://blog.bolt.eu/wp-content/uploads/2020/06/1200x628_Oaksure-Financial-Services-insurance-covers-Bolt-passengers-and-drivers-on-all-rides.jpg")))),
-              trailing: Icon(Icons.arrow_forward_ios_outlined, size: 16, color: Colors.grey[300]),
-              onTap: (){
+              trailing: Icon(Icons.arrow_forward_ios_outlined,
+                  size: 16, color: Colors.grey[300]),
+              onTap: () {
                 Navigator.push(
                     context,
                     MaterialPageRoute<Null>(

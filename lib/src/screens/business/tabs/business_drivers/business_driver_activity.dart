@@ -199,17 +199,14 @@ class BusinessDriverActivityWidget extends State {
                       ),
                     ),
                     SizedBox(height: 5),
-
                     FlatButton(
                       shape: RoundedRectangleBorder(
-                          borderRadius:
-                          BorderRadius.circular(18.0)),
+                          borderRadius: BorderRadius.circular(18.0)),
                       color: AppColor.primaryText,
                       textColor: AppColor.primaryText,
                       padding: EdgeInsets.only(left: 25, right: 25),
                       onPressed: () {
                         _showBottomSheet(context);
-
                       },
                       child: Text("Lets try",
                           style: TextStyle(
@@ -314,7 +311,8 @@ class BusinessDriverActivityWidget extends State {
                             controller: controller,
                             itemCount: 100,
                             itemBuilder: (_, index) {
-                              return Card(elevation: 7,
+                              return Card(
+                                elevation: 7,
                                 child: Padding(
                                   padding: EdgeInsets.all(16),
                                   child: Text("Element at index($index)"),
