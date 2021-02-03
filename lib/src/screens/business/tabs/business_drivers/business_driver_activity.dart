@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pickrr_app/src/helpers/constants.dart';
+import 'package:pickrr_app/src/screens/business/business_driver_prof.dart';
 import 'package:pickrr_app/src/screens/business/tabs/business_drivers/business_driver_details.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -266,6 +267,30 @@ class BusinessDriverActivityWidget extends State {
                               fullscreenDialog: true,
                             ));
                       },
+                    ),
+
+                    FlatButton(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(18.0)),
+                      color: AppColor.primaryText,
+                      textColor: AppColor.primaryText,
+                      padding: EdgeInsets.only(left: 25, right: 25),
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute<Null>(
+                              builder: (BuildContext context) {
+                                return BusinessDriverProf();
+                              },
+                              fullscreenDialog: true,
+                            ));
+                      },
+                      child: Text("Hello Fish Head",
+                          style: TextStyle(
+                              fontSize: 13.5,
+                              color: Colors.white,
+                              fontFamily: 'Ubuntu',
+                              fontWeight: FontWeight.w500)),
                     ),
                   ],
                 ),

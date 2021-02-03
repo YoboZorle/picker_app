@@ -53,7 +53,7 @@ class BusinessHomePageState extends State<BusinessHomePage>
             color: Colors.white,
             child: TabBar(
               indicatorWeight: 2,
-              indicatorPadding: EdgeInsets.only(left: 50, right: 50, top: 50),
+              indicatorPadding: EdgeInsets.only(left: 50, right: 50),
               indicatorColor: AppColor.primaryText,
               labelColor: AppColor.primaryText,
               unselectedLabelColor: Colors.grey[400],
