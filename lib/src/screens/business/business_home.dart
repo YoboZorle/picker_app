@@ -48,8 +48,7 @@ class BusinessHomePageState extends State<BusinessHomePage>
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
+    return Scaffold(
         body: TabBarView(
           physics: BouncingScrollPhysics(),
           children: _pages,
@@ -87,7 +86,6 @@ class BusinessHomePageState extends State<BusinessHomePage>
             ),
           ),
         ),
-      ),
-    );
+      );
   }
 }

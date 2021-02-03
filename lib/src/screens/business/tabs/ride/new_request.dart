@@ -212,8 +212,7 @@ class _NewRequestState extends State<NewRequest> {
                                     ride.price),
                                     style: TextStyle(
                                         color: Colors.black,
-                                        fontSize: 14,
-                                        fontFamily: 'Ubuntu')),
+                                        fontSize: 14)),
                                 InkWell(
                                   child: Container(
                                     height: 35,

@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pickrr_app/src/blocs/authentication/bloc.dart';
 import 'package:pickrr_app/src/helpers/constants.dart';
 import 'package:pickrr_app/src/models/user.dart';
-import 'package:pickrr_app/src/screens/business/business_details.dart';
 import 'package:pickrr_app/src/screens/star_rating/rate_driver.dart';
 import 'package:pickrr_app/src/services/repositories/business.dart';
 import 'package:pickrr_app/src/widgets/image.dart';
