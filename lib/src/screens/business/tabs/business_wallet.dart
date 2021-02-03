@@ -33,66 +33,94 @@ class _BusinessWalletState extends State<BusinessWallet> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: Colors.grey[100],
-        appBar: AppBar(
-          title: Text('My Wallet',
-              style: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.w700,
-                  fontFamily: 'Ubuntu')),
-          brightness: Brightness.light,
-          backgroundColor: Colors.white,
-          elevation: 0,
-          actions: [
-            Row(
-              children: [
-                RaisedButton(
-                    elevation: 8,
-                    onPressed: () {},
-                    color: AppColor.primaryText,
-                    child: Text('Withdraw',
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w500,
-                            fontSize: 14,
-                            fontFamily: 'Ubuntu'))),
-                SizedBox(width: 20)
-              ],
-            ),
-          ],
-          leading: Builder(
-            builder: (context) => IconButton(
-              icon: Icon(Icons.menu_rounded, color: Colors.black),
-              onPressed: () => Scaffold.of(context).openDrawer(),
+    return BlocBuilder<AuthenticationBloc, AuthenticationState>(
+        builder: (_, state) {
+      if (state is NonLoggedIn) {
+        WidgetsBinding.instance.addPostFrameCallback(
+            (_) => Navigator.pushReplacementNamed(context, '/'));
+      }
+      if (state.props.isEmpty) {
+        return Container();
+      }
+      User user = state.props[0];
+
+      return Scaffold(
+          backgroundColor: Colors.grey[100],
+          appBar: AppBar(
+            title: Text('My Wallet',
+                style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.w700,
+                    fontFamily: 'Ubuntu')),
+            brightness: Brightness.light,
+            backgroundColor: Colors.white,
+            elevation: 0,
+            actions: [
+              Row(
+                children: [
+                  FutureBuilder(
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.none ||
+                            snapshot.hasData == null ||
+                            !snapshot.hasData) {
+                          return SizedBox(
+                            width: 15,
+                            height: 15,
+                            child: CircularProgressIndicator(
+                              strokeWidth: 1.5,
+                            ),
+                          );
+                        }
+                        final businessDetails = snapshot.data;
+                        return businessDetails.balance < 0
+                            ? RaisedButton(
+                                elevation: 8,
+                                onPressed: () {},
+                                color: AppColor.primaryText,
+                                child: Text('Clear Debt',
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 14,
+                                        fontFamily: 'Ubuntu')))
+                            : RaisedButton(
+                                elevation: 8,
+                                onPressed: () {},
+                                color: AppColor.primaryText,
+                                child: Text('Withdraw',
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 14,
+                                        fontFamily: 'Ubuntu')));
+                      },
+                      future: _businessRepository
+                          .getBusinessFromStorage(user.businessId)),
+                  SizedBox(width: 20)
+                ],
+              ),
+            ],
+            leading: Builder(
+              builder: (context) => IconButton(
+                icon: Icon(Icons.menu_rounded, color: Colors.black),
+                onPressed: () => Scaffold.of(context).openDrawer(),
+              ),
             ),
           ),
-        ),
-        drawer:  BusinessNavDrawer(),
-        body: SingleChildScrollView(
-          physics: BouncingScrollPhysics(),
-          child: Column(
-            children: <Widget>[
-              new Container(
-                  color: Colors.white,
-                  width: MediaQuery.of(context).size.width,
-                  padding: EdgeInsets.only(
-                      left: 20.0, right: 20.0, bottom: 10, top: 15),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      BlocBuilder<AuthenticationBloc, AuthenticationState>(
-                          builder: (_, state) {
-                        if (state is NonLoggedIn) {
-                          WidgetsBinding.instance.addPostFrameCallback((_) =>
-                              Navigator.pushReplacementNamed(context, '/'));
-                        }
-                        if (state.props.isEmpty) {
-                          return Container();
-                        }
-                        User user = state.props[0];
-
-                        return FutureBuilder(
+          drawer: BusinessNavDrawer(),
+          body: SingleChildScrollView(
+            physics: BouncingScrollPhysics(),
+            child: Column(
+              children: <Widget>[
+                new Container(
+                    color: Colors.white,
+                    width: MediaQuery.of(context).size.width,
+                    padding: EdgeInsets.only(
+                        left: 20.0, right: 20.0, bottom: 10, top: 15),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        FutureBuilder(
                             builder: (context, snapshot) {
                               if (snapshot.connectionState ==
                                       ConnectionState.none ||
@@ -114,7 +142,10 @@ class _BusinessWalletState extends State<BusinessWallet> {
                                         style: TextStyle(
                                             fontSize: 13,
                                             fontWeight: FontWeight.w400,
-                                            color: Colors.green)),
+                                            color:
+                                                businessDetails.balance < 0
+                                                    ? Colors.red
+                                                    : Colors.green)),
                                     Text(
                                         '\u20A6 ${businessDetails.balanceHumanized}',
                                         style: TextStyle(
@@ -126,68 +157,68 @@ class _BusinessWalletState extends State<BusinessWallet> {
                               );
                             },
                             future: _businessRepository
-                                .getBusinessFromStorage(user.businessId));
-                      }),
-                      SizedBox(height: 15),
-                      Text(
-                        'Transactions',
-                        style: TextStyle(
-                            fontSize: 13,
-                            color: Colors.grey,
-                            fontWeight: FontWeight.w400,
-                            fontFamily: 'Ubuntu'),
-                      )
-                    ],
-                  )),
-              BlocBuilder<BusinessTransactionBloc, BusinessTransactionState>(
-                  // ignore: missing_return
-                  builder: (_, state) {
-                if (state.isFailure) {
-                  return Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Container(
-                        child: Text("No transaction!"),
-                        alignment: Alignment.center,
-                      ),
-                    ],
-                  );
-                }
-                if (state.isInitial || !state.isSuccess && state.isLoading) {
-                  return Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Center(
-                        child: CircularProgressIndicator(
-                          strokeWidth: 1.5,
+                                .getBusinessFromStorage(user.businessId)),
+                        SizedBox(height: 15),
+                        Text(
+                          'Transactions',
+                          style: TextStyle(
+                              fontSize: 13,
+                              color: Colors.grey,
+                              fontWeight: FontWeight.w400,
+                              fontFamily: 'Ubuntu'),
+                        )
+                      ],
+                    )),
+                BlocBuilder<BusinessTransactionBloc, BusinessTransactionState>(
+                    // ignore: missing_return
+                    builder: (_, state) {
+                  if (state.isFailure) {
+                    return Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Container(
+                          child: Text("No transaction!"),
+                          alignment: Alignment.center,
                         ),
-                      ),
-                    ],
-                  );
-                }
-                if (state.isSuccess) {
-                  return ListView.builder(
-                      controller: _scrollController,
-                      padding: EdgeInsets.all(8.0),
-                      reverse: true,
-                      shrinkWrap: true,
-                      itemCount: state.hasReachedMax
-                          ? state.histories.length
-                          : state.histories.length + 1,
-                      physics: const BouncingScrollPhysics(),
-                      dragStartBehavior: DragStartBehavior.down,
-                      itemBuilder: (_, index) {
-                        if (index >= state.histories.length) {
-                          return PreLoader();
-                        }
-                        History history = state.histories[index];
-                        return historyDetails(history);
-                      });
-                }
-              })
-            ],
-          ),
-        ));
+                      ],
+                    );
+                  }
+                  if (state.isInitial || !state.isSuccess && state.isLoading) {
+                    return Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Center(
+                          child: CircularProgressIndicator(
+                            strokeWidth: 1.5,
+                          ),
+                        ),
+                      ],
+                    );
+                  }
+                  if (state.isSuccess) {
+                    return ListView.builder(
+                        controller: _scrollController,
+                        padding: EdgeInsets.all(8.0),
+                        reverse: true,
+                        shrinkWrap: true,
+                        itemCount: state.hasReachedMax
+                            ? state.histories.length
+                            : state.histories.length + 1,
+                        physics: const BouncingScrollPhysics(),
+                        dragStartBehavior: DragStartBehavior.down,
+                        itemBuilder: (_, index) {
+                          if (index >= state.histories.length) {
+                            return PreLoader();
+                          }
+                          History history = state.histories[index];
+                          return historyDetails(history);
+                        });
+                  }
+                })
+              ],
+            ),
+          ));
+    });
   }
 
   historyDetails(History history) => Card(
