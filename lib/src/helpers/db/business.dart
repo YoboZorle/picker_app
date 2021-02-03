@@ -13,6 +13,8 @@ final String columnLocation = 'location';
 final String columnEmail = 'email';
 final String columnPhone = 'phone';
 final String columnBlocked = 'blocked';
+final String columnBalanceHumanized = 'balance_humanized';
+final String columnBalance = 'balance';
 
 class BusinessProvider {
   Database db;
@@ -40,6 +42,8 @@ create table $tableBusiness (
   $columnLocation text,
   $columnEmail text,
   $columnPhone text,
+  $columnBalanceHumanized text,
+  $columnBalance text,
   $columnBlocked integer)
 ''');
     });

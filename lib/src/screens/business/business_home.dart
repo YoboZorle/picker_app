@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pickrr_app/src/blocs/authentication/bloc.dart';
+import 'package:pickrr_app/src/blocs/business/ride_order/bloc.dart';
+import 'package:pickrr_app/src/blocs/business/transaction/bloc.dart';
 import 'package:pickrr_app/src/helpers/constants.dart';
 import 'package:pickrr_app/src/screens/business/tabs/business_drivers/business_drivers.dart';
-import 'package:pickrr_app/src/screens/business/tabs/business_wallet/business_wallet.dart';
-import 'package:pickrr_app/src/screens/business/tabs/ride_requests/new_request.dart';
+import 'package:pickrr_app/src/screens/business/tabs/business_wallet.dart';
+import 'package:pickrr_app/src/screens/business/tabs/ride/new_request.dart';
 
 class BusinessHomePage extends StatefulWidget {
   BusinessHomePage() : super();
@@ -14,6 +18,21 @@ class BusinessHomePage extends StatefulWidget {
 class BusinessHomePageState extends State<BusinessHomePage>
     with SingleTickerProviderStateMixin {
   TabController controller;
+
+  List<Widget> _pages = [
+    BlocProvider<BusinessRideOrdersBloc>(
+        create: (_) => BusinessRideOrdersBloc()..add(BusinessOrdersFetched()),
+        child: NewRequest()),
+    BusinessDrivers(),
+    MultiBlocProvider(providers: [
+      BlocProvider<AuthenticationBloc>(
+          create: (_) =>
+          AuthenticationBloc()..add(AuthenticationEvent.AUTHENTICATED)),
+      BlocProvider<BusinessTransactionBloc>(
+          create: (_) =>
+          BusinessTransactionBloc()..add(BusinessTransactionFetched()))
+    ], child: BusinessWallet()),
+  ];
 
   @override
   void initState() {
@@ -33,11 +52,7 @@ class BusinessHomePageState extends State<BusinessHomePage>
       home: Scaffold(
         body: TabBarView(
           physics: BouncingScrollPhysics(),
-          children: <Widget>[
-            NewRequest(),
-            BusinessDrivers(),
-            BusinessWallet(),
-          ],
+          children: _pages,
           controller: controller,
         ),
         bottomNavigationBar: Container(

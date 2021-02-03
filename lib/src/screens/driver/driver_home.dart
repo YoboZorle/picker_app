@@ -36,8 +36,6 @@ class _DriverHomeState extends State<DriverHome> {
   final _storage = new FlutterSecureStorage();
   RideOrdersBloc _rideOrdersBloc;
 
-  bool arrived = true;
-
   @override
   void initState() {
     super.initState();

@@ -16,6 +16,7 @@ class User extends Equatable {
   final String email;
   final bool isDriver;
   final bool isBusiness;
+  final int businessId;
   final bool isNewBusiness;
 
   bool get isCompleteDetails {
@@ -37,6 +38,7 @@ class User extends Equatable {
       this.profileImageUrl,
       this.isDriver,
       this.isBusiness,
+        this.businessId,
       this.isNewBusiness});
 
   @override
@@ -57,6 +59,10 @@ class User extends Equatable {
       map['_userId'] = id;
     }
 
+    if(businessId != null) {
+      map['business_id'] = businessId;
+    }
+
     return map;
   }
 
@@ -70,6 +76,7 @@ class User extends Equatable {
       'callingCode': rawData['calling_code'].toString(),
       'is_driver': rawData['is_driver'],
       'is_company': rawData['is_company'],
+      'business_id': rawData['business_id'],
       'is_new_business': rawData['is_new_business']
     };
 
@@ -84,6 +91,7 @@ class User extends Equatable {
         profileImageUrl = mapData['profileImageUrl'] ?? '',
         isDriver = _intToBool(mapData['is_driver']),
         isBusiness = _intToBool(mapData['is_company']),
+        businessId = mapData['business_id'],
         isNewBusiness = _intToBool(mapData['is_new_business']),
         callingCode = mapData['callingCode'] ?? '';
 

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pickrr_app/src/helpers/constants.dart';
 import 'package:pickrr_app/src/screens/business/tabs/business_drivers/business_driver_activity.dart';
-import 'package:pickrr_app/src/screens/business/tabs/ride_requests/new_request.dart';
+import 'package:pickrr_app/src/widgets/nav_drawer.dart';
 
 class BusinessDrivers extends StatelessWidget {
   final String title;
@@ -44,7 +44,7 @@ class BusinessDrivers extends StatelessWidget {
           ),
         ),
       ),
-      drawer: BusinessDrawer(),
+      drawer: BusinessNavDrawer(),
       backgroundColor: Colors.grey[100],
       body: ListView.builder(
         physics: BouncingScrollPhysics(),

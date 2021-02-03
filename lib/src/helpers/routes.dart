@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pickrr_app/src/blocs/authentication/bloc.dart';
+import 'package:pickrr_app/src/blocs/business/available_riders/available_riders_bloc.dart';
 import 'package:pickrr_app/src/blocs/driver/orders/bloc.dart';
 import 'package:pickrr_app/src/blocs/ride/orders/bloc.dart';
 import 'package:pickrr_app/src/helpers/custom_route.dart';
@@ -8,8 +9,10 @@ import 'package:pickrr_app/src/models/user.dart';
 import 'package:pickrr_app/src/screens/auth/complete_profile_form.dart';
 import 'package:pickrr_app/src/screens/auth/login.dart';
 import 'package:pickrr_app/src/screens/business/application.dart';
+import 'package:pickrr_app/src/screens/business/business_details.dart';
 import 'package:pickrr_app/src/screens/business/password_prompt.dart';
 import 'package:pickrr_app/src/screens/business/business_home.dart';
+import 'package:pickrr_app/src/screens/business/tabs/ride/assign_driver.dart';
 import 'package:pickrr_app/src/screens/driver/onboard.dart';
 import 'package:pickrr_app/src/screens/driver/order_history.dart';
 import 'package:pickrr_app/src/screens/home.dart';
@@ -43,7 +46,8 @@ class Routes {
     }
     switch (pathElements[1]) {
       case "BusinessHomePage":
-        return SlideLeftRoute<bool>(builder: (BuildContext context) => BusinessHomePage());
+        return SlideLeftRoute<bool>(
+            builder: (BuildContext context) => BusinessHomePage());
       case "BusinessApplication":
         return SlideLeftRoute<bool>(
             builder: (BuildContext context) => BusinessApplication());
@@ -118,6 +122,24 @@ class Routes {
                 create: (_) => AuthenticationBloc()
                   ..add(AuthenticationEvent.AUTHENTICATED),
                 child: Home()));
+      case "BusinessDetails":
+        return SlideLeftRoute<bool>(
+            builder: (BuildContext context) => BlocProvider<AuthenticationBloc>(
+                create: (_) => AuthenticationBloc()
+                  ..add(AuthenticationEvent.AUTHENTICATED),
+                child: BusinessProfile()));
+      case "AssignDriver":
+        int rideId;
+        if (pathElements.length > 2) {
+          rideId = int.parse(pathElements[2]);
+        } else {
+          return onUnknownRoute(RouteSettings(name: '/Unknown'));
+        }
+        return CustomRoute<bool>(
+            builder: (BuildContext context) =>
+                BlocProvider<AvailableRidersBloc>(
+                    create: (_) => AvailableRidersBloc(),
+                    child: AssignDriver(rideId)));
       default:
         return onUnknownRoute(RouteSettings(name: '/Unknown'));
     }

@@ -15,6 +15,7 @@ final String columnIsDriver = 'is_driver';
 final String columnCallingCode = 'callingCode';
 final String columnIsBusiness = 'is_company';
 final String columnIsNewBusiness = 'is_new_business';
+final String columnBusinessId = 'business_id';
 
 class UserProvider {
   Database db;
@@ -43,7 +44,8 @@ create table $tableUser (
   $columnIsDriver integer,
   $columnCallingCode text,
   $columnIsBusiness integer,
-  $columnIsNewBusiness integer)
+  $columnIsNewBusiness integer,
+  $columnBusinessId integer)
 ''');
     });
   }

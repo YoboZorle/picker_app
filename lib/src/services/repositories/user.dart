@@ -8,6 +8,7 @@ import 'package:pickrr_app/src/helpers/utility.dart';
 import 'package:pickrr_app/src/models/user.dart';
 import 'package:pickrr_app/src/services/exceptions.dart';
 import 'package:pickrr_app/src/services/http_client.dart';
+import 'package:pickrr_app/src/services/repositories/business.dart';
 import 'package:pickrr_app/src/services/repositories/driver.dart';
 
 class UserRepository extends APIClient {
@@ -65,6 +66,9 @@ class UserRepository extends APIClient {
       final responseBody = response.data;
       if (responseBody['is_driver']) {
         await DriverRepository().loadDriverDetailsToStorage(userId);
+      }
+      if(responseBody['is_company']){
+        await BusinessRepository().loadBusinessDetailsToStorage(userId);
       }
       return responseBody;
     } catch (e) {
