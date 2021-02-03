@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:pickrr_app/src/helpers/constants.dart';
 import 'package:pickrr_app/src/screens/business/tabs/business_drivers/business_driver_activity.dart';
+import 'package:pickrr_app/src/screens/business/tabs/ride_requests/new_request.dart';
 
 class BusinessDrivers extends StatelessWidget {
   final String title;
@@ -9,6 +11,40 @@ class BusinessDrivers extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text('My Drivers',
+            style: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.w700,
+                fontFamily: 'Ubuntu')),
+        brightness: Brightness.light,
+        backgroundColor: Colors.white,
+        elevation: 0,
+        actions: [
+          Row(
+            children: [
+             RaisedButton(
+                  elevation: 8,
+                  onPressed: () {},
+                  color: AppColor.primaryText,
+                  child: Text('Add driver',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 14,
+                          fontFamily: 'Ubuntu'))),
+              SizedBox(width: 20)
+            ],
+          ),
+        ],
+        leading: Builder(
+          builder: (context) => IconButton(
+            icon: Icon(Icons.menu_rounded, color: Colors.black),
+            onPressed: () => Scaffold.of(context).openDrawer(),
+          ),
+        ),
+      ),
+      drawer: BusinessDrawer(),
       backgroundColor: Colors.grey[100],
       body: ListView.builder(
         physics: BouncingScrollPhysics(),

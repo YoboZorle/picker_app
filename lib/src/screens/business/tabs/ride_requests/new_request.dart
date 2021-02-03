@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:pickrr_app/src/helpers/constants.dart';
 import 'package:pickrr_app/src/screens/business/tabs/ride_requests/assign_driver.dart';
 import 'package:pickrr_app/src/screens/business/tabs/ride_requests/request_models.dart';
+import 'package:pickrr_app/src/screens/star_rating/rate_driver.dart';
+
+import '../business_details.dart';
 
 class NewRequest extends StatelessWidget {
   final String title;
@@ -61,6 +64,23 @@ class NewRequest extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Ride Requests',
+            style: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.w700,
+                fontFamily: 'Ubuntu')),
+        brightness: Brightness.light,
+        backgroundColor: Colors.white,
+        elevation: 0,
+        leading: Builder(
+          builder: (context) => IconButton(
+            icon: Icon(Icons.menu_rounded, color: Colors.black),
+            onPressed: () => Scaffold.of(context).openDrawer(),
+          ),
+        ),
+      ),
+      drawer: BusinessDrawer(),
       backgroundColor: Colors.grey[100],
       body: ListView.builder(
         physics: BouncingScrollPhysics(),
@@ -173,7 +193,7 @@ class NewRequest extends StatelessWidget {
                           ],
                         ),
                       ),
-                      onTap: (){
+                      onTap: () {
                         Navigator.push(
                             context,
                             MaterialPageRoute<Null>(
@@ -194,4 +214,113 @@ class NewRequest extends StatelessWidget {
       ),
     );
   }
+}
+
+class BusinessDrawer extends StatelessWidget{
+  @override
+  Widget build(BuildContext context) {
+   return Drawer(
+       elevation: 20.0,
+       child: ListView(
+         physics: BouncingScrollPhysics(),
+         padding: EdgeInsets.zero,
+         children: <Widget>[
+           InkWell(
+             splashColor: Colors.grey[300],
+             onTap: () {
+               Navigator.push(
+                   context,
+                   MaterialPageRoute<Null>(
+                     builder: (BuildContext context) {
+                       return BusinessDetails();
+                     },
+                     fullscreenDialog: true,
+                   ));
+             },
+             child: UserAccountsDrawerHeader(
+               accountName: Text('Ruzz Logistics',
+                   style: TextStyle(
+                       color: Colors.black,
+                       fontWeight: FontWeight.w600,
+                       fontSize: 17,
+                       fontFamily: 'Ubuntu',
+                       height: 1.3)),
+               accountEmail: Text('Business account',
+                   style: TextStyle(
+                       color: Colors.grey,
+                       fontSize: 14,
+                       fontWeight: FontWeight.w400,
+                       fontFamily: 'Ubuntu')),
+               currentAccountPicture: Container(
+                   width: 100.0,
+                   height: 100.0,
+                   decoration: new BoxDecoration(
+                       shape: BoxShape.circle,
+                       image: new DecorationImage(
+                           fit: BoxFit.cover,
+                           image: NetworkImage(
+                               "https://i.pinimg.com/originals/30/3c/1d/303c1d159727b81dc4ef644bd079af82.jpg")))),
+               decoration: BoxDecoration(color: Colors.white),
+             ),
+           ),
+
+           ListTile(
+             leading: Icon(
+               Icons.account_circle_rounded,
+               color: Colors.grey[400],
+             ),
+             title: Text('Support',
+                 style: TextStyle(
+                     color: Colors.black,
+                     fontWeight: FontWeight.w400,
+                     fontSize: 16,
+                     fontFamily: 'Ubuntu')),
+             onTap: () {
+             },
+           ),
+           ListTile(
+             leading: Icon(
+               Icons.star_rate_rounded,
+               color: Colors.grey[400],
+             ),
+             title: Text('Star rating',
+                 style: TextStyle(
+                     color: Colors.black,
+                     fontWeight: FontWeight.w400,
+                     fontSize: 16,
+                     fontFamily: 'Ubuntu')),
+             onTap: () {
+               Navigator.push(
+                   context,
+                   MaterialPageRoute<Null>(
+                     builder: (BuildContext context) {
+                       return RateDriver();
+                     },
+                     fullscreenDialog: true,
+                   ));
+             },
+           ),
+           SizedBox(height: 35),
+           Container(
+             margin: EdgeInsets.only(left: 20, right: 20, bottom: 25),
+             child: RaisedButton(
+                 elevation: 12,
+                 onPressed: () {
+                   Navigator.pushNamed(context, '/HomePage');
+                 },
+                 color: AppColor.primaryText,
+                 child: Container(
+                   margin: EdgeInsets.only(top: 15, bottom: 15),
+                   child: Text('Go back to Personal account',
+                       style: TextStyle(
+                           color: Colors.white,
+                           fontWeight: FontWeight.w500,
+                           fontSize: 14,
+                           fontFamily: 'Ubuntu')),
+                 )),
+           ),
+         ],
+       ));
+  }
+
 }
