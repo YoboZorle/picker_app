@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pickrr_app/src/helpers/constants.dart';
 import 'package:pickrr_app/src/screens/business/business_driver_prof.dart';
-import 'package:pickrr_app/src/screens/business/tabs/business_drivers/business_driver_details.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class BusinessDriverActivity extends StatefulWidget {
@@ -200,22 +199,6 @@ class BusinessDriverActivityWidget extends State {
                       ),
                     ),
                     SizedBox(height: 5),
-                    FlatButton(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(18.0)),
-                      color: AppColor.primaryText,
-                      textColor: AppColor.primaryText,
-                      padding: EdgeInsets.only(left: 25, right: 25),
-                      onPressed: () {
-                        _showBottomSheet(context);
-                      },
-                      child: Text("Lets try",
-                          style: TextStyle(
-                              fontSize: 13.5,
-                              color: Colors.white,
-                              fontFamily: 'Ubuntu',
-                              fontWeight: FontWeight.w500)),
-                    ),
                     InkWell(
                       child: Card(
                         elevation: 0,
@@ -262,99 +245,18 @@ class BusinessDriverActivityWidget extends State {
                             context,
                             MaterialPageRoute<Null>(
                               builder: (BuildContext context) {
-                                return BusinessDriverDetails();
+                                return BusinessDriverProf();
                               },
                               fullscreenDialog: true,
                             ));
                       },
                     ),
 
-                    FlatButton(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(18.0)),
-                      color: AppColor.primaryText,
-                      textColor: AppColor.primaryText,
-                      padding: EdgeInsets.only(left: 25, right: 25),
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute<Null>(
-                              builder: (BuildContext context) {
-                                return BusinessDriverProf();
-                              },
-                              fullscreenDialog: true,
-                            ));
-                      },
-                      child: Text("Hello Fish Head",
-                          style: TextStyle(
-                              fontSize: 13.5,
-                              color: Colors.white,
-                              fontFamily: 'Ubuntu',
-                              fontWeight: FontWeight.w500)),
-                    ),
                   ],
                 ),
               )
             ],
           ),
         ));
-  }
-
-  void _showBottomSheet(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      backgroundColor: Colors.transparent,
-      builder: (context) {
-        return GestureDetector(
-          onTap: () => Navigator.of(context).pop(),
-          child: Container(
-            color: Color.fromRGBO(0, 0, 0, 0.001),
-            child: GestureDetector(
-              onTap: () {},
-              child: DraggableScrollableSheet(
-                initialChildSize: 0.4,
-                minChildSize: 0.2,
-                maxChildSize: 0.75,
-                builder: (_, controller) {
-                  return Container(
-                    decoration: BoxDecoration(
-                      color: Colors.black.withOpacity(0.75),
-                      borderRadius: BorderRadius.only(
-                        topLeft: const Radius.circular(0.0),
-                        topRight: const Radius.circular(0.0),
-                      ),
-                    ),
-                    child: Column(
-                      children: [
-                        Icon(
-                          Icons.remove,
-                          color: Colors.grey[600],
-                        ),
-                        Expanded(
-                          child: ListView.builder(
-                            controller: controller,
-                            itemCount: 100,
-                            itemBuilder: (_, index) {
-                              return Card(
-                                elevation: 7,
-                                child: Padding(
-                                  padding: EdgeInsets.all(16),
-                                  child: Text("Element at index($index)"),
-                                ),
-                              );
-                            },
-                          ),
-                        ),
-                      ],
-                    ),
-                  );
-                },
-              ),
-            ),
-          ),
-        );
-      },
-    );
   }
 }

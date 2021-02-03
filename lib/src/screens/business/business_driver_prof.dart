@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_awesome_alert_box/flutter_awesome_alert_box.dart';
 import 'package:list_tile_switch/list_tile_switch.dart';
 
+import 'driver_reviews.dart';
+
 class BusinessDriverProf extends StatefulWidget {
   @override
   _BusinessDriverProfState createState() => _BusinessDriverProfState();
@@ -274,7 +276,7 @@ class _BusinessDriverProfState extends State<BusinessDriverProf> {
                   physics: BouncingScrollPhysics(),
                   children: [
                     Center(child: Text('First here')),
-                    Center(child: Text('Second here')),
+                    DriverReviews(),
                     Center(child: Text('Third here'))
                   ],
                 ),
