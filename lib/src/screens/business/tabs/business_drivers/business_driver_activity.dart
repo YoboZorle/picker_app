@@ -64,7 +64,7 @@ class BusinessDriverActivityWidget extends State {
                               title: Text(
                                 "Chinanza Orji",
                                 style: TextStyle(
-                                    fontSize: 16.0,
+                                    fontSize: 15.0,
                                     fontFamily: "Ubuntu",
                                     color: Colors.black87,
                                     fontWeight: FontWeight.w500,
@@ -199,6 +199,25 @@ class BusinessDriverActivityWidget extends State {
                       ),
                     ),
                     SizedBox(height: 5),
+
+                    FlatButton(
+                      shape: RoundedRectangleBorder(
+                          borderRadius:
+                          BorderRadius.circular(18.0)),
+                      color: AppColor.primaryText,
+                      textColor: AppColor.primaryText,
+                      padding: EdgeInsets.only(left: 25, right: 25),
+                      onPressed: () {
+                        _showBottomSheet(context);
+
+                      },
+                      child: Text("Lets try",
+                          style: TextStyle(
+                              fontSize: 13.5,
+                              color: Colors.white,
+                              fontFamily: 'Ubuntu',
+                              fontWeight: FontWeight.w500)),
+                    ),
                     InkWell(
                       child: Card(
                         elevation: 0,
@@ -218,9 +237,9 @@ class BusinessDriverActivityWidget extends State {
                             title: Text(
                               "Amadi Chibuzor",
                               style: TextStyle(
-                                  fontSize: 16.0,
+                                  fontSize: 15.0,
                                   fontFamily: "Ubuntu",
-                                  color: Colors.black87,
+                                  color: Colors.black,
                                   fontWeight: FontWeight.w500,
                                   height: 1.6),
                             ),
@@ -257,5 +276,62 @@ class BusinessDriverActivityWidget extends State {
             ],
           ),
         ));
+  }
+
+  void _showBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) {
+        return GestureDetector(
+          onTap: () => Navigator.of(context).pop(),
+          child: Container(
+            color: Color.fromRGBO(0, 0, 0, 0.001),
+            child: GestureDetector(
+              onTap: () {},
+              child: DraggableScrollableSheet(
+                initialChildSize: 0.4,
+                minChildSize: 0.2,
+                maxChildSize: 0.75,
+                builder: (_, controller) {
+                  return Container(
+                    decoration: BoxDecoration(
+                      color: Colors.black.withOpacity(0.75),
+                      borderRadius: BorderRadius.only(
+                        topLeft: const Radius.circular(0.0),
+                        topRight: const Radius.circular(0.0),
+                      ),
+                    ),
+                    child: Column(
+                      children: [
+                        Icon(
+                          Icons.remove,
+                          color: Colors.grey[600],
+                        ),
+                        Expanded(
+                          child: ListView.builder(
+                            controller: controller,
+                            itemCount: 100,
+                            itemBuilder: (_, index) {
+                              return Card(elevation: 7,
+                                child: Padding(
+                                  padding: EdgeInsets.all(16),
+                                  child: Text("Element at index($index)"),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              ),
+            ),
+          ),
+        );
+      },
+    );
   }
 }

@@ -56,9 +56,9 @@ class BusinessDriverDetailsWidget extends State {
                                   image: new DecorationImage(
                                       fit: BoxFit.cover,
                                       image: NetworkImage(
-                                          "https://i.pinimg.com/originals/30/3c/1d/303c1d159727b81dc4ef644bd079af82.jpg")))),
+                                          "https://bloximages.chicago2.vip.townnews.com/stlamerican.com/content/tncms/assets/v3/editorial/1/cb/1cb65068-c76d-11e8-8686-7f40e5fbe1d0/5bb5605309dba.image.jpg?resize=400%2C422")))),
                           title: Text(
-                            "Ruzz Logistics",
+                            "Amadi Chibuzor",
                             style: TextStyle(
                                 fontSize: 16.0,
                                 fontFamily: "Ubuntu",
@@ -67,7 +67,7 @@ class BusinessDriverDetailsWidget extends State {
                                 height: 1.6),
                           ),
                           subtitle: Text(
-                            'Business name',
+                            'My driver name',
                             style: TextStyle(
                                 fontSize: 14.0,
                                 fontFamily: "Ubuntu",
@@ -181,9 +181,9 @@ class BusinessDriverDetailsWidget extends State {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                'LOG OUT',
+                                'BLOCK DRIVER',
                                 style: TextStyle(
-                                    fontSize: 16.0,
+                                    fontSize: 15.0,
                                     fontFamily: "Ubuntu",
                                     color: Colors.red,
                                     fontWeight: FontWeight.w400,
@@ -196,7 +196,7 @@ class BusinessDriverDetailsWidget extends State {
                           onTap: () {
                             ConfirmAlertBoxDark(
                                 context: context,
-                                title: 'Are you sure you want to leave?',
+                                title: 'Are you sure you want to delete driver?',
                                 titleTextColor: Colors.white,
                                 icon: Icons.eighteen_mp,
                                 infoMessage: '',
