@@ -39,6 +39,18 @@ class _BusinessDriverProfState extends State<BusinessDriverProf> {
               color: Colors.black,
               size: 20,
             )),
+        actions: [
+          IconButton(icon: Icon(Icons.logout, color: Colors.red, size: 22), onPressed: (){
+            ConfirmAlertBoxDark(
+                context: context,
+                title:
+                'Are you sure you want to delete driver?',
+                titleTextColor: Colors.white,
+                icon: Icons.eighteen_mp,
+                infoMessage: '',
+                onPressedYes: () {});
+          })
+        ],
       ),
       body: DefaultTabController(
         length: 3,
@@ -51,135 +63,72 @@ class _BusinessDriverProfState extends State<BusinessDriverProf> {
                   [
                     Column(
                       children: [
-                        Container(
-                            width: 85.0,
-                            height: 85.0,
-                            margin: EdgeInsets.only(bottom: 10, top: 20),
-                            decoration: new BoxDecoration(
-                                shape: BoxShape.circle,
-                                image: new DecorationImage(
-                                    fit: BoxFit.contain,
-                                    image: NetworkImage(
-                                        "https://bloximages.chicago2.vip.townnews.com/stlamerican.com/content/tncms/assets/v3/editorial/1/cb/1cb65068-c76d-11e8-8686-7f40e5fbe1d0/5bb5605309dba.image.jpg?resize=400%2C422")))),
-                        Text(
-                          "Amadi Chibuzor",
-                          style: TextStyle(
-                              fontSize: 16.0,
-                              fontFamily: "Ubuntu",
-                              color: Colors.black87,
-                              fontWeight: FontWeight.w500,
-                              height: 1.6),
+                        SizedBox(height: 4),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                                width: 85.0,
+                                height: 85.0,
+                                margin: EdgeInsets.only(right: 20,left: 20),
+                                decoration: new BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    image: new DecorationImage(
+                                        fit: BoxFit.contain,
+                                        image: NetworkImage(
+                                            "https://bloximages.chicago2.vip.townnews.com/stlamerican.com/content/tncms/assets/v3/editorial/1/cb/1cb65068-c76d-11e8-8686-7f40e5fbe1d0/5bb5605309dba.image.jpg?resize=400%2C422")))),
+                            Flexible(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  SizedBox(height: 4),
+                                  Text('QLink - BY87R',
+                                      style: TextStyle(
+                                          fontSize: 12.0,
+                                          height: 1.3,
+                                          fontFamily: "Ubuntu",
+                                          color: Colors.grey,
+                                          fontWeight: FontWeight.w400)),
+                                  Text(
+                                    "Amadi Chibuzor",
+                                    style: TextStyle(
+                                        fontSize: 16.0,
+                                        height: 1.3,
+                                        fontFamily: "Ubuntu",
+                                        color: Colors.black87,
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                  Text('Ticket ID - 445677723',
+                                      style: TextStyle(
+                                          fontSize: 12.0,
+                                          fontFamily: "Ubuntu",
+                                          color: Colors.grey,
+                                          height: 1.4,
+                                          fontWeight: FontWeight.w400)),
+                                  Text('08038752226',
+                                      style: TextStyle(
+                                          fontSize: 13.0,
+                                          height: 1.3,
+                                          fontFamily: "Ubuntu",
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.w400)),
+                                  Text('yobozorle@gmail.com',
+                                      style: TextStyle(
+                                          fontSize: 13.0,
+                                          fontFamily: "Ubuntu",
+                                          color: Colors.black,
+                                          height: 1.3,
+                                          fontWeight: FontWeight.w400))
+                                ],
+                              ),
+                            ),
+                          ],
                         ),
                         Container(
-                          margin: EdgeInsets.only(left: 20, top: 3, right: 20),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text('Bike brand',
-                                  style: TextStyle(
-                                      fontSize: 13.0,
-                                      fontFamily: "Ubuntu",
-                                      color: Colors.grey,
-                                      fontWeight: FontWeight.w400,
-                                      height: 1.5)),
-                              Text('QLink',
-                                  style: TextStyle(
-                                      fontSize: 14.0,
-                                      fontFamily: "Ubuntu",
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.w400,
-                                      height: 1.5))
-                            ],
-                          ),
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(left: 20, top: 3, right: 20),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text('Plate number',
-                                  style: TextStyle(
-                                      fontSize: 13.0,
-                                      fontFamily: "Ubuntu",
-                                      color: Colors.grey,
-                                      fontWeight: FontWeight.w400,
-                                      height: 1.5)),
-                              Text('BY87R',
-                                  style: TextStyle(
-                                      fontSize: 14.0,
-                                      fontFamily: "Ubuntu",
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.w400,
-                                      height: 1.5))
-                            ],
-                          ),
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(left: 20, top: 3, right: 20),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text('Ticket ID ',
-                                  style: TextStyle(
-                                      fontSize: 13.0,
-                                      fontFamily: "Ubuntu",
-                                      color: Colors.grey,
-                                      fontWeight: FontWeight.w400,
-                                      height: 1.5)),
-                              Text('445677723',
-                                  style: TextStyle(
-                                      fontSize: 14.0,
-                                      fontFamily: "Ubuntu",
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.w400,
-                                      height: 1.5))
-                            ],
-                          ),
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(left: 20, top: 3, right: 20),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text('Phone',
-                                  style: TextStyle(
-                                      fontSize: 13.0,
-                                      fontFamily: "Ubuntu",
-                                      color: Colors.grey,
-                                      fontWeight: FontWeight.w400,
-                                      height: 1.5)),
-                              Text('08038752226',
-                                  style: TextStyle(
-                                      fontSize: 14.0,
-                                      fontFamily: "Ubuntu",
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.w400,
-                                      height: 1.5))
-                            ],
-                          ),
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(left: 20, top: 3, right: 20),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text('Email',
-                                  style: TextStyle(
-                                      fontSize: 13.0,
-                                      fontFamily: "Ubuntu",
-                                      color: Colors.grey,
-                                      fontWeight: FontWeight.w400,
-                                      height: 1.5)),
-                              Text('yobozorle@gmail.com',
-                                  style: TextStyle(
-                                      fontSize: 14.0,
-                                      fontFamily: "Ubuntu",
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.w400,
-                                      height: 1.5))
-                            ],
-                          ),
-                        ),
+                            height: 0.7,
+                            margin: EdgeInsets.only(top: 15, left: 20, right: 20),
+                            width: MediaQuery.of(context).size.width,
+                            color: Colors.grey[300]),
                         Card(
                           elevation: 0,
                           child: Padding(
@@ -215,27 +164,6 @@ class _BusinessDriverProfState extends State<BusinessDriverProf> {
                                       height: 1.6)),
                             ),
                           ),
-                        ),
-                        InkWell(
-                          child: Container(
-                            height: 40,
-                            width: MediaQuery.of(context).size.width / 2,
-                            child: Center(child: Text('BLOCK DRIVER',
-                              style: TextStyle(
-                                  fontSize: 13,
-                                  fontFamily: "Ubuntu",
-                                  color: Colors.red,
-                                  fontWeight: FontWeight.w400),)),
-                          ),
-                          onTap: (){
-                            ConfirmAlertBoxDark(
-                                context: context,
-                                title: 'Are you sure you want to delete driver?',
-                                titleTextColor: Colors.white,
-                                icon: Icons.eighteen_mp,
-                                infoMessage: '',
-                                onPressedYes: () {});
-                          },
                         ),
                         Container(
                             height: 0.7,
