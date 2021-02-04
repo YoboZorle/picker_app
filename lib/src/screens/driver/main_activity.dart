@@ -21,7 +21,7 @@ class _DriverTabsState extends State<DriverTabs> {
       BlocProvider<DriverStatusBloc>(create: (_) => DriverStatusBloc()),
       BlocProvider<RiderDetailsBloc>(create: (_) => RiderDetailsBloc()),
       BlocProvider<RideOrdersBloc>(
-          create: (_) => RideOrdersBloc()..add(OrdersFetched()))
+          create: (_) => RideOrdersBloc()..add(OrdersFetched(isUser: 0)))
     ], child: DriverHome(key: PageStorageKey('DriverHome'))),
     BlocProvider<DriverHistoryBloc>(
         create: (_) => DriverHistoryBloc()..add(DriverHistoryFetched()),

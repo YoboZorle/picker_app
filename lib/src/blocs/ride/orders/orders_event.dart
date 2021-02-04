@@ -11,10 +11,11 @@ abstract class OrdersEvent extends Equatable {
 class OrdersReset extends OrdersEvent {}
 
 class OrdersFetched extends OrdersEvent {
-  const OrdersFetched();
+  final int isUser;
+  const OrdersFetched({this.isUser = 1});
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [isUser];
 }
 
 class OrdersAdded extends OrdersEvent {

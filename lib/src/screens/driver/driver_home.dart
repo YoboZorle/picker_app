@@ -254,7 +254,7 @@ class _DriverHomeState extends State<DriverHome> {
               ),
               onRefresh: () async {
                 _rideOrdersBloc.add(OrdersReset());
-                _rideOrdersBloc.add(OrdersFetched());
+                _rideOrdersBloc.add(OrdersFetched(isUser:0));
               },
             )));
   }
@@ -263,7 +263,7 @@ class _DriverHomeState extends State<DriverHome> {
     final maxScroll = _scrollController.position.maxScrollExtent;
     final currentScroll = _scrollController.position.pixels;
     if (maxScroll - currentScroll <= _scrollThreshold) {
-      _rideOrdersBloc.add(OrdersFetched());
+      _rideOrdersBloc.add(OrdersFetched(isUser:0));
     }
   }
 
