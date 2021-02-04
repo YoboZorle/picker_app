@@ -53,8 +53,8 @@ class BusinessDriverActivityWidget extends State {
                           children: [
                             ListTile(
                               leading: Container(
-                                  width: 50.0,
-                                  height: 50.0,
+                                  width: 45.0,
+                                  height: 45.0,
                                   decoration: new BoxDecoration(
                                       shape: BoxShape.circle,
                                       image: new DecorationImage(
@@ -97,7 +97,7 @@ class BusinessDriverActivityWidget extends State {
                                   margin: EdgeInsets.only(right: 8),
                                   child: Text("From: ",
                                       style: TextStyle(
-                                          fontSize: 13,
+                                          fontSize: 12,
                                           color: Colors.grey,
                                           fontFamily: 'Ubuntu',
                                           fontWeight: FontWeight.w400)),
@@ -106,7 +106,7 @@ class BusinessDriverActivityWidget extends State {
                                   child: Text(
                                       '20 Egbema Street, Borikiri, Port harcourt, Nigeria',
                                       style: TextStyle(
-                                          fontSize: 14,
+                                          fontSize: 13.5,
                                           color: Colors.black,
                                           fontFamily: 'Ubuntu',
                                           fontWeight: FontWeight.w400)),
@@ -122,7 +122,7 @@ class BusinessDriverActivityWidget extends State {
                                   margin: EdgeInsets.only(right: 8),
                                   child: Text("To: ",
                                       style: TextStyle(
-                                          fontSize: 13,
+                                          fontSize: 12,
                                           color: Colors.grey,
                                           fontFamily: 'Ubuntu',
                                           fontWeight: FontWeight.w400)),
@@ -131,7 +131,7 @@ class BusinessDriverActivityWidget extends State {
                                   child: Text(
                                       '66-4 Parkhurst Rd, Chelmsford MA 1824 ',
                                       style: TextStyle(
-                                          fontSize: 14,
+                                          fontSize: 13.5,
                                           color: Colors.black,
                                           fontFamily: 'Ubuntu',
                                           fontWeight: FontWeight.w400)),
@@ -163,11 +163,11 @@ class BusinessDriverActivityWidget extends State {
                                             MainAxisAlignment.start,
                                         children: [
                                           Icon(Icons.phone_in_talk_rounded,
-                                              color: Colors.black, size: 19),
+                                              color: Colors.black, size: 18),
                                           SizedBox(width: 8),
                                           Text('Call 08038752226',
                                               style: TextStyle(
-                                                  fontSize: 13.3,
+                                                  fontSize: 13,
                                                   fontFamily: 'Ubuntu',
                                                   color: Colors.black,
                                                   fontWeight: FontWeight.w400)),
@@ -177,20 +177,22 @@ class BusinessDriverActivityWidget extends State {
                                   ),
                                   onTap: () => launch("tel://+2348038752226"),
                                 ),
-                                FlatButton(
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius:
-                                          BorderRadius.circular(18.0)),
-                                  color: AppColor.primaryText,
-                                  textColor: AppColor.primaryText,
-                                  padding: EdgeInsets.only(left: 25, right: 25),
-                                  onPressed: () {},
-                                  child: Text("ACCEPT RIDE",
-                                      style: TextStyle(
-                                          fontSize: 13.5,
-                                          color: Colors.white,
-                                          fontFamily: 'Ubuntu',
-                                          fontWeight: FontWeight.w500)),
+                                Expanded(
+                                  child: FlatButton(
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(18.0)),
+                                    color: AppColor.primaryText,
+                                    textColor: AppColor.primaryText,
+                                    padding: EdgeInsets.only(left: 25, right: 25),
+                                    onPressed: () {},
+                                    child: Text("ACCEPT RIDE",
+                                        style: TextStyle(
+                                            fontSize: 13,
+                                            color: Colors.white,
+                                            fontFamily: 'Ubuntu',
+                                            fontWeight: FontWeight.w500)),
+                                  ),
                                 ),
                               ],
                             ),
@@ -218,7 +220,7 @@ class BusinessDriverActivityWidget extends State {
                             title: Text(
                               "Amadi Chibuzor",
                               style: TextStyle(
-                                  fontSize: 15.0,
+                                  fontSize: 14.0,
                                   fontFamily: "Ubuntu",
                                   color: Colors.black,
                                   fontWeight: FontWeight.w500,

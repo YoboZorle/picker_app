@@ -58,7 +58,7 @@ class BusinessDrivers extends StatelessWidget {
               title: Text(
                 'Yobo Zorle',
                 style: TextStyle(
-                    fontSize: 16.0,
+                    fontSize: 15.0,
                     fontWeight: FontWeight.w500,
                     color: Colors.black,
                     fontFamily: 'Ubuntu'),
@@ -78,8 +78,8 @@ class BusinessDrivers extends StatelessWidget {
                 ],
               ),
               leading: Container(
-                  width: 48.0,
-                  height: 48.0,
+                  width: 40.0,
+                  height: 40.0,
                   decoration: new BoxDecoration(
                       shape: BoxShape.circle,
                       image: new DecorationImage(
@@ -87,7 +87,7 @@ class BusinessDrivers extends StatelessWidget {
                           image: NetworkImage(
                               "https://blog.bolt.eu/wp-content/uploads/2020/06/1200x628_Oaksure-Financial-Services-insurance-covers-Bolt-passengers-and-drivers-on-all-rides.jpg")))),
               trailing: Icon(Icons.arrow_forward_ios_outlined,
-                  size: 16, color: Colors.grey[300]),
+                  size: 15, color: Colors.grey[400]),
               onTap: () {
                 Navigator.push(
                     context,

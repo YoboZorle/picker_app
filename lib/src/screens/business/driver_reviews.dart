@@ -16,9 +16,10 @@ class _DriverReviewsState extends State<DriverReviews> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: ListView.builder(
+        shrinkWrap: true,
         physics: BouncingScrollPhysics(),
         itemCount: 5,
-        padding: EdgeInsets.all(0.0),
+        padding: EdgeInsets.zero,
         itemBuilder: (context, index) {
           // return Container(
           //   color: Colors.white,
