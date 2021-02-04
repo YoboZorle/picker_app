@@ -33,7 +33,7 @@ class Radii {
       topRight: Radius.circular(25),
       topLeft: Radius.circular(25),
       bottomLeft: Radius.circular(25),
-      bottomRight: Radius.circular(5));
+      bottomRight: Radius.circular(25));
 
   static final BorderRadiusGeometry k25pxAll = BorderRadius.only(
       topRight: Radius.circular(25),
@@ -87,7 +87,7 @@ class Shadows {
 }
 
 class APIConstants {
-  static final String httpUrl = 'http://172.20.10.5';
+  static final String httpUrl = 'http://pickrr-webapp-env-new.eba-f5va3dav.us-east-1.elasticbeanstalk.com/admin/';
   static final String wsUrl = 'ws://172.20.10.5';
   static final String assetsUrl = 'https://pickrr-storage.s3.amazonaws.com/logistics-a9e77482c84e16/';
   static final String apiUrl = '$httpUrl/api/';

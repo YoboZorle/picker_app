@@ -61,9 +61,9 @@ class _AppState extends State<App> {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       systemNavigationBarColor: Colors.white,
       systemNavigationBarIconBrightness: Brightness.dark,
-      statusBarColor: Colors.white,
       statusBarBrightness: Brightness.light,
       statusBarIconBrightness: Brightness.dark,
+      statusBarColor: Colors.transparent,
     ));
     return MaterialApp(
         debugShowCheckedModeBanner: false,
