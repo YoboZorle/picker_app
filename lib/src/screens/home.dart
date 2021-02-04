@@ -75,7 +75,7 @@ class _HomeState extends State<Home> {
       final lng = detail.result.geometry.location.lng;
 
       destination = detail.result;
-      destinationController.text = detail.result.name;
+      destinationController.text = detail.result.formattedAddress;
       Marker marker = Marker(
           markerId: MarkerId('distanceMarker'),
           draggable: false,
@@ -108,7 +108,7 @@ class _HomeState extends State<Home> {
       final lng = detail.result.geometry.location.lng;
 
       pickupPoint = detail.result;
-      pickupController.text = detail.result.name;
+      pickupController.text = detail.result.formattedAddress;
       Marker marker = Marker(
           markerId: MarkerId('pickupMarker'),
           draggable: false,
@@ -381,7 +381,7 @@ class _HomeState extends State<Home> {
                                               hint: 'Search pickup location',
                                               components: [
                                             new Component(
-                                                Component.country, "ng")
+                                                Component.country, "ng"),
                                           ]);
                                       displayPredictionPickup(p);
                                       setState(() {
