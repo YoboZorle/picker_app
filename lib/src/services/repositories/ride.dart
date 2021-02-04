@@ -73,8 +73,6 @@ class RideRepository extends APIClient {
       final responseBody = response.data;
       return responseBody;
     } catch (e) {
-      print('e --------------------------------');
-      print(e);
       throw ServiceError('Request failed please try again.');
     }
   }
@@ -126,7 +124,6 @@ class RideRepository extends APIClient {
     final String url = '/order/$rideId/package-delivered';
     try {
       Response response = await dio.post(url);
-      print('FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF');
       print(response);
       final responseBody = response.data;
       return responseBody;
