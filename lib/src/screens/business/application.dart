@@ -278,7 +278,7 @@ class _BusinessApplicationState extends State<BusinessApplication> {
           ),
           duration: 10);
       Future.delayed(new Duration(seconds: 7), () {
-        Navigator.pushReplacementNamed(context, '/');
+        Navigator.pushReplacementNamed(context, '/BusinessHomePage');
       });
     } catch (err) {
       debugLog(err);

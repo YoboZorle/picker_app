@@ -47,6 +47,8 @@ class Driver extends Equatable {
     company = business;
   }
 
+  get isDriverAvailable => !this.blocked && this.status == 'A' && !this.isDelivering;
+
   @override
   List<Object> get props => [id, ticketNumber, bikeBrand, createdAt];
 

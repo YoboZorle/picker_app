@@ -10,8 +10,10 @@ import 'package:pickrr_app/src/screens/auth/complete_profile_form.dart';
 import 'package:pickrr_app/src/screens/auth/login.dart';
 import 'package:pickrr_app/src/screens/business/application.dart';
 import 'package:pickrr_app/src/screens/business/business_details.dart';
+import 'package:pickrr_app/src/screens/business/drivers/application.dart';
 import 'package:pickrr_app/src/screens/business/password_prompt.dart';
 import 'package:pickrr_app/src/screens/business/business_home.dart';
+import 'package:pickrr_app/src/screens/business/tabs/business_drivers/business_driver_activity.dart';
 import 'package:pickrr_app/src/screens/business/tabs/ride/assign_driver.dart';
 import 'package:pickrr_app/src/screens/driver/onboard.dart';
 import 'package:pickrr_app/src/screens/driver/order_history.dart';
@@ -140,6 +142,12 @@ class Routes {
                 BlocProvider<AvailableRidersBloc>(
                     create: (_) => AvailableRidersBloc(),
                     child: AssignDriver(rideId)));
+      case "NewBusinessRiderApplication":
+        return SlideLeftRoute<bool>(
+            builder: (BuildContext context) => NewRiderApplication());
+      case "DriverActivities":
+        return CustomRoute<bool>(
+            builder: (BuildContext context) => BusinessDriverActivity());
       default:
         return onUnknownRoute(RouteSettings(name: '/Unknown'));
     }

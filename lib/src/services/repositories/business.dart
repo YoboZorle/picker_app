@@ -123,8 +123,37 @@ class BusinessRepository extends APIClient {
     }
   }
 
+  Future<dynamic> getAllRiders({int page, String query}) async {
+    Map<String, dynamic> queryParams = {'query': query, 'page': page};
+    final String url = '/business/riders';
+    try {
+      Response response = await dio.get(url, queryParameters: queryParams);
+      final responseBody = response.data;
+      return responseBody;
+    } catch (e) {
+      throw ServiceError('Request failed please try again.');
+    }
+  }
+
   Future<void> assignRiderToRide(FormData details) async {
     final String url = '/business/assign-to-ride';
+
+    try {
+      response = await dio.post(url, data: details);
+      final responseBody = response.data;
+      return responseBody;
+    } catch (err) {
+      cprint(err.response, errorIn: 'assignRiderToRide');
+      if (err.response.data != null &&
+          err.response.data['non_field_errors'] != null) {
+        throw ServiceError(err.response.data['non_field_errors'].first);
+      }
+      throw ServiceError('Request failed, please try again.');
+    }
+  }
+
+  Future<void> registerRider(FormData details) async {
+    final String url = '/business/register-rider';
 
     try {
       response = await dio.post(url, data: details);

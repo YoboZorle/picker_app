@@ -5,8 +5,9 @@ class InputField extends StatelessWidget {
   final TextEditingController inputController;
   final String hintText;
   final VoidCallback onPressed;
+  final TextInputType inputType;
 
-  InputField({this.inputController, this.hintText, this.onPressed});
+  InputField({this.inputController, this.hintText, this.onPressed, this.inputType=TextInputType.name});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +20,7 @@ class InputField extends StatelessWidget {
               width: MediaQuery.of(context).size.width,
               margin: EdgeInsets.only(left: 0),
               child: TextFormField(
-                keyboardType: TextInputType.name,
+                keyboardType: inputType,
                 cursorColor: AppColor.primaryText,
                 controller: inputController,
                 style: TextStyle(
