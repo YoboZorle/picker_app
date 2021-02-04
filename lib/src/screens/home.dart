@@ -13,15 +13,12 @@ import 'package:pickrr_app/src/helpers/constants.dart';
 import 'package:pickrr_app/src/helpers/utility.dart';
 import 'package:pickrr_app/src/screens/ride/receiver_details.dart';
 import 'package:pickrr_app/src/services/repositories/ride.dart';
-import 'package:pickrr_app/src/user/custom_appbar.dart';
 import 'package:pickrr_app/src/utils/alert_bar.dart';
 import 'package:pickrr_app/src/widgets/nav_drawer.dart';
 
-import 'package:flutter_svg/svg.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pickrr_app/src/blocs/authentication/bloc.dart';
 import 'package:pickrr_app/src/models/user.dart';
-import 'package:pickrr_app/src/helpers/constants.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -757,28 +754,34 @@ class _PickrrAppBarState extends State<PickrrAppBar> {
                 },
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(25.0))),
-                label: user.isDriver
-                    ? Text('Open as rider',
-                        style: TextStyle(
-                            fontSize: 13.6,
-                            fontFamily: 'Ubuntu',
-                            color: Colors.white,
-                            fontWeight: FontWeight.w400))
-                    : user.isBusiness
-                        ? Text('Open as business',
-                            style: TextStyle(
-                                fontSize: 13.6,
-                                fontFamily: 'Ubuntu',
-                                color: Colors.white,
-                                fontWeight: FontWeight.w400))
-                        : Text('Become a rider',
-                            style: TextStyle(
-                                fontSize: 13.6,
-                                fontFamily: 'Ubuntu',
-                                color: Colors.white,
-                                fontWeight: FontWeight.w400)),
-                icon: SvgPicture.asset('assets/svg/kargo_bike.svg',
-                    height: 20, semanticsLabel: 'Bike Icon'),
+                label: Container(
+                  margin: EdgeInsets.only(right: 5, top: 10, bottom:10),
+                  child: user.isDriver
+                      ? Text('Open as rider',
+                          style: TextStyle(
+                              fontSize: 13.6,
+                              fontFamily: 'Ubuntu',
+                              color: Colors.white,
+                              fontWeight: FontWeight.w400))
+                      : user.isBusiness
+                          ? Text('Open as business',
+                              style: TextStyle(
+                                  fontSize: 13.6,
+                                  fontFamily: 'Ubuntu',
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w400))
+                          : Text('Become a rider',
+                              style: TextStyle(
+                                  fontSize: 13.6,
+                                  fontFamily: 'Ubuntu',
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w400)),
+                ),
+                icon: Container(
+                  margin: EdgeInsets.only(left: 5, top: 10, bottom:10),
+                  child: SvgPicture.asset('assets/svg/kargo_bike.svg',
+                      height: 20, semanticsLabel: 'Bike Icon'),
+                ),
                 textColor: Colors.white,
                 splashColor: Colors.yellowAccent,
                 color: AppColor.primaryText,
