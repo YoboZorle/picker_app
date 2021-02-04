@@ -18,17 +18,20 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   String _callingCode = '234';
   TextEditingController _phoneController;
+  TextEditingController _retypePhoneController;
   UserRepository _userRepository;
 
   @override
   void dispose() {
     _phoneController.dispose();
+    _retypePhoneController.dispose();
     super.dispose();
   }
 
   @override
   void initState() {
     _phoneController = new TextEditingController();
+    _retypePhoneController = new TextEditingController();
     _userRepository = UserRepository();
     super.initState();
   }
@@ -50,13 +53,14 @@ class _LoginState extends State<Login> {
               return;
             }
 
-            if(user.isDriver){
+            if (user.isDriver) {
               Navigator.popAndPushNamed(context, '/DriversHomePage');
               return;
             }
 
-            if(user.isBusiness){
-              Navigator.popAndPushNamed(context, '/PasswordPrompt/${user.isNewBusiness}');
+            if (user.isBusiness) {
+              Navigator.popAndPushNamed(
+                  context, '/PasswordPrompt/${user.isNewBusiness}');
               return;
             }
 
@@ -122,26 +126,15 @@ class _LoginState extends State<Login> {
                           SizedBox(height: 25),
                           Container(
                               height: 47,
-                              margin:
-                                  EdgeInsets.only(left: 20, right: 20, bottom: 20),
+                              margin: EdgeInsets.only(
+                                  left: 20, right: 20, bottom: 20),
                               color: Colors.grey[200],
                               child: _phoneInput()),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                'An SMS code will be sent to you\nto verify your number',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  fontFamily: 'Ubuntu',
-                                  color: Colors.grey,
-                                  fontWeight: FontWeight.w400,
-                                  height: 1.3,
-                                ),
-                              ),
-                            ],
-                          ),
+                          Container(
+                              height: 47,
+                              margin: EdgeInsets.only(left: 20, right: 20),
+                              color: Colors.grey[200],
+                              child: _phoneAgain()),
                         ])),
                       ])),
                 ),
@@ -313,8 +306,29 @@ class _LoginState extends State<Login> {
       return;
     }
 
+    if (_retypePhoneController.text == null ||
+        _retypePhoneController.text.isEmpty) {
+      AlertBar.dialog(context, 'Retype your phone number', Colors.red,
+          icon: Icon(
+            Icons.error,
+            color: Colors.red,
+          ),
+          duration: 5);
+      return;
+    }
+    
+    if( _retypePhoneController.text != _phoneController.text) {
+      AlertBar.dialog(context, 'Phone numbers do not match', Colors.red,
+          icon: Icon(
+            Icons.error,
+            color: Colors.red,
+          ),
+          duration: 5);
+      return;
+    }
+
     AlertBar.dialog(
-        context, 'Requesting Verification code...', AppColor.primaryText,
+        context, 'Processing login...', AppColor.primaryText,
         showProgressIndicator: true, duration: null);
 
     try {
@@ -323,13 +337,81 @@ class _LoginState extends State<Login> {
       _firebaseMessaging.configure();
       String deviceToken = await _firebaseMessaging.getToken();
       await _userRepository.requestOTP(
-          callingCode: _callingCode, phone: _phoneController.text, deviceToken: deviceToken);
+          callingCode: _callingCode,
+          phone: _phoneController.text,
+          deviceToken: deviceToken);
       Navigator.pop(context);
-      BlocProvider.of<AuthenticationBloc>(context).add(AuthenticationEvent.AUTHENTICATED);
+      BlocProvider.of<AuthenticationBloc>(context)
+          .add(AuthenticationEvent.AUTHENTICATED);
     } catch (err) {
       Navigator.pop(context);
       AlertBar.dialog(context, 'Request failed. please try again', Colors.red,
           icon: Icon(Icons.error), duration: 5);
     }
   }
+
+  _phoneAgain() => Container(
+        margin: EdgeInsets.only(left: 15),
+        child: Row(
+          children: <Widget>[
+            Expanded(
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                child: TextFormField(
+                  validator: (val){
+                    if(val.isEmpty)
+                      return 'Empty';
+                    if(val != _phoneController.text)
+                      return 'Not Match';
+                    return null;
+                  },
+                  controller: _retypePhoneController,
+                  keyboardType: TextInputType.number,
+                  cursorColor: AppColor.primaryText,
+                  inputFormatters: <TextInputFormatter>[
+                    FilteringTextInputFormatter.digitsOnly
+                  ],
+                  style: TextStyle(
+                      fontSize: 18.0,
+                      fontFamily: 'Ubuntu',
+                      color: Colors.black,
+                      fontWeight: FontWeight.w400),
+                  decoration: InputDecoration(
+                    hintText: 'Re-enter number',
+                    hintStyle: TextStyle(
+                        fontSize: 18.0,
+                        fontFamily: 'Ubuntu',
+                        color: Colors.grey,
+                        fontWeight: FontWeight.w400),
+                    border: InputBorder.none,
+                    focusedBorder: InputBorder.none,
+                    enabledBorder: InputBorder.none,
+                    errorBorder: InputBorder.none,
+                    disabledBorder: InputBorder.none,
+                    suffixIcon: _retypePhoneController.text != null &&
+                        _retypePhoneController.text.isNotEmpty
+                        ? Padding(
+                            padding:
+                                const EdgeInsetsDirectional.only(start: 12.0),
+                            child: IconButton(
+                              iconSize: 16.0,
+                              icon: Icon(
+                                Icons.cancel,
+                                color: Colors.grey,
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  _retypePhoneController.clear();
+                                });
+                              },
+                            ),
+                          )
+                        : null,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      );
 }
