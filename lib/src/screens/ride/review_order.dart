@@ -602,6 +602,7 @@ class ReviewOrder extends StatelessWidget {
 
     try {
       Map<String, dynamic> formDetails = {
+        'distance_covered': arguments.distanceCovered,
         'price': arguments.price,
         'duration': arguments.duration,
         'distance': arguments.distance,

@@ -277,7 +277,7 @@ class _BusinessApplicationState extends State<BusinessApplication> {
             color: Colors.green,
           ),
           duration: 10);
-      Future.delayed(new Duration(seconds: 7), () {
+      Future.delayed(new Duration(seconds: 6), () {
         Navigator.pushReplacementNamed(context, '/BusinessHomePage');
       });
     } catch (err) {

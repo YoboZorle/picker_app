@@ -119,17 +119,6 @@ String getFullTime(String date) {
       .toString();
 }
 
-double priceCalculator(double distance) {
-  int distanceCovered = distance < 1 ? 1 : distance.round();
-  final double flatRate = 400;
-  final double perKmCharge = 50;
-  double price = 0;
-
-  price = flatRate;
-  if (distanceCovered > 4) price += (perKmCharge * (distanceCovered - 4));
-  return price;
-}
-
 Widget flightShuttleBuilder(
   BuildContext flightContext,
   Animation<double> animation,
@@ -163,7 +152,7 @@ void cancelRide(BuildContext context, rideId, {nextRoute = '/HomePage'}) async {
       showProgressIndicator: true, duration: null);
   try {
     await RideRepository().cancelRide(rideId);
-    Navigator.pop(context);
+    Navigator.popUntil(context, (Route<dynamic> route) => route is PageRoute);
     Navigator.popAndPushNamed(context, nextRoute);
   } catch (err) {
     debugLog(err);

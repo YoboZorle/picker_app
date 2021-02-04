@@ -8,8 +8,10 @@ class RideDetailsArguments {
   final String receiversPhone;
   final String distance;
   final String duration;
+  final double distanceCovered;
 
   RideDetailsArguments(
+      this.distanceCovered,
       this.price,
       this.pickupCoordinate,
       this.destinationCoordinate,

@@ -9,9 +9,11 @@ class PackageReceiverDetails extends StatefulWidget {
   final Map<String, dynamic> destinationCoordinate;
   final String distance;
   final String duration;
+  final double distanceCovered;
 
   PackageReceiverDetails(
       {this.price,
+        this.distanceCovered,
       this.pickupCoordinate,
       this.destinationCoordinate,
       this.distance,
@@ -165,6 +167,7 @@ class _PackageReceiverDetailsState extends State<PackageReceiverDetails> {
                             onTap: () => _enableBtn
                                 ? Navigator.popAndPushNamed(context, '/ReviewOrderPage',
                                     arguments: RideDetailsArguments(
+                                      widget.distanceCovered,
                                         widget.price,
                                         widget.pickupCoordinate,
                                         widget.destinationCoordinate,

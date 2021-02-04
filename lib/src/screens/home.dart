@@ -12,6 +12,7 @@ import 'package:intl/intl.dart';
 import 'package:pickrr_app/src/helpers/constants.dart';
 import 'package:pickrr_app/src/helpers/utility.dart';
 import 'package:pickrr_app/src/screens/ride/receiver_details.dart';
+import 'package:pickrr_app/src/services/repositories/core.dart';
 import 'package:pickrr_app/src/services/repositories/ride.dart';
 import 'package:pickrr_app/src/utils/alert_bar.dart';
 import 'package:pickrr_app/src/widgets/nav_drawer.dart';
@@ -28,6 +29,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   RideRepository _rideRepository;
+  CoreRepository _coreRepository;
   GoogleMapController mapController;
   TextEditingController destinationController;
   TextEditingController pickupController;
@@ -46,11 +48,13 @@ class _HomeState extends State<Home> {
 
   String _placeDistance;
   double _distanceCovered;
+  double _ridePrice;
   String _placeTime;
 
   @override
   void initState() {
     _rideRepository = RideRepository();
+    _coreRepository = CoreRepository();
     destinationController = new TextEditingController();
     pickupController = new TextEditingController();
     googleMapPolyline = new GoogleMapPolyline(apiKey: AppData.mapAPIKey);
@@ -167,6 +171,11 @@ class _HomeState extends State<Home> {
       totalTime = "${totalMinutes ~/ 60} hours, $minutes mins";
     }
 
+    Map<String, dynamic> formDetails = {
+      'price': totalDistance
+    };
+    _ridePrice = await _coreRepository.getRidePrice(new FormData.fromMap(formDetails));
+
     setState(() {
       _distanceCovered = totalDistance;
       _placeDistance = totalDistance.toStringAsFixed(1);
@@ -228,9 +237,10 @@ class _HomeState extends State<Home> {
       destinationCoordinate['id'] = response['destination_id'];
       final duration = _placeTime;
       final locationDistance = _placeDistance;
-      final price = priceCalculator(_distanceCovered);
+      final price = _ridePrice;
       final pickupDetails = pickupCoordinate;
       final destinationDetails = destinationCoordinate;
+      final totalDistanceCovered = _distanceCovered;
       _resetState();
       Navigator.pop(context);
       Navigator.push(
@@ -238,6 +248,7 @@ class _HomeState extends State<Home> {
           MaterialPageRoute(
               builder: (context) => PackageReceiverDetails(
                   duration: duration,
+                  distanceCovered: totalDistanceCovered,
                   distance: locationDistance,
                   price: price,
                   pickupCoordinate: pickupDetails,
@@ -593,7 +604,7 @@ class _HomeState extends State<Home> {
                     ),
                     Text(
                         currencyFormatter
-                            .format(priceCalculator(_distanceCovered)),
+                            .format(_ridePrice),
                         style: TextStyle(
                           fontSize: 22,
                           fontFamily: "Roboto",
