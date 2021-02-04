@@ -4,6 +4,10 @@ import 'package:pickrr_app/src/screens/business/business_driver_prof.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class BusinessDriverActivity extends StatefulWidget {
+  final int riderId;
+
+  BusinessDriverActivity(this.riderId);
+
   BusinessDriverActivityWidget createState() => BusinessDriverActivityWidget();
 }
 
@@ -184,7 +188,8 @@ class BusinessDriverActivityWidget extends State {
                                             BorderRadius.circular(18.0)),
                                     color: AppColor.primaryText,
                                     textColor: AppColor.primaryText,
-                                    padding: EdgeInsets.only(left: 25, right: 25),
+                                    padding:
+                                        EdgeInsets.only(left: 25, right: 25),
                                     onPressed: () {},
                                     child: Text("ACCEPT RIDE",
                                         style: TextStyle(
@@ -253,7 +258,6 @@ class BusinessDriverActivityWidget extends State {
                             ));
                       },
                     ),
-
                   ],
                 ),
               )

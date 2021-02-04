@@ -146,8 +146,14 @@ class Routes {
         return SlideLeftRoute<bool>(
             builder: (BuildContext context) => NewRiderApplication());
       case "DriverActivities":
+        int riderId;
+        if (pathElements.length > 2) {
+          riderId = int.parse(pathElements[2]);
+        } else {
+          return onUnknownRoute(RouteSettings(name: '/Unknown'));
+        }
         return CustomRoute<bool>(
-            builder: (BuildContext context) => BusinessDriverActivity());
+            builder: (BuildContext context) => BusinessDriverActivity(riderId));
       default:
         return onUnknownRoute(RouteSettings(name: '/Unknown'));
     }
