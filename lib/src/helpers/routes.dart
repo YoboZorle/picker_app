@@ -10,6 +10,7 @@ import 'package:pickrr_app/src/screens/auth/complete_profile_form.dart';
 import 'package:pickrr_app/src/screens/auth/login.dart';
 import 'package:pickrr_app/src/screens/business/application.dart';
 import 'package:pickrr_app/src/screens/business/business_details.dart';
+import 'package:pickrr_app/src/screens/business/business_driver_prof.dart';
 import 'package:pickrr_app/src/screens/business/drivers/application.dart';
 import 'package:pickrr_app/src/screens/business/password_prompt.dart';
 import 'package:pickrr_app/src/screens/business/business_home.dart';
@@ -154,6 +155,15 @@ class Routes {
         }
         return CustomRoute<bool>(
             builder: (BuildContext context) => BusinessDriverActivity(riderId));
+      case "DriverActivitiesDetails":
+        int riderId;
+        if (pathElements.length > 2) {
+          riderId = int.parse(pathElements[2]);
+        } else {
+          return onUnknownRoute(RouteSettings(name: '/Unknown'));
+        }
+        return CustomRoute<bool>(
+            builder: (BuildContext context) => DriverActivitiesDetails(riderId));
       default:
         return onUnknownRoute(RouteSettings(name: '/Unknown'));
     }

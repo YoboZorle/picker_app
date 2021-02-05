@@ -5,12 +5,14 @@ import 'package:list_tile_switch/list_tile_switch.dart';
 
 import 'driver_reviews.dart';
 
-class BusinessDriverProf extends StatefulWidget {
+class DriverActivitiesDetails extends StatefulWidget {
+  final int riderId;
+  DriverActivitiesDetails(this.riderId);
   @override
-  _BusinessDriverProfState createState() => _BusinessDriverProfState();
+  _DriverActivitiesDetailsState createState() => _DriverActivitiesDetailsState();
 }
 
-class _BusinessDriverProfState extends State<BusinessDriverProf> {
+class _DriverActivitiesDetailsState extends State<DriverActivitiesDetails> {
   bool _switchValues = true;
   bool _blockDriver = false;
   @override

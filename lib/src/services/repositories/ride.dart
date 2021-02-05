@@ -137,6 +137,39 @@ class RideRepository extends APIClient {
     }
   }
 
+  processPackagePickedForRider(int rideId) async {
+    final String url = '/order/business/$rideId/package-pickedup';
+    try {
+      Response response = await dio.post(url);
+      final responseBody = response.data;
+      return responseBody;
+    } catch (e) {
+      cprint(e.response, errorIn: 'processPackagePickedForRider');
+      if (e.response.data != null &&
+          e.response.data['non_field_errors'] != null) {
+        throw ServiceError(e.response.data['non_field_errors']);
+      }
+      throw ServiceError('Request failed please try again.');
+    }
+  }
+
+  processPackageDeliveredForRider(int rideId) async {
+    final String url = '/order/business/$rideId/package-delivered';
+    try {
+      Response response = await dio.post(url);
+      print(response);
+      final responseBody = response.data;
+      return responseBody;
+    } catch (e) {
+      cprint(e.response, errorIn: 'processPackageDeliveredForRider');
+      if (e.response.data != null &&
+          e.response.data['non_field_errors'] != null) {
+        throw ServiceError(e.response.data['non_field_errors']);
+      }
+      throw ServiceError('Request failed please try again.');
+    }
+  }
+
   getRideDetails(int rideId) async {
     final String url = '/$rideId/ride-details';
     try {

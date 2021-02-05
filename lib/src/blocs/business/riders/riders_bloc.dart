@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:pickrr_app/src/blocs/business/riders/bloc.dart';
 import 'package:pickrr_app/src/helpers/db/driver.dart';
+import 'package:pickrr_app/src/helpers/utility.dart';
 import 'package:pickrr_app/src/models/driver.dart';
 import 'package:pickrr_app/src/services/repositories/business.dart';
 
@@ -102,6 +103,9 @@ class BusinessRidersBloc
       drivers.add(driver);
       DriverProvider helper = DriverProvider.instance;
       helper.updateOrInsert(driver).then((val) {});
+      if(driver.details != null) {
+        persistUserDetails(driver.details);
+      }
     });
 
     return drivers;

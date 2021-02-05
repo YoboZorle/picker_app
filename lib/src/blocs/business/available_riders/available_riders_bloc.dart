@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:pickrr_app/src/blocs/business/available_riders/bloc.dart';
+import 'package:pickrr_app/src/helpers/db/driver.dart';
+import 'package:pickrr_app/src/helpers/utility.dart';
 import 'package:pickrr_app/src/models/driver.dart';
 import 'package:meta/meta.dart';
 import 'package:pickrr_app/src/services/repositories/business.dart';
@@ -50,10 +52,10 @@ class AvailableRidersBloc
         var drivers = result['drivers'];
 
         if (currentState.isInitial) {
-          hasReachedMax = result['currentPage'] + 1 > result['lastPage'];
+          hasReachedMax = result['currentPage'] + 1 >= result['lastPage'];
         }
         if (!currentState.isInitial) {
-          if (nextPage > currentState.lastPage) {
+          if (nextPage >= currentState.lastPage) {
             hasReachedMax = true;
           }
           drivers = isSearching ? drivers : currentState.drivers + drivers;
@@ -100,6 +102,11 @@ class AvailableRidersBloc
     result.forEach((rawDetails) {
       Driver driver = Driver.fromMap(Driver().formatToMap(rawDetails));
       drivers.add(driver);
+      DriverProvider helper = DriverProvider.instance;
+      helper.updateOrInsert(driver).then((val) {});
+      if(driver.details != null) {
+        persistUserDetails(driver.details);
+      }
     });
 
     return drivers;

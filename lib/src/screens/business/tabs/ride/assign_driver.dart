@@ -31,6 +31,7 @@ class _AssignDriverState extends State<AssignDriver> {
     super.initState();
     _scrollController.addListener(_onScroll);
     _availableRidersBloc = BlocProvider.of<AvailableRidersBloc>(context);
+    _availableRidersBloc.add(RidersFetched());
   }
 
   @override
@@ -105,63 +106,82 @@ class _AssignDriverState extends State<AssignDriver> {
   }
 
   Widget _driverWidget() {
-    return new Flexible(
-      child: BlocBuilder<AvailableRidersBloc, AvailableRidersState>(
-          builder: (blocContext, state) {
-        return state.isSuccess
-            ? new ListView.builder(
-                controller: _scrollController,
-                physics: BouncingScrollPhysics(),
-                itemCount: state.hasReachedMax
-                    ? state.drivers.length
-                    : state.drivers.length + 1,
-                itemBuilder: (BuildContext context, int index) {
-                  Driver rider = state.drivers[index];
-                  return index >= state.drivers.length
-                      ? PreLoader()
-                      : new Card(
-                          color: Colors.white,
-                          elevation: 0.05,
-                          child: new ListTile(
-                              onTap: () async => _chooseRider(rider.id),
-                              leading: ClipOval(
-                                  child: Container(
-                                      height: 38.0,
-                                      width: 38.0,
-                                      decoration:
-                                          BoxDecoration(color: Colors.white),
-                                      child: rider.details.profileImageUrl !=
-                                                  null ||
-                                              rider.details.profileImageUrl
-                                                  .isNotEmpty
-                                          ? CustomImage(
-                                              imageUrl:
-                                                  '${APIConstants.assetsUrl}${rider.details.profileImageUrl}',
-                                            )
-                                          : Image.asset('placeholder.jpg',
-                                              width: double.infinity,
-                                              height: double.infinity))),
-                              title: new Text(rider.details.fullname,
-                                  style: TextStyle(
-                                      color: Colors.black,
-                                      fontFamily: 'Ubuntu',
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 15)),
-                              subtitle: new Text('Online',
-                                  style: TextStyle(
-                                      color: Colors.green,
-                                      fontFamily: 'Ubuntu',
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 12)),
-                              trailing: Icon(Icons.arrow_forward_ios_outlined,
-                                  color: Colors.grey[300], size: 20),
-                              contentPadding:
-                                  EdgeInsets.only(left: 15, right: 5)),
-                        );
-                })
-            : Container();
-      }),
-    );
+    return new Flexible(child:
+        BlocBuilder<AvailableRidersBloc, AvailableRidersState>(
+            builder: (blocContext, state) {
+      if (state.isFailure) {
+        return Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Container(
+              child: Text("No riders!"),
+              alignment: Alignment.center,
+            ),
+          ],
+        );
+      }
+      if (state.isInitial || !state.isSuccess && state.isLoading) {
+        return Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Center(
+              child: CircularProgressIndicator(
+                strokeWidth: 1.5,
+              ),
+            ),
+          ],
+        );
+      }
+      return state.isSuccess
+          ? new ListView.builder(
+              controller: _scrollController,
+              physics: BouncingScrollPhysics(),
+              itemCount: state.hasReachedMax
+                  ? state.drivers.length
+                  : state.drivers.length + 1,
+              itemBuilder: (BuildContext context, int index) {
+                if (index >= state.drivers.length) {
+                  return PreLoader();
+                }
+                Driver rider = state.drivers[index];
+                return new Card(
+                  color: Colors.white,
+                  elevation: 0.05,
+                  child: new ListTile(
+                      onTap: () async => _chooseRider(rider.id),
+                      leading: ClipOval(
+                          child: Container(
+                              height: 38.0,
+                              width: 38.0,
+                              decoration: BoxDecoration(color: Colors.white),
+                              child: rider.details.profileImageUrl != null ||
+                                      rider.details.profileImageUrl.isNotEmpty
+                                  ? CustomImage(
+                                      imageUrl:
+                                          '${rider.details.profileImageUrl}',
+                                    )
+                                  : Image.asset('placeholder.jpg',
+                                      width: double.infinity,
+                                      height: double.infinity))),
+                      title: new Text(rider.details.fullname,
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontFamily: 'Ubuntu',
+                              fontWeight: FontWeight.w400,
+                              fontSize: 15)),
+                      subtitle: new Text('Online',
+                          style: TextStyle(
+                              color: Colors.green,
+                              fontFamily: 'Ubuntu',
+                              fontWeight: FontWeight.w400,
+                              fontSize: 12)),
+                      trailing: Icon(Icons.arrow_forward_ios_outlined,
+                          color: Colors.grey[300], size: 20),
+                      contentPadding: EdgeInsets.only(left: 15, right: 5)),
+                );
+              })
+          : Container();
+    }));
   }
 
   @override
@@ -196,10 +216,10 @@ class _AssignDriverState extends State<AssignDriver> {
       await _businessRepository
           .assignRiderToRide(FormData.fromMap(formDetails));
       Navigator.popUntil(context, (Route<dynamic> route) => route is PageRoute);
-      // Todo: Navigate business to rider activity
-      Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+      Navigator.popAndPushNamed(context, '/DriverActivities/$riderId');
     } catch (err) {
       cprint(err.message);
+      Navigator.popUntil(context, (Route<dynamic> route) => route is PageRoute);
       Navigator.popUntil(context, (Route<dynamic> route) => route is PageRoute);
       AlertBar.dialog(context, err.message, Colors.red,
           icon: Icon(Icons.error), duration: 5);

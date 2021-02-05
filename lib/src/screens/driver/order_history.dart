@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pickrr_app/src/blocs/driver/orders/bloc.dart';
 import 'package:pickrr_app/src/models/ride.dart';
 import 'package:pickrr_app/src/helpers/utility.dart';
+import 'package:pickrr_app/src/widgets/arguments.dart';
 import 'package:pickrr_app/src/widgets/preloader.dart';
 import 'package:pickrr_app/src/widgets/ride_status.dart';
 
@@ -87,45 +88,48 @@ class _RiderOrderHistoryState extends State<RiderOrderHistory> {
                           return PreLoader();
                         }
                         Ride ride = state.rides[index];
-                        return Column(
-                          children: [
-                            SizedBox(height: 10),
-                            Card(
-                              elevation: 0,
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    vertical: 10.0, horizontal: 20),
-                                child: ListTile(
-                                  title: Text(
-                                    ride.deliveryLocation.address,
-                                    style: TextStyle(
-                                        fontSize: 16.0,
-                                        fontFamily: "Ubuntu",
-                                        color: Colors.black87,
-                                        fontWeight: FontWeight.w500,
-                                        height: 1.6),
+                        return InkWell(
+                          onTap: () => Navigator.pushNamed(context, '/RideDetails', arguments: RideArguments(ride)),
+                          child: Column(
+                            children: [
+                              SizedBox(height: 10),
+                              Card(
+                                elevation: 0,
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 10.0, horizontal: 20),
+                                  child: ListTile(
+                                    title: Text(
+                                      ride.deliveryLocation.address,
+                                      style: TextStyle(
+                                          fontSize: 16.0,
+                                          fontFamily: "Ubuntu",
+                                          color: Colors.black87,
+                                          fontWeight: FontWeight.w500,
+                                          height: 1.6),
+                                    ),
+                                    subtitle: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          getFullTime(ride.createdAt),
+                                          style: TextStyle(
+                                              fontSize: 16.0,
+                                              fontFamily: "Ubuntu",
+                                              color: Colors.grey,
+                                              fontWeight: FontWeight.w400,
+                                              height: 1.6),
+                                        ),
+                                        RideStatusText(ride.status)
+                                      ],
+                                    ),
+                                    contentPadding: EdgeInsets.all(0),
+                                    dense: true,
                                   ),
-                                  subtitle: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        getFullTime(ride.createdAt),
-                                        style: TextStyle(
-                                            fontSize: 16.0,
-                                            fontFamily: "Ubuntu",
-                                            color: Colors.grey,
-                                            fontWeight: FontWeight.w400,
-                                            height: 1.6),
-                                      ),
-                                      RideStatusText(ride.status)
-                                    ],
-                                  ),
-                                  contentPadding: EdgeInsets.all(0),
-                                  dense: true,
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         );
                       },
                       childCount: state.hasReachedMax

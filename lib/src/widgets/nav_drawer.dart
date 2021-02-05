@@ -353,10 +353,10 @@ class BusinessNavDrawer extends StatelessWidget {
                               height: 100.0,
                               width: 100.0,
                               decoration: BoxDecoration(color: Colors.white),
-                              child: !businessDetails.logo
+                              child: businessDetails.logo != null
                                   ? CustomImage(
                                       imageUrl:
-                                          '${APIConstants.assetsUrl}${businessDetails.logo}',
+                                          '${businessDetails.logo}',
                                     )
                                   : Image.asset('placeholder.jpg',
                                       width: double.infinity,

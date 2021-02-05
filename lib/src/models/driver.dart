@@ -20,7 +20,7 @@ class Driver extends Equatable {
   final String status;
   final String createdAt;
   final bool blocked;
-  final User details;
+  User details;
   final bool isDelivering;
   final int totalRides;
   final int ongoingRides;

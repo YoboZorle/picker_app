@@ -1,7 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:pickrr_app/src/helpers/db/business.dart';
+import 'package:pickrr_app/src/helpers/db/driver.dart';
 import 'package:pickrr_app/src/helpers/utility.dart';
 import 'package:pickrr_app/src/models/business.dart';
+import 'package:pickrr_app/src/models/driver.dart';
+import 'package:pickrr_app/src/models/user.dart';
 import 'package:pickrr_app/src/services/exceptions.dart';
 import 'package:pickrr_app/src/services/http_client.dart';
 
@@ -166,6 +169,32 @@ class BusinessRepository extends APIClient {
         throw ServiceError(err.response.data['non_field_errors'].first);
       }
       throw ServiceError('Request failed, please try again.');
+    }
+  }
+
+  Future<Driver> getDriverFromStorage(int riderId) async {
+    DriverProvider helper = DriverProvider.instance;
+    Driver driver = await helper.getDriver(riderId);
+    if (driver.businessId != null) {
+      BusinessProvider businessDBHelper = BusinessProvider.instance;
+      Business business = await businessDBHelper.getBusiness(driver.businessId);
+      driver.setCompany = business;
+    }
+    if(driver.id != null){
+      User userDetails = await getPersistedUserDetails(driver.id);
+      driver.details = userDetails;
+    }
+    return driver;
+  }
+
+  Future<dynamic> getRiderCurrentRide(int riderId) async {
+    final String url = '/business/active-ride/$riderId';
+    try {
+      Response response = await dio.get(url);
+      final responseBody = response.data;
+      return responseBody;
+    } catch (e) {
+      throw ServiceError('Request failed please try again.');
     }
   }
 }

@@ -21,12 +21,24 @@ class BusinessHomePageState extends State<BusinessHomePage>
   TabController controller;
 
   List<Widget> _pages = [
-    BlocProvider<BusinessRideOrdersBloc>(
-        create: (_) => BusinessRideOrdersBloc()..add(BusinessOrdersFetched()),
-        child: NewRequest()),
-    BlocProvider<BusinessRidersBloc>(
-        create: (_) => BusinessRidersBloc()..add(RidersFetched()),
-        child: BusinessDrivers()),
+    MultiBlocProvider(providers: [
+      BlocProvider<AuthenticationBloc>(
+          create: (_) =>
+              AuthenticationBloc()..add(AuthenticationEvent.AUTHENTICATED)),
+      BlocProvider<BusinessRideOrdersBloc>(
+          create: (_) =>
+              BusinessRideOrdersBloc()..add(BusinessOrdersFetched())),
+    ], child: NewRequest()),
+    MultiBlocProvider(
+      providers: [
+        BlocProvider<AuthenticationBloc>(
+            create: (_) =>
+                AuthenticationBloc()..add(AuthenticationEvent.AUTHENTICATED)),
+        BlocProvider<BusinessRidersBloc>(
+            create: (_) => BusinessRidersBloc()..add(RidersFetched())),
+      ],
+      child: BusinessDrivers(),
+    ),
     MultiBlocProvider(providers: [
       BlocProvider<AuthenticationBloc>(
           create: (_) =>

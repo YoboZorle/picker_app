@@ -26,7 +26,7 @@ class User extends Equatable {
   bool get noProfileImage {
     return profileImageUrl == null ||
         profileImageUrl.isEmpty ||
-        profileImageUrl == 'None';
+        profileImageUrl.toLowerCase() == 'none';
   }
 
   User(
