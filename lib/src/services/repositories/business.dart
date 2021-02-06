@@ -7,6 +7,7 @@ import 'package:pickrr_app/src/models/driver.dart';
 import 'package:pickrr_app/src/models/user.dart';
 import 'package:pickrr_app/src/services/exceptions.dart';
 import 'package:pickrr_app/src/services/http_client.dart';
+import 'package:pickrr_app/src/services/repositories/driver.dart';
 
 class BusinessRepository extends APIClient {
   Response response;
@@ -196,5 +197,15 @@ class BusinessRepository extends APIClient {
     } catch (e) {
       throw ServiceError('Request failed please try again.');
     }
+  }
+
+  Future<void> updateDriverStatus({String status, int riderId}) async {
+    final String url = '/business/update-rider-status';
+    response = await dio.patch(url, data: {
+      'status': status,
+      'rider_id': riderId
+    });
+    final responseBody = response.data;
+    await DriverRepository().persistDriverDetails(responseBody);
   }
 }

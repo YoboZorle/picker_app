@@ -17,7 +17,7 @@ class Driver extends Equatable {
   final String driversLicence;
   Business company;
   final int businessId;
-  final String status;
+  String status;
   final String createdAt;
   final bool blocked;
   User details;

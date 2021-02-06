@@ -52,7 +52,7 @@ class BusinessDriverActivity extends StatelessWidget {
                             return Container();
                           }
                           final rawDetails = snapshot.data;
-                          if (rawDetails == null) {
+                          if (rawDetails == null || rawDetails == '') {
                             return Container();
                           }
                           Ride ride = Ride.fromMap(rawDetails);
@@ -91,7 +91,7 @@ class BusinessDriverActivity extends StatelessWidget {
                                             imageUrl:
                                                 '${driverDetails.details.profileImageUrl}',
                                           )
-                                        : Image.asset('placeholder.jpg',
+                                        : Image.asset('assets/images/placeholder.jpg',
                                             width: double.infinity,
                                             height: double.infinity),
                                   )),

@@ -71,6 +71,10 @@ class DriverRepository extends APIClient {
     await helper.updateOrInsert(driver);
   }
 
+  Future<void> persistDriverDetails(rawData) async {
+    await _persistDriverDetails(rawData);
+  }
+
   Future loadDriverDetailsToStorage(userId) async {
     var driverResponse = await getDriverDetails();
     await _persistDriverDetails(driverResponse);
