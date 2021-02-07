@@ -1,6 +1,24 @@
 import 'package:pickrr_app/src/models/driver.dart';
 import 'package:pickrr_app/src/models/user.dart';
 
+class Review {
+  final int id;
+  final String review;
+  final double star;
+  final String createdAt;
+
+  Review({this.id, this.review, this.star, this.createdAt});
+
+  Review.fromMap(Map<String, dynamic> mapData)
+      : id = mapData['id'] ?? null,
+        review = mapData['review'] ?? '',
+        star = mapData['star'] != null ? double.parse(mapData['star']) :  0,
+        createdAt = mapData['created_at'] ?? '';
+
+  @override
+  String toString() => 'Reviews { id: $id, review: $review }';
+}
+
 class Location {
   final int id;
   final double lat;
@@ -41,6 +59,7 @@ class Ride {
   final String receiverPhone;
   final String status;
   final String rideId;
+  final Review review;
   final String duration;
   final bool isPickedUp;
 
@@ -52,6 +71,7 @@ class Ride {
       this.rider,
       this.createdAt,
       this.price,
+        this.review,
       this.distance,
       this.receiverName,
       this.receiverPhone,
@@ -62,6 +82,7 @@ class Ride {
 
   Ride.fromMap(Map<String, dynamic> mapData)
       : id = mapData['id'] ?? null,
+      review = mapData['review'] != null ? Review.fromMap(mapData['review']): null,
         pickupLocation = mapData['pickup_location'] != null
             ? Location.fromMap(mapData['pickup_location'])
             : null,

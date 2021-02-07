@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:meta/meta.dart';
 import 'package:pickrr_app/src/helpers/db/business.dart';
 import 'package:pickrr_app/src/helpers/db/driver.dart';
 import 'package:pickrr_app/src/helpers/utility.dart';
@@ -181,7 +182,7 @@ class BusinessRepository extends APIClient {
       Business business = await businessDBHelper.getBusiness(driver.businessId);
       driver.setCompany = business;
     }
-    if(driver.id != null){
+    if (driver.id != null) {
       User userDetails = await getPersistedUserDetails(driver.id);
       driver.details = userDetails;
     }
@@ -201,11 +202,45 @@ class BusinessRepository extends APIClient {
 
   Future<void> updateDriverStatus({String status, int riderId}) async {
     final String url = '/business/update-rider-status';
-    response = await dio.patch(url, data: {
-      'status': status,
-      'rider_id': riderId
-    });
+    response =
+        await dio.patch(url, data: {'status': status, 'rider_id': riderId});
     final responseBody = response.data;
     await DriverRepository().persistDriverDetails(responseBody);
+  }
+
+  Future<dynamic> getRatedRidesBusiness(int riderId,
+      {@required int page}) async {
+    final String url = '/business/rider-reviews?page=$page&rider_id=$riderId';
+    try {
+      Response response = await dio.get(url);
+      final responseBody = response.data;
+      return responseBody;
+    } catch (e) {
+      throw ServiceError('Request failed please try again.');
+    }
+  }
+
+  Future<dynamic> getRiderHistory(int riderId,
+      {@required int page}) async {
+    final String url = '/business/rider-order-history?page=$page&rider_id=$riderId';
+    try {
+      Response response = await dio.get(url);
+      final responseBody = response.data;
+      return responseBody;
+    } catch (e) {
+      throw ServiceError('Request failed please try again.');
+    }
+  }
+
+  Future<dynamic> getRiderTransactions(int riderId,
+      {@required int page}) async {
+    final String url = '/business/rider-transactions?page=$page&rider_id=$riderId';
+    try {
+      Response response = await dio.get(url);
+      final responseBody = response.data;
+      return responseBody;
+    } catch (e) {
+      throw ServiceError('Request failed please try again.');
+    }
   }
 }
