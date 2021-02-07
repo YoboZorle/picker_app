@@ -163,7 +163,7 @@ class _NewRequestState extends State<NewRequest> {
                         Flexible(
                           child: Text(ride.pickupLocation.address,
                               style: TextStyle(
-                                  fontSize: 13,
+                                  fontSize: 14,
                                   color: Colors.black,
                                   fontFamily: 'Ubuntu',
                                   fontWeight: FontWeight.w400)),
@@ -187,7 +187,7 @@ class _NewRequestState extends State<NewRequest> {
                         Flexible(
                           child: Text(ride.deliveryLocation.address,
                               style: TextStyle(
-                                  fontSize: 13,
+                                  fontSize: 14,
                                   color: Colors.black,
                                   fontFamily: 'Ubuntu',
                                   fontWeight: FontWeight.w400)),

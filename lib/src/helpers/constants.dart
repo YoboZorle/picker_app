@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutterwave/flutterwave.dart';
 
 class Borders {
+
   static final BorderSide primaryBorder = BorderSide(
     color: Color.fromARGB(255, 112, 112, 112),
     width: 1,
@@ -16,6 +17,7 @@ class Borders {
 }
 
 class AppColor {
+
   static final Color primaryBackground = Color.fromARGB(255, 255, 255, 255);
   static final Color secondaryBackground = Color.fromARGB(255, 0, 141, 210);
   static final Color primaryElement = Color.fromARGB(255, 255, 255, 255);
@@ -87,7 +89,7 @@ class Shadows {
 }
 
 class APIConstants {
-  static final String httpUrl = 'http://172.20.10.5';
+  static final String httpUrl = 'http://pickrr-webapp-env-new.eba-f5va3dav.us-east-1.elasticbeanstalk.com';
   static final String wsUrl = 'ws://pickrr-webapp-env-new.eba-f5va3dav.us-east-1.elasticbeanstalk.com';
   static final String assetsUrl = 'https://pickrr-storage.s3.amazonaws.com/logistics-a9e77482c84e16/';
   static final String apiUrl = '$httpUrl/api/';
