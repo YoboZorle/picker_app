@@ -41,7 +41,7 @@ class NavDrawer extends StatelessWidget {
                                   imageUrl:
                                       '${APIConstants.assetsUrl}${user.profileImageUrl}',
                                 )
-                              : Image.asset('placeholder.jpg',
+                              : Image.asset('assets/images/placeholder.jpg',
                                   width: double.infinity,
                                   height: double.infinity))),
                   SizedBox(width: 20),
@@ -203,7 +203,7 @@ class RiderNavDrawer extends StatelessWidget {
                                     imageUrl:
                                         '${APIConstants.assetsUrl}${user.profileImageUrl}',
                                   )
-                                : Image.asset('placeholder.jpg',
+                                : Image.asset('assets/images/placeholder.jpg',
                                     width: double.infinity,
                                     height: double.infinity))),
                     SizedBox(width: 20),
@@ -358,7 +358,7 @@ class BusinessNavDrawer extends StatelessWidget {
                                       imageUrl:
                                           '${businessDetails.logo}',
                                     )
-                                  : Image.asset('placeholder.jpg',
+                                  : Image.asset('assets/images/placeholder.jpg',
                                       width: double.infinity,
                                       height: double.infinity))),
                     ),

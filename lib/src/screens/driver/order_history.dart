@@ -114,7 +114,7 @@ class _RiderOrderHistoryState extends State<RiderOrderHistory> {
                                         Text(
                                           getFullTime(ride.createdAt),
                                           style: TextStyle(
-                                              fontSize: 16.0,
+                                              fontSize: 14.0,
                                               fontFamily: "Ubuntu",
                                               color: Colors.grey,
                                               fontWeight: FontWeight.w400,

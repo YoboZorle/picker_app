@@ -228,7 +228,7 @@ class _DriverHomeState extends State<DriverHome> {
                                             fontFamily: "Ubuntu",
                                             color: Colors.black87,
                                             fontWeight: FontWeight.w500,
-                                            height: 1.6),
+                                            height: 1.4),
                                       ),
                                       subtitle: Text(
                                         getFullTime(ride.createdAt),
@@ -271,6 +271,7 @@ class _DriverHomeState extends State<DriverHome> {
   void _chooseOrderInteractiveSheet(Ride ride) {
     showModalBottomSheet(
         context: context,
+        isDismissible: false,
         builder: (BuildContext bc) {
           return SafeArea(
             child: RiderOrderInteractiveLayout(ride, onProcess: _onProcessRide(ride)),

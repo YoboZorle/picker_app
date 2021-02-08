@@ -508,6 +508,7 @@ class ReviewOrder extends StatelessWidget {
         builder: (BuildContext bc) {
           return SafeArea(
             child: Container(
+              color: Colors.white,
               padding: EdgeInsets.symmetric(horizontal: 10),
               child: new Wrap(
                 children: <Widget>[

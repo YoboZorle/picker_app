@@ -53,7 +53,7 @@ class CustomerAppBar extends StatelessWidget {
                               value: driverDetails.status == 'A' ? true : false,
                               textOn: 'Online',
                               textOff: 'Offline',
-                              colorOn: AppColor.primaryText,
+                              colorOn: Colors.green,
                               colorOff: Colors.grey[400],
                               iconOn: Icons.directions_bike,
                               iconOff: Icons.power_settings_new,

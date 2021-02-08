@@ -89,6 +89,7 @@ class _RiderOrderInteractiveLayoutState
             color: Colors.white,
           ),
           width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height / 2.2,
           child: Column(
             children: [
               SizedBox(
@@ -156,6 +157,7 @@ class _RiderOrderInteractiveLayoutState
                 margin: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
                 child: Column(
                   children: [
+                    SizedBox(height: 8),
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -179,7 +181,7 @@ class _RiderOrderInteractiveLayoutState
                         ),
                       ],
                     ),
-                    SizedBox(height: 8),
+                    SizedBox(height: 10),
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -207,152 +209,144 @@ class _RiderOrderInteractiveLayoutState
                 ),
               ),
               Container(
-                margin: EdgeInsets.symmetric(horizontal: 20),
-                child: Row(
-                  children: <Widget>[
-                    Expanded(
-                      child: RaisedButton(
-                        onPressed: () {},
-                        child: Text(
-                          "Cancel",
-                        ),
-                        color: Colors.grey[200],
-                        elevation: 0,
-                      ),
-                      flex: 1,
-                    ),
-                    SizedBox(width: 20),
-                    Expanded(
-                      child: RaisedButton(
-                        child: Text("Accept ride",
-                            style: TextStyle(
-                                fontSize: 14.0,
-                                fontFamily: "Ubuntu",
-                                color: Colors.white,
-                                fontWeight: FontWeight.w400)),
-                        color: AppColor.primaryText,
-                        onPressed: () {},
-                        elevation: 12,
-                      ),
-                      flex: 2,
-                    )
-                  ],
-                ),
-              ),
-              Builder(builder: (BuildContext context) {
-                return ride.status == 'INPROGRESS'
-                    ? Column(
-                        children: [
-                          ride.isPickedUp
-                              ? GestureDetector(
-                                  child: Container(
-                                    height: 45,
-                                    alignment: Alignment.center,
-                                    margin: EdgeInsets.only(
-                                        bottom: 10,
-                                        left: 25,
-                                        right: 25,
-                                        top: 18),
-                                    decoration: BoxDecoration(
-                                      color: AppColor.primaryText,
-                                      boxShadow: [Shadows.secondaryShadow],
-                                      borderRadius: Radii.kRoundpxRadius,
-                                    ),
-                                    child: Text('Delivered',
-                                        style: TextStyle(
-                                            fontSize: 15,
-                                            fontFamily: 'Ubuntu',
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.w500)),
-                                  ),
-                                  onTap: () => _processPackageDelivered(),
-                                )
-                              : GestureDetector(
-                                  child: Container(
-                                    height: 45,
-                                    alignment: Alignment.center,
-                                    margin: EdgeInsets.only(
-                                        bottom: 10,
-                                        left: 25,
-                                        right: 25,
-                                        top: 18),
-                                    decoration: BoxDecoration(
-                                      color: AppColor.primaryText,
-                                      boxShadow: [Shadows.secondaryShadow],
-                                      borderRadius: Radii.kRoundpxRadius,
-                                    ),
-                                    child: Text('Picked Up Package',
-                                        style: TextStyle(
-                                            fontSize: 15,
-                                            fontFamily: 'Ubuntu',
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.w500)),
-                                  ),
-                                  onTap: () => _processPackagePicked(),
-                                )
-                        ],
-                      )
-                    : Column(
-                        children: [
-                          GestureDetector(
-                            child: Container(
-                              height: 45,
-                              alignment: Alignment.center,
-                              margin: EdgeInsets.only(
-                                  bottom: 5, left: 25, right: 25, top: 15),
-                              decoration: BoxDecoration(
-                                color: AppColor.primaryText,
-                                boxShadow: [Shadows.secondaryShadow],
-                                borderRadius: Radii.kRoundpxRadius,
-                              ),
-                              child: Text('Accept',
-                                  style: TextStyle(
-                                      fontSize: 15,
-                                      fontFamily: 'Ubuntu',
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w500)),
-                            ),
-                            onTap: () => _processAcceptRide(),
-                          ),
-                          GestureDetector(
-                            child: Container(
-                              height: 45,
-                              alignment: Alignment.center,
-                              margin: EdgeInsets.only(
-                                  bottom: 10, left: 25, right: 25, top: 0),
-                              child: Text('Decline ride',
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      fontFamily: 'Ubuntu',
-                                      color: Colors.red,
-                                      fontWeight: FontWeight.w500)),
-                            ),
-                            onTap: () {
-                              Navigator.pop(context);
-                            },
+                  margin: EdgeInsets.only(left: 20, right: 20, top: 25),
+                  child: Builder(builder: (BuildContext context) {
+                    return ride.status == 'INPROGRESS'
+                        ? Row(
+                            children: [
+                              Expanded(
+                                  flex: 2,
+                                  child: ride.isPickedUp
+                                      ? ButtonTheme(
+                                          height: 45,
+                                          child: RaisedButton(
+                                            child: Text('Package Delivered',
+                                                style: TextStyle(
+                                                    fontSize: 15.0,
+                                                    fontFamily: "Ubuntu",
+                                                    color: Colors.white,
+                                                    fontWeight:
+                                                        FontWeight.w500)),
+                                            onPressed: () =>
+                                                _processPackageDelivered(),
+                                            color: AppColor.primaryText,
+                                            elevation: 12,
+                                          ),
+                                        )
+                                      : ButtonTheme(
+                                          height: 45,
+                                          child: RaisedButton(
+                                            color: AppColor.primaryText,
+                                            child: Text('Picked Up Package',
+                                                style: TextStyle(
+                                                    fontSize: 15,
+                                                    fontFamily: 'Ubuntu',
+                                                    color: Colors.white,
+                                                    fontWeight:
+                                                        FontWeight.w500)),
+                                            onPressed: () =>
+                                                _processPackagePicked(),
+                                            elevation: 12,
+                                          ),
+                                        )),
+                            ],
                           )
-                        ],
-                      );
-              })
+                        : Row(
+                            children: [
+                              Expanded(
+                                flex: 1,
+                                child: ButtonTheme(
+                                  height: 45,
+                                  child: RaisedButton(
+                                    child: Text('Cancel',
+                                        style: TextStyle(
+                                            fontSize: 15,
+                                            fontFamily: 'Ubuntu',
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.w400)),
+                                    color: Colors.grey[300],
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    elevation: 0,
+                                  ),
+                                ),
+                              ),
+                              SizedBox(width: 20),
+                              Expanded(
+                                flex: 2,
+                                child: ButtonTheme(
+                                  height: 45,
+                                  child: RaisedButton(
+                                    child: Text('Accept ride',
+                                        style: TextStyle(
+                                            fontSize: 15,
+                                            fontFamily: 'Ubuntu',
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.w500)),
+                                    color: AppColor.primaryText,
+                                    elevation: 12,
+                                    onPressed: () => _processAcceptRide(),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          );
+                  })),
             ],
           ));
     }
     return Container(
-        height: 150,
+        height: MediaQuery.of(context).size.height / 2.6,
         width: MediaQuery.of(context).size.width,
         child: Column(
           children: [
             SizedBox(height: 25),
             Icon(Icons.check_circle, color: Colors.green, size: 70),
-            SizedBox(height: 8),
-            Padding(
+            SizedBox(height: 12),
+            Container(
               padding: const EdgeInsets.only(left: 15.0, right: 15.0),
-              child: Text("Package delivered Successfully!",
+              margin: EdgeInsets.only(bottom: 10),
+              child: Text("Success!",
                   style: TextStyle(
                       fontWeight: FontWeight.w600,
                       color: Colors.black,
                       fontFamily: 'Ubuntu',
                       fontSize: 20)),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: Text("You have successfully completed your ride.",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      fontWeight: FontWeight.w400,
+                      color: Colors.black,
+                      fontFamily: 'Ubuntu',
+                      fontSize: 15)),
+            ),
+            Container(
+              margin: EdgeInsets.only(top: 25),
+              padding: const EdgeInsets.only(left: 20, right: 20),
+              child: Row(children: <Widget>[
+                Expanded(
+                  child: ButtonTheme(
+                    height: 45,
+                    child: RaisedButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: Text("Done",
+                          style: TextStyle(
+                              fontSize: 15.0,
+                              fontFamily: "Ubuntu",
+                              color: Colors.white,
+                              fontWeight: FontWeight.w400)),
+                      color: AppColor.primaryText,
+                      elevation: 12,
+                    ),
+                  ),
+                ),
+              ]),
             ),
           ],
         ));
