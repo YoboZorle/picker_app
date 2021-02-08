@@ -325,99 +325,105 @@ class BusinessNavDrawer extends StatelessWidget {
                 return Container();
               }
               final businessDetails = snapshot.data;
-              return ListView(
-                physics: BouncingScrollPhysics(),
-                padding: EdgeInsets.zero,
-                children: <Widget>[
-                  InkWell(
-                    splashColor: Colors.grey[300],
-                    onTap: () {
-                      Navigator.pushNamed(context, '/BusinessProfile');
-                    },
-                    child: UserAccountsDrawerHeader(
-                      accountName: Text(businessDetails.name,
+              return Container(
+                color: Colors.white,
+                child: ListView(
+                  physics: BouncingScrollPhysics(),
+                  padding: EdgeInsets.zero,
+                  children: <Widget>[
+                    InkWell(
+                      splashColor: Colors.grey[300],
+                      onTap: () {
+                        Navigator.pushNamed(context, '/BusinessProfile');
+                      },
+                      child: UserAccountsDrawerHeader(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                        ),
+                        accountName: Text(businessDetails.name,
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.w600,
+                                fontSize: 17,
+                                fontFamily: 'Ubuntu',
+                                height: 1.3)),
+                        accountEmail: Text('Business account',
+                            style: TextStyle(
+                                color: Colors.grey,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
+                                fontFamily: 'Ubuntu')),
+                        currentAccountPicture: ClipOval(
+                            child: Container(
+                                height: 100.0,
+                                width: 100.0,
+                                decoration: BoxDecoration(color: Colors.white),
+                                child: businessDetails.logo != null
+                                    ? CustomImage(
+                                        imageUrl:
+                                            '${businessDetails.logo}',
+                                      )
+                                    : Image.asset('assets/images/placeholder.jpg',
+                                        width: double.infinity,
+                                        height: double.infinity))),
+                      ),
+                    ),
+                    ListTile(
+                      leading: Icon(
+                        Icons.account_circle_rounded,
+                        color: Colors.grey[400],
+                      ),
+                      title: Text('Support',
                           style: TextStyle(
                               color: Colors.black,
-                              fontWeight: FontWeight.w600,
-                              fontSize: 17,
-                              fontFamily: 'Ubuntu',
-                              height: 1.3)),
-                      accountEmail: Text('Business account',
-                          style: TextStyle(
-                              color: Colors.grey,
-                              fontSize: 14,
                               fontWeight: FontWeight.w400,
+                              fontSize: 16,
                               fontFamily: 'Ubuntu')),
-                      currentAccountPicture: ClipOval(
+                      onTap: () {},
+                    ),
+                    ListTile(
+                      leading: Icon(
+                        Icons.star_rate_rounded,
+                        color: Colors.grey[400],
+                      ),
+                      title: Text('Star rating',
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.w400,
+                              fontSize: 16,
+                              fontFamily: 'Ubuntu')),
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute<Null>(
+                              builder: (BuildContext context) {
+                                return RateDriver();
+                              },
+                              fullscreenDialog: true,
+                            ));
+                      },
+                    ),
+                    SizedBox(height: 35),
+                    Container(
+                      margin: EdgeInsets.only(left: 20, right: 20, bottom: 25),
+                      child: RaisedButton(
+                          elevation: 12,
+                          onPressed: () {
+                            Navigator.pushNamed(context, '/HomePage');
+                          },
+                          color: AppColor.primaryText,
                           child: Container(
-                              height: 100.0,
-                              width: 100.0,
-                              decoration: BoxDecoration(color: Colors.white),
-                              child: businessDetails.logo != null
-                                  ? CustomImage(
-                                      imageUrl:
-                                          '${businessDetails.logo}',
-                                    )
-                                  : Image.asset('assets/images/placeholder.jpg',
-                                      width: double.infinity,
-                                      height: double.infinity))),
+                            margin: EdgeInsets.only(top: 15, bottom: 15),
+                            child: Text('Go back to Personal account',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 14,
+                                    fontFamily: 'Ubuntu')),
+                          )),
                     ),
-                  ),
-                  ListTile(
-                    leading: Icon(
-                      Icons.account_circle_rounded,
-                      color: Colors.grey[400],
-                    ),
-                    title: Text('Support',
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.w400,
-                            fontSize: 16,
-                            fontFamily: 'Ubuntu')),
-                    onTap: () {},
-                  ),
-                  ListTile(
-                    leading: Icon(
-                      Icons.star_rate_rounded,
-                      color: Colors.grey[400],
-                    ),
-                    title: Text('Star rating',
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.w400,
-                            fontSize: 16,
-                            fontFamily: 'Ubuntu')),
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute<Null>(
-                            builder: (BuildContext context) {
-                              return RateDriver();
-                            },
-                            fullscreenDialog: true,
-                          ));
-                    },
-                  ),
-                  SizedBox(height: 35),
-                  Container(
-                    margin: EdgeInsets.only(left: 20, right: 20, bottom: 25),
-                    child: RaisedButton(
-                        elevation: 12,
-                        onPressed: () {
-                          Navigator.pushNamed(context, '/HomePage');
-                        },
-                        color: AppColor.primaryText,
-                        child: Container(
-                          margin: EdgeInsets.only(top: 15, bottom: 15),
-                          child: Text('Go back to Personal account',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 14,
-                                  fontFamily: 'Ubuntu')),
-                        )),
-                  ),
-                ],
+                  ],
+                ),
               );
             },
             future: _businessRepository.getBusinessFromStorage(user.businessId),
