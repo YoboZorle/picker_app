@@ -23,18 +23,33 @@ class RideOrdersBloc extends Bloc<OrdersEvent, RideOrdersState> {
       }
     }
 
-    if(event is OrdersAdded){
+    if (event is OrdersAdded) {
       yield* _mapOrdersAddedToState(event.ride, currentState);
+    }
+
+    if (event is OrderRemoved) {
+      yield* _mapOrderRemovedToState(event.ride, currentState);
     }
   }
 
-  Stream<RideOrdersState> _mapOrdersAddedToState(Ride ride, currentState) async* {
+  Stream<RideOrdersState> _mapOrderRemovedToState(Ride ride,
+      currentState) async* {
+    final int rideIndex =
+    currentState.rides.indexWhere((element) => element.id == ride.id);
+    if (rideIndex > -1) {
+      currentState.rides.removeAt(rideIndex);
+      yield currentState.copyWith(rides: currentState.rides);
+    }
+  }
+
+  Stream<RideOrdersState> _mapOrdersAddedToState(Ride ride,
+      currentState) async* {
     List<Ride> rides = currentState.rides.insert(0, ride);
     yield currentState.copyWith(rides: rides);
   }
 
-  Stream<RideOrdersState> _mapOrdersFetchedToState(
-      currentState, int isUser) async* {
+  Stream<RideOrdersState> _mapOrdersFetchedToState(currentState,
+      int isUser) async* {
     yield RideOrdersState.loading(currentState);
 
     try {
@@ -71,9 +86,11 @@ class RideOrdersBloc extends Bloc<OrdersEvent, RideOrdersState> {
   bool _hasReachedMax(RideOrdersState state) =>
       state.isSuccess && state.hasReachedMax;
 
-  Future<Map<String, dynamic>> _fetchOrdersAndGetPages(nextPage, int isUser) async {
+  Future<Map<String, dynamic>> _fetchOrdersAndGetPages(nextPage,
+      int isUser) async {
     try {
-      final response = await _rideRepository.getOrders(page: nextPage, isUser: isUser);
+      final response = await _rideRepository.getOrders(
+          page: nextPage, isUser: isUser);
       if (response == null) {
         return {'orders': [], 'currentPage': 1, 'lastPage': 1};
       }

@@ -25,3 +25,12 @@ class OrdersAdded extends OrdersEvent {
   @override
   List<Object> get props => [ride];
 }
+
+class OrderRemoved extends OrdersEvent {
+  final Ride ride;
+
+  const OrderRemoved(this.ride);
+
+  @override
+  List<Object> get props => [ride];
+}

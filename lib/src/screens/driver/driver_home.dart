@@ -63,9 +63,15 @@ class _DriverHomeState extends State<DriverHome> {
     var channel = IOWebSocketChannel.connect(
         "${APIConstants.wsUrl}/ws/delivery/ride-order/?token=$jwtToken");
     channel.stream.listen((response) {
-      var decodedResponse = json.decode(response)['ride_details'];
-      Ride ride = Ride.fromMap(decodedResponse);
-      _rideOrdersBloc.add(OrdersAdded(ride));
+      var decodedResponse = json.decode(response);
+      if (decodedResponse['type'] == 'ride_processed') {
+        Ride ride = Ride.fromMap(decodedResponse['ride_details']);
+        _rideOrdersBloc.add(OrderRemoved(ride));
+      }
+      if (decodedResponse['type'] == 'ride_orders') {
+        Ride ride = Ride.fromMap(decodedResponse['ride_details']);
+        _rideOrdersBloc.add(OrdersAdded(ride));
+      }
     });
   }
 
@@ -267,8 +273,12 @@ class _DriverHomeState extends State<DriverHome> {
         context: context,
         builder: (BuildContext bc) {
           return SafeArea(
-            child: RiderOrderInteractiveLayout(ride),
+            child: RiderOrderInteractiveLayout(ride, onProcess: _onProcessRide(ride)),
           );
         });
+  }
+
+  void _onProcessRide(Ride ride) {
+    _rideOrdersBloc.add(OrderRemoved(ride));
   }
 }

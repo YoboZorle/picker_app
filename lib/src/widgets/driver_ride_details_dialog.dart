@@ -17,8 +17,9 @@ import 'package:pickrr_app/src/widgets/image.dart';
 
 class RiderOrderInteractiveLayout extends StatefulWidget {
   final Ride ride;
+  final VoidCallback onProcess;
 
-  RiderOrderInteractiveLayout(this.ride);
+  RiderOrderInteractiveLayout(this.ride, {this.onProcess});
 
   @override
   _RiderOrderInteractiveLayoutState createState() =>
@@ -56,6 +57,7 @@ class _RiderOrderInteractiveLayoutState
     _driver = await _driverRepository.getDriverDetailsFromStorage();
     if (ride.status == 'CANCELED' ||
         ride.status == 'DELIVERED' && ride.rider.details.id != _driver.id) {
+      widget.onProcess();
       Navigator.pop(context);
       AlertBar.dialog(context, 'Ride already taken!', Colors.orange,
           icon: Icon(Icons.info), duration: 5);
@@ -372,6 +374,7 @@ class _RiderOrderInteractiveLayoutState
       var rawDetails = await _rideRepository.processAcceptRide(ride.id);
       Ride rideDetails = Ride.fromMap(rawDetails);
       await _rideDetailsCheck(rideDetails);
+      widget.onProcess();
       Navigator.pop(context);
     } catch (err) {
       Navigator.pop(context);
