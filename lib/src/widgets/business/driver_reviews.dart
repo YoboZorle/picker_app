@@ -60,6 +60,17 @@ class _DriverReviewsState extends State<DriverReviews> {
             );
           }
           if (state.isSuccess) {
+            if (state.rides.isEmpty) {
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Container(
+                    child: Text("No reviews!"),
+                    alignment: Alignment.center,
+                  ),
+                ],
+              );
+            }
             return ListView.builder(
               controller: _scrollController,
               shrinkWrap: true,

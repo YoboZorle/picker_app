@@ -73,6 +73,17 @@ class _DriverTransactionState extends State<DriverTransaction> {
                           );
                         }
                         if (state.isSuccess) {
+                          if (state.histories.isEmpty) {
+                            return Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Container(
+                                  child: Text("No transactions!"),
+                                  alignment: Alignment.center,
+                                ),
+                              ],
+                            );
+                          }
                           return ListView.builder(
                               controller: _scrollController,
                               padding: EdgeInsets.all(8.0),

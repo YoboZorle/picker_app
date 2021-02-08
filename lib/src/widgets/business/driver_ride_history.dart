@@ -59,6 +59,17 @@ class _DriverRideHistoryState extends State<DriverRideHistory> {
         );
       }
       if (state.isSuccess) {
+        if (state.rides.isEmpty) {
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Container(
+                child: Text("No order history!"),
+                alignment: Alignment.center,
+              ),
+            ],
+          );
+        }
         return CustomScrollView(
             controller: _scrollController,
             slivers: <Widget>[

@@ -224,7 +224,7 @@ class _BusinessWalletState extends State<BusinessWallet> {
   historyDetails(History history) => Card(
         elevation: 0,
         child: Container(
-          padding: EdgeInsets.only(top: 15.0, bottom: 15.0, right: 15.0),
+          padding: EdgeInsets.only(top: 15.0, bottom: 15.0, right: 15.0, left: 15),
           decoration: BoxDecoration(
               color: Colors.white, borderRadius: BorderRadius.circular(22.0)),
           child: Row(

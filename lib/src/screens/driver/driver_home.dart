@@ -66,7 +66,7 @@ class _DriverHomeState extends State<DriverHome> {
       var decodedResponse = json.decode(response);
       if (decodedResponse['type'] == 'ride_processed') {
         Ride ride = Ride.fromMap(decodedResponse['ride_details']);
-        _rideOrdersBloc.add(OrderRemoved(ride));
+        _rideOrdersBloc.add(OrderRemoved(ride: ride));
       }
       if (decodedResponse['type'] == 'ride_orders') {
         Ride ride = Ride.fromMap(decodedResponse['ride_details']);
@@ -97,7 +97,8 @@ class _DriverHomeState extends State<DriverHome> {
                 Driver driver = await _driverDetails();
                 if (driver != null) {
                   if (state is DetailsUpdate && driver.blocked) {
-                    BlocProvider.of<RiderDetailsBloc>(context).add(RiderDetailsEvent.BLOCKED_RIDER);
+                    BlocProvider.of<RiderDetailsBloc>(context)
+                        .add(RiderDetailsEvent.BLOCKED_RIDER);
                   } else if (driver.isDelivering) {
                     BlocProvider.of<RiderDetailsBloc>(context)
                         .add(RiderDetailsEvent.RIDER_IS_DELIVERING);
@@ -125,13 +126,13 @@ class _DriverHomeState extends State<DriverHome> {
 
               if (state is IsRiding) {
                 if (await isInternetConnected()) {
-                  try{
+                  try {
                     var rawRideDetails = await RideRepository().getActiveRide();
-                    if (rawRideDetails != null){
+                    if (rawRideDetails != null) {
                       Ride ride = Ride.fromMap(rawRideDetails);
                       _chooseOrderInteractiveSheet(ride);
                     }
-                  }catch(err) {
+                  } catch (err) {
                     cprint(err.message, errorIn: 'DriverBlocListener');
                   }
                 }
@@ -255,7 +256,7 @@ class _DriverHomeState extends State<DriverHome> {
               ),
               onRefresh: () async {
                 _rideOrdersBloc.add(OrdersReset());
-                _rideOrdersBloc.add(OrdersFetched(isUser:0));
+                _rideOrdersBloc.add(OrdersFetched(isUser: 0));
               },
             )));
   }
@@ -264,7 +265,7 @@ class _DriverHomeState extends State<DriverHome> {
     final maxScroll = _scrollController.position.maxScrollExtent;
     final currentScroll = _scrollController.position.pixels;
     if (maxScroll - currentScroll <= _scrollThreshold) {
-      _rideOrdersBloc.add(OrdersFetched(isUser:0));
+      _rideOrdersBloc.add(OrdersFetched(isUser: 0));
     }
   }
 
@@ -274,12 +275,13 @@ class _DriverHomeState extends State<DriverHome> {
         isDismissible: false,
         builder: (BuildContext bc) {
           return SafeArea(
-            child: RiderOrderInteractiveLayout(ride, onProcess: _onProcessRide(ride)),
+            child: RiderOrderInteractiveLayout(ride,
+                onProcess: () => _onProcessRide(ride)),
           );
         });
   }
 
   void _onProcessRide(Ride ride) {
-    _rideOrdersBloc.add(OrderRemoved(ride));
+    _rideOrdersBloc.add(OrderRemoved(ride: ride));
   }
 }

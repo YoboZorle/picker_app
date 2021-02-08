@@ -178,7 +178,8 @@ class _DetailsSectionState extends State<DetailsSection> {
                                 color: Colors.grey,
                                 height: 1.4,
                                 fontWeight: FontWeight.w400)),
-                        Text(driverDetails.details.phone,
+                        Text(
+                            '+${driverDetails.details.callingCode}${driverDetails.details.phone}',
                             style: TextStyle(
                                 fontSize: 13.0,
                                 height: 1.3,
@@ -202,43 +203,7 @@ class _DetailsSectionState extends State<DetailsSection> {
                   margin: EdgeInsets.only(top: 15, left: 20, right: 20),
                   width: MediaQuery.of(context).size.width,
                   color: Colors.grey[300]),
-              Card(
-                elevation: 0,
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 0.0, horizontal: 15),
-                  child: ListTileSwitch(
-                    contentPadding: EdgeInsets.all(0),
-                    value: _driverStatus,
-                    onChanged: (value) {
-                      setState(() {
-                        _driverStatus = value;
-                      });
-                      _updateRiderStatus(value == true ? 'A' : 'NA');
-                    },
-                    toggleSelectedOnValueChange: true,
-                    subtitle: Text(
-                        'Toggle button to activate or deactivate your driver.',
-                        style: TextStyle(
-                            fontSize: 13.0,
-                            fontFamily: "Ubuntu",
-                            color: Colors.grey,
-                            fontWeight: FontWeight.w400,
-                            height: 1.5)),
-                    switchActiveColor: Colors.green,
-                    switchType: SwitchType.material,
-                    title: Text(
-                        driverDetails.status == 'A'
-                            ? 'Driver Available'
-                            : 'Driver Unavailable',
-                        style: TextStyle(
-                            fontSize: 15.0,
-                            fontFamily: "Ubuntu",
-                            fontWeight: FontWeight.w400,
-                            height: 1.6)),
-                  ),
-                ),
-              ),
+              DriverAvailabilityBar(_driverStatus, widget.riderId),
               Container(
                   height: 0.7,
                   margin: EdgeInsets.only(top: 10),
@@ -248,6 +213,70 @@ class _DetailsSectionState extends State<DetailsSection> {
           );
         },
         future: _businessRepository.getDriverFromStorage(widget.riderId));
+  }
+}
+
+
+class DriverAvailabilityBar extends StatefulWidget {
+  final bool driverStatus;
+  final int riderId;
+
+  DriverAvailabilityBar(this.driverStatus, this.riderId);
+
+  @override
+  _DriverAvailabilityBarState createState() => _DriverAvailabilityBarState();
+}
+
+class _DriverAvailabilityBarState extends State<DriverAvailabilityBar> {
+  bool _driverStatus = true;
+  final BusinessRepository _businessRepository = BusinessRepository();
+
+  @override
+  void initState() {
+    _driverStatus = widget.driverStatus;
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      elevation: 0,
+      child: Padding(
+        padding:
+        const EdgeInsets.symmetric(vertical: 0.0, horizontal: 15),
+        child: ListTileSwitch(
+          contentPadding: EdgeInsets.all(0),
+          visualDensity: VisualDensity.comfortable,
+          value: _driverStatus,
+          onChanged: (value) {
+            setState(() {
+              _driverStatus = value;
+            });
+            _updateRiderStatus(value == true ? 'A' : 'NA');
+          },
+          toggleSelectedOnValueChange: true,
+          subtitle: Text(
+              'Toggle button to activate or deactivate your driver.',
+              style: TextStyle(
+                  fontSize: 13.0,
+                  fontFamily: "Ubuntu",
+                  color: Colors.grey,
+                  fontWeight: FontWeight.w400,
+                  height: 1.5)),
+          switchActiveColor: Colors.green,
+          switchType: SwitchType.cupertino,
+          title: Text(
+              _driverStatus
+                  ? 'Driver Available'
+                  : 'Driver Unavailable',
+              style: TextStyle(
+                  fontSize: 15.0,
+                  fontFamily: "Ubuntu",
+                  fontWeight: FontWeight.w400,
+                  height: 1.6)),
+        ),
+      ),
+    );
   }
 
   _updateRiderStatus(String status) async {
