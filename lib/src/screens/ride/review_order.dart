@@ -534,7 +534,7 @@ class ReviewOrder extends StatelessWidget {
                             fontWeight: FontWeight.w400)),
                     subtitle: Text('Pay cash to bike rider before delivery',
                         style: TextStyle(
-                            fontSize: 15.0,
+                            fontSize: 14.0,
                             fontFamily: "Ubuntu",
                             color: Colors.grey,
                             fontWeight: FontWeight.w400,
