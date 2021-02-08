@@ -79,7 +79,8 @@ class _HomeState extends State<Home> {
       final lng = detail.result.geometry.location.lng;
 
       destination = detail.result;
-      destinationController.text = detail.result.name +', ' + detail.result.formattedAddress;
+      destinationController.text =
+          detail.result.name + ', ' + detail.result.formattedAddress;
       Marker marker = Marker(
           markerId: MarkerId('distanceMarker'),
           draggable: false,
@@ -112,7 +113,8 @@ class _HomeState extends State<Home> {
       final lng = detail.result.geometry.location.lng;
 
       pickupPoint = detail.result;
-      pickupController.text = detail.result.name +', ' + detail.result.formattedAddress;
+      pickupController.text =
+          detail.result.name + ', ' + detail.result.formattedAddress;
       Marker marker = Marker(
           markerId: MarkerId('pickupMarker'),
           draggable: false,
@@ -171,10 +173,9 @@ class _HomeState extends State<Home> {
       totalTime = "${totalMinutes ~/ 60} hours, $minutes mins";
     }
 
-    Map<String, dynamic> formDetails = {
-      'price': totalDistance
-    };
-    _ridePrice = await _coreRepository.getRidePrice(new FormData.fromMap(formDetails));
+    Map<String, dynamic> formDetails = {'price': totalDistance};
+    _ridePrice =
+        await _coreRepository.getRidePrice(new FormData.fromMap(formDetails));
 
     setState(() {
       _distanceCovered = totalDistance;
@@ -381,6 +382,9 @@ class _HomeState extends State<Home> {
                                     ),
                                     controller: pickupController,
                                     onTap: () async {
+                                      setState((){
+                                        _clearPickupRecord();
+                                      });
                                       Prediction p =
                                           await PlacesAutocomplete.show(
                                               context: context,
@@ -395,17 +399,6 @@ class _HomeState extends State<Home> {
                                                 Component.country, "ng"),
                                           ]);
                                       displayPredictionPickup(p);
-                                      setState(() {
-                                        if (markersList.isNotEmpty)
-                                          markersList.clear();
-                                        if (polyline.isNotEmpty)
-                                          polyline.clear();
-                                        if (routeCoords.isNotEmpty)
-                                          routeCoords.clear();
-                                        _placeDistance = null;
-                                        _placeTime = null;
-                                        _distanceCovered = null;
-                                      });
                                     },
                                   ),
                                 ],
@@ -464,6 +457,9 @@ class _HomeState extends State<Home> {
                                     ),
                                     controller: destinationController,
                                     onTap: () async {
+                                      setState((){
+                                        _clearDestinationRecord();
+                                      });
                                       Prediction p =
                                           await PlacesAutocomplete.show(
                                               context: context,
@@ -478,17 +474,6 @@ class _HomeState extends State<Home> {
                                                 Component.country, "ng")
                                           ]);
                                       displayPredictionDestination(p);
-                                      setState(() {
-                                        if (markersList.isNotEmpty)
-                                          markersList.clear();
-                                        if (polyline.isNotEmpty)
-                                          polyline.clear();
-                                        if (routeCoords.isNotEmpty)
-                                          routeCoords.clear();
-                                        _placeDistance = null;
-                                        _placeTime = null;
-                                        _distanceCovered = null;
-                                      });
                                     },
                                   ),
                                 ],
@@ -530,19 +515,49 @@ class _HomeState extends State<Home> {
 
   void _resetState() {
     setState(() {
-      destination = null;
-      pickupPoint = null;
-      _placeDistance = null;
-      _distanceCovered = null;
-      _placeTime = null;
-      pickupCoordinate = {};
-      destinationCoordinate = {};
-      markersList.clear();
-      routeCoords.clear();
-      polyline.clear();
-      pickupController.clear();
-      destinationController.clear();
+      _clearDestinationRecord();
+      _clearPickupRecord();
+      _clearMapRecords();
     });
+  }
+
+  _clearDestinationRecord() {
+      destinationController.clear();
+      destinationCoordinate = {};
+      destination = null;
+    _clearRideDetails();
+      final int markerId =
+      markersList.indexWhere((element) => element.markerId == MarkerId('pickupMarker'));
+      if (markerId > -1) {
+        markersList.removeAt(markerId);
+      }
+  }
+
+  _clearPickupRecord() {
+      pickupController.clear();
+      pickupCoordinate = {};
+      pickupPoint = null;
+      _clearRideDetails();
+      final int markerId =
+      markersList.indexWhere((element) => element.markerId == MarkerId('pickupMarker'));
+      if (markerId > -1) {
+        markersList.removeAt(markerId);
+      }
+  }
+
+  _clearRideDetails() {
+    routeCoords.clear();
+    polyline.clear();
+    _placeDistance = null;
+    _distanceCovered = null;
+    _placeTime = null;
+    _ridePrice = null;
+  }
+
+  _clearMapRecords() {
+    markersList.clear();
+    routeCoords.clear();
+    polyline.clear();
   }
 
   @override
@@ -602,9 +617,7 @@ class _HomeState extends State<Home> {
                         fontWeight: FontWeight.w400,
                       ),
                     ),
-                    Text(
-                        currencyFormatter
-                            .format(_ridePrice),
+                    Text(currencyFormatter.format(_ridePrice),
                         style: TextStyle(
                           fontSize: 22,
                           fontFamily: "Roboto",
@@ -766,7 +779,7 @@ class _PickrrAppBarState extends State<PickrrAppBar> {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(25.0))),
                 label: Container(
-                  margin: EdgeInsets.only(right: 5, top: 10, bottom:10),
+                  margin: EdgeInsets.only(right: 5, top: 10, bottom: 10),
                   child: user.isDriver
                       ? Text('Open as rider',
                           style: TextStyle(
@@ -789,7 +802,7 @@ class _PickrrAppBarState extends State<PickrrAppBar> {
                                   fontWeight: FontWeight.w400)),
                 ),
                 icon: Container(
-                  margin: EdgeInsets.only(left: 5, top: 10, bottom:10),
+                  margin: EdgeInsets.only(left: 5, top: 10, bottom: 10),
                   child: SvgPicture.asset('assets/svg/kargo_bike.svg',
                       height: 20, semanticsLabel: 'Bike Icon'),
                 ),
