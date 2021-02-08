@@ -34,15 +34,34 @@ class AwaitingRideWidget extends StatelessWidget {
           child: Container(
             height: 45,
             alignment: Alignment.center,
+            color: Colors.red,
             margin: EdgeInsets.only(bottom: 10, left: 25, right: 25, top: 0),
             child: Text('Cancel ride',
                 style: TextStyle(
                     fontSize: 15,
                     fontFamily: 'Ubuntu',
-                    color: Colors.red,
+                    color: Colors.white,
                     fontWeight: FontWeight.w500)),
           ),
           onTap: () async => cancelRide(context, rideId),
+        ),
+
+        SizedBox(height: 10),
+        GestureDetector(
+          child: Container(
+            height: 45,
+            alignment: Alignment.center,
+            margin: EdgeInsets.only(bottom: 10, left: 25, right: 25, top: 0),
+            child: Text('Minimize',
+                style: TextStyle(
+                    fontSize: 15,
+                    fontFamily: 'Ubuntu',
+                    color: Colors.green,
+                    fontWeight: FontWeight.w500)),
+          ),
+          onTap: () {
+            Navigator.pop(context);
+          },
         ),
       ],
     );

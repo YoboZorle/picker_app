@@ -135,6 +135,7 @@ class _DriverHomeState extends State<DriverHome> {
         ],
         child: Scaffold(
             key: _scaffoldKey,
+            backgroundColor: Colors.grey[100],
             drawer: RiderNavDrawer(),
             body: RefreshIndicator(
               child: Column(
@@ -223,20 +224,14 @@ class _DriverHomeState extends State<DriverHome> {
                                             fontWeight: FontWeight.w500,
                                             height: 1.6),
                                       ),
-                                      subtitle: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            getFullTime(ride.createdAt),
-                                            style: TextStyle(
-                                                fontSize: 16.0,
-                                                fontFamily: "Ubuntu",
-                                                color: Colors.grey,
-                                                fontWeight: FontWeight.w400,
-                                                height: 1.6),
-                                          )
-                                        ],
+                                      subtitle: Text(
+                                        getFullTime(ride.createdAt),
+                                        style: TextStyle(
+                                            fontSize: 14.0,
+                                            fontFamily: "Ubuntu",
+                                            color: Colors.grey,
+                                            fontWeight: FontWeight.w400,
+                                            height: 1.6),
                                       ),
                                       contentPadding: EdgeInsets.all(0),
                                       dense: true,

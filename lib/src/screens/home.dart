@@ -79,7 +79,7 @@ class _HomeState extends State<Home> {
       final lng = detail.result.geometry.location.lng;
 
       destination = detail.result;
-      destinationController.text = detail.result.formattedAddress;
+      destinationController.text = detail.result.name +', ' + detail.result.formattedAddress;
       Marker marker = Marker(
           markerId: MarkerId('distanceMarker'),
           draggable: false,
@@ -112,7 +112,7 @@ class _HomeState extends State<Home> {
       final lng = detail.result.geometry.location.lng;
 
       pickupPoint = detail.result;
-      pickupController.text = detail.result.formattedAddress;
+      pickupController.text = detail.result.name +', ' + detail.result.formattedAddress;
       Marker marker = Marker(
           markerId: MarkerId('pickupMarker'),
           draggable: false,

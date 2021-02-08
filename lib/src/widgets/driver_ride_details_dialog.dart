@@ -44,9 +44,9 @@ class _RiderOrderInteractiveLayoutState
   _getRideDetails() async {
     var rawDetails = await _rideRepository.getRideDetails(ride.id);
     Ride rideDetails = Ride.fromMap(rawDetails);
-    if(rideDetails != null){
+    if (rideDetails != null) {
       // setState(() => {
-        ride = rideDetails;
+      ride = rideDetails;
       // });
     }
   }
@@ -55,14 +55,12 @@ class _RiderOrderInteractiveLayoutState
     _getRideDetails();
     _driver = await _driverRepository.getDriverDetailsFromStorage();
     if (ride.status == 'CANCELED' ||
-        ride.status == 'DELIVERED' &&
-            ride.rider.details.id != _driver.id) {
+        ride.status == 'DELIVERED' && ride.rider.details.id != _driver.id) {
       Navigator.pop(context);
       AlertBar.dialog(context, 'Ride already taken!', Colors.orange,
           icon: Icon(Icons.info), duration: 5);
     }
-    if (ride.status == 'INPROGRESS' &&
-        ride.rider.details.id != _driver.id) {
+    if (ride.status == 'INPROGRESS' && ride.rider.details.id != _driver.id) {
       Navigator.pop(context);
       AlertBar.dialog(context, 'Ride already taken!', Colors.orange,
           icon: Icon(Icons.info), duration: 5);
@@ -79,9 +77,9 @@ class _RiderOrderInteractiveLayoutState
 
   @override
   Widget build(BuildContext context) {
-    if(ride.status == 'CANCELED'){
+    if (ride.status == 'CANCELED') {
       WidgetsBinding.instance.addPostFrameCallback(
-              (_) => Navigator.pushNamed(context, '/DriversHomePage'));
+          (_) => Navigator.pushNamed(context, '/DriversHomePage'));
     }
     if (ride.status == 'INPROGRESS' || ride.status == 'PENDING') {
       return Container(
@@ -91,13 +89,8 @@ class _RiderOrderInteractiveLayoutState
           width: MediaQuery.of(context).size.width,
           child: Column(
             children: [
-              Container(
-                height: 8,
-                width: 60,
-                margin: EdgeInsets.only(top: 15, bottom: 18),
-                decoration: BoxDecoration(
-                    color: Colors.grey[300],
-                    borderRadius: BorderRadius.circular(16)),
+              SizedBox(
+                height: 25,
               ),
               Text(
                 ride.status == 'INPROGRESS'
@@ -114,103 +107,135 @@ class _RiderOrderInteractiveLayoutState
                     fontWeight: FontWeight.w700,
                     height: 1.35),
               ),
-              SizedBox(height: 10),
               ListTile(
-                title: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                   ClipOval(
-                          child: Container(
-                              height: 65.0,
-                              width: 65.0,
-                              child: !ride.user.noProfileImage
-                                  ? CustomImage(
-                                imageUrl: '${ride.user.profileImageUrl}',
-                              )
-                                  : Image.asset('assets/images/placeholder.jpg',
-                                  fit: BoxFit.cover))),
-                    SizedBox(height: 4),
-                    RichText(
-                      text: TextSpan(
-                        children: [
-                          TextSpan(
-                            text: 'Name: ',
-                            style: TextStyle(
-                                fontSize: 15.0,
-                                fontFamily: "Ubuntu",
-                                color: Colors.grey,
-                                fontWeight: FontWeight.w400,
-                                height: 1.5),
-                          ),
-                          TextSpan(
-                            text: ride.user.fullname,
-                            style: TextStyle(
-                                fontSize: 17.0,
-                                fontFamily: "Ubuntu",
-                                color: Colors.black,
-                                fontWeight: FontWeight.w600,
-                                height: 1.5),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-                subtitle: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    RichText(
-                      text: TextSpan(children: [
-                        TextSpan(
-                          text: 'Pickup: ',
-                          style: TextStyle(
-                              fontSize: 15.0,
-                              fontFamily: "Ubuntu",
-                              color: Colors.grey,
-                              fontWeight: FontWeight.w400,
-                              height: 1.5),
-                        ),
-                        TextSpan(
-                          text: ride.pickupLocation.address,
-                          style: TextStyle(
-                              fontSize: 16.0,
-                              fontFamily: "Ubuntu",
-                              color: Colors.black,
-                              fontWeight: FontWeight.w500,
-                              height: 1.6),
-                        ),
-                      ]),
-                    ),
-                    GestureDetector(
+                  leading: ClipOval(
                       child: Container(
-                        height: 30,
-                        alignment: Alignment.centerLeft,
-                        margin:
-                        EdgeInsets.only(top: 5, right: 50),
-                        decoration: BoxDecoration(
-                          borderRadius: Radii.kRoundpxRadius,
+                          height: 55.0,
+                          width: 55.0,
+                          child: !ride.user.noProfileImage
+                              ? CustomImage(
+                                  imageUrl: '${ride.user.profileImageUrl}',
+                                )
+                              : Image.asset('assets/images/placeholder.jpg',
+                                  fit: BoxFit.cover))),
+                  title: Text(ride.user.fullname,
+                      style: TextStyle(
+                          fontSize: 15,
+                          color: Colors.black,
+                          fontFamily: 'Ubuntu',
+                          fontWeight: FontWeight.w500)),
+                  subtitle: Text('+${ride.user.callingCode}${ride.user.phone}',
+                      style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.grey,
+                          fontFamily: 'Ubuntu',
+                          height: 1.7,
+                          fontWeight: FontWeight.w400)),
+                  trailing: Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey, width: 0.5),
+                      color: Colors.transparent,
+                      shape: BoxShape.circle,
+                    ),
+                    child: IconButton(
+                      icon: Icon(Icons.phone, color: Colors.black),
+                      onPressed: () {
+                        launch(
+                            "tel://+${ride.user.callingCode}${ride.user.phone}");
+                      },
+                    ),
+                  )),
+              Container(
+                  height: 0.5,
+                  width: MediaQuery.of(context).size.width,
+                  color: Colors.grey[300],
+                  margin: EdgeInsets.symmetric(horizontal: 20, vertical: 8)),
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                child: Column(
+                  children: [
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          width: 40,
+                          margin: EdgeInsets.only(right: 8),
+                          child: Text("From: ",
+                              style: TextStyle(
+                                  fontSize: 12,
+                                  color: Colors.grey,
+                                  fontFamily: 'Ubuntu',
+                                  fontWeight: FontWeight.w400)),
                         ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Icon(Icons.phone_rounded, color: Colors.green, size: 20),
-                            SizedBox(width: 8),
-                            Text('Call +${ride.user.callingCode}${ride.user.phone}',
-                                style: TextStyle(
-                                    fontSize: 16,
-                                    fontFamily: 'Ubuntu',
-                                    color: Colors.green,
-                                    fontWeight: FontWeight.w500)),
-                          ],
+                        Flexible(
+                          child: Text(ride.pickupLocation.address,
+                              style: TextStyle(
+                                  fontSize: 15,
+                                  color: Colors.black,
+                                  fontFamily: 'Ubuntu',
+                                  fontWeight: FontWeight.w400)),
                         ),
-                      ),
-                      onTap: () =>
-                          launch("tel://+${ride.user.callingCode}${ride.user.phone}"),
+                      ],
+                    ),
+                    SizedBox(height: 8),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          width: 40,
+                          margin: EdgeInsets.only(right: 8),
+                          child: Text("To: ",
+                              style: TextStyle(
+                                  fontSize: 12,
+                                  color: Colors.grey,
+                                  fontFamily: 'Ubuntu',
+                                  fontWeight: FontWeight.w400)),
+                        ),
+                        Flexible(
+                          child: Text(ride.deliveryLocation.address,
+                              style: TextStyle(
+                                  fontSize: 14,
+                                  color: Colors.black,
+                                  fontFamily: 'Ubuntu',
+                                  fontWeight: FontWeight.w400)),
+                        ),
+                      ],
                     ),
                   ],
                 ),
-                contentPadding: EdgeInsets.only(left: 20),
-                dense: true,
+              ),
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: 20),
+                child: Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: RaisedButton(
+                        onPressed: () {},
+                        child: Text(
+                          "Cancel",
+                        ),
+                        color: Colors.grey[200],
+                        elevation: 0,
+                      ),
+                      flex: 1,
+                    ),
+                    SizedBox(width: 20),
+                    Expanded(
+                      child: RaisedButton(
+                        child: Text("Accept ride",
+                            style: TextStyle(
+                                fontSize: 14.0,
+                                fontFamily: "Ubuntu",
+                                color: Colors.white,
+                                fontWeight: FontWeight.w400)),
+                        color: AppColor.primaryText,
+                        onPressed: () {},
+                        elevation: 12,
+                      ),
+                      flex: 2,
+                    )
+                  ],
+                ),
               ),
               Builder(builder: (BuildContext context) {
                 return ride.status == 'INPROGRESS'
@@ -311,21 +336,24 @@ class _RiderOrderInteractiveLayoutState
           ));
     }
     return Container(
-      height: 150,
+        height: 150,
         width: MediaQuery.of(context).size.width,
         child: Column(
-      children: [
-        SizedBox(height: 25),
-        Icon(Icons.check_circle, color: Colors.green, size: 70),
-        SizedBox(height: 8),
-        Padding(
-          padding: const EdgeInsets.only(left: 15.0, right: 15.0),
-          child: Text("Package delivered Successfully!",
-          style: TextStyle(fontWeight: FontWeight.w600,
-          color: Colors.black, fontFamily: 'Ubuntu', fontSize: 20)),
-        ),
-      ],
-    ));
+          children: [
+            SizedBox(height: 25),
+            Icon(Icons.check_circle, color: Colors.green, size: 70),
+            SizedBox(height: 8),
+            Padding(
+              padding: const EdgeInsets.only(left: 15.0, right: 15.0),
+              child: Text("Package delivered Successfully!",
+                  style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      color: Colors.black,
+                      fontFamily: 'Ubuntu',
+                      fontSize: 20)),
+            ),
+          ],
+        ));
   }
 
   _processAcceptRide() async {
