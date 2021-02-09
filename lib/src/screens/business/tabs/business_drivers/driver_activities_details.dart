@@ -42,6 +42,27 @@ class DriverActivitiesDetails extends StatelessWidget {
               color: Colors.black,
               size: 20,
             )),
+        iconTheme: IconThemeData(color: Colors.black, size: 10.0),
+        actions: <Widget>[
+          PopupMenuButton<String>(
+            onSelected: handleClick,
+            itemBuilder: (BuildContext context) {
+              return {'Delete driver'}.map((String choice) {
+                return PopupMenuItem<String>(
+                  value: choice,
+                  child: Text(choice,
+                  style: TextStyle(
+                   color: Colors.red,
+                   fontFamily: 'Ubuntu',
+                   fontWeight: FontWeight.w400,
+                   fontSize: 15
+                  )),
+                );
+              }).toList();
+            },
+          ),
+        ],
+
       ),
       body: DefaultTabController(
         length: 3,
@@ -101,6 +122,12 @@ class DriverActivitiesDetails extends StatelessWidget {
         ),
       ),
     );
+  }
+  void handleClick(String value) {
+    switch (value) {
+      case 'Delete driver':
+        break;
+    }
   }
 }
 
