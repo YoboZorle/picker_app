@@ -51,18 +51,16 @@ class DriverActivitiesDetails extends StatelessWidget {
                 return PopupMenuItem<String>(
                   value: choice,
                   child: Text(choice,
-                  style: TextStyle(
-                   color: Colors.red,
-                   fontFamily: 'Ubuntu',
-                   fontWeight: FontWeight.w400,
-                   fontSize: 15
-                  )),
+                      style: TextStyle(
+                          color: Colors.red,
+                          fontFamily: 'Ubuntu',
+                          fontWeight: FontWeight.w400,
+                          fontSize: 15)),
                 );
               }).toList();
             },
           ),
         ],
-
       ),
       body: DefaultTabController(
         length: 3,
@@ -123,6 +121,7 @@ class DriverActivitiesDetails extends StatelessWidget {
       ),
     );
   }
+
   void handleClick(String value) {
     switch (value) {
       case 'Delete driver':
@@ -243,7 +242,6 @@ class _DetailsSectionState extends State<DetailsSection> {
   }
 }
 
-
 class DriverAvailabilityBar extends StatefulWidget {
   final bool driverStatus;
   final int riderId;
@@ -269,8 +267,7 @@ class _DriverAvailabilityBarState extends State<DriverAvailabilityBar> {
     return Card(
       elevation: 0,
       child: Padding(
-        padding:
-        const EdgeInsets.symmetric(vertical: 0.0, horizontal: 15),
+        padding: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 15),
         child: ListTileSwitch(
           contentPadding: EdgeInsets.all(0),
           visualDensity: VisualDensity.comfortable,
@@ -282,8 +279,7 @@ class _DriverAvailabilityBarState extends State<DriverAvailabilityBar> {
             _updateRiderStatus(value == true ? 'A' : 'NA');
           },
           toggleSelectedOnValueChange: true,
-          subtitle: Text(
-              'Toggle button to activate or deactivate your driver.',
+          subtitle: Text('Toggle button to activate or deactivate your driver.',
               style: TextStyle(
                   fontSize: 13.0,
                   fontFamily: "Ubuntu",
@@ -292,10 +288,7 @@ class _DriverAvailabilityBarState extends State<DriverAvailabilityBar> {
                   height: 1.5)),
           switchActiveColor: Colors.green,
           switchType: SwitchType.cupertino,
-          title: Text(
-              _driverStatus
-                  ? 'Driver Available'
-                  : 'Driver Unavailable',
+          title: Text(_driverStatus ? 'Driver Available' : 'Driver Unavailable',
               style: TextStyle(
                   fontSize: 15.0,
                   fontFamily: "Ubuntu",

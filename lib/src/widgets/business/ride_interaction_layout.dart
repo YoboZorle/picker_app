@@ -195,7 +195,7 @@ class _RideInteractionState extends State<RideInteraction> {
                       ),
                     ],
                   ),
-                  SizedBox(height: 5),
+
                   Row(
                     children: [
                       Column(
@@ -220,6 +220,7 @@ class _RideInteractionState extends State<RideInteraction> {
                                       fontWeight: FontWeight.w500)),
                             ],
                           ),
+                          SizedBox(height: 5),
                           Row(
                             children: [
                               Container(
