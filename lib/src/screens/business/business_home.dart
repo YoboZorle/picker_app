@@ -24,6 +24,7 @@ class BusinessHomePageState extends State<BusinessHomePage>
     with SingleTickerProviderStateMixin {
   TabController controller;
   BusinessRepository _businessRepository = BusinessRepository();
+  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   List<Widget> _pages = [
     BlocProvider<BusinessRideOrdersBloc>(
@@ -53,80 +54,81 @@ class BusinessHomePageState extends State<BusinessHomePage>
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocListener(
-        listeners: [
-          BlocListener<AuthenticationBloc, AuthenticationState>(
-            listener: (__, state) async {
-              if (state is LoggedIn || state is DetailsUpdate) {
-                User user = state.props[0];
-                Business business = await _businessRepository
-                    .getBusinessFromStorage(user.businessId);
-                if (business != null) {
-                  if (state is DetailsUpdate && business.blocked) {
-                    BlocProvider.of<BusinessStatusBloc>(context)
-                        .add(BusinessStatusEvent.BLOCKED);
+    return Scaffold(
+      key: _scaffoldKey,
+      body: MultiBlocListener(
+          listeners: [
+            BlocListener<AuthenticationBloc, AuthenticationState>(
+              listener: (__, state) async {
+                if (state is LoggedIn || state is DetailsUpdate) {
+                  User user = state.props[0];
+                  Business business = await _businessRepository
+                      .getBusinessFromStorage(user.businessId);
+                  if (business != null) {
+                    if (state is DetailsUpdate && business.blocked) {
+                      BlocProvider.of<BusinessStatusBloc>(context)
+                          .add(BusinessStatusEvent.BLOCKED);
+                    }
                   }
                 }
-              }
-            },
-          ),
-          BlocListener<BusinessStatusBloc, BusinessStatusState>(
-            listener: (__, state) async {
-              if (state is IsBlocked) {
-                Scaffold.of(context).showSnackBar(
-                  new SnackBar(
-                    content: new Text(
-                        'Your account has been blocked. Contact admin for help'),
-                  ),
-                );
+              },
+            ),
+            BlocListener<BusinessStatusBloc, BusinessStatusState>(
+              listener: (__, state) async {
+                if (state is IsBlocked) {
+                  Scaffold.of(context).showSnackBar(
+                    new SnackBar(
+                      content: new Text(
+                          'Your account has been blocked. Contact admin for help'),
+                    ),
+                  );
 
-                new Future<Null>.delayed(Duration(seconds: 3), () {
-                  Navigator.pushNamedAndRemoveUntil(
-                      context, '/HomePage', (route) => false);
-                });
-                return;
-              }
-            },
-          ),
-        ],
-        child: Scaffold(
-          body: TabBarView(
+                  new Future<Null>.delayed(Duration(seconds: 3), () {
+                    Navigator.pushNamedAndRemoveUntil(
+                        context, '/HomePage', (route) => false);
+                  });
+                  return;
+                }
+              },
+            ),
+          ],
+          child: TabBarView(
             physics: BouncingScrollPhysics(),
             children: _pages,
             controller: controller,
-          ),
-          bottomNavigationBar: Container(
-            decoration: BoxDecoration(
-              boxShadow: <BoxShadow>[
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.1),
-                  blurRadius: 20,
-                ),
-              ],
+          )),
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          boxShadow: <BoxShadow>[
+            BoxShadow(
+              color: Colors.black.withOpacity(0.1),
+              blurRadius: 20,
             ),
-            child: Material(
-              color: Colors.white,
-              child: TabBar(
-                indicatorWeight: 2,
-                indicatorPadding: EdgeInsets.only(left: 50, right: 50),
-                indicatorColor: AppColor.primaryText,
-                labelColor: AppColor.primaryText,
-                unselectedLabelColor: Colors.grey[400],
-                tabs: <Widget>[
-                  Tab(
-                    icon: Icon(Icons.home_filled),
-                  ),
-                  Tab(
-                    icon: Icon(Icons.directions_bike_rounded),
-                  ),
-                  Tab(
-                    icon: Icon(Icons.account_balance_wallet_rounded),
-                  ),
-                ],
-                controller: controller,
+          ],
+        ),
+        child: Material(
+          color: Colors.white,
+          child: TabBar(
+            indicatorWeight: 2,
+            indicatorPadding: EdgeInsets.only(left: 50, right: 50),
+            indicatorColor: AppColor.primaryText,
+            labelColor: AppColor.primaryText,
+            unselectedLabelColor: Colors.grey[400],
+            tabs: <Widget>[
+              Tab(
+                icon: Icon(Icons.home_filled),
               ),
-            ),
+              Tab(
+                icon: Icon(Icons.directions_bike_rounded),
+              ),
+              Tab(
+                icon: Icon(Icons.account_balance_wallet_rounded),
+              ),
+            ],
+            controller: controller,
           ),
-        ));
+        ),
+      ),
+    );
   }
 }

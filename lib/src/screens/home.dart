@@ -565,7 +565,9 @@ class _HomeState extends State<Home> {
     mapController.dispose();
     destinationController.dispose();
     pickupController.dispose();
-    _resetState();
+    if(mounted){
+      _resetState();
+    }
     super.dispose();
   }
 

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pickrr_app/src/blocs/authentication/bloc.dart';
 import 'package:pickrr_app/src/blocs/business/available_riders/available_riders_bloc.dart';
+import 'package:pickrr_app/src/blocs/business/business_status/bloc.dart';
 import 'package:pickrr_app/src/blocs/driver/orders/bloc.dart';
 import 'package:pickrr_app/src/blocs/ride/orders/bloc.dart';
 import 'package:pickrr_app/src/helpers/custom_route.dart';
@@ -51,10 +52,14 @@ class Routes {
     switch (pathElements[1]) {
       case "BusinessHomePage":
         return SlideLeftRoute<bool>(
-            builder: (BuildContext context) => BlocProvider<AuthenticationBloc>(
-                create: (_) => AuthenticationBloc()
-                  ..add(AuthenticationEvent.AUTHENTICATED),
-                child: BusinessHomePage()));
+            builder: (BuildContext context) => MultiBlocProvider(providers: [
+                  BlocProvider<AuthenticationBloc>(
+                      create: (_) => AuthenticationBloc()
+                        ..add(AuthenticationEvent.AUTHENTICATED)),
+              BlocProvider<BusinessStatusBloc>(
+                  create: (_) => BusinessStatusBloc()),
+                ], child: Scaffold(
+                body:  BusinessHomePage())));
       case "BusinessApplication":
         return SlideLeftRoute<bool>(
             builder: (BuildContext context) => BusinessApplication());
