@@ -76,6 +76,50 @@ class _RideInteractionState extends State<RideInteraction> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  SizedBox(height: 5),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        ride.distance + ' km' + '/' + ride.duration + ' ride',
+                        style: TextStyle(
+                            fontSize: 13.0,
+                            fontFamily: "Ubuntu",
+                            color: Colors.grey,
+                            fontWeight: FontWeight.w400,
+                            height: 1.6),
+                      ),
+                      Text(currencyFormatter.format(ride.price),
+                          style: TextStyle(
+                              color: Color(0xFF16B9BB),
+                              fontSize: 17,
+                              fontWeight: FontWeight.w600)),
+                    ],
+                  ),
+                  SizedBox(height: 8),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        margin: EdgeInsets.only(right: 8),
+                        width: 52,
+                        child: Text("Sender: ",
+                            style: TextStyle(
+                                fontSize: 12,
+                                color: Colors.grey,
+                                fontFamily: 'Ubuntu',
+                                fontWeight: FontWeight.w400)),
+                      ),
+                      Flexible(
+                        child: Text(ride.pickupLocation.address,
+                            style: TextStyle(
+                                fontSize: 13.5,
+                                color: Colors.black,
+                                fontFamily: 'Ubuntu',
+                                fontWeight: FontWeight.w400)),
+                      ),
+                    ],
+                  ),
                   ListTile(
                     leading: ClipOval(
                         child: Container(
@@ -98,7 +142,7 @@ class _RideInteractionState extends State<RideInteraction> {
                           height: 1.6),
                     ),
                     subtitle: Text(
-                      ride.distance + ' km' + '/' + ride.duration + ' ride',
+                      "+234${ride.user.phone}",
                       style: TextStyle(
                           fontSize: 13.0,
                           fontFamily: "Ubuntu",
@@ -106,46 +150,35 @@ class _RideInteractionState extends State<RideInteraction> {
                           fontWeight: FontWeight.w400,
                           height: 1.5),
                     ),
-                    trailing: Text(currencyFormatter.format(ride.price),
-                        style: TextStyle(
-                            color: Color(0xFF16B9BB),
-                            fontSize: 15,
-                            fontWeight: FontWeight.w500)),
+                    trailing: Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.grey, width: 0.4),
+                        color: Colors.transparent,
+                        shape: BoxShape.circle,
+                      ),
+                      child: IconButton(
+                        icon: Icon(Icons.phone, color: Colors.black),
+                        onPressed: () {
+                          launch(
+                              "tel://+${ride.user.callingCode}${ride.user.phone}");
+                        },
+                      ),
+                    ),
                     contentPadding: EdgeInsets.all(0),
                     dense: true,
                   ),
-                  SizedBox(height: 5),
+                  Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: 0.6,
+                      margin: EdgeInsets.only(top: 15, bottom: 20),
+                      color: Colors.grey[300]),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
-                        width: 40,
+                        width: 52,
                         margin: EdgeInsets.only(right: 8),
-                        child: Text("From: ",
-                            style: TextStyle(
-                                fontSize: 12,
-                                color: Colors.grey,
-                                fontFamily: 'Ubuntu',
-                                fontWeight: FontWeight.w400)),
-                      ),
-                      Flexible(
-                        child: Text(ride.pickupLocation.address,
-                            style: TextStyle(
-                                fontSize: 13.5,
-                                color: Colors.black,
-                                fontFamily: 'Ubuntu',
-                                fontWeight: FontWeight.w400)),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 8),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        width: 40,
-                        margin: EdgeInsets.only(right: 8),
-                        child: Text("To: ",
+                        child: Text("Receiver: ",
                             style: TextStyle(
                                 fontSize: 12,
                                 color: Colors.grey,
@@ -162,46 +195,78 @@ class _RideInteractionState extends State<RideInteraction> {
                       ),
                     ],
                   ),
+                  SizedBox(height: 5),
+                  Row(
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              Container(
+                                margin: EdgeInsets.only(right: 8),
+                                child: Text("Receiver's name: ",
+                                    style: TextStyle(
+                                        fontSize: 12,
+                                        color: Colors.grey,
+                                        fontFamily: 'Ubuntu',
+                                        fontWeight: FontWeight.w400)),
+                              ),
+                              Text(ride.receiverName,
+                                  style: TextStyle(
+                                      fontSize: 14,
+                                      color: Colors.black,
+                                      fontFamily: 'Ubuntu',
+                                      fontWeight: FontWeight.w500)),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Container(
+                                margin: EdgeInsets.only(right: 8),
+                                child: Text("Receiver phone: ",
+                                    style: TextStyle(
+                                        fontSize: 12,
+                                        color: Colors.grey,
+                                        fontFamily: 'Ubuntu',
+                                        fontWeight: FontWeight.w400)),
+                              ),
+                              Text(ride.receiverPhone,
+                                  style: TextStyle(
+                                      fontSize: 13.5,
+                                      color: Colors.black,
+                                      fontFamily: 'Ubuntu',
+                                      fontWeight: FontWeight.w400)),
+                            ],
+                          ),
+                        ],
+                      ),
+                      Expanded(child: SizedBox()),
+                      Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.grey, width: 0.4),
+                          color: Colors.transparent,
+                          shape: BoxShape.circle,
+                        ),
+                        child: IconButton(
+                          icon: Icon(Icons.phone, color: Colors.black),
+                          onPressed: () {
+                            launch(
+                                "tel://+${ride.user.callingCode}${ride.receiverPhone}");
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
                   Container(
                       width: MediaQuery.of(context).size.width,
-                      height: 0.7,
+                      height: 0.6,
                       margin: EdgeInsets.only(top: 18, bottom: 10),
-                      color: Colors.grey[200]),
+                      color: Colors.grey[300]),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      GestureDetector(
-                        child: Container(
-                          height: 30,
-                          alignment: Alignment.centerLeft,
-                          margin: EdgeInsets.only(top: 5, right: 50),
-                          decoration: BoxDecoration(
-                            borderRadius: Radii.kRoundpxRadius,
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.only(
-                                right: 8, top: 5, bottom: 5),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Icon(Icons.phone_in_talk_rounded,
-                                    color: Colors.black, size: 18),
-                                SizedBox(width: 8),
-                                Text('Call ' + ride.user.phone,
-                                    style: TextStyle(
-                                        fontSize: 13,
-                                        fontFamily: 'Ubuntu',
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.w400)),
-                              ],
-                            ),
-                          ),
-                        ),
-                        onTap: () => launch("tel://+" +
-                            ride.user.callingCode +
-                            ride.user.phone),
-                      ),
                       Expanded(
                         child: Builder(builder: (BuildContext context) {
                           if (!ride.isPickedUp && ride.status == 'INPROGRESS') {
@@ -257,8 +322,8 @@ class _RideInteractionState extends State<RideInteraction> {
         return;
       }
 
-      Ride rideDetails =
-          Ride.fromMap(await _rideRepository.processPackagePickedForRider(ride.id));
+      Ride rideDetails = Ride.fromMap(
+          await _rideRepository.processPackagePickedForRider(ride.id));
       Navigator.pop(context);
       await _rideDetailsCheck(rideDetails);
     } catch (err) {
@@ -287,8 +352,8 @@ class _RideInteractionState extends State<RideInteraction> {
         return;
       }
 
-      Ride rideDetails =
-          Ride.fromMap(await _rideRepository.processPackageDeliveredForRider(ride.id));
+      Ride rideDetails = Ride.fromMap(
+          await _rideRepository.processPackageDeliveredForRider(ride.id));
       Navigator.pop(context);
       await _rideDetailsCheck(rideDetails);
     } catch (err) {

@@ -140,56 +140,35 @@ class _DriverHomeState extends State<DriverHome> {
             },
           ),
         ],
-        child: Scaffold(
-            key: _scaffoldKey,
-            backgroundColor: Colors.grey[100],
-            drawer: RiderNavDrawer(),
-            body: RefreshIndicator(
-              child: Column(
-                children: <Widget>[
-                  Expanded(
-                    flex: 0,
-                    child: BlocBuilder<AuthenticationBloc, AuthenticationState>(
+        child: WillPopScope(
+          onWillPop: () {
+            return new Future(() => false);
+          },
+          child: Scaffold(
+              key: _scaffoldKey,
+              backgroundColor: Colors.grey[100],
+              drawer: RiderNavDrawer(),
+              body: RefreshIndicator(
+                child: Column(
+                  children: <Widget>[
+                    Expanded(
+                      flex: 0,
+                      child: BlocBuilder<AuthenticationBloc, AuthenticationState>(
+                          builder: (_, state) {
+                        if (state is NonLoggedIn) {
+                          WidgetsBinding.instance.addPostFrameCallback((_) =>
+                              Navigator.pushReplacementNamed(context, '/'));
+                        }
+                        if (state.props.isEmpty) {
+                          return Container();
+                        }
+                        return CustomerAppBar();
+                      }),
+                    ),
+                    Expanded(child: BlocBuilder<RideOrdersBloc, RideOrdersState>(
+                        // ignore: missing_return
                         builder: (_, state) {
-                      if (state is NonLoggedIn) {
-                        WidgetsBinding.instance.addPostFrameCallback((_) =>
-                            Navigator.pushReplacementNamed(context, '/'));
-                      }
-                      if (state.props.isEmpty) {
-                        return Container();
-                      }
-                      return CustomerAppBar();
-                    }),
-                  ),
-                  Expanded(child: BlocBuilder<RideOrdersBloc, RideOrdersState>(
-                      // ignore: missing_return
-                      builder: (_, state) {
-                    if (state.isFailure) {
-                      return Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Container(
-                            child: Text("No orders!"),
-                            alignment: Alignment.center,
-                          ),
-                        ],
-                      );
-                    }
-                    if (state.isInitial ||
-                        !state.isSuccess && state.isLoading) {
-                      return Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Center(
-                            child: CircularProgressIndicator(
-                              strokeWidth: 1.5,
-                            ),
-                          ),
-                        ],
-                      );
-                    }
-                    if (state.isSuccess) {
-                      if (state.rides.isEmpty) {
+                      if (state.isFailure) {
                         return Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
@@ -200,65 +179,91 @@ class _DriverHomeState extends State<DriverHome> {
                           ],
                         );
                       }
-                      return ListView.builder(
-                        itemCount: state.hasReachedMax
-                            ? state.rides.length
-                            : state.rides.length + 1,
-                        padding: EdgeInsets.only(top: 0, bottom: 20),
-                        physics: BouncingScrollPhysics(),
-                        itemBuilder: (BuildContext context, int index) {
-                          if (index >= state.rides.length) {
-                            return PreLoader();
-                          }
-                          Ride ride = state.rides[index];
-                          return InkWell(
-                            onTap: () => _chooseOrderInteractiveSheet(ride),
-                            child: Column(
-                              children: [
-                                SizedBox(height: 10),
-                                Card(
-                                  elevation: 0,
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 10.0, horizontal: 20),
-                                    child: ListTile(
-                                      title: Text(
-                                        ride.pickupLocation.address,
-                                        style: TextStyle(
-                                            fontSize: 16.0,
-                                            fontFamily: "Ubuntu",
-                                            color: Colors.black87,
-                                            fontWeight: FontWeight.w500,
-                                            height: 1.4),
-                                      ),
-                                      subtitle: Text(
-                                        getFullTime(ride.createdAt),
-                                        style: TextStyle(
-                                            fontSize: 14.0,
-                                            fontFamily: "Ubuntu",
-                                            color: Colors.grey,
-                                            fontWeight: FontWeight.w400,
-                                            height: 1.6),
-                                      ),
-                                      contentPadding: EdgeInsets.all(0),
-                                      dense: true,
-                                    ),
-                                  ),
-                                )
-                              ],
+                      if (state.isInitial ||
+                          !state.isSuccess && state.isLoading) {
+                        return Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Center(
+                              child: CircularProgressIndicator(
+                                strokeWidth: 1.5,
+                              ),
                             ),
+                          ],
+                        );
+                      }
+                      if (state.isSuccess) {
+                        if (state.rides.isEmpty) {
+                          return Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Container(
+                                child: Text("No orders!"),
+                                alignment: Alignment.center,
+                              ),
+                            ],
                           );
-                        },
-                      );
-                    }
-                  }))
-                ],
-              ),
-              onRefresh: () async {
-                _rideOrdersBloc.add(OrdersReset());
-                _rideOrdersBloc.add(OrdersFetched(isUser: 0));
-              },
-            )));
+                        }
+                        return ListView.builder(
+                          itemCount: state.hasReachedMax
+                              ? state.rides.length
+                              : state.rides.length + 1,
+                          padding: EdgeInsets.only(top: 0, bottom: 20),
+                          physics: BouncingScrollPhysics(),
+                          itemBuilder: (BuildContext context, int index) {
+                            if (index >= state.rides.length) {
+                              return PreLoader();
+                            }
+                            Ride ride = state.rides[index];
+                            return InkWell(
+                              onTap: () => _chooseOrderInteractiveSheet(ride),
+                              child: Column(
+                                children: [
+                                  SizedBox(height: 10),
+                                  Card(
+                                    elevation: 0,
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 10.0, horizontal: 20),
+                                      child: ListTile(
+                                        title: Text(
+                                          ride.pickupLocation.address,
+                                          style: TextStyle(
+                                              fontSize: 16.0,
+                                              fontFamily: "Ubuntu",
+                                              color: Colors.black87,
+                                              fontWeight: FontWeight.w500,
+                                              height: 1.4),
+                                        ),
+                                        subtitle: Text(
+                                          getFullTime(ride.createdAt),
+                                          style: TextStyle(
+                                              fontSize: 14.0,
+                                              fontFamily: "Ubuntu",
+                                              color: Colors.grey,
+                                              fontWeight: FontWeight.w400,
+                                              height: 1.6),
+                                        ),
+                                        contentPadding: EdgeInsets.all(0),
+                                        dense: true,
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            );
+                          },
+                        );
+                      }
+                    }))
+                  ],
+                ),
+                onRefresh: () async {
+                  _rideOrdersBloc.add(OrdersReset());
+                  _rideOrdersBloc.add(OrdersFetched(isUser: 0));
+                },
+              )),
+        ));
   }
 
   void _onScroll() {

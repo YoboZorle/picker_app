@@ -88,7 +88,7 @@ class BusinessHomePageState extends State<BusinessHomePage>
             unselectedLabelColor: Colors.grey[400],
             tabs: <Widget>[
               Tab(
-                icon: Icon(Icons.favorite),
+                icon: Icon(Icons.home_filled),
               ),
               Tab(
                 icon: Icon(Icons.directions_bike_rounded),

@@ -84,217 +84,323 @@ class _RiderOrderInteractiveLayoutState
           (_) => Navigator.pushNamed(context, '/DriversHomePage'));
     }
     if (ride.status == 'INPROGRESS' || ride.status == 'PENDING') {
-      return Container(
-          decoration: BoxDecoration(
-            color: Colors.white,
-          ),
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height / 2.2,
-          child: Column(
-            children: [
-              SizedBox(
-                height: 25,
-              ),
-              Text(
-                ride.status == 'INPROGRESS'
-                    ? ride.isPickedUp
-                        ? "Meet and Pickup"
-                        : "Deliver Package"
-                    : "New Request!",
-                maxLines: 1,
-                textAlign: TextAlign.left,
-                style: TextStyle(
-                    fontSize: 20.0,
-                    fontFamily: "Ubuntu",
-                    color: Colors.black,
-                    fontWeight: FontWeight.w700,
-                    height: 1.35),
-              ),
-              ListTile(
-                  leading: ClipOval(
-                      child: Container(
-                          height: 55.0,
-                          width: 55.0,
-                          child: !ride.user.noProfileImage
-                              ? CustomImage(
-                                  imageUrl: '${ride.user.profileImageUrl}',
-                                )
-                              : Image.asset('assets/images/placeholder.jpg',
-                                  fit: BoxFit.cover))),
-                  title: Text(ride.user.fullname,
-                      style: TextStyle(
-                          fontSize: 15,
-                          color: Colors.black,
-                          fontFamily: 'Ubuntu',
-                          fontWeight: FontWeight.w500)),
-                  subtitle: Text('+${ride.user.callingCode}${ride.user.phone}',
-                      style: TextStyle(
-                          fontSize: 14,
-                          color: Colors.grey,
-                          fontFamily: 'Ubuntu',
-                          height: 1.7,
-                          fontWeight: FontWeight.w400)),
-                  trailing: Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey, width: 0.5),
-                      color: Colors.transparent,
-                      shape: BoxShape.circle,
-                    ),
-                    child: IconButton(
-                      icon: Icon(Icons.phone, color: Colors.black),
-                      onPressed: () {
-                        launch(
-                            "tel://+${ride.user.callingCode}${ride.user.phone}");
-                      },
-                    ),
-                  )),
-              Container(
-                  height: 0.5,
-                  width: MediaQuery.of(context).size.width,
-                  color: Colors.grey[300],
-                  margin: EdgeInsets.symmetric(horizontal: 20, vertical: 8)),
-              Container(
-                margin: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-                child: Column(
+      return WillPopScope(
+        onWillPop: () {
+          return new Future(() => false);
+        },
+        child: Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+            ),
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
+            child: ListView(
+              physics: BouncingScrollPhysics(),
+              children: [
+
+
+
+
+
+
+
+
+
+
+
+
+SizedBox(height: 15),
+                Row(mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    SizedBox(height: 8),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          width: 40,
-                          margin: EdgeInsets.only(right: 8),
-                          child: Text("From: ",
-                              style: TextStyle(
-                                  fontSize: 12,
-                                  color: Colors.grey,
-                                  fontFamily: 'Ubuntu',
-                                  fontWeight: FontWeight.w400)),
-                        ),
-                        Flexible(
-                          child: Text(ride.pickupLocation.address,
-                              style: TextStyle(
-                                  fontSize: 15,
-                                  color: Colors.black,
-                                  fontFamily: 'Ubuntu',
-                                  fontWeight: FontWeight.w400)),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 10),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          width: 40,
-                          margin: EdgeInsets.only(right: 8),
-                          child: Text("To: ",
-                              style: TextStyle(
-                                  fontSize: 12,
-                                  color: Colors.grey,
-                                  fontFamily: 'Ubuntu',
-                                  fontWeight: FontWeight.w400)),
-                        ),
-                        Flexible(
-                          child: Text(ride.deliveryLocation.address,
-                              style: TextStyle(
-                                  fontSize: 14,
-                                  color: Colors.black,
-                                  fontFamily: 'Ubuntu',
-                                  fontWeight: FontWeight.w400)),
-                        ),
-                      ],
+                    Text(
+                      ride.status == 'INPROGRESS'
+                          ? ride.isPickedUp
+                          ? "Meet and Pickup"
+                          : "Deliver Package"
+                          : "New Request!",
+                      maxLines: 1,
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                          fontSize: 20.0,
+                          fontFamily: "Ubuntu",
+                          color: Colors.black,
+                          fontWeight: FontWeight.w700,
+                         ),
                     ),
                   ],
                 ),
-              ),
-              Container(
-                  margin: EdgeInsets.only(left: 20, right: 20, top: 25),
-                  child: Builder(builder: (BuildContext context) {
-                    return ride.status == 'INPROGRESS'
-                        ? Row(
+                Container(
+                    color: Colors.white,
+                    margin: EdgeInsets.only(top: 0),
+                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text('Receiver details:',
+                              style: TextStyle(
+                                  fontSize: 12,
+                                  fontFamily: 'Ubuntu',
+                                  color: Colors.black45,
+                                  fontWeight: FontWeight.w400)),
+                          SizedBox(height: 8),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
+                              Padding(
+                                padding: const EdgeInsets.only(top: 4.0),
+                                child: Icon(Icons.circle,
+                                    size: 12, color: Colors.green),
+                              ),
+                              SizedBox(width: 13),
                               Expanded(
-                                  flex: 2,
-                                  child: ride.isPickedUp
-                                      ? ButtonTheme(
-                                          height: 45,
-                                          child: RaisedButton(
-                                            child: Text('Package Delivered',
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(ride.deliveryLocation.address,
+                                        style: TextStyle(
+                                            fontSize: 15,
+                                            color: Colors.black,
+                                            fontFamily: 'Ubuntu',
+                                            fontWeight: FontWeight.w400)),
+                                    SizedBox(height: 4),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(ride.receiverName,
                                                 style: TextStyle(
-                                                    fontSize: 15.0,
-                                                    fontFamily: "Ubuntu",
-                                                    color: Colors.white,
-                                                    fontWeight:
-                                                        FontWeight.w500)),
-                                            onPressed: () =>
-                                                _processPackageDelivered(),
-                                            color: AppColor.primaryText,
-                                            elevation: 12,
+                                                    fontSize: 16,
+                                                    fontFamily: 'Ubuntu',
+                                                    color: Colors.black,
+                                                    fontWeight: FontWeight.w600)),
+                                            SizedBox(height: 4),
+                                            Text(
+                                                '+${ride.user.callingCode + ride.receiverPhone}',
+                                                style: TextStyle(
+                                                    fontSize: 14,
+                                                    fontFamily: 'Ubuntu',
+                                                    color: Colors.grey,
+                                                    fontWeight: FontWeight.w400)),
+                                          ],
+                                        ),
+                                        Container(
+                                          margin: EdgeInsets.only(top: 5),
+                                          decoration: BoxDecoration(
+                                            border: Border.all(
+                                                color: Colors.grey, width: 0.4),
+                                            color: Colors.transparent,
+                                            shape: BoxShape.circle,
+                                          ),
+                                          child: IconButton(
+                                            icon: Icon(Icons.phone,
+                                                color: Colors.black),
+                                            onPressed: () {
+                                              launch(
+                                                  "tel://+${ride.user.callingCode}${ride.receiverPhone}");
+                                            },
                                           ),
                                         )
-                                      : ButtonTheme(
-                                          height: 45,
-                                          child: RaisedButton(
-                                            color: AppColor.primaryText,
-                                            child: Text('Picked Up Package',
-                                                style: TextStyle(
-                                                    fontSize: 15,
-                                                    fontFamily: 'Ubuntu',
-                                                    color: Colors.white,
-                                                    fontWeight:
-                                                        FontWeight.w500)),
-                                            onPressed: () =>
-                                                _processPackagePicked(),
-                                            elevation: 12,
-                                          ),
-                                        )),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
                             ],
-                          )
-                        : Row(
+                          ),
+
+
+
+
+
+
+
+
+
+                          Container(
+                              height: 0.5,
+                              width: MediaQuery.of(context).size.width,
+                              color: Colors.grey[300],
+                          margin: EdgeInsets.only(top: 13, bottom: 13)),
+                          Text('Sender details:',
+                              style: TextStyle(
+                                  fontSize: 12,
+                                  fontFamily: 'Ubuntu',
+                                  color: Colors.black45,
+                                  fontWeight: FontWeight.w400)),
+                          SizedBox(height: 8),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
+                              ClipOval(
+                                  child: Container(
+                                      height: 45.0,
+                                      width: 45.0,
+                                      child: !ride.user.noProfileImage
+                                          ? CustomImage(
+                                        imageUrl: '${ride.user.profileImageUrl}',
+                                      )
+                                          : Image.asset('assets/images/placeholder.jpg',
+                                          fit: BoxFit.cover))),
+                              SizedBox(width: 13),
                               Expanded(
-                                flex: 1,
-                                child: ButtonTheme(
-                                  height: 45,
-                                  child: RaisedButton(
-                                    child: Text('Cancel',
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(ride.pickupLocation.address,
                                         style: TextStyle(
                                             fontSize: 15,
-                                            fontFamily: 'Ubuntu',
                                             color: Colors.black,
-                                            fontWeight: FontWeight.w400)),
-                                    color: Colors.grey[300],
-                                    onPressed: () {
-                                      Navigator.pop(context);
-                                    },
-                                    elevation: 0,
-                                  ),
-                                ),
-                              ),
-                              SizedBox(width: 20),
-                              Expanded(
-                                flex: 2,
-                                child: ButtonTheme(
-                                  height: 45,
-                                  child: RaisedButton(
-                                    child: Text('Accept ride',
-                                        style: TextStyle(
-                                            fontSize: 15,
                                             fontFamily: 'Ubuntu',
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.w500)),
-                                    color: AppColor.primaryText,
-                                    elevation: 12,
-                                    onPressed: () => _processAcceptRide(),
-                                  ),
+                                            fontWeight: FontWeight.w400)),
+                                    SizedBox(height: 4),
+                                    Row(
+                                      mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Column(
+                                          crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                          children: [
+                                            Text(ride.user.fullname,
+                                                style: TextStyle(
+                                                    fontSize: 16,
+                                                    fontFamily: 'Ubuntu',
+                                                    color: Colors.black,
+                                                    fontWeight: FontWeight.w600)),
+                                            SizedBox(height: 4),
+                                            Text(
+                                                '+${ride.user.callingCode + ride.user.phone}',
+                                                style: TextStyle(
+                                                    fontSize: 14,
+                                                    fontFamily: 'Ubuntu',
+                                                    color: Colors.grey,
+                                                    fontWeight: FontWeight.w400)),
+                                          ],
+                                        ),
+                                        Container(
+                                          margin: EdgeInsets.only(top: 5),
+                                          decoration: BoxDecoration(
+                                            border: Border.all(
+                                                color: Colors.grey, width: 0.4),
+                                            color: Colors.transparent,
+                                            shape: BoxShape.circle,
+                                          ),
+                                          child: IconButton(
+                                            icon: Icon(Icons.phone,
+                                                color: Colors.black),
+                                            onPressed: () {
+                                              launch(
+                                                  "tel://+${ride.user.callingCode}${ride.user.phone}");
+                                            },
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ],
                                 ),
                               ),
                             ],
-                          );
-                  })),
-            ],
-          ));
+                          ),
+                        ])),
+
+
+
+
+
+
+                Container(
+                    margin: EdgeInsets.only(left: 20, right: 20, top: 10),
+                    child: Builder(builder: (BuildContext context) {
+                      return ride.status == 'INPROGRESS'
+                          ? Row(
+                              children: [
+                                Expanded(
+                                    flex: 2,
+                                    child: ride.isPickedUp
+                                        ? ButtonTheme(
+                                            height: 45,
+                                            child: RaisedButton(
+                                              child: Text('Package Delivered',
+                                                  style: TextStyle(
+                                                      fontSize: 15.0,
+                                                      fontFamily: "Ubuntu",
+                                                      color: Colors.white,
+                                                      fontWeight:
+                                                          FontWeight.w500)),
+                                              onPressed: () =>
+                                                  _processPackageDelivered(),
+                                              color: AppColor.primaryText,
+                                              elevation: 12,
+                                            ),
+                                          )
+                                        : ButtonTheme(
+                                            height: 45,
+                                            child: RaisedButton(
+                                              color: AppColor.primaryText,
+                                              child: Text('Picked Up Package',
+                                                  style: TextStyle(
+                                                      fontSize: 15,
+                                                      fontFamily: 'Ubuntu',
+                                                      color: Colors.white,
+                                                      fontWeight:
+                                                          FontWeight.w500)),
+                                              onPressed: () =>
+                                                  _processPackagePicked(),
+                                              elevation: 12,
+                                            ),
+                                          )),
+                              ],
+                            )
+                          : Row(
+                              children: [
+                                Expanded(
+                                  flex: 1,
+                                  child: ButtonTheme(
+                                    height: 45,
+                                    child: RaisedButton(
+                                      child: Text('Cancel',
+                                          style: TextStyle(
+                                              fontSize: 15,
+                                              fontFamily: 'Ubuntu',
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.w400)),
+                                      color: Colors.grey[300],
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      elevation: 0,
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(width: 20),
+                                Expanded(
+                                  flex: 2,
+                                  child: ButtonTheme(
+                                    height: 45,
+                                    child: RaisedButton(
+                                      child: Text('Accept ride',
+                                          style: TextStyle(
+                                              fontSize: 15,
+                                              fontFamily: 'Ubuntu',
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.w500)),
+                                      color: AppColor.primaryText,
+                                      elevation: 8,
+                                      onPressed: () => _processAcceptRide(),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            );
+                    })),
+              ],
+            )),
+      );
     }
     return Container(
         height: MediaQuery.of(context).size.height / 2.6,
