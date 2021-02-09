@@ -379,7 +379,7 @@ class BusinessNavDrawer extends StatelessWidget {
                               fontWeight: FontWeight.w400,
                               fontSize: 16,
                               fontFamily: 'Ubuntu')),
-                      onTap: () {},
+                      onTap: () => launch("tel://+2348076048409"),
                     ),
                     ListTile(
                       leading: Icon(

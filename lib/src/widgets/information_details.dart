@@ -638,7 +638,7 @@ class _RideInformationWidgetState extends State<RideInformationWidget> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Text('Your driver and rating:',
+                    Text('Your rider and ratings:',
                         style: TextStyle(
                             fontSize: 12,
                             fontFamily: 'Ubuntu',
