@@ -28,6 +28,7 @@ import 'package:pickrr_app/src/screens/ride/ride_history.dart';
 import 'package:pickrr_app/src/screens/ride/track_deliveries.dart';
 import 'package:pickrr_app/src/screens/terms.dart';
 import 'package:pickrr_app/src/screens/user_profile.dart';
+import 'package:pickrr_app/src/widgets/rate_driver.dart';
 
 class Routes {
   static dynamic route() {
@@ -50,7 +51,10 @@ class Routes {
     switch (pathElements[1]) {
       case "BusinessHomePage":
         return SlideLeftRoute<bool>(
-            builder: (BuildContext context) => BusinessHomePage());
+            builder: (BuildContext context) => BlocProvider<AuthenticationBloc>(
+                create: (_) => AuthenticationBloc()
+                  ..add(AuthenticationEvent.AUTHENTICATED),
+                child: BusinessHomePage()));
       case "BusinessApplication":
         return SlideLeftRoute<bool>(
             builder: (BuildContext context) => BusinessApplication());
@@ -103,7 +107,16 @@ class Routes {
                 child: ReviewOrder(settings.arguments)));
       case "RideDetails":
         return SlideLeftRoute<bool>(
-            builder: (BuildContext context) => RideDetails(settings.arguments));
+            builder: (BuildContext context) => BlocProvider<AuthenticationBloc>(
+                create: (_) => AuthenticationBloc()
+                  ..add(AuthenticationEvent.AUTHENTICATED),
+                child: RideDetails(settings.arguments)));
+      case "RideRatingDialog":
+        return SlideLeftRoute<bool>(
+            builder: (BuildContext context) => BlocProvider<AuthenticationBloc>(
+                create: (_) => AuthenticationBloc()
+                  ..add(AuthenticationEvent.AUTHENTICATED),
+                child: RideRatingDialog(settings.arguments)));
       case "RideHistory":
         return CustomRoute<bool>(
             builder: (BuildContext context) => BlocProvider<RideOrdersBloc>(
@@ -163,7 +176,8 @@ class Routes {
           return onUnknownRoute(RouteSettings(name: '/Unknown'));
         }
         return CustomRoute<bool>(
-            builder: (BuildContext context) => DriverActivitiesDetails(riderId));
+            builder: (BuildContext context) =>
+                DriverActivitiesDetails(riderId));
       default:
         return onUnknownRoute(RouteSettings(name: '/Unknown'));
     }

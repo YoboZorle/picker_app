@@ -1,21 +1,39 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:pickrr_app/src/helpers/constants.dart';
+import 'package:pickrr_app/src/helpers/utility.dart';
+import 'package:pickrr_app/src/models/ride.dart';
+import 'package:pickrr_app/src/services/repositories/ride.dart';
+import 'package:pickrr_app/src/utils/alert_bar.dart';
+import 'package:pickrr_app/src/widgets/arguments.dart';
+import 'package:pickrr_app/src/widgets/image.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 
-class RateDriver extends StatefulWidget {
-  RatingBarWidget createState() => RatingBarWidget();
+class RideRatingDialog extends StatefulWidget {
+  final RideArguments arguments;
+
+  RideRatingDialog(this.arguments);
+
+  @override
+  _RideRatingDialogState createState() => _RideRatingDialogState();
 }
 
-class RatingBarWidget extends State {
-  double rating = 0;
-
-  List<String> _locations = [
+class _RideRatingDialogState extends State<RideRatingDialog> {
+  double _rating;
+  String _selectedReview;
+  List<String> _reviews = [
     'Driver did not deliver on time.',
     'Driver is very rude.',
     'Excellent ride!',
     'Driver is unprofessional.'
   ];
-  String _selectedLocation;
+  RideRepository _rideRepository = RideRepository();
+
+  @override
+  void initState() {
+    _rating = 0;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +44,7 @@ class RatingBarWidget extends State {
           elevation: 0,
           backgroundColor: Colors.white,
           centerTitle: true,
-          title: Text('Ride Complete!',
+          title: Text('Rate this ride!',
               style: TextStyle(
                   color: Colors.black,
                   fontFamily: 'Ubuntu',
@@ -37,25 +55,25 @@ class RatingBarWidget extends State {
           width: MediaQuery.of(context).size.width,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
-            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Text('Please rate your last ride',
-                  style: TextStyle(
-                      color: Colors.grey,
-                      fontFamily: 'Ubuntu',
-                      fontWeight: FontWeight.w400,
-                      fontSize: 14)),
-              Container(
-                  width: 70.0,
-                  height: 70.0,
-                  margin: EdgeInsets.only(top: 20, bottom: 18),
-                  decoration: new BoxDecoration(
-                      shape: BoxShape.circle,
-                      image: new DecorationImage(
-                          fit: BoxFit.cover,
-                          image: NetworkImage(
-                              "https://blog.bolt.eu/wp-content/uploads/2020/06/1200x628_Oaksure-Financial-Services-insurance-covers-Bolt-passengers-and-drivers-on-all-rides.jpg")))),
-              Text('George Adowei',
+              ClipOval(
+                  child: Container(
+                      height: 70.0,
+                      width: 70.0,
+                      decoration: BoxDecoration(color: Colors.white),
+                      child:
+                          widget.arguments.ride.rider.details.profileImageUrl !=
+                                      null ||
+                                  widget.arguments.ride.rider.details
+                                      .profileImageUrl.isNotEmpty
+                              ? CustomImage(
+                                  imageUrl:
+                                      '${widget.arguments.ride.rider.details.profileImageUrl}',
+                                )
+                              : Image.asset('assets/images/placeholder.jpg',
+                                  width: double.infinity,
+                                  height: double.infinity))),
+              Text(widget.arguments.ride.rider.details.fullname,
                   style: TextStyle(
                       color: Colors.black,
                       fontFamily: 'Ubuntu',
@@ -66,23 +84,16 @@ class RatingBarWidget extends State {
                 allowHalfRating: true,
                 onRatingChanged: (value) {
                   setState(() {
-                    rating = value;
+                    _rating = double.parse(value.toStringAsFixed(2));
                   });
                 },
                 starCount: 5,
-                rating: rating,
+                rating: _rating,
                 size: 35.0,
                 color: Colors.amber,
                 borderColor: Colors.grey[400],
                 spacing: 5.0,
               ),
-              // SizedBox(height: 10),
-              // Text('Rating = ' + '$rating',
-              //     style: TextStyle(
-              //         color: Colors.grey,
-              //         fontFamily: 'Ubuntu',
-              //         fontWeight: FontWeight.w400,
-              //         fontSize: 12)),
               Expanded(child: SizedBox()),
               DropdownButton(
                 hint: Text(
@@ -93,13 +104,13 @@ class RatingBarWidget extends State {
                       color: Colors.grey,
                       fontFamily: 'Ubuntu'),
                 ), // Not necessary for Option 1
-                value: _selectedLocation,
+                value: _selectedReview,
                 onChanged: (newValue) {
                   setState(() {
-                    _selectedLocation = newValue;
+                    _selectedReview = newValue;
                   });
                 },
-                items: _locations.map((location) {
+                items: _reviews.map((location) {
                   return DropdownMenuItem(
                     child: new Text(location,
                         style: TextStyle(
@@ -112,7 +123,7 @@ class RatingBarWidget extends State {
                 }).toList(),
               ),
               GestureDetector(
-                onTap: () {},
+                onTap: () => _processRating(),
                 child: Container(
                     height: 45,
                     width: MediaQuery.of(context).size.width,
@@ -147,5 +158,44 @@ class RatingBarWidget extends State {
             ],
           ),
         ));
+  }
+
+  _processRating() async {
+    if (_rating == null || _rating == 0) {
+      return;
+    }
+
+    AlertBar.dialog(context, 'Submitting request...', AppColor.primaryText,
+        showProgressIndicator: true, duration: null);
+
+    try {
+      Map<String, dynamic> formDetails = {
+        'review': _selectedReview,
+        'star': _rating,
+      };
+
+      var response = await _rideRepository.submitRideRating(
+          new FormData.fromMap(formDetails), widget.arguments.ride.id);
+      Navigator.pop(context);
+      Review review = Review.fromMap(response);
+      AlertBar.dialog(context, 'Rating submitted!', Colors.green,
+          icon: Icon(
+            Icons.check_circle_outline,
+            color: Colors.green,
+          ),
+          duration: 10);
+      widget.arguments.ride.review = review;
+      Future.delayed(new Duration(seconds: 2), () {
+        Navigator.popUntil(
+            context, (Route<dynamic> route) => route is PageRoute);
+        Navigator.popAndPushNamed(context, '/RideDetails',
+            arguments: RideArguments(widget.arguments.ride));
+      });
+    } catch (err) {
+      debugLog(err);
+      Navigator.pop(context);
+      AlertBar.dialog(context, err.message, Colors.red,
+          icon: Icon(Icons.error), duration: 5);
+    }
   }
 }

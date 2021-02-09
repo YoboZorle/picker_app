@@ -119,7 +119,7 @@ class _DriverReviewsState extends State<DriverReviews> {
                           onRatingChanged: (value) {
                           },
                           starCount: 5,
-                          rating: ride.review.star,
+                          rating: ride.review.star.toDouble(),
                           size: 11.0,
                           color: Colors.amber,
                           borderColor: Colors.grey[400],

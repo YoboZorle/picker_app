@@ -59,7 +59,7 @@ class Ride {
   final String receiverPhone;
   final String status;
   final String rideId;
-  final Review review;
+  Review review;
   final String duration;
   final bool isPickedUp;
 

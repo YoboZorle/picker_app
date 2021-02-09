@@ -219,7 +219,7 @@ class RideRepository extends APIClient {
       Response response = await dio.post(url, data: details);
       return response.data;
     } catch (e) {
-      cprint(e.response, errorIn: 'submitRideRideRating');
+      cprint(e.response, errorIn: 'submitRideRating');
       if (e.response.data != null &&
           e.response.data['non_field_errors'] != null) {
         throw ServiceError(e.response.data['non_field_errors'].first);

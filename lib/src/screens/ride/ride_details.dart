@@ -1,9 +1,12 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:intl/intl.dart';
+import 'package:pickrr_app/src/blocs/authentication/bloc.dart';
 import 'package:pickrr_app/src/helpers/constants.dart';
+import 'package:pickrr_app/src/models/user.dart';
 import 'package:pickrr_app/src/widgets/arguments.dart';
 import 'package:pickrr_app/src/widgets/awaiting_ride.dart';
 import 'package:pickrr_app/src/widgets/information_details.dart';
@@ -38,9 +41,9 @@ class _RideDetailsState extends State<RideDetails> {
     _channel.stream.listen((response) {
       var decodedResponse = json.decode(response)['ride'];
       Ride ride = Ride.fromMap(decodedResponse);
-      if(ride.status == 'INPROGRESS' && ride.isPickedUp){
+      if (ride.status == 'INPROGRESS' && ride.isPickedUp) {
         WidgetsBinding.instance.addPostFrameCallback(
-                (_) => Navigator.pushReplacementNamed(context, '/RideHistory'));
+            (_) => Navigator.pushReplacementNamed(context, '/RideHistory'));
       }
       setState(() {
         widget.arguments.ride = ride;
@@ -56,23 +59,44 @@ class _RideDetailsState extends State<RideDetails> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: _onBackPressed,
-      child: Scaffold(
-        body: SafeArea(
-        top: true,
-        child: ListView(
-          children: <Widget>[
-            Container(
-                width: MediaQuery.of(context).size.width,
-                child: widget.arguments.ride.status == 'PENDING'
-                    ? AwaitingRideWidget(
-                        rideStatus: widget.arguments.ride.status,
-                        rideId: widget.arguments.ride.id,
-                      )
-                    : RideInformationWidget(widget.arguments.ride)),
-          ],
-        ),
-      ),
-    ));
+        onWillPop: _onBackPressed,
+        child: BlocBuilder<AuthenticationBloc, AuthenticationState>(
+            builder: (_, state) {
+          if (state is NonLoggedIn) {
+            WidgetsBinding.instance.addPostFrameCallback(
+                (_) => Navigator.pushReplacementNamed(context, '/'));
+          }
+          if (state.props.isEmpty) {
+            return Container();
+          }
+          User user = state.props[0];
+
+          if (widget.arguments.ride.status == 'DELIVERED' &&
+              widget.arguments.ride.user.id == user.id) {
+            if (widget.arguments.ride.review == null) {
+              WidgetsBinding.instance.addPostFrameCallback((_) =>
+                  Navigator.pushNamed(context, '/RideRatingDialog',
+                      arguments: RideArguments(widget.arguments.ride)));
+            }
+          }
+
+          return Scaffold(
+            body: SafeArea(
+              top: true,
+              child: ListView(
+                children: <Widget>[
+                  Container(
+                      width: MediaQuery.of(context).size.width,
+                      child: widget.arguments.ride.status == 'PENDING'
+                          ? AwaitingRideWidget(
+                              rideStatus: widget.arguments.ride.status,
+                              rideId: widget.arguments.ride.id,
+                            )
+                          : RideInformationWidget(widget.arguments.ride)),
+                ],
+              ),
+            ),
+          );
+        }));
   }
 }

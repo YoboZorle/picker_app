@@ -630,84 +630,88 @@ class _RideInformationWidgetState extends State<RideInformationWidget> {
                       ],
                     ),
                   ])),
-          Container(
-              color: Colors.white,
-              margin: EdgeInsets.only(top: 15),
-              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-              child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Text('Your rider and ratings:',
-                        style: TextStyle(
-                            fontSize: 12,
-                            fontFamily: 'Ubuntu',
-                            color: Colors.black45,
-                            fontWeight: FontWeight.w400)),
-                    SizedBox(height: 8),
-                    ListTile(
-                      contentPadding: EdgeInsets.all(0.0),
-                      leading: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          ClipOval(
-                              child: Container(
-                            height: 45.0,
-                            width: 45.0,
-                            child: !widget.rideDetails.user.noProfileImage
-                                ? CustomImage(
-                                    imageUrl:
-                                        '${widget.rideDetails.user.profileImageUrl}',
-                                  )
-                                : Image.asset('assets/images/placeholder.jpg',
-                                    width: double.infinity,
-                                    height: double.infinity),
-                          )),
-                        ],
-                      ),
-                      title: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text('Yobo Zorle',
-                              style: TextStyle(
-                                  fontSize: 14.0,
-                                  fontFamily: "Ubuntu",
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w500)),
-                          SmoothStarRating(
-                            allowHalfRating: true,
-                            onRatingChanged: (value) {},
-                            starCount: 5,
-                            rating: 2.6,
-                            size: 11.0,
-                            color: Colors.amber,
-                            borderColor: Colors.grey[400],
-                            spacing: 0,
+          widget.rideDetails.review != null
+              ? Container(
+                  color: Colors.white,
+                  margin: EdgeInsets.only(top: 15),
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text('Ride ratings:',
+                            style: TextStyle(
+                                fontSize: 12,
+                                fontFamily: 'Ubuntu',
+                                color: Colors.black45,
+                                fontWeight: FontWeight.w400)),
+                        SizedBox(height: 8),
+                        ListTile(
+                          contentPadding: EdgeInsets.all(0.0),
+                          leading: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              ClipOval(
+                                  child: Container(
+                                height: 45.0,
+                                width: 45.0,
+                                child: !widget.rideDetails.rider.details.noProfileImage
+                                    ? CustomImage(
+                                        imageUrl:
+                                            '${widget.rideDetails.rider.details.profileImageUrl}',
+                                      )
+                                    : Image.asset(
+                                        'assets/images/placeholder.jpg',
+                                        width: double.infinity,
+                                        height: double.infinity),
+                              )),
+                            ],
                           ),
-                        ],
-                      ),
-                      subtitle: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text('I really enjoy the service, it was excellent!',
-                              style: TextStyle(
-                                  fontSize: 14,
-                                  fontFamily: "Ubuntu",
-                                  height: 1.35,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w400)),
-                          Text('2days ago',
-                              style: TextStyle(
-                                  fontSize: 12.0,
-                                  fontFamily: "Ubuntu",
-                                  color: Colors.grey,
-                                  height: 1.3,
-                                  fontWeight: FontWeight.w400)),
-                        ],
-                      ),
-                    ),
-                  ])),
+                          title: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(widget.rideDetails.rider.details.fullname,
+                                  style: TextStyle(
+                                      fontSize: 14.0,
+                                      fontFamily: "Ubuntu",
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w500)),
+                              SmoothStarRating(
+                                allowHalfRating: true,
+                                onRatingChanged: (value) {},
+                                starCount: 5,
+                                rating: widget.rideDetails.review.star.toDouble(),
+                                size: 11.0,
+                                color: Colors.amber,
+                                borderColor: Colors.grey[400],
+                                spacing: 0,
+                              ),
+                            ],
+                          ),
+                          subtitle: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                  widget.rideDetails.review.review,
+                                  style: TextStyle(
+                                      fontSize: 14,
+                                      fontFamily: "Ubuntu",
+                                      height: 1.35,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w400)),
+                              Text(getChatTime( widget.rideDetails.review.createdAt),
+                                  style: TextStyle(
+                                      fontSize: 12.0,
+                                      fontFamily: "Ubuntu",
+                                      color: Colors.grey,
+                                      height: 1.3,
+                                      fontWeight: FontWeight.w400)),
+                            ],
+                          ),
+                        ),
+                      ]))
+              : Container(),
         ],
       );
 }
