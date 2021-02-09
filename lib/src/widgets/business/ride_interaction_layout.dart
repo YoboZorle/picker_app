@@ -195,7 +195,6 @@ class _RideInteractionState extends State<RideInteraction> {
                       ),
                     ],
                   ),
-
                   Row(
                     children: [
                       Column(
