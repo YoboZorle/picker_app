@@ -4,6 +4,7 @@ import 'package:pickrr_app/src/helpers/constants.dart';
 import 'package:pickrr_app/src/helpers/utility.dart';
 import 'package:pickrr_app/src/models/ride.dart';
 import 'package:pickrr_app/src/widgets/image.dart';
+import 'package:smooth_star_rating/smooth_star_rating.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class RideInformationWidget extends StatefulWidget {
@@ -222,7 +223,7 @@ class _RideInformationWidgetState extends State<RideInformationWidget> {
                   children: [
                     Text('From where:',
                         style: TextStyle(
-                            fontSize: 14,
+                            fontSize: 12,
                             fontFamily: 'Ubuntu',
                             color: Colors.black45,
                             fontWeight: FontWeight.w400)),
@@ -277,7 +278,7 @@ class _RideInformationWidgetState extends State<RideInformationWidget> {
                   children: [
                     Text('To where:',
                         style: TextStyle(
-                            fontSize: 14,
+                            fontSize: 12,
                             fontFamily: 'Ubuntu',
                             color: Colors.black45,
                             fontWeight: FontWeight.w400)),
@@ -336,7 +337,7 @@ class _RideInformationWidgetState extends State<RideInformationWidget> {
                           children: [
                             Text('Time',
                                 style: TextStyle(
-                                    fontSize: 14,
+                                    fontSize: 12,
                                     fontFamily: 'Ubuntu',
                                     color: Colors.black45,
                                     fontWeight: FontWeight.w400)),
@@ -354,7 +355,7 @@ class _RideInformationWidgetState extends State<RideInformationWidget> {
                           children: [
                             Text('Distance',
                                 style: TextStyle(
-                                    fontSize: 13,
+                                    fontSize: 12,
                                     fontFamily: 'Ubuntu',
                                     color: Colors.black45,
                                     fontWeight: FontWeight.w400)),
@@ -372,7 +373,7 @@ class _RideInformationWidgetState extends State<RideInformationWidget> {
                           children: [
                             Text('Amount',
                                 style: TextStyle(
-                                    fontSize: 13,
+                                    fontSize: 12,
                                     fontFamily: 'Ubuntu',
                                     color: Colors.black45,
                                     fontWeight: FontWeight.w400)),
@@ -444,7 +445,7 @@ class _RideInformationWidgetState extends State<RideInformationWidget> {
                   children: [
                     Text('From where:',
                         style: TextStyle(
-                            fontSize: 14,
+                            fontSize: 12,
                             fontFamily: 'Ubuntu',
                             color: Colors.black45,
                             fontWeight: FontWeight.w400)),
@@ -499,7 +500,7 @@ class _RideInformationWidgetState extends State<RideInformationWidget> {
                   children: [
                     Text('To where:',
                         style: TextStyle(
-                            fontSize: 14,
+                            fontSize: 12,
                             fontFamily: 'Ubuntu',
                             color: Colors.black45,
                             fontWeight: FontWeight.w400)),
@@ -558,7 +559,7 @@ class _RideInformationWidgetState extends State<RideInformationWidget> {
                           children: [
                             Text('Time',
                                 style: TextStyle(
-                                    fontSize: 14,
+                                    fontSize: 12,
                                     fontFamily: 'Ubuntu',
                                     color: Colors.black45,
                                     fontWeight: FontWeight.w400)),
@@ -576,7 +577,7 @@ class _RideInformationWidgetState extends State<RideInformationWidget> {
                           children: [
                             Text('Distance',
                                 style: TextStyle(
-                                    fontSize: 13,
+                                    fontSize: 12,
                                     fontFamily: 'Ubuntu',
                                     color: Colors.black45,
                                     fontWeight: FontWeight.w400)),
@@ -594,7 +595,7 @@ class _RideInformationWidgetState extends State<RideInformationWidget> {
                           children: [
                             Text('Amount',
                                 style: TextStyle(
-                                    fontSize: 13,
+                                    fontSize: 12,
                                     fontFamily: 'Ubuntu',
                                     color: Colors.black45,
                                     fontWeight: FontWeight.w400)),
@@ -627,6 +628,84 @@ class _RideInformationWidgetState extends State<RideInformationWidget> {
                                 color: Colors.green,
                                 fontWeight: FontWeight.w600)),
                       ],
+                    ),
+                  ])),
+          Container(
+              color: Colors.white,
+              margin: EdgeInsets.only(top: 15),
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text('Your driver and rating:',
+                        style: TextStyle(
+                            fontSize: 12,
+                            fontFamily: 'Ubuntu',
+                            color: Colors.black45,
+                            fontWeight: FontWeight.w400)),
+                    SizedBox(height: 8),
+                    ListTile(
+                      contentPadding: EdgeInsets.all(0.0),
+                      leading: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          ClipOval(
+                              child: Container(
+                            height: 45.0,
+                            width: 45.0,
+                            child: !widget.rideDetails.user.noProfileImage
+                                ? CustomImage(
+                                    imageUrl:
+                                        '${widget.rideDetails.user.profileImageUrl}',
+                                  )
+                                : Image.asset('assets/images/placeholder.jpg',
+                                    width: double.infinity,
+                                    height: double.infinity),
+                          )),
+                        ],
+                      ),
+                      title: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text('Yobo Zorle',
+                              style: TextStyle(
+                                  fontSize: 14.0,
+                                  fontFamily: "Ubuntu",
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w500)),
+                          SmoothStarRating(
+                            allowHalfRating: true,
+                            onRatingChanged: (value) {},
+                            starCount: 5,
+                            rating: 2.6,
+                            size: 11.0,
+                            color: Colors.amber,
+                            borderColor: Colors.grey[400],
+                            spacing: 0,
+                          ),
+                        ],
+                      ),
+                      subtitle: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('I really enjoy the service, it was excellent!',
+                              style: TextStyle(
+                                  fontSize: 14,
+                                  fontFamily: "Ubuntu",
+                                  height: 1.35,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w400)),
+                          Text('2days ago',
+                              style: TextStyle(
+                                  fontSize: 12.0,
+                                  fontFamily: "Ubuntu",
+                                  color: Colors.grey,
+                                  height: 1.3,
+                                  fontWeight: FontWeight.w400)),
+                        ],
+                      ),
                     ),
                   ])),
         ],
