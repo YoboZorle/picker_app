@@ -212,4 +212,19 @@ class RideRepository extends APIClient {
       throw ServiceError('Request failed please try again.');
     }
   }
+
+  submitRideRating(FormData details, int rideId) async {
+    final String url = '/$rideId/rating';
+    try {
+      Response response = await dio.post(url, data: details);
+      return response.data;
+    } catch (e) {
+      cprint(e.response, errorIn: 'submitRideRideRating');
+      if (e.response.data != null &&
+          e.response.data['non_field_errors'] != null) {
+        throw ServiceError(e.response.data['non_field_errors'].first);
+      }
+      throw ServiceError('Request failed please try again.');
+    }
+  }
 }

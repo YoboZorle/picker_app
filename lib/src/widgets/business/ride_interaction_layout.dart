@@ -83,7 +83,7 @@ class _RideInteractionState extends State<RideInteraction> {
                       width: 45.0,
                       child: !ride.user.noProfileImage
                           ? CustomImage(
-                              imageUrl: '${APIConstants.assetsUrl}${ride.user.profileImageUrl}',
+                              imageUrl: '${ride.user.profileImageUrl}',
                             )
                           : Image.asset('assets/images/placeholder.jpg',
                               width: double.infinity, height: double.infinity),
