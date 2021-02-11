@@ -82,7 +82,7 @@ class Ride {
 
   Ride.fromMap(Map<String, dynamic> mapData)
       : id = mapData['id'] ?? null,
-      review = mapData['review'] != null ? Review.fromMap(mapData['review']): null,
+      review = mapData['rating'] != null ? Review.fromMap(mapData['rating']): null,
         pickupLocation = mapData['pickup_location'] != null
             ? Location.fromMap(mapData['pickup_location'])
             : null,

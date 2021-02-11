@@ -208,6 +208,13 @@ class BusinessRepository extends APIClient {
     await DriverRepository().persistDriverDetails(responseBody);
   }
 
+  Future<void> updateRiderBlockingStatus({String status, int riderId}) async {
+    final String url = '/business/$riderId/rider-blocking';
+    response = await dio.post(url, data: {'blocking_state': status});
+    final responseBody = response.data;
+    await DriverRepository().persistDriverDetails(responseBody);
+  }
+
   Future<dynamic> getRatedRidesBusiness(int riderId,
       {@required int page}) async {
     final String url = '/business/rider-reviews?page=$page&rider_id=$riderId';
@@ -220,9 +227,9 @@ class BusinessRepository extends APIClient {
     }
   }
 
-  Future<dynamic> getRiderHistory(int riderId,
-      {@required int page}) async {
-    final String url = '/business/rider-order-history?page=$page&rider_id=$riderId';
+  Future<dynamic> getRiderHistory(int riderId, {@required int page}) async {
+    final String url =
+        '/business/rider-order-history?page=$page&rider_id=$riderId';
     try {
       Response response = await dio.get(url);
       final responseBody = response.data;
@@ -234,7 +241,8 @@ class BusinessRepository extends APIClient {
 
   Future<dynamic> getRiderTransactions(int riderId,
       {@required int page}) async {
-    final String url = '/business/rider-transactions?page=$page&rider_id=$riderId';
+    final String url =
+        '/business/rider-transactions?page=$page&rider_id=$riderId';
     try {
       Response response = await dio.get(url);
       final responseBody = response.data;

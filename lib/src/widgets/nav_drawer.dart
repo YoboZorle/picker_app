@@ -87,6 +87,18 @@ class NavDrawer extends StatelessWidget {
               },
             ),
             ListTile(
+              onTap: () => Navigator.pushNamed(context, '/TrackDeliveries'),
+              title: Text(
+                'Track Deliveries',
+                style: TextStyle(
+                    fontWeight: FontWeight.w400,
+                    fontFamily: "Ubuntu",
+                    fontSize: 18),
+              ),
+              leading: Icon(Icons.track_changes),
+              dense: false,
+            ),
+            ListTile(
               title: Text(
                 'Support',
                 style: TextStyle(
@@ -333,7 +345,6 @@ class BusinessNavDrawer extends StatelessWidget {
                     InkWell(
                       splashColor: Colors.grey[300],
                       onTap: () {
-                        Navigator.pushNamed(context, '/BusinessProfile');
                       },
                       child: UserAccountsDrawerHeader(
                         decoration: BoxDecoration(
@@ -379,6 +390,20 @@ class BusinessNavDrawer extends StatelessWidget {
                               fontSize: 16,
                               fontFamily: 'Ubuntu')),
                       onTap: () => launch("tel://+2348076048409"),
+                    ),
+                    ListTile(
+                      leading: Icon(
+                        Icons.logout,
+                        color: Colors.grey[400],
+                      ),
+                      title: Text('Logout',
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.w400,
+                              fontSize: 16,
+                              fontFamily: 'Ubuntu')),
+                      onTap: () => BlocProvider.of<AuthenticationBloc>(context)
+                          .add(AuthenticationEvent.LOGGED_OUT),
                     ),
                     SizedBox(height: 35),
                     Container(

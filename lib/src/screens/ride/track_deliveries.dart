@@ -6,6 +6,7 @@ import 'package:pickrr_app/src/services/exceptions.dart';
 import 'package:pickrr_app/src/services/repositories/ride.dart';
 import 'package:pickrr_app/src/utils/alert_bar.dart';
 import 'package:pickrr_app/src/utils/transitionAppbar/transition_appbar.dart';
+import 'package:pickrr_app/src/widgets/arguments.dart';
 
 class TrackDeliveries extends StatefulWidget {
   @override
@@ -159,15 +160,22 @@ class _TrackDeliveriesState extends State<TrackDeliveries> {
             icon: Icon(Icons.error), duration: 5);
         return;
       }
-      var rideDetails = _rideRepository.trackRide(rideId);
+      var rideDetails = await _rideRepository.trackRide(rideId);
+      Navigator.pop(context);
       Ride ride = Ride.fromMap(rideDetails);
-      _rideInformationSheet(ride);
+      Navigator.pushNamed(context, '/RideDetails', arguments: RideArguments(ride));
     } catch (err) {
       debugLog(err);
       Navigator.pop(context);
       if (err is ServiceError) {
         AlertBar.dialog(context, err.message, Colors.red,
             icon: Icon(Icons.error), duration: 5);
+        return;
+      }
+      if (err is NotFoundError) {
+        AlertBar.dialog(context, 'Tracking code does not match any delivery!', Colors.orange,
+            icon: Icon(Icons.warning_amber_outlined), duration: 5);
+        return;
       }
       AlertBar.dialog(context, 'Request could not be completed', Colors.red,
           icon: Icon(Icons.error), duration: 5);
@@ -178,15 +186,5 @@ class _TrackDeliveriesState extends State<TrackDeliveries> {
   void dispose() {
     _trackingIdController.dispose();
     super.dispose();
-  }
-
-  _rideInformationSheet(Ride ride) {
-    showModalBottomSheet(
-        context: context,
-        builder: (BuildContext context) {
-          return SafeArea(
-            child: Text("Hello Tracker"),
-          );
-        });
   }
 }

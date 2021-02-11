@@ -187,13 +187,16 @@ class RideRepository extends APIClient {
   }
 
   trackRide(String rideId) async {
-    final String url = '/$rideId/track';
+    final String url = '/track/$rideId';
     try {
       Response response = await dio.get(url);
       final responseBody = response.data;
       return responseBody;
     } catch (e) {
       cprint(e.response, errorIn: 'trackRide');
+      if(e.response.statusCode == 404){
+        throw NotFoundError();
+      }
       if (e.response.data != null &&
           e.response.data['non_field_errors'] != null) {
         throw ServiceError(e.response.data['non_field_errors']);

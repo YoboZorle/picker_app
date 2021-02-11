@@ -27,6 +27,7 @@ class _RideDetailsState extends State<RideDetails> {
       NumberFormat.currency(locale: 'en_US', symbol: '\u20a6');
   final _storage = new FlutterSecureStorage();
   var _channel;
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
@@ -81,6 +82,7 @@ class _RideDetailsState extends State<RideDetails> {
           }
 
           return Scaffold(
+            key: _scaffoldKey,
             body: SafeArea(
               top: true,
               child: ListView(

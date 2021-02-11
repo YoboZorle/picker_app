@@ -19,6 +19,7 @@ class RideRatingDialog extends StatefulWidget {
 }
 
 class _RideRatingDialogState extends State<RideRatingDialog> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   double _rating;
   String _selectedReview;
   List<String> _reviews = [
@@ -38,6 +39,7 @@ class _RideRatingDialogState extends State<RideRatingDialog> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        key: _scaffoldKey,
         backgroundColor: Colors.white,
         appBar: AppBar(
           automaticallyImplyLeading: false,

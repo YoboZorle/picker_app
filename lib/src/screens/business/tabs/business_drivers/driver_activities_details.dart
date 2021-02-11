@@ -13,6 +13,7 @@ import 'package:pickrr_app/src/widgets/image.dart';
 
 class DriverActivitiesDetails extends StatelessWidget {
   final int riderId;
+  final BusinessRepository _businessRepository = BusinessRepository();
 
   DriverActivitiesDetails(this.riderId);
 
@@ -44,22 +45,17 @@ class DriverActivitiesDetails extends StatelessWidget {
             )),
         iconTheme: IconThemeData(color: Colors.black, size: 10.0),
         actions: <Widget>[
-          PopupMenuButton<String>(
-            onSelected: handleClick,
-            itemBuilder: (BuildContext context) {
-              return {'Delete driver'}.map((String choice) {
-                return PopupMenuItem<String>(
-                  value: choice,
-                  child: Text(choice,
-                      style: TextStyle(
-                          color: Colors.red,
-                          fontFamily: 'Ubuntu',
-                          fontWeight: FontWeight.w400,
-                          fontSize: 15)),
-                );
-              }).toList();
-            },
-          ),
+          FutureBuilder(
+              builder: (BuildContext context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.none ||
+                    snapshot.hasData == null ||
+                    !snapshot.hasData) {
+                  return Container();
+                }
+                final Driver driverDetails = snapshot.data;
+                return DriverBlocking(riderId, driverDetails.blocked);
+              },
+              future: _businessRepository.getDriverFromStorage(riderId))
         ],
       ),
       body: DefaultTabController(
@@ -121,12 +117,71 @@ class DriverActivitiesDetails extends StatelessWidget {
       ),
     );
   }
+}
 
-  void handleClick(String value) {
+class DriverBlocking extends StatefulWidget {
+  final int riderId;
+  final bool riderBlockingStatus;
+
+  DriverBlocking(this.riderId, this.riderBlockingStatus);
+
+  @override
+  _DriverBlockingState createState() => _DriverBlockingState();
+}
+
+class _DriverBlockingState extends State<DriverBlocking> {
+  final BusinessRepository _businessRepository = BusinessRepository();
+  bool _riderBlockingStatus;
+
+  @override
+  void initState() {
+    _riderBlockingStatus = widget.riderBlockingStatus;
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return PopupMenuButton<String>(
+      onSelected: _handleRiderBlockingUpdate,
+      itemBuilder: (BuildContext popUpMenuContext) {
+        Set<String> riderState = {
+          _riderBlockingStatus ? 'Unblock rider' : 'Block rider'
+        };
+        return riderState.map((String choice) {
+          return PopupMenuItem<String>(
+            value: choice,
+            child: Text(choice,
+                style: TextStyle(
+                    color: Colors.red,
+                    fontFamily: 'Ubuntu',
+                    fontWeight: FontWeight.w400,
+                    fontSize: 15)),
+          );
+        }).toList();
+      },
+    );
+  }
+
+  void _handleRiderBlockingUpdate(String value) async {
     switch (value) {
-      case 'Delete driver':
+      case 'Block rider':
+        _processRequest('block');
+        setState(() {
+          _riderBlockingStatus = true;
+        });
+        break;
+      case 'Unblock rider':
+        _processRequest('unblock');
+        setState(() {
+          _riderBlockingStatus = false;
+        });
         break;
     }
+  }
+
+  void _processRequest(String status) async {
+    await _businessRepository.updateRiderBlockingStatus(
+        status: status, riderId: widget.riderId);
   }
 }
 
