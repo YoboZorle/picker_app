@@ -7,7 +7,7 @@ import 'package:pickrr_app/src/services/repositories/user.dart';
 
 import 'bloc.dart';
 
-enum AuthenticationEvent { AUTHENTICATED, LOGGED_OUT, APP_STARTED }
+enum AuthenticationEvent { AUTHENTICATED, LOGGED_OUT, APP_STARTED, AUTHENTICATED_NO_UPDATE }
 
 class AuthenticationBloc
     extends Bloc<AuthenticationEvent, AuthenticationState> {
@@ -23,6 +23,8 @@ class AuthenticationBloc
       yield* _mapAppStartedToState();
     } else if (event == AuthenticationEvent.AUTHENTICATED) {
       yield* _mapLoggedInToState();
+    }  else if (event == AuthenticationEvent.AUTHENTICATED_NO_UPDATE) {
+      yield* _mapLoggedInToState(shouldUpdate:false);
     } else if (event == AuthenticationEvent.LOGGED_OUT) {
       var currentState = state;
       yield* _mapLoggedOutToState(currentState);
@@ -56,11 +58,12 @@ class AuthenticationBloc
     }
   }
 
-  Stream<AuthenticationState> _mapLoggedInToState() async* {
+  Stream<AuthenticationState> _mapLoggedInToState(
+      {shouldUpdate = true}) async* {
     try {
       final User user = await _userRepository.getUser();
       yield LoggedIn(user);
-      if (await isInternetConnected()) {
+      if (shouldUpdate && await isInternetConnected()) {
         yield* _loadPersistedUserDetails(user);
       }
     } catch (_) {

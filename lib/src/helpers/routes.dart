@@ -56,10 +56,9 @@ class Routes {
                   BlocProvider<AuthenticationBloc>(
                       create: (_) => AuthenticationBloc()
                         ..add(AuthenticationEvent.AUTHENTICATED)),
-              BlocProvider<BusinessStatusBloc>(
-                  create: (_) => BusinessStatusBloc()),
-                ], child: Scaffold(
-                body:  BusinessHomePage())));
+                  BlocProvider<BusinessStatusBloc>(
+                      create: (_) => BusinessStatusBloc()),
+                ], child: Scaffold(body: BusinessHomePage())));
       case "BusinessApplication":
         return SlideLeftRoute<bool>(
             builder: (BuildContext context) => BusinessApplication());
@@ -114,14 +113,12 @@ class Routes {
         return SlideLeftRoute<bool>(
             builder: (BuildContext context) => BlocProvider<AuthenticationBloc>(
                 create: (_) => AuthenticationBloc()
-                  ..add(AuthenticationEvent.AUTHENTICATED),
+                  ..add(AuthenticationEvent.AUTHENTICATED_NO_UPDATE),
                 child: RideDetails(settings.arguments)));
       case "RideRatingDialog":
         return SlideLeftRoute<bool>(
-            builder: (BuildContext context) => BlocProvider<AuthenticationBloc>(
-                create: (_) => AuthenticationBloc()
-                  ..add(AuthenticationEvent.AUTHENTICATED),
-                child: RideRatingDialog(settings.arguments)));
+            builder: (BuildContext context) =>
+                RideRatingDialog(settings.arguments));
       case "RideHistory":
         return CustomRoute<bool>(
             builder: (BuildContext context) => BlocProvider<RideOrdersBloc>(
