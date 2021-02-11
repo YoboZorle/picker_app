@@ -139,7 +139,7 @@ class Routes {
             builder: (BuildContext context) => BlocProvider<AuthenticationBloc>(
                 create: (_) => AuthenticationBloc()
                   ..add(AuthenticationEvent.AUTHENTICATED),
-                child: Home()));
+                child: Home(arguments: settings.arguments)));
       case "BusinessDetails":
         return SlideLeftRoute<bool>(
             builder: (BuildContext context) => BlocProvider<AuthenticationBloc>(

@@ -5,6 +5,7 @@ import 'package:dio/dio.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:pickrr_app/src/helpers/constants.dart';
 import 'package:pickrr_app/src/services/repositories/business.dart';
+import 'package:pickrr_app/src/widgets/arguments.dart';
 import 'package:pickrr_app/src/widgets/input.dart';
 import 'package:pickrr_app/src/utils/alert_bar.dart';
 import 'package:pickrr_app/src/helpers/utility.dart';
@@ -39,14 +40,13 @@ class _BusinessApplicationState extends State<BusinessApplication> {
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-          leading:    IconButton(
-            icon: Icon(Icons.arrow_back_ios,
-                color: Colors.black),
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back_ios, color: Colors.black),
             onPressed: () {
               Navigator.pop(context);
             },
           ),
-          title:   Text(
+          title: Text(
             'Business account',
             textAlign: TextAlign.center,
             style: TextStyle(
@@ -270,16 +270,8 @@ class _BusinessApplicationState extends State<BusinessApplication> {
 
       await _businessRepository
           .applicationRequest(new FormData.fromMap(formDetails));
-      AlertBar.dialog(context,
-          'Request has been sent. You will be contacted soon.', Colors.green,
-          icon: Icon(
-            Icons.check_circle_outline,
-            color: Colors.green,
-          ),
-          duration: 10);
-      Future.delayed(new Duration(seconds: 6), () {
-        Navigator.pushReplacementNamed(context, '/BusinessHomePage');
-      });
+      Navigator.pushReplacementNamed(context, '/HomePage',
+          arguments: AlertBarArguments(true, false));
     } catch (err) {
       debugLog(err);
       Navigator.pop(context);

@@ -13,6 +13,7 @@ import 'package:pickrr_app/src/models/driver.dart';
 import 'package:pickrr_app/src/models/ride.dart';
 import 'package:pickrr_app/src/services/repositories/driver.dart';
 import 'package:pickrr_app/src/services/repositories/ride.dart';
+import 'package:pickrr_app/src/widgets/arguments.dart';
 import 'package:pickrr_app/src/widgets/driver_appbar.dart';
 import 'package:pickrr_app/src/widgets/nav_drawer.dart';
 import 'package:geolocator/geolocator.dart';
@@ -64,11 +65,11 @@ class _DriverHomeState extends State<DriverHome> {
         "${APIConstants.wsUrl}/ws/delivery/ride-order/?token=$jwtToken");
     channel.stream.listen((response) {
       var decodedResponse = json.decode(response);
-      if (decodedResponse['type'] == 'ride_processed') {
+      if (decodedResponse['update_type'] == 'ride_processed') {
         Ride ride = Ride.fromMap(decodedResponse['ride_details']);
         _rideOrdersBloc.add(OrderRemoved(ride: ride));
       }
-      if (decodedResponse['type'] == 'ride_orders') {
+      if (decodedResponse['update_type'] == 'ride_orders') {
         Ride ride = Ride.fromMap(decodedResponse['ride_details']);
         _rideOrdersBloc.add(OrdersAdded(ride));
       }
@@ -110,17 +111,9 @@ class _DriverHomeState extends State<DriverHome> {
           BlocListener<RiderDetailsBloc, RiderDetailsState>(
             listener: (__, state) async {
               if (state is IsBlocked) {
-                Scaffold.of(context).showSnackBar(
-                  new SnackBar(
-                    content: new Text(
-                        'Your account has been blocked. Contact admin for help'),
-                  ),
-                );
-
-                new Future<Null>.delayed(Duration(seconds: 3), () {
-                  Navigator.pushNamedAndRemoveUntil(
-                      context, '/HomePage', (route) => false);
-                });
+                Navigator.pushNamedAndRemoveUntil(
+                    context, '/HomePage', (route) => false,
+                    arguments: AlertBarArguments(false, true));
                 return;
               }
 
@@ -153,8 +146,9 @@ class _DriverHomeState extends State<DriverHome> {
                   children: <Widget>[
                     Expanded(
                       flex: 0,
-                      child: BlocBuilder<AuthenticationBloc, AuthenticationState>(
-                          builder: (_, state) {
+                      child:
+                          BlocBuilder<AuthenticationBloc, AuthenticationState>(
+                              builder: (_, state) {
                         if (state is NonLoggedIn) {
                           WidgetsBinding.instance.addPostFrameCallback((_) =>
                               Navigator.pushReplacementNamed(context, '/'));
@@ -165,9 +159,10 @@ class _DriverHomeState extends State<DriverHome> {
                         return CustomerAppBar();
                       }),
                     ),
-                    Expanded(child: BlocBuilder<RideOrdersBloc, RideOrdersState>(
-                        // ignore: missing_return
-                        builder: (_, state) {
+                    Expanded(
+                        child: BlocBuilder<RideOrdersBloc, RideOrdersState>(
+                            // ignore: missing_return
+                            builder: (_, state) {
                       if (state.isFailure) {
                         return Column(
                           mainAxisAlignment: MainAxisAlignment.center,

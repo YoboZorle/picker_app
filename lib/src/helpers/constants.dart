@@ -87,9 +87,10 @@ class Shadows {
 }
 
 class APIConstants {
-  static final String httpUrl = 'http://192.168.43.105';
+  static final String httpUrl =
+      'http://192.168.43.105';
   static final String wsUrl =
-      'ws://pickrr-webapp-env-new.eba-f5va3dav.us-east-1.elasticbeanstalk.com';
+      'ws://192.168.43.105';
   static final String assetsUrl =
       'https://pickrr-storage.s3.amazonaws.com/logistics-a9e77482c84e16/';
   static final String apiUrl = '$httpUrl/api/';

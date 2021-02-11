@@ -5,6 +5,7 @@ import 'package:dio/dio.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:pickrr_app/src/helpers/constants.dart';
 import 'package:pickrr_app/src/services/repositories/driver.dart';
+import 'package:pickrr_app/src/widgets/arguments.dart';
 import 'package:pickrr_app/src/widgets/input.dart';
 import 'package:pickrr_app/src/utils/alert_bar.dart';
 import 'package:pickrr_app/src/helpers/utility.dart';
@@ -232,16 +233,8 @@ class _DriverApplicationState extends State<DriverApplication> {
           filename: fileName);
 
       await _driverRepository.driverRequest(new FormData.fromMap(formDetails));
-      AlertBar.dialog(context,
-          'Request has been sent. You will be contacted soon.', Colors.green,
-          icon: Icon(
-            Icons.check_circle_outline,
-            color: Colors.green,
-          ),
-          duration: 10);
-      Future.delayed(new Duration(seconds: 7), () {
-        Navigator.pushReplacementNamed(context, '/');
-      });
+      Navigator.pushReplacementNamed(context, '/HomePage',
+          arguments: AlertBarArguments(true, false));
     } catch (err) {
       debugLog(err);
       Navigator.pop(context);

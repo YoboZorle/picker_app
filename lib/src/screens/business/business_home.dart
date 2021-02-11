@@ -12,6 +12,7 @@ import 'package:pickrr_app/src/screens/business/tabs/business_drivers/business_d
 import 'package:pickrr_app/src/screens/business/tabs/business_wallet.dart';
 import 'package:pickrr_app/src/screens/business/tabs/ride/new_request.dart';
 import 'package:pickrr_app/src/services/repositories/business.dart';
+import 'package:pickrr_app/src/widgets/arguments.dart';
 
 class BusinessHomePage extends StatefulWidget {
   BusinessHomePage() : super();
@@ -76,17 +77,9 @@ class BusinessHomePageState extends State<BusinessHomePage>
             BlocListener<BusinessStatusBloc, BusinessStatusState>(
               listener: (__, state) async {
                 if (state is IsBlocked) {
-                  Scaffold.of(context).showSnackBar(
-                    new SnackBar(
-                      content: new Text(
-                          'Your account has been blocked. Contact admin for help'),
-                    ),
-                  );
-
-                  new Future<Null>.delayed(Duration(seconds: 3), () {
-                    Navigator.pushNamedAndRemoveUntil(
-                        context, '/HomePage', (route) => false);
-                  });
+                  Navigator.pushNamedAndRemoveUntil(
+                      context, '/HomePage', (route) => false,
+                      arguments: AlertBarArguments(false, true));
                   return;
                 }
               },

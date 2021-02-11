@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_google_places/flutter_google_places.dart';
 import 'package:google_map_polyline/google_map_polyline.dart';
@@ -15,6 +16,7 @@ import 'package:pickrr_app/src/screens/ride/receiver_details.dart';
 import 'package:pickrr_app/src/services/repositories/core.dart';
 import 'package:pickrr_app/src/services/repositories/ride.dart';
 import 'package:pickrr_app/src/utils/alert_bar.dart';
+import 'package:pickrr_app/src/widgets/arguments.dart';
 import 'package:pickrr_app/src/widgets/nav_drawer.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -22,6 +24,10 @@ import 'package:pickrr_app/src/blocs/authentication/bloc.dart';
 import 'package:pickrr_app/src/models/user.dart';
 
 class Home extends StatefulWidget {
+  final AlertBarArguments arguments;
+
+  Home({this.arguments});
+
   @override
   _HomeState createState() => _HomeState();
 }
@@ -58,6 +64,8 @@ class _HomeState extends State<Home> {
     destinationController = new TextEditingController();
     pickupController = new TextEditingController();
     googleMapPolyline = new GoogleMapPolyline(apiKey: AppData.mapAPIKey);
+    _accountBlockedAlert();
+    _applicationSubmittedAlert();
     super.initState();
   }
 
@@ -382,7 +390,7 @@ class _HomeState extends State<Home> {
                                     ),
                                     controller: pickupController,
                                     onTap: () async {
-                                      setState((){
+                                      setState(() {
                                         _clearPickupRecord();
                                       });
                                       Prediction p =
@@ -457,7 +465,7 @@ class _HomeState extends State<Home> {
                                     ),
                                     controller: destinationController,
                                     onTap: () async {
-                                      setState((){
+                                      setState(() {
                                         _clearDestinationRecord();
                                       });
                                       Prediction p =
@@ -522,27 +530,27 @@ class _HomeState extends State<Home> {
   }
 
   _clearDestinationRecord() {
-      destinationController.clear();
-      destinationCoordinate = {};
-      destination = null;
+    destinationController.clear();
+    destinationCoordinate = {};
+    destination = null;
     _clearRideDetails();
-      final int markerId =
-      markersList.indexWhere((element) => element.markerId == MarkerId('pickupMarker'));
-      if (markerId > -1) {
-        markersList.removeAt(markerId);
-      }
+    final int markerId = markersList
+        .indexWhere((element) => element.markerId == MarkerId('pickupMarker'));
+    if (markerId > -1) {
+      markersList.removeAt(markerId);
+    }
   }
 
   _clearPickupRecord() {
-      pickupController.clear();
-      pickupCoordinate = {};
-      pickupPoint = null;
-      _clearRideDetails();
-      final int markerId =
-      markersList.indexWhere((element) => element.markerId == MarkerId('pickupMarker'));
-      if (markerId > -1) {
-        markersList.removeAt(markerId);
-      }
+    pickupController.clear();
+    pickupCoordinate = {};
+    pickupPoint = null;
+    _clearRideDetails();
+    final int markerId = markersList
+        .indexWhere((element) => element.markerId == MarkerId('pickupMarker'));
+    if (markerId > -1) {
+      markersList.removeAt(markerId);
+    }
   }
 
   _clearRideDetails() {
@@ -565,7 +573,7 @@ class _HomeState extends State<Home> {
     mapController.dispose();
     destinationController.dispose();
     pickupController.dispose();
-    if(mounted){
+    if (mounted) {
       _resetState();
     }
     super.dispose();
@@ -705,6 +713,30 @@ class _HomeState extends State<Home> {
         northEastLongitudeCheck &&
         southWestLatitudeCheck &&
         southWestLongitudeCheck;
+  }
+
+  _applicationSubmittedAlert() {
+    if (widget.arguments.showSnackBar) {
+      SchedulerBinding.instance.addPostFrameCallback((_) {
+        AlertBar.dialog(context,
+            'Request has been sent. You will be contacted soon.', Colors.green,
+            icon: Icon(
+              Icons.check_circle_outline,
+              color: Colors.green,
+            ),
+            duration: 10);
+      });
+    }
+  }
+
+  _accountBlockedAlert() {
+    if (widget.arguments.showAccountBlockedSnackBar) {
+      SchedulerBinding.instance.addPostFrameCallback((_) {
+        _scaffoldKey.currentState.showSnackBar(SnackBar(
+          content: Text('Your account has been blocked. Contact admin for help'),
+        ));
+      });
+    }
   }
 }
 

@@ -16,12 +16,20 @@ class RideDetailsArguments {
       this.pickupCoordinate,
       this.destinationCoordinate,
       this.receiversFullName,
-      this.receiversPhone, this.distance, this.duration);
+      this.receiversPhone,
+      this.distance,
+      this.duration);
 }
-
 
 class RideArguments {
   Ride ride;
 
   RideArguments(this.ride);
+}
+
+class AlertBarArguments {
+  bool showSnackBar;
+  bool showAccountBlockedSnackBar;
+
+  AlertBarArguments(this.showSnackBar, this.showAccountBlockedSnackBar);
 }
