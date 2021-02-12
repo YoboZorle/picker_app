@@ -716,7 +716,7 @@ class _HomeState extends State<Home> {
   }
 
   _applicationSubmittedAlert() {
-    if (widget.arguments.showSnackBar) {
+    if (widget.arguments != null && widget.arguments.showSnackBar) {
       SchedulerBinding.instance.addPostFrameCallback((_) {
         AlertBar.dialog(context,
             'Request has been sent. You will be contacted soon.', Colors.green,
@@ -730,7 +730,7 @@ class _HomeState extends State<Home> {
   }
 
   _accountBlockedAlert() {
-    if (widget.arguments.showAccountBlockedSnackBar) {
+    if (widget.arguments != null && widget.arguments.showAccountBlockedSnackBar) {
       SchedulerBinding.instance.addPostFrameCallback((_) {
         _scaffoldKey.currentState.showSnackBar(SnackBar(
           content: Text('Your account has been blocked. Contact admin for help'),
