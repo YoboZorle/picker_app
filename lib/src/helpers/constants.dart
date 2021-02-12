@@ -98,7 +98,7 @@ class APIConstants {
 
 class AppData {
   static final String messageFrom = 'Yarner';
-  static final String mapAPIKey = 'AIzaSyAPV3djPp_HceZIbgK4M4jRadHA-d08ECg';
+  static final String mapAPIKey = 'AIzaSyBQfjEMVXYdk2hK-aEMTseqQ9e9tVFRI_8';
   static final String placeholderImageUrl = '';
   static final String currency = FlutterwaveCurrency.NGN;
   static final String flutterWaveEncryptionKey = 'db10212d5c965cc55e922ed4';
