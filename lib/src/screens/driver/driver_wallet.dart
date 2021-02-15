@@ -20,7 +20,7 @@ class _DriverWalletState extends State<DriverWallet> {
   final DriverRepository _driverRepository = DriverRepository();
   final _scrollController = ScrollController();
   final currencyFormatter =
-  NumberFormat.currency(locale: 'en_US', symbol: '\u20a6');
+      NumberFormat.currency(locale: 'en_US', symbol: '\u20a6');
   final _scrollThreshold = 200.0;
   DriverHistoryBloc _historyBloc;
 
@@ -142,8 +142,7 @@ class _DriverWalletState extends State<DriverWallet> {
         ));
   }
 
-  historyDetails(History history) =>
-      Card(
+  historyDetails(History history) => Card(
         elevation: 0,
         child: Container(
           padding: EdgeInsets.only(top: 15.0, bottom: 15.0, right: 15.0),
@@ -162,8 +161,7 @@ class _DriverWalletState extends State<DriverWallet> {
                         Container(),
                         Text("\u20A6 ${history.balance}",
                             style: TextStyle(
-                                fontSize: 16.0,
-                                fontWeight: FontWeight.bold))
+                                fontSize: 16.0, fontWeight: FontWeight.bold))
                       ],
                     ),
                     SizedBox(height: 3),
@@ -172,17 +170,18 @@ class _DriverWalletState extends State<DriverWallet> {
                       children: <Widget>[
                         Text(getFullTime(history.createdAt),
                             style: TextStyle(
-                                fontSize: 13.0,
-                                fontWeight: FontWeight.normal)),
-                        history.type == 'DEDUCTION' ? Text("- \u20A6 ${history.amount}",
-                            style: TextStyle(
-                              fontSize: 14.0,
-                              color: Colors.red[500],
-                            )) : Text("+ \u20A6 ${history.amount}",
-                            style: TextStyle(
-                              fontSize: 14.0,
-                              color: Colors.green[500],
-                            ))
+                                fontSize: 13.0, fontWeight: FontWeight.normal)),
+                        history.type == 'DEDUCTION'
+                            ? Text("- \u20A6 ${history.amount}",
+                                style: TextStyle(
+                                  fontSize: 14.0,
+                                  color: Colors.red[500],
+                                ))
+                            : Text("+ \u20A6 ${history.amount}",
+                                style: TextStyle(
+                                  fontSize: 14.0,
+                                  color: Colors.green[500],
+                                ))
                       ],
                     )
                   ],

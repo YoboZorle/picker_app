@@ -1,31 +1,47 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_paystack/flutter_paystack.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 import 'package:pickrr_app/src/blocs/authentication/bloc.dart';
 import 'package:pickrr_app/src/helpers/constants.dart';
+import 'package:pickrr_app/src/helpers/payment.dart';
 import 'package:pickrr_app/src/models/ride.dart';
 import 'package:pickrr_app/src/models/user.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:pickrr_app/src/services/repositories/ride.dart';
+import 'package:pickrr_app/src/services/repositories/wallet.dart';
 import 'package:pickrr_app/src/utils/alert_bar.dart';
 import 'package:pickrr_app/src/widgets/arguments.dart';
 import 'package:pickrr_app/src/helpers/utility.dart';
 
-class ReviewOrder extends StatelessWidget {
+class ReviewOrder extends StatefulWidget {
   final RideDetailsArguments arguments;
-  final RideRepository _rideRepository = RideRepository();
 
   ReviewOrder(this.arguments);
 
+  @override
+  _ReviewOrderState createState() => _ReviewOrderState();
+}
+
+class _ReviewOrderState extends State<ReviewOrder> {
+  final RideRepository _rideRepository = RideRepository();
+  final WalletRepository _walletRepository = WalletRepository();
   final currencyFormatter =
       NumberFormat.currency(locale: 'en_US', symbol: '\u20a6');
   final _scaffoldKey = GlobalKey<ScaffoldState>();
+  bool deactivateActionBtn = false;
 
   Future<bool> _onBackPressed(context) async {
     Navigator.of(context).popAndPushNamed('/HomePage');
     return true;
+  }
+
+  @override
+  void initState() {
+    PaystackPlugin.initialize(publicKey: AppData.paystackPublicKey);
+    super.initState();
   }
 
   @override
@@ -206,7 +222,7 @@ class ReviewOrder extends StatelessWidget {
                                               SizedBox(width: 18),
                                               Expanded(
                                                 child: Text(
-                                                  arguments.pickupCoordinate[
+                                                  widget.arguments.pickupCoordinate[
                                                           'address'] ??
                                                       '',
                                                   style: TextStyle(
@@ -270,7 +286,7 @@ class ReviewOrder extends StatelessWidget {
                                               SizedBox(width: 18),
                                               Expanded(
                                                 child: Text(
-                                                  arguments.receiversFullName
+                                                  widget.arguments.receiversFullName
                                                       .capitalize(),
                                                   style: TextStyle(
                                                       fontSize: 14.0,
@@ -297,7 +313,7 @@ class ReviewOrder extends StatelessWidget {
                                               SizedBox(width: 18),
                                               Expanded(
                                                 child: Text(
-                                                  arguments.receiversPhone,
+                                                  widget.arguments.receiversPhone,
                                                   style: TextStyle(
                                                       fontSize: 14.0,
                                                       fontFamily: "Ubuntu",
@@ -327,7 +343,7 @@ class ReviewOrder extends StatelessWidget {
                                               SizedBox(width: 18),
                                               Expanded(
                                                 child: Text(
-                                                  arguments.destinationCoordinate[
+                                                  widget.arguments.destinationCoordinate[
                                                           'address'] ??
                                                       '',
                                                   style: TextStyle(
@@ -363,7 +379,7 @@ class ReviewOrder extends StatelessWidget {
                                           ),
                                         ),
                                         Text(
-                                          arguments.duration,
+                                          widget.arguments.duration,
                                           textAlign: TextAlign.left,
                                           style: TextStyle(
                                             fontSize: 14,
@@ -392,7 +408,7 @@ class ReviewOrder extends StatelessWidget {
                                           ),
                                         ),
                                         Text(
-                                          '${arguments.distance} km',
+                                          '${widget.arguments.distance} km',
                                           textAlign: TextAlign.left,
                                           style: TextStyle(
                                             fontSize: 14,
@@ -437,7 +453,7 @@ class ReviewOrder extends StatelessWidget {
                                         ),
                                         new Text(
                                           currencyFormatter
-                                              .format(arguments.price),
+                                              .format(widget.arguments.price),
                                           maxLines: 1,
                                           textAlign: TextAlign.left,
                                           style: TextStyle(
@@ -482,7 +498,7 @@ class ReviewOrder extends StatelessWidget {
                               color: AppColor.primaryText,
                               child: Text(
                                   "Pay " +
-                                      currencyFormatter.format(arguments.price),
+                                      currencyFormatter.format(widget.arguments.price),
                                   style: TextStyle(
                                       fontFamily: "Roboto",
                                       fontWeight: FontWeight.w600,
@@ -547,31 +563,35 @@ class ReviewOrder extends StatelessWidget {
                     contentPadding:
                         EdgeInsets.only(top: 15, bottom: 15, left: 15),
                   ),
-//                  Divider(height: 0.5, color: Colors.grey[400]),
-//                  new ListTile(
-//                    dense: true,
-//                    leading: SvgPicture.asset('assets/svg/card.svg',
-//                        height: 30, semanticsLabel: 'card icon'),
-//                    title: new Text('Pay Online',
-//                        style: TextStyle(
-//                            fontSize: 17.0,
-//                            fontFamily: "Ubuntu",
-//                            color: Colors.black,
-//                            fontWeight: FontWeight.w400)),
-//                    subtitle: Text('Pay using your card details',
-//                        style: TextStyle(
-//                            fontSize: 15.0,
-//                            fontFamily: "Ubuntu",
-//                            color: Colors.grey,
-//                            fontWeight: FontWeight.w400,
-//                            height: 1.4)),
-//                    onTap: () => _initiateOnlinePayment(context, user),
-//                    trailing: Icon(Icons.arrow_forward_ios,
-//                        color: Colors.grey[400], size: 18),
-//                    contentPadding:
-//                        EdgeInsets.only(top: 15, bottom: 15, left: 15),
-//                  ),
-                  // SizedBox(height: 10),
+                 Divider(height: 0.5, color: Colors.grey[400]),
+                 new ListTile(
+                   dense: true,
+                   leading: SvgPicture.asset('assets/svg/card.svg',
+                       height: 30, semanticsLabel: 'card icon'),
+                   title: new Text('Pay Online',
+                       style: TextStyle(
+                           fontSize: 17.0,
+                           fontFamily: "Ubuntu",
+                           color: Colors.black,
+                           fontWeight: FontWeight.w400)),
+                   subtitle: Text(deactivateActionBtn ? 'Preparing online payment...' : 'Pay using your card details',
+                       style: TextStyle(
+                           fontSize: 15.0,
+                           fontFamily: "Ubuntu",
+                           color: Colors.grey,
+                           fontWeight: FontWeight.w400,
+                           height: 1.4)),
+                   onTap: deactivateActionBtn
+                       ? null
+                       : () {
+                     chargeCard(context, widget.arguments.price, user);
+                   },
+                   trailing: Icon(Icons.arrow_forward_ios,
+                       color: Colors.grey[400], size: 18),
+                   contentPadding:
+                       EdgeInsets.only(top: 15, bottom: 15, left: 15),
+                 ),
+                  SizedBox(height: 10),
                 ],
               ),
             ),
@@ -579,21 +599,33 @@ class ReviewOrder extends StatelessWidget {
         });
   }
 
-//  _initiateOnlinePayment(BuildContext context, User user) async {
-//    Navigator.pop(context);
-//    final paymentMethod = 'CARD';
-//    final onlinePayment = OnlinePayment(
-//      context: context,
-//      userName: user.fullname,
-//      userEmail: user.email,
-//      userPhone: '0${user.phone}',
-//      amount: arguments.price.toString(),
-//      onCompletePayment: (String transactionRef) =>
-//          _processOrder(context, paymentMethod, transactionId: transactionRef),
-//    );
-//
-//    return await onlinePayment.processPayment();
-//  }
+  chargeCard(BuildContext context, double amount, User user) async {
+    setState(() {
+      deactivateActionBtn = true;
+    });
+    var result = await _walletRepository.initiateTransaction(
+        new FormData.fromMap(<String, dynamic>{'amount': amount.round()}));
+    setState(() {
+      deactivateActionBtn = false;
+    });
+    final int amountInKobo = amount.round() * 100;
+    Navigator.pop(context);
+
+    Charge charge = Charge()
+      ..amount = amountInKobo
+      ..accessCode = result["access_code"]
+      ..email = user.email;
+    CheckoutResponse response = await PaystackPlugin.checkout(
+      context,
+      method: CheckoutMethod.selectable,
+      charge: charge,
+    );
+    if (response.status == true) {
+      _processOrder(context, 'CARD', transactionId: response.reference);
+    } else {
+      _showErrorDialog(context);
+    }
+  }
 
   void _processOrder(BuildContext context, String paymentMethod,
       {transactionId}) async {
@@ -602,14 +634,14 @@ class ReviewOrder extends StatelessWidget {
 
     try {
       Map<String, dynamic> formDetails = {
-        'distance_covered': arguments.distanceCovered,
-        'price': arguments.price,
-        'duration': arguments.duration,
-        'distance': arguments.distance,
-        'receiver_phone': arguments.receiversPhone,
-        'receiver_name': arguments.receiversFullName,
-        'pickup_location': arguments.pickupCoordinate['id'],
-        'delivery_location': arguments.destinationCoordinate['id'],
+        'distance_covered': widget.arguments.distanceCovered,
+        'price': widget.arguments.price,
+        'duration': widget.arguments.duration,
+        'distance': widget.arguments.distance,
+        'receiver_phone': widget.arguments.receiversPhone,
+        'receiver_name': widget.arguments.receiversFullName,
+        'pickup_location': widget.arguments.pickupCoordinate['id'],
+        'delivery_location': widget.arguments.destinationCoordinate['id'],
         'payment_method': paymentMethod
       };
 
@@ -636,5 +668,14 @@ class ReviewOrder extends StatelessWidget {
       AlertBar.dialog(context, err.message, Colors.red,
           icon: Icon(Icons.error), duration: 5);
     }
+  }
+
+  void _showErrorDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext _dialogContext) {
+        return errorDialog(_dialogContext);
+      },
+    );
   }
 }
