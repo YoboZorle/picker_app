@@ -10,7 +10,6 @@ import 'package:pickrr_app/src/models/user.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:pickrr_app/src/services/repositories/ride.dart';
 import 'package:pickrr_app/src/utils/alert_bar.dart';
-import 'package:pickrr_app/src/utils/online_payment.dart';
 import 'package:pickrr_app/src/widgets/arguments.dart';
 import 'package:pickrr_app/src/helpers/utility.dart';
 

@@ -17,6 +17,7 @@ class Business {
   final bool blocked;
   final Wallet wallet;
   final double balance;
+  final double debt;
   final String balanceHumanized;
 
   Business(
@@ -29,6 +30,7 @@ class Business {
       this.blocked,
       this.wallet,
         this.balance,
+        this.debt,
       this.balanceHumanized});
 
   Business.fromMap(Map<String, dynamic> mapData)
@@ -47,6 +49,9 @@ class Business {
             mapData['wallet'] == null
                 ? double.parse(mapData['balance'])
                 : double.parse(mapData['wallet']['balance']),
+        debt = mapData['wallet'] == null
+            ? double.parse(mapData['total_debt'])
+            : double.parse(mapData['wallet']['total_debt']),
         wallet = mapData['wallet'] == null
             ? null
             : Wallet.fromMap(mapData['wallet']);
@@ -62,6 +67,7 @@ class Business {
       'blocked': blocked == true ? 1 : 0,
       'balance_humanized': balanceHumanized,
       'balance': balance.toString(),
+      'total_debt': debt.toString(),
     };
 
     return map;

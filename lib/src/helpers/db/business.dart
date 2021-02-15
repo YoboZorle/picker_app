@@ -15,6 +15,7 @@ final String columnPhone = 'phone';
 final String columnBlocked = 'blocked';
 final String columnBalanceHumanized = 'balance_humanized';
 final String columnBalance = 'balance';
+final String columnDebt = 'total_debt';
 
 class BusinessProvider {
   Database db;
@@ -44,6 +45,7 @@ create table $tableBusiness (
   $columnPhone text,
   $columnBalanceHumanized text,
   $columnBalance text,
+  $columnDebt text,
   $columnBlocked integer)
 ''');
     });

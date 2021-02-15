@@ -1,13 +1,19 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_paystack/flutter_paystack.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pickrr_app/src/blocs/authentication/bloc.dart';
 import 'package:pickrr_app/src/blocs/business/transaction/bloc.dart';
 import 'package:pickrr_app/src/helpers/constants.dart';
+import 'package:pickrr_app/src/helpers/payment.dart';
 import 'package:pickrr_app/src/helpers/utility.dart';
 import 'package:pickrr_app/src/models/driver.dart';
 import 'package:pickrr_app/src/models/user.dart';
+import 'package:pickrr_app/src/screens/business/withdrawal.dart';
 import 'package:pickrr_app/src/services/repositories/business.dart';
+import 'package:pickrr_app/src/services/repositories/wallet.dart';
+import 'package:pickrr_app/src/utils/alert_bar.dart';
 import 'package:pickrr_app/src/widgets/nav_drawer.dart';
 import 'package:pickrr_app/src/widgets/preloader.dart';
 
@@ -20,15 +26,19 @@ class BusinessWallet extends StatefulWidget {
 
 class _BusinessWalletState extends State<BusinessWallet> {
   final BusinessRepository _businessRepository = BusinessRepository();
+  WalletRepository _walletRepository;
   final _scrollController = ScrollController();
   final _scrollThreshold = 200.0;
   BusinessTransactionBloc _historyBloc;
+  bool deactivateActionBtn = false;
 
   @override
   void initState() {
-    super.initState();
+    _walletRepository = WalletRepository();
+    PaystackPlugin.initialize(publicKey: AppData.paystackPublicKey);
     _scrollController.addListener(_onScroll);
     _historyBloc = BlocProvider.of<BusinessTransactionBloc>(context);
+    super.initState();
   }
 
   @override
@@ -75,7 +85,11 @@ class _BusinessWalletState extends State<BusinessWallet> {
                         return businessDetails.balance < 0
                             ? RaisedButton(
                                 elevation: 8,
-                                onPressed: () {},
+                                onPressed: deactivateActionBtn
+                                    ? null
+                                    : () {
+                                        chargeCard(businessDetails.debt, user);
+                                      },
                                 color: AppColor.primaryText,
                                 child: Text('Clear Debt',
                                     style: TextStyle(
@@ -85,7 +99,9 @@ class _BusinessWalletState extends State<BusinessWallet> {
                                         fontFamily: 'Ubuntu')))
                             : RaisedButton(
                                 elevation: 8,
-                                onPressed: () {},
+                                onPressed: () {
+                                  showWithdraw();
+                                },
                                 color: AppColor.primaryText,
                                 child: Text('Withdraw',
                                     style: TextStyle(
@@ -142,10 +158,9 @@ class _BusinessWalletState extends State<BusinessWallet> {
                                         style: TextStyle(
                                             fontSize: 13,
                                             fontWeight: FontWeight.w400,
-                                            color:
-                                                businessDetails.balance < 0
-                                                    ? Colors.red
-                                                    : Colors.green)),
+                                            color: businessDetails.balance < 0
+                                                ? Colors.red
+                                                : Colors.green)),
                                     Text(
                                         '\u20A6 ${businessDetails.balanceHumanized}',
                                         style: TextStyle(
@@ -224,7 +239,8 @@ class _BusinessWalletState extends State<BusinessWallet> {
   historyDetails(History history) => Card(
         elevation: 0,
         child: Container(
-          padding: EdgeInsets.only(top: 15.0, bottom: 15.0, right: 15.0, left: 15),
+          padding:
+              EdgeInsets.only(top: 15.0, bottom: 15.0, right: 15.0, left: 15),
           decoration: BoxDecoration(
               color: Colors.white, borderRadius: BorderRadius.circular(22.0)),
           child: Row(
@@ -285,5 +301,88 @@ class _BusinessWalletState extends State<BusinessWallet> {
     if (maxScroll - currentScroll <= _scrollThreshold) {
       _historyBloc.add(BusinessTransactionFetched());
     }
+  }
+
+  void showWithdraw() {
+    showModalBottomSheet(
+        context: context,
+        isDismissible: false,
+        builder: (BuildContext bc) {
+          return SafeArea(
+            child: BalanceWithdrawal(onFinishProcess: _onFinishProcess),
+          );
+        });
+  }
+
+  chargeCard(double amount, User user) async {
+    setState(() {
+      deactivateActionBtn = true;
+    });
+    var result = await _walletRepository.initiateTransaction(
+        new FormData.fromMap(<String, dynamic>{'amount': amount.round()}));
+    setState(() {
+      deactivateActionBtn = false;
+    });
+    final int amountInKobo = amount.round() * 100;
+
+    Charge charge = Charge()
+      ..amount = amountInKobo
+      ..accessCode = result["access_code"]
+      ..email = user.email;
+    CheckoutResponse response = await PaystackPlugin.checkout(
+      context,
+      method: CheckoutMethod.selectable,
+      // Defaults to CheckoutMethod.selectable
+      charge: charge,
+    );
+    if (response.status == true) {
+      await _submitPaymentRequest(response.reference);
+    } else {
+      _showErrorDialog();
+    }
+  }
+
+  _submitPaymentRequest(String transactionReference) async {
+    AlertBar.dialog(
+        context, 'Processing payment. Please wait...', AppColor.primaryText,
+        showProgressIndicator: true, duration: null);
+
+    try {
+      Map<String, dynamic> formDetails = {
+        'transaction_id': transactionReference
+      };
+
+      await _walletRepository
+          .settleBusinessDebt(new FormData.fromMap(formDetails));
+      Navigator.pop(context);
+      setState(() {});
+      _showSuccessDialog();
+    } catch (err) {
+      debugLog(err);
+      Navigator.pop(context);
+      _showErrorDialog();
+    }
+  }
+
+  void _showErrorDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return errorDialog(context);
+      },
+    );
+  }
+
+  void _showSuccessDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return successDialog(context);
+      },
+    );
+  }
+
+  void _onFinishProcess() {
+    setState(() {});
   }
 }

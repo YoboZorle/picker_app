@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:pickrr_app/src/helpers/constants.dart';
 
 class InputField extends StatelessWidget {
@@ -6,8 +7,15 @@ class InputField extends StatelessWidget {
   final String hintText;
   final VoidCallback onPressed;
   final TextInputType inputType;
+  final List<TextInputFormatter> inputFormatters;
+  final ValueChanged<String> onChanged;
 
-  InputField({this.inputController, this.hintText, this.onPressed, this.inputType=TextInputType.name});
+  InputField(
+      {this.inputController,
+      this.hintText,
+      this.onPressed,
+      this.inputType = TextInputType.name,
+      this.inputFormatters, this.onChanged});
 
   @override
   Widget build(BuildContext context) {
@@ -19,10 +27,12 @@ class InputField extends StatelessWidget {
             child: Container(
               width: MediaQuery.of(context).size.width,
               margin: EdgeInsets.only(left: 0),
-              child: TextFormField(
+              child: TextField(
                 keyboardType: inputType,
                 cursorColor: AppColor.primaryText,
                 controller: inputController,
+                inputFormatters: inputFormatters,
+                  onChanged: onChanged,
                 style: TextStyle(
                     fontSize: 16.0,
                     fontFamily: 'Ubuntu',

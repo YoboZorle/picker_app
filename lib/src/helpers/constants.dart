@@ -100,8 +100,5 @@ class AppData {
   static final String messageFrom = 'Yarner';
   static final String mapAPIKey = 'AIzaSyBQfjEMVXYdk2hK-aEMTseqQ9e9tVFRI_8';
   static final String placeholderImageUrl = '';
-  static final String currency = FlutterwaveCurrency.NGN;
-  static final String flutterWaveEncryptionKey = 'db10212d5c965cc55e922ed4';
-  static final String flutterWavePublicKey =
-      'FLWPUBK-3bc543698de65afc2bcea532aee80c6d-X';
+  static final String paystackPublicKey = 'pk_test_86e8c322ffb87ea63619ef63272f40237f0175a2';
 }

@@ -105,6 +105,10 @@ class BusinessRepository extends APIClient {
     await _persistBusinessDetails(businessResponse);
   }
 
+  Future<void> persistBusinessDetails(rawData) async {
+    await _persistBusinessDetails(rawData);
+  }
+
   Future<dynamic> getBusinessTransactions({int page}) async {
     final String url = '/business/transactions?page=$page';
     try {
