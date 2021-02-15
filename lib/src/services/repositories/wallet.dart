@@ -40,6 +40,23 @@ class WalletRepository extends APIClient {
     }
   }
 
+  Future<dynamic> withdrawFromDriver(FormData details) async {
+    final String url = '/withdrawal/driver';
+
+    try {
+      response = await dio.post(url, data: details);
+      final responseBody = response.data;
+      return responseBody;
+    } catch (err) {
+      cprint(err.response, errorIn: 'withdrawFromDriver');
+      if (err.response.data != null &&
+          err.response.data['non_field_errors'] != null) {
+        throw ServiceError(err.response.data['non_field_errors'].first);
+      }
+      throw ServiceError('Request failed, please try again.');
+    }
+  }
+
   Future<dynamic> initiateTransaction(FormData details) async {
     final String url = '/initiate-transaction';
 
@@ -66,6 +83,23 @@ class WalletRepository extends APIClient {
       await BusinessRepository().persistBusinessDetails(responseBody);
     } catch (err) {
       cprint(err.response, errorIn: 'settleBusinessDebt');
+      if (err.response.data != null &&
+          err.response.data['non_field_errors'] != null) {
+        throw ServiceError(err.response.data['non_field_errors'].first);
+      }
+      throw ServiceError('Request failed, please try again.');
+    }
+  }
+
+  Future<void> settleDriverDebt(FormData details) async {
+    final String url = '/settle-driver-debt';
+
+    try {
+      response = await dio.post(url, data: details);
+      final responseBody = response.data;
+      return responseBody;
+    } catch (err) {
+      cprint(err.response, errorIn: 'settleDriverDebt');
       if (err.response.data != null &&
           err.response.data['non_field_errors'] != null) {
         throw ServiceError(err.response.data['non_field_errors'].first);

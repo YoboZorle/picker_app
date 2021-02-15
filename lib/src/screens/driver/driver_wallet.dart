@@ -1,12 +1,21 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_paystack/flutter_paystack.dart';
+import 'package:pickrr_app/src/blocs/authentication/bloc.dart';
+import 'package:pickrr_app/src/helpers/constants.dart';
 import 'package:intl/intl.dart';
 import 'package:pickrr_app/src/blocs/driver/driver_history/bloc.dart';
+import 'package:pickrr_app/src/helpers/payment.dart';
 import 'package:pickrr_app/src/helpers/utility.dart';
 import 'package:pickrr_app/src/models/driver.dart';
+import 'package:pickrr_app/src/models/user.dart';
+import 'package:pickrr_app/src/models/wallet.dart';
+import 'package:pickrr_app/src/screens/business/withdrawal.dart';
 import 'package:pickrr_app/src/services/repositories/driver.dart';
-import 'package:pickrr_app/src/utils/transitionAppbar/transition_appbar.dart';
+import 'package:pickrr_app/src/services/repositories/wallet.dart';
+import 'package:pickrr_app/src/utils/alert_bar.dart';
 import 'package:pickrr_app/src/widgets/preloader.dart';
 
 class DriverWallet extends StatefulWidget {
@@ -18,15 +27,18 @@ class DriverWallet extends StatefulWidget {
 
 class _DriverWalletState extends State<DriverWallet> {
   final DriverRepository _driverRepository = DriverRepository();
+  WalletRepository _walletRepository = WalletRepository();
   final _scrollController = ScrollController();
   final currencyFormatter =
       NumberFormat.currency(locale: 'en_US', symbol: '\u20a6');
   final _scrollThreshold = 200.0;
   DriverHistoryBloc _historyBloc;
+  bool deactivateActionBtn = false;
 
   @override
   void initState() {
     super.initState();
+    PaystackPlugin.initialize(publicKey: AppData.paystackPublicKey);
     _scrollController.addListener(_onScroll);
     _historyBloc = BlocProvider.of<DriverHistoryBloc>(context);
   }
@@ -42,46 +54,92 @@ class _DriverWalletState extends State<DriverWallet> {
           body: SafeArea(
             child: CustomScrollView(
               slivers: <Widget>[
-                TransitionAppBar(
-                  extent: 100,
-                  avatar: Text("Total balance",
-                      style: TextStyle(
-                        fontWeight: FontWeight.w400,
-                        fontFamily: 'Ubuntu',
-                        fontSize: 15,
-                      )),
-                  title: Container(
-                    margin: EdgeInsets.only(left: 20.0, right: 20),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(5.0))),
-                    child: Row(children: <Widget>[
-                      FutureBuilder(
-                        builder: (context, snapshot) {
-                          if (snapshot.connectionState ==
-                                  ConnectionState.none ||
-                              snapshot.hasData == null ||
-                              !snapshot.hasData) {
-                            return SizedBox(
-                              width: 15,
-                              height: 15,
-                              child: CircularProgressIndicator(
-                                strokeWidth: 1.5,
-                              ),
-                            );
+                SliverList(
+                    delegate: SliverChildListDelegate([
+                  FutureBuilder(
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.none ||
+                            snapshot.hasData == null ||
+                            !snapshot.hasData) {
+                          return Container();
+                        }
+                        final driverDetails = snapshot.data;
+                        final Wallet wallet = Wallet.fromMap(driverDetails);
+                        return BlocBuilder<AuthenticationBloc,
+                            AuthenticationState>(builder: (_, state) {
+                          if (state is NonLoggedIn) {
+                            WidgetsBinding.instance.addPostFrameCallback((_) =>
+                                Navigator.pushReplacementNamed(context, '/'));
                           }
-                          final driverDetails = snapshot.data;
-                          return Text("\u20A6 ${driverDetails['balance']}",
-                              style: TextStyle(
-                                fontWeight: FontWeight.w800,
-                                fontSize: 27,
-                              ));
-                        },
-                        future: _driverRepository.getDriverWalletDetails(),
-                      ),
-                      Expanded(child: SizedBox()),
-                    ]),
-                  ),
-                ),
+                          if (state.props.isEmpty) {
+                            return Container();
+                          }
+                          User user = state.props[0];
+
+                          return Column(
+                            children: [
+                              wallet.balance < 0
+                                  ? Container(
+                                      child: RaisedButton(
+                                          elevation: 8,
+                                          onPressed: deactivateActionBtn
+                                              ? null
+                                              : () {
+                                                  chargeCard(wallet.debts, user);
+                                                },
+                                          color: AppColor.primaryText,
+                                          child: Text('Clear Debt',
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.w500,
+                                                  fontSize: 14,
+                                                  fontFamily: 'Ubuntu'))),
+                                      margin:
+                                          EdgeInsets.only(right: 15, top: 10),
+                                      alignment: Alignment.topRight,
+                                    )
+                                  : Container(
+                                      margin:
+                                          EdgeInsets.only(right: 15, top: 10),
+                                      alignment: Alignment.topRight,
+                                      child: RaisedButton(
+                                          elevation: 8,
+                                          onPressed: () {
+                                            showWithdraw();
+                                          },
+                                          color: AppColor.primaryText,
+                                          child: Text('Withdraw',
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.w500,
+                                                  fontSize: 14,
+                                                  fontFamily: 'Ubuntu'))),
+                                    ),
+                              SizedBox(height: 10),
+                              Center(
+                                child: Column(
+                                  children: [
+                                    Text('Balance',
+                                        style: TextStyle(
+                                            fontSize: 13,
+                                            fontWeight: FontWeight.w400,
+                                            color: wallet.balance < 0
+                                                ? Colors.red
+                                                : Colors.green)),
+                                    Text('\u20A6 ${wallet.balanceHumanized}',
+                                        style: TextStyle(
+                                            fontSize: 25,
+                                            fontWeight: FontWeight.w400,
+                                            color: Colors.black)),
+                                  ],
+                                ),
+                              )
+                            ],
+                          );
+                        });
+                      },
+                      future: _driverRepository.getDriverWalletDetails()),
+                ])),
                 SliverList(
                   delegate: SliverChildListDelegate(
                     [
@@ -145,7 +203,8 @@ class _DriverWalletState extends State<DriverWallet> {
   historyDetails(History history) => Card(
         elevation: 0,
         child: Container(
-          padding: EdgeInsets.only(top: 15.0, bottom: 15.0, right: 15.0),
+          padding:
+              EdgeInsets.only(top: 15.0, bottom: 15.0, right: 15.0, left: 15.0),
           decoration: BoxDecoration(
               color: Colors.white, borderRadius: BorderRadius.circular(22.0)),
           child: Row(
@@ -206,5 +265,87 @@ class _DriverWalletState extends State<DriverWallet> {
     if (maxScroll - currentScroll <= _scrollThreshold) {
       _historyBloc.add(DriverHistoryFetched());
     }
+  }
+
+  void showWithdraw() {
+    showModalBottomSheet(
+        context: context,
+        isDismissible: false,
+        builder: (BuildContext bc) {
+          return SafeArea(
+            child: BalanceWithdrawalDriver(onFinishProcess: _onFinishProcess),
+          );
+        });
+  }
+
+  chargeCard(double amount, User user) async {
+    setState(() {
+      deactivateActionBtn = true;
+    });
+    var result = await _walletRepository.initiateTransaction(
+        new FormData.fromMap(<String, dynamic>{'amount': amount.round()}));
+    setState(() {
+      deactivateActionBtn = false;
+    });
+    final int amountInKobo = amount.round() * 100;
+
+    Charge charge = Charge()
+      ..amount = amountInKobo
+      ..accessCode = result["access_code"]
+      ..email = user.email;
+    CheckoutResponse response = await PaystackPlugin.checkout(
+      context,
+      method: CheckoutMethod.selectable,
+      charge: charge,
+    );
+    if (response.status == true) {
+      await _submitPaymentRequest(response.reference);
+    } else {
+      _showErrorDialog();
+    }
+  }
+
+  _submitPaymentRequest(String transactionReference) async {
+    AlertBar.dialog(
+        context, 'Processing payment. Please wait...', AppColor.primaryText,
+        showProgressIndicator: true, duration: null);
+
+    try {
+      Map<String, dynamic> formDetails = {
+        'transaction_id': transactionReference
+      };
+
+      await _walletRepository
+          .settleDriverDebt(new FormData.fromMap(formDetails));
+      Navigator.pop(context);
+      setState(() {});
+      _showSuccessDialog();
+    } catch (err) {
+      debugLog(err);
+      Navigator.pop(context);
+      _showErrorDialog();
+    }
+  }
+
+  void _showErrorDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return errorDialog(context);
+      },
+    );
+  }
+
+  void _showSuccessDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return successDialog(context);
+      },
+    );
+  }
+
+  void _onFinishProcess() {
+    setState(() {});
   }
 }

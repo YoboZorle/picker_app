@@ -332,7 +332,6 @@ class _BusinessWalletState extends State<BusinessWallet> {
     CheckoutResponse response = await PaystackPlugin.checkout(
       context,
       method: CheckoutMethod.selectable,
-      // Defaults to CheckoutMethod.selectable
       charge: charge,
     );
     if (response.status == true) {

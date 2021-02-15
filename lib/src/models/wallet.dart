@@ -2,14 +2,18 @@ class Wallet {
   final int id;
   final double balance;
   final double debts;
+  final String balanceHumanized;
 
-  Wallet({this.id, this.balance, this.debts});
+  Wallet({this.id, this.balance, this.debts, this.balanceHumanized});
 
   Wallet.fromMap(Map<String, dynamic> mapData)
       : id = mapData['id'],
         balance =
             mapData['balance'] != null ? double.parse(mapData['balance']) : 0,
-        debts = mapData['total_debt'] != null ? double.parse(mapData['total_debt']) : 0;
+        balanceHumanized = mapData['balance_humanized'] ?? '0',
+        debts = mapData['total_debt'] != null
+            ? double.parse(mapData['total_debt'])
+            : 0;
 
   Map<String, dynamic> toMap() {
     var map = {'id': id, 'balance': balance, 'total_debt': debts};

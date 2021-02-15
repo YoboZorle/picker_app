@@ -7,7 +7,12 @@ import 'package:pickrr_app/src/services/repositories/user.dart';
 
 import 'bloc.dart';
 
-enum AuthenticationEvent { AUTHENTICATED, LOGGED_OUT, APP_STARTED, AUTHENTICATED_NO_UPDATE }
+enum AuthenticationEvent {
+  AUTHENTICATED,
+  LOGGED_OUT,
+  APP_STARTED,
+  AUTHENTICATED_NO_UPDATE
+}
 
 class AuthenticationBloc
     extends Bloc<AuthenticationEvent, AuthenticationState> {
@@ -23,8 +28,8 @@ class AuthenticationBloc
       yield* _mapAppStartedToState();
     } else if (event == AuthenticationEvent.AUTHENTICATED) {
       yield* _mapLoggedInToState();
-    }  else if (event == AuthenticationEvent.AUTHENTICATED_NO_UPDATE) {
-      yield* _mapLoggedInToState(shouldUpdate:false);
+    } else if (event == AuthenticationEvent.AUTHENTICATED_NO_UPDATE) {
+      yield* _mapLoggedInToState(shouldUpdate: false);
     } else if (event == AuthenticationEvent.LOGGED_OUT) {
       var currentState = state;
       yield* _mapLoggedOutToState(currentState);
@@ -73,12 +78,15 @@ class AuthenticationBloc
 
   Stream<AuthenticationState> _mapLoggedOutToState(
       AuthenticationState currentState) async* {
-    await _userRepository.signOutFromDevice();
-    if (currentState is LoggedIn) {
-      final User user = currentState.props.first;
-      UserProvider helper = UserProvider.instance;
-      helper.delete(user.id);
+    if (await isInternetConnected()) {
+      if (currentState is LoggedIn) {
+        await _userRepository.removeDevice();
+        final User user = currentState.props.first;
+        UserProvider helper = UserProvider.instance;
+        helper.delete(user.id);
+      }
+      await _userRepository.signOutFromDevice();
+      yield NonLoggedIn();
     }
-    yield NonLoggedIn();
   }
 }

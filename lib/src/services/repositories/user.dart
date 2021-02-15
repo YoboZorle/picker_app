@@ -134,4 +134,16 @@ class UserRepository extends APIClient {
       throw ServiceError(e);
     }
   }
+
+  removeDevice() async {
+    final String url = '/remove-device';
+
+    try {
+      response = await dio.post(url);
+    } catch (e) {
+      print(e);
+      cprint(e, errorIn: 'removeDevice');
+      throw ServiceError(e);
+    }
+  }
 }
