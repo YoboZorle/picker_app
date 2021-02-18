@@ -345,6 +345,14 @@ class _LoginState extends State<Login> {
           .add(AuthenticationEvent.AUTHENTICATED);
     } catch (err) {
       Navigator.pop(context);
+      if (err.message.response != null) {
+        if (err.message.response.data != null &&
+            err.message.response.data['non_field_errors'] != null) {
+          AlertBar.dialog(context, err.message.response.data['non_field_errors'].first, Colors.red,
+              icon: Icon(Icons.error), duration: 5);
+        }
+        return;
+      }
       AlertBar.dialog(context, 'Request failed. please try again', Colors.red,
           icon: Icon(Icons.error), duration: 5);
     }

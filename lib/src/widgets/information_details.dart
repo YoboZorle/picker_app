@@ -86,7 +86,7 @@ class _RideInformationWidgetState extends State<RideInformationWidget> {
                                 fontWeight: FontWeight.w400,
                                 height: 1.5),
                           )
-                        : Container(),
+                        : TextSpan(),
                     WidgetSpan(
                       child: Padding(
                         padding: const EdgeInsets.all(4.0),
