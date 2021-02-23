@@ -37,7 +37,7 @@ class _RiderOrderHistoryState extends State<RiderOrderHistory> {
             elevation: 0,
             brightness: Brightness.light,
             backgroundColor: Colors.white,
-            title:  Text(
+            title: Text(
               'Order History',
               style: TextStyle(
                   fontFamily: "Ubuntu",
@@ -53,8 +53,9 @@ class _RiderOrderHistoryState extends State<RiderOrderHistory> {
                 icon: Icon(Icons.arrow_back_ios, color: Colors.black))),
         body: SafeArea(
           child:
-          // ignore: missing_return
-          BlocBuilder<RiderOrdersHistoryBloc, RiderOrdersState>(builder: (_, state) {
+              BlocBuilder<RiderOrdersHistoryBloc, RiderOrdersState>(
+                  // ignore: missing_return
+                  builder: (_, state) {
             if (state.isFailure) {
               return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -79,17 +80,24 @@ class _RiderOrderHistoryState extends State<RiderOrderHistory> {
               );
             }
             if (state.isSuccess) {
-              return CustomScrollView(controller: _scrollController, slivers: <
-                  Widget>[
-                SliverList(
-                    delegate: SliverChildBuilderDelegate(
-                          (BuildContext context, int index) {
+              return CustomScrollView(
+                  controller: _scrollController,
+                  slivers: <Widget>[
+                    SliverList(
+                        delegate: SliverChildBuilderDelegate(
+                      (BuildContext context, int index) {
                         if (index >= state.rides.length) {
                           return PreLoader();
                         }
                         Ride ride = state.rides[index];
                         return InkWell(
-                          onTap: () => Navigator.pushNamed(context, '/RideDetails', arguments: RideArguments(ride)),
+                          onTap: () {
+                            if (ride.status != 'PENDING' &&
+                                ride.status != 'INPROGRESS') {
+                              Navigator.pushNamed(context, '/RideDetails',
+                                  arguments: RideArguments(ride));
+                            }
+                          },
                           child: Column(
                             children: [
                               SizedBox(height: 10),
@@ -109,7 +117,8 @@ class _RiderOrderHistoryState extends State<RiderOrderHistory> {
                                           height: 1.6),
                                     ),
                                     subtitle: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         Text(
                                           getFullTime(ride.createdAt),
@@ -136,7 +145,7 @@ class _RiderOrderHistoryState extends State<RiderOrderHistory> {
                           ? state.rides.length
                           : state.rides.length + 1,
                     ))
-              ]);
+                  ]);
             }
           }),
         ),
@@ -158,5 +167,4 @@ class _RiderOrderHistoryState extends State<RiderOrderHistory> {
       _riderOrdersHistoryBloc.add(RiderOrdersFetched());
     }
   }
-
 }

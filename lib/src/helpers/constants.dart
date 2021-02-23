@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutterwave/flutterwave.dart';
 
 class Borders {
   static final BorderSide primaryBorder = BorderSide(
@@ -100,5 +99,5 @@ class AppData {
   static final String messageFrom = 'Yarner';
   static final String mapAPIKey = 'AIzaSyBQfjEMVXYdk2hK-aEMTseqQ9e9tVFRI_8';
   static final String placeholderImageUrl = '';
-  static final String paystackPublicKey = 'pk_test_86e8c322ffb87ea63619ef63272f40237f0175a2';
+  static final String paystackPublicKey = 'pk_live_75ef37cbb02feae191b608d74339e3cdad53bc13';
 }

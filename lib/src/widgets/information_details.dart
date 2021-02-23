@@ -23,7 +23,7 @@ class _RideInformationWidgetState extends State<RideInformationWidget> {
   @override
   Widget build(BuildContext context) {
     if (widget.rideDetails.status == 'CANCELED') {
-      return cancelRideWidge();
+      return cancelRideWidget();
     }
     if (widget.rideDetails.status == 'DELIVERED') {
       return deliveredRideWidget();
@@ -182,14 +182,16 @@ class _RideInformationWidgetState extends State<RideInformationWidget> {
                     color: Colors.black87,
                     fontWeight: FontWeight.w500)),
           ),
-          onTap: () async => cancelRide(context, widget.rideDetails.id,
-              nextRoute: '/RideHistory'),
+          onTap: () {
+            Navigator.popUntil(
+                context, (Route<dynamic> route) => route is PageRoute);
+          },
         ),
       ],
     );
   }
 
-  Widget cancelRideWidge() => Column(
+  Widget cancelRideWidget() => Column(
         children: [
           Container(
               color: Colors.white,
@@ -241,21 +243,21 @@ class _RideInformationWidgetState extends State<RideInformationWidget> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(widget.rideDetails.pickupLocation.address,
+                              SelectableText(widget.rideDetails.pickupLocation.address,
                                   style: TextStyle(
                                       fontSize: 16,
                                       fontFamily: 'Ubuntu',
                                       color: Colors.black,
                                       fontWeight: FontWeight.w500)),
                               SizedBox(height: 4),
-                              Text(widget.rideDetails.user.fullname,
+                              SelectableText(widget.rideDetails.user.fullname,
                                   style: TextStyle(
                                       fontSize: 15,
                                       fontFamily: 'Ubuntu',
                                       color: Colors.black87,
                                       fontWeight: FontWeight.w400)),
                               SizedBox(height: 4),
-                              Text(
+                              SelectableText(
                                   '+${widget.rideDetails.user.callingCode + widget.rideDetails.user.phone}',
                                   style: TextStyle(
                                       fontSize: 15,
@@ -296,21 +298,21 @@ class _RideInformationWidgetState extends State<RideInformationWidget> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(widget.rideDetails.deliveryLocation.address,
+                              SelectableText(widget.rideDetails.deliveryLocation.address,
                                   style: TextStyle(
                                       fontSize: 16,
                                       fontFamily: 'Ubuntu',
                                       color: Colors.black,
                                       fontWeight: FontWeight.w500)),
                               SizedBox(height: 4),
-                              Text(widget.rideDetails.receiverName,
+                              SelectableText(widget.rideDetails.receiverName,
                                   style: TextStyle(
                                       fontSize: 15,
                                       fontFamily: 'Ubuntu',
                                       color: Colors.black87,
                                       fontWeight: FontWeight.w400)),
                               SizedBox(height: 4),
-                              Text(
+                              SelectableText(
                                   '+${widget.rideDetails.user.callingCode + widget.rideDetails.receiverPhone}',
                                   style: TextStyle(
                                       fontSize: 15,
@@ -408,6 +410,27 @@ class _RideInformationWidgetState extends State<RideInformationWidget> {
                       ],
                     ),
                   ])),
+          Container(
+              color: Colors.white,
+              margin: EdgeInsets.only(top: 15),
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text('Ride ID',
+                      style: TextStyle(
+                          fontSize: 12,
+                          fontFamily: 'Ubuntu',
+                          color: Colors.black45,
+                          fontWeight: FontWeight.w400)),
+                  SelectableText(widget.rideDetails.rideId,
+                      style: TextStyle(
+                          fontSize: 17,
+                          fontFamily: 'Ubuntu',
+                          color: Colors.black45,
+                          fontWeight: FontWeight.w400)),
+                ],
+              )),
         ],
       );
 
@@ -463,21 +486,21 @@ class _RideInformationWidgetState extends State<RideInformationWidget> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(widget.rideDetails.pickupLocation.address,
+                              SelectableText(widget.rideDetails.pickupLocation.address,
                                   style: TextStyle(
                                       fontSize: 16,
                                       fontFamily: 'Ubuntu',
                                       color: Colors.black,
                                       fontWeight: FontWeight.w500)),
                               SizedBox(height: 4),
-                              Text(widget.rideDetails.user.fullname,
+                              SelectableText(widget.rideDetails.user.fullname,
                                   style: TextStyle(
                                       fontSize: 15,
                                       fontFamily: 'Ubuntu',
                                       color: Colors.black87,
                                       fontWeight: FontWeight.w400)),
                               SizedBox(height: 4),
-                              Text(
+                              SelectableText(
                                   '+${widget.rideDetails.user.callingCode + widget.rideDetails.user.phone}',
                                   style: TextStyle(
                                       fontSize: 15,
@@ -518,21 +541,21 @@ class _RideInformationWidgetState extends State<RideInformationWidget> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(widget.rideDetails.deliveryLocation.address,
+                              SelectableText(widget.rideDetails.deliveryLocation.address,
                                   style: TextStyle(
                                       fontSize: 16,
                                       fontFamily: 'Ubuntu',
                                       color: Colors.black,
                                       fontWeight: FontWeight.w500)),
                               SizedBox(height: 4),
-                              Text(widget.rideDetails.receiverName,
+                              SelectableText(widget.rideDetails.receiverName,
                                   style: TextStyle(
                                       fontSize: 15,
                                       fontFamily: 'Ubuntu',
                                       color: Colors.black87,
                                       fontWeight: FontWeight.w400)),
                               SizedBox(height: 4),
-                              Text(
+                              SelectableText(
                                   '+${widget.rideDetails.user.callingCode + widget.rideDetails.receiverPhone}',
                                   style: TextStyle(
                                       fontSize: 15,
@@ -656,7 +679,8 @@ class _RideInformationWidgetState extends State<RideInformationWidget> {
                                   child: Container(
                                 height: 45.0,
                                 width: 45.0,
-                                child: !widget.rideDetails.rider.details.noProfileImage
+                                child: !widget.rideDetails.rider.details
+                                        .noProfileImage
                                     ? CustomImage(
                                         imageUrl:
                                             '${widget.rideDetails.rider.details.profileImageUrl}',
@@ -681,7 +705,8 @@ class _RideInformationWidgetState extends State<RideInformationWidget> {
                                 allowHalfRating: true,
                                 onRatingChanged: (value) {},
                                 starCount: 5,
-                                rating: widget.rideDetails.review.star.toDouble(),
+                                rating:
+                                    widget.rideDetails.review.star.toDouble(),
                                 size: 11.0,
                                 color: Colors.amber,
                                 borderColor: Colors.grey[400],
@@ -692,15 +717,16 @@ class _RideInformationWidgetState extends State<RideInformationWidget> {
                           subtitle: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                  widget.rideDetails.review.review,
+                              Text(widget.rideDetails.review.review,
                                   style: TextStyle(
                                       fontSize: 14,
                                       fontFamily: "Ubuntu",
                                       height: 1.35,
                                       color: Colors.black,
                                       fontWeight: FontWeight.w400)),
-                              Text(getChatTime( widget.rideDetails.review.createdAt),
+                              Text(
+                                  getChatTime(
+                                      widget.rideDetails.review.createdAt),
                                   style: TextStyle(
                                       fontSize: 12.0,
                                       fontFamily: "Ubuntu",
@@ -712,6 +738,27 @@ class _RideInformationWidgetState extends State<RideInformationWidget> {
                         ),
                       ]))
               : Container(),
+          Container(
+              color: Colors.white,
+              margin: EdgeInsets.only(top: 15),
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text('Ride ID: ',
+                      style: TextStyle(
+                          fontSize: 12,
+                          fontFamily: 'Ubuntu',
+                          color: Colors.black45,
+                          fontWeight: FontWeight.w400)),
+                  SelectableText(widget.rideDetails.rideId,
+                      style: TextStyle(
+                          fontSize: 17,
+                          fontFamily: 'Ubuntu',
+                          color: Colors.black,
+                          fontWeight: FontWeight.w400)),
+                ],
+              ))
         ],
       );
 }

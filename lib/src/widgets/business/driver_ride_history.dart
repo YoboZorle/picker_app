@@ -81,8 +81,13 @@ class _DriverRideHistoryState extends State<DriverRideHistory> {
                   }
                   Ride ride = state.rides[index];
                   return InkWell(
-                    onTap: () => Navigator.pushNamed(context, '/RideDetails',
-                        arguments: RideArguments(ride)),
+                    onTap: () {
+                      if (ride.status != 'PENDING' &&
+                          ride.status != 'INPROGRESS') {
+                        Navigator.pushNamed(context, '/RideDetails',
+                            arguments: RideArguments(ride));
+                      }
+                    },
                     child: Column(
                       children: [
                         SizedBox(height: 10),
