@@ -7,6 +7,35 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:504755289184:android:d8f2f3192eb272cf491705",
+        "android_client_info": {
+          "package_name": "io.klynox.pickrr"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "504755289184-jhot0np6npo9hrukjfhvlivks3flcguu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAePkXZul5uH5mM1niSVlkbMO93NcD1V68"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "504755289184-jhot0np6npo9hrukjfhvlivks3flcguu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:504755289184:android:6be1894bcad8b20e491705",
         "android_client_info": {
           "package_name": "io.klynox.pickrr_app"

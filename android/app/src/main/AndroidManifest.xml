@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="io.klynox.pickrr_app">
+    package="io.klynox.pickrr">
 
     <uses-permission android:name="android.permission.INTERNET"/>
 

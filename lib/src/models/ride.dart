@@ -61,6 +61,7 @@ class Ride {
   final String rideId;
   Review review;
   final String duration;
+  final String paymentMethod;
   final bool isPickedUp;
 
   Ride(
@@ -77,8 +78,11 @@ class Ride {
       this.receiverPhone,
       this.status,
       this.rideId,
+        this.paymentMethod,
         this.duration,
       this.isPickedUp});
+
+  get methodOfPayment => this.paymentMethod == 'CARD' ? 'ONLINE' : 'CASH';
 
   Ride.fromMap(Map<String, dynamic> mapData)
       : id = mapData['id'] ?? null,
@@ -98,6 +102,7 @@ class Ride {
         receiverName = mapData['receiver_name'] ?? '',
         receiverPhone = mapData['receiver_phone'] ?? '',
         status = mapData['status'] ?? '',
+        paymentMethod = mapData['payment_method'] ?? '',
         rideId = mapData['ride_id'] ?? '',
         duration = mapData['duration'] ?? '',
         isPickedUp = mapData['picked_up'] ?? false;
@@ -117,6 +122,7 @@ class Ride {
       'receiver_name': receiverName,
       'receiver_phone': receiverPhone,
       'status': status,
+      'payment_method': paymentMethod,
       'ride_id': rideId,
       'duration': duration,
       'picked_up': isPickedUp

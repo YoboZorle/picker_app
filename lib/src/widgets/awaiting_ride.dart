@@ -20,7 +20,7 @@ class AwaitingRideWidget extends StatelessWidget {
               animation: 'RidertoStore'),
         ),
         new Text(
-          "A driver will be assigned\nto you shortly...",
+          "A rider will be assigned\nto you within 5 minutes...",
           textAlign: TextAlign.center,
           style: TextStyle(
               fontSize: 17.0,

@@ -111,7 +111,7 @@ class _RideInteractionState extends State<RideInteraction> {
                                 fontWeight: FontWeight.w400)),
                       ),
                       Flexible(
-                        child: Text(ride.pickupLocation.address,
+                        child: SelectableText(ride.pickupLocation.address,
                             style: TextStyle(
                                 fontSize: 13.5,
                                 color: Colors.black,
@@ -132,7 +132,7 @@ class _RideInteractionState extends State<RideInteraction> {
                           : Image.asset('assets/images/placeholder.jpg',
                               width: double.infinity, height: double.infinity),
                     )),
-                    title: Text(
+                    title: SelectableText(
                       ride.user.fullname,
                       style: TextStyle(
                           fontSize: 15.0,
@@ -141,7 +141,7 @@ class _RideInteractionState extends State<RideInteraction> {
                           fontWeight: FontWeight.w500,
                           height: 1.6),
                     ),
-                    subtitle: Text(
+                    subtitle: SelectableText(
                       "+234${ride.user.phone}",
                       style: TextStyle(
                           fontSize: 13.0,
@@ -186,7 +186,7 @@ class _RideInteractionState extends State<RideInteraction> {
                                 fontWeight: FontWeight.w400)),
                       ),
                       Flexible(
-                        child: Text(ride.deliveryLocation.address,
+                        child: SelectableText(ride.deliveryLocation.address,
                             style: TextStyle(
                                 fontSize: 13.5,
                                 color: Colors.black,
@@ -211,7 +211,7 @@ class _RideInteractionState extends State<RideInteraction> {
                                         fontFamily: 'Ubuntu',
                                         fontWeight: FontWeight.w400)),
                               ),
-                              Text(ride.receiverName,
+                              SelectableText(ride.receiverName,
                                   style: TextStyle(
                                       fontSize: 14,
                                       color: Colors.black,
@@ -231,7 +231,27 @@ class _RideInteractionState extends State<RideInteraction> {
                                         fontFamily: 'Ubuntu',
                                         fontWeight: FontWeight.w400)),
                               ),
-                              Text(ride.receiverPhone,
+                              SelectableText(ride.receiverPhone,
+                                  style: TextStyle(
+                                      fontSize: 13.5,
+                                      color: Colors.black,
+                                      fontFamily: 'Ubuntu',
+                                      fontWeight: FontWeight.w400)),
+                            ],
+                          ),
+                          SizedBox(height: 5),
+                          Row(
+                            children: [
+                              Container(
+                                margin: EdgeInsets.only(right: 8),
+                                child: Text("Payment Method: ",
+                                    style: TextStyle(
+                                        fontSize: 12,
+                                        color: Colors.grey,
+                                        fontFamily: 'Ubuntu',
+                                        fontWeight: FontWeight.w400)),
+                              ),
+                              SelectableText(ride.methodOfPayment,
                                   style: TextStyle(
                                       fontSize: 13.5,
                                       color: Colors.black,

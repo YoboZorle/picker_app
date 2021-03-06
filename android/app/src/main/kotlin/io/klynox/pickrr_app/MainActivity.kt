@@ -1,4 +1,4 @@
-package io.klynox.pickrr_app
+package io.klynox.pickrr
 
 import io.flutter.embedding.android.FlutterActivity
 

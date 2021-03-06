@@ -97,35 +97,24 @@ class _RiderOrderInteractiveLayoutState
             child: ListView(
               physics: BouncingScrollPhysics(),
               children: [
-
-
-
-
-
-
-
-
-
-
-
-
-SizedBox(height: 15),
-                Row(mainAxisAlignment: MainAxisAlignment.center,
+                SizedBox(height: 15),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
                       ride.status == 'INPROGRESS'
                           ? ride.isPickedUp
-                          ? "Meet and Pickup"
-                          : "Deliver Package"
+                              ? "Meet and Pickup"
+                              : "Deliver Package"
                           : "New Request!",
                       maxLines: 1,
                       textAlign: TextAlign.left,
                       style: TextStyle(
-                          fontSize: 20.0,
-                          fontFamily: "Ubuntu",
-                          color: Colors.black,
-                          fontWeight: FontWeight.w700,
-                         ),
+                        fontSize: 20.0,
+                        fontFamily: "Ubuntu",
+                        color: Colors.black,
+                        fontWeight: FontWeight.w700,
+                      ),
                     ),
                   ],
                 ),
@@ -177,7 +166,8 @@ SizedBox(height: 15),
                                                     fontSize: 16,
                                                     fontFamily: 'Ubuntu',
                                                     color: Colors.black,
-                                                    fontWeight: FontWeight.w600)),
+                                                    fontWeight:
+                                                        FontWeight.w600)),
                                             SizedBox(height: 4),
                                             Text(
                                                 '+${ride.user.callingCode + ride.receiverPhone}',
@@ -185,7 +175,8 @@ SizedBox(height: 15),
                                                     fontSize: 14,
                                                     fontFamily: 'Ubuntu',
                                                     color: Colors.grey,
-                                                    fontWeight: FontWeight.w400)),
+                                                    fontWeight:
+                                                        FontWeight.w400)),
                                           ],
                                         ),
                                         Container(
@@ -212,20 +203,11 @@ SizedBox(height: 15),
                               ),
                             ],
                           ),
-
-
-
-
-
-
-
-
-
                           Container(
                               height: 0.5,
                               width: MediaQuery.of(context).size.width,
                               color: Colors.grey[300],
-                          margin: EdgeInsets.only(top: 13, bottom: 13)),
+                              margin: EdgeInsets.only(top: 13, bottom: 13)),
                           Text('Sender details:',
                               style: TextStyle(
                                   fontSize: 12,
@@ -242,10 +224,12 @@ SizedBox(height: 15),
                                       width: 45.0,
                                       child: !ride.user.noProfileImage
                                           ? CustomImage(
-                                        imageUrl: '${ride.user.profileImageUrl}',
-                                      )
-                                          : Image.asset('assets/images/placeholder.jpg',
-                                          fit: BoxFit.cover))),
+                                              imageUrl:
+                                                  '${ride.user.profileImageUrl}',
+                                            )
+                                          : Image.asset(
+                                              'assets/images/placeholder.jpg',
+                                              fit: BoxFit.cover))),
                               SizedBox(width: 13),
                               Expanded(
                                 child: Column(
@@ -260,18 +244,19 @@ SizedBox(height: 15),
                                     SizedBox(height: 4),
                                     Row(
                                       mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
                                         Column(
                                           crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                              CrossAxisAlignment.start,
                                           children: [
                                             Text(ride.user.fullname,
                                                 style: TextStyle(
                                                     fontSize: 16,
                                                     fontFamily: 'Ubuntu',
                                                     color: Colors.black,
-                                                    fontWeight: FontWeight.w600)),
+                                                    fontWeight:
+                                                        FontWeight.w600)),
                                             SizedBox(height: 4),
                                             Text(
                                                 '+${ride.user.callingCode + ride.user.phone}',
@@ -279,7 +264,17 @@ SizedBox(height: 15),
                                                     fontSize: 14,
                                                     fontFamily: 'Ubuntu',
                                                     color: Colors.grey,
-                                                    fontWeight: FontWeight.w400)),
+                                                    fontWeight:
+                                                        FontWeight.w400)),
+                                            SizedBox(height: 4),
+                                            Text(
+                                                'Payment Method: +${ride.methodOfPayment}',
+                                                style: TextStyle(
+                                                    fontSize: 15,
+                                                    fontFamily: 'Ubuntu',
+                                                    color: Colors.grey,
+                                                    fontWeight:
+                                                        FontWeight.w400)),
                                           ],
                                         ),
                                         Container(
@@ -307,12 +302,6 @@ SizedBox(height: 15),
                             ],
                           ),
                         ])),
-
-
-
-
-
-
                 Container(
                     margin: EdgeInsets.only(left: 20, right: 20, top: 10),
                     child: Builder(builder: (BuildContext context) {

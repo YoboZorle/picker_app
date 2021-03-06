@@ -243,7 +243,8 @@ class _RideInformationWidgetState extends State<RideInformationWidget> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              SelectableText(widget.rideDetails.pickupLocation.address,
+                              SelectableText(
+                                  widget.rideDetails.pickupLocation.address,
                                   style: TextStyle(
                                       fontSize: 16,
                                       fontFamily: 'Ubuntu',
@@ -298,7 +299,8 @@ class _RideInformationWidgetState extends State<RideInformationWidget> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              SelectableText(widget.rideDetails.deliveryLocation.address,
+                              SelectableText(
+                                  widget.rideDetails.deliveryLocation.address,
                                   style: TextStyle(
                                       fontSize: 16,
                                       fontFamily: 'Ubuntu',
@@ -431,6 +433,27 @@ class _RideInformationWidgetState extends State<RideInformationWidget> {
                           fontWeight: FontWeight.w400)),
                 ],
               )),
+          Container(
+              color: Colors.white,
+              margin: EdgeInsets.only(top: 15),
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text('Payment Method: ',
+                      style: TextStyle(
+                          fontSize: 12,
+                          fontFamily: 'Ubuntu',
+                          color: Colors.black45,
+                          fontWeight: FontWeight.w400)),
+                  SelectableText(widget.rideDetails.methodOfPayment,
+                      style: TextStyle(
+                          fontSize: 17,
+                          fontFamily: 'Ubuntu',
+                          color: Colors.black,
+                          fontWeight: FontWeight.w400)),
+                ],
+              ))
         ],
       );
 
@@ -486,7 +509,8 @@ class _RideInformationWidgetState extends State<RideInformationWidget> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              SelectableText(widget.rideDetails.pickupLocation.address,
+                              SelectableText(
+                                  widget.rideDetails.pickupLocation.address,
                                   style: TextStyle(
                                       fontSize: 16,
                                       fontFamily: 'Ubuntu',
@@ -541,7 +565,8 @@ class _RideInformationWidgetState extends State<RideInformationWidget> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              SelectableText(widget.rideDetails.deliveryLocation.address,
+                              SelectableText(
+                                  widget.rideDetails.deliveryLocation.address,
                                   style: TextStyle(
                                       fontSize: 16,
                                       fontFamily: 'Ubuntu',
@@ -752,6 +777,27 @@ class _RideInformationWidgetState extends State<RideInformationWidget> {
                           color: Colors.black45,
                           fontWeight: FontWeight.w400)),
                   SelectableText(widget.rideDetails.rideId,
+                      style: TextStyle(
+                          fontSize: 17,
+                          fontFamily: 'Ubuntu',
+                          color: Colors.black,
+                          fontWeight: FontWeight.w400)),
+                ],
+              )),
+          Container(
+              color: Colors.white,
+              margin: EdgeInsets.only(top: 15),
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text('Payment Method: ',
+                      style: TextStyle(
+                          fontSize: 12,
+                          fontFamily: 'Ubuntu',
+                          color: Colors.black45,
+                          fontWeight: FontWeight.w400)),
+                  SelectableText(widget.rideDetails.methodOfPayment,
                       style: TextStyle(
                           fontSize: 17,
                           fontFamily: 'Ubuntu',

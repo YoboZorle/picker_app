@@ -431,7 +431,7 @@ class _HomeState extends State<Home> {
                                   TextField(
                                     readOnly: true,
                                     decoration: InputDecoration(
-                                      hintText: "Enter Destination Location",
+                                      hintText: "Enter Delivery Location",
                                       hintStyle: TextStyle(
                                         color: Colors.black45,
                                         fontFamily: "Ubuntu",
