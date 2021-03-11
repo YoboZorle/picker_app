@@ -203,7 +203,8 @@ class DriverOnboard extends StatelessWidget {
                         size: 20,
                         color: Colors.grey[400],
                       ),
-                      onTap: () => Navigator.pushNamed(context, '/BusinessApplication')),
+                      onTap: () =>
+                          Navigator.pushNamed(context, '/BusinessApplication')),
                 ),
               ],
             ),
