@@ -316,8 +316,8 @@ class _LoginState extends State<Login> {
           duration: 5);
       return;
     }
-    
-    if( _retypePhoneController.text != _phoneController.text) {
+
+    if (_retypePhoneController.text != _phoneController.text) {
       AlertBar.dialog(context, 'Phone numbers do not match', Colors.red,
           icon: Icon(
             Icons.error,
@@ -327,13 +327,14 @@ class _LoginState extends State<Login> {
       return;
     }
 
-    AlertBar.dialog(
-        context, 'Processing login...', AppColor.primaryText,
+    AlertBar.dialog(context, 'Processing login...', AppColor.primaryText,
         showProgressIndicator: true, duration: null);
 
     try {
       final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
-      _firebaseMessaging.requestNotificationPermissions();
+      _firebaseMessaging.requestNotificationPermissions(
+        const IosNotificationSettings(sound: true, badge: true, alert: true),
+      );
       _firebaseMessaging.configure();
       String deviceToken = await _firebaseMessaging.getToken();
       await _userRepository.requestOTP(
@@ -348,7 +349,8 @@ class _LoginState extends State<Login> {
       if (err.message.response != null) {
         if (err.message.response.data != null &&
             err.message.response.data['non_field_errors'] != null) {
-          AlertBar.dialog(context, err.message.response.data['non_field_errors'].first, Colors.red,
+          AlertBar.dialog(context,
+              err.message.response.data['non_field_errors'].first, Colors.red,
               icon: Icon(Icons.error), duration: 5);
         }
         return;
@@ -366,11 +368,9 @@ class _LoginState extends State<Login> {
               child: Container(
                 width: MediaQuery.of(context).size.width,
                 child: TextFormField(
-                  validator: (val){
-                    if(val.isEmpty)
-                      return 'Empty';
-                    if(val != _phoneController.text)
-                      return 'Not Match';
+                  validator: (val) {
+                    if (val.isEmpty) return 'Empty';
+                    if (val != _phoneController.text) return 'Not Match';
                     return null;
                   },
                   controller: _retypePhoneController,
@@ -397,7 +397,7 @@ class _LoginState extends State<Login> {
                     errorBorder: InputBorder.none,
                     disabledBorder: InputBorder.none,
                     suffixIcon: _retypePhoneController.text != null &&
-                        _retypePhoneController.text.isNotEmpty
+                            _retypePhoneController.text.isNotEmpty
                         ? Padding(
                             padding:
                                 const EdgeInsetsDirectional.only(start: 12.0),
