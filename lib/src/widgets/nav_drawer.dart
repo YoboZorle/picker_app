@@ -1,5 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 import 'package:pickrr_app/src/blocs/authentication/bloc.dart';
 import 'package:pickrr_app/src/helpers/constants.dart';
 import 'package:pickrr_app/src/models/user.dart';
@@ -20,6 +22,7 @@ class NavDrawer extends StatelessWidget {
         return Container();
       }
       User user = state.props[0];
+
       return SafeArea(
         child: Container(
           padding: EdgeInsets.only(left: 15.0, right: 15.0),
@@ -119,7 +122,35 @@ class NavDrawer extends StatelessWidget {
                 ),
                 leading: Icon(Icons.verified_user_outlined),
                 onTap: () {
-                  Navigator.pushNamed(context, '/Terms');
+                  // Navigator.pushNamed(context, '/Terms');
+
+                  Navigator.of(context).push(CupertinoPageRoute(
+                    fullscreenDialog: true,
+                    builder: (context) => new WebviewScaffold(
+                      url: 'https://yobozorle.gitbook.io/pickrr/',
+                      appBar: new AppBar(
+                        elevation: 0,
+                        backgroundColor: Colors.white,
+                        automaticallyImplyLeading: true,
+                        brightness: Brightness.light,
+                        leading: IconButton(
+                          icon: Icon(Icons.close, color: Colors.black,),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                        ),
+                      ),
+                      withZoom: true,
+                      withLocalStorage: true,
+                      hidden: true,
+                      initialChild: Container(
+                        color: Colors.white,
+                        child: const Center(
+                          child: Text('Waiting.....'),
+                        ),
+                      ),
+                    ),
+                  ));
                 }),
             Expanded(child: SizedBox()),
             Container(
@@ -344,8 +375,7 @@ class BusinessNavDrawer extends StatelessWidget {
                   children: <Widget>[
                     InkWell(
                       splashColor: Colors.grey[300],
-                      onTap: () {
-                      },
+                      onTap: () {},
                       child: UserAccountsDrawerHeader(
                         decoration: BoxDecoration(
                           color: Colors.white,
@@ -370,10 +400,10 @@ class BusinessNavDrawer extends StatelessWidget {
                                 decoration: BoxDecoration(color: Colors.white),
                                 child: businessDetails.logo != null
                                     ? CustomImage(
-                                        imageUrl:
-                                            '${businessDetails.logo}',
+                                        imageUrl: '${businessDetails.logo}',
                                       )
-                                    : Image.asset('assets/images/placeholder.jpg',
+                                    : Image.asset(
+                                        'assets/images/placeholder.jpg',
                                         width: double.infinity,
                                         height: double.infinity))),
                       ),
