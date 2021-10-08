@@ -84,7 +84,12 @@ class _RideRatingDialogState extends State<RideRatingDialog> {
               SizedBox(height: 20),
               SmoothStarRating(
                 allowHalfRating: true,
-                onRatingChanged: (value) {
+                // onRatingChanged: (value) {
+                //   setState(() {
+                //     _rating = double.parse(value.toStringAsFixed(2));
+                //   });
+                // },
+                onRated: (value) {
                   setState(() {
                     _rating = double.parse(value.toStringAsFixed(2));
                   });

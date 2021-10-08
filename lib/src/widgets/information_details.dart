@@ -728,7 +728,7 @@ class _RideInformationWidgetState extends State<RideInformationWidget> {
                                       fontWeight: FontWeight.w500)),
                               SmoothStarRating(
                                 allowHalfRating: true,
-                                onRatingChanged: (value) {},
+                                // onRatingChanged: (value) {},
                                 starCount: 5,
                                 rating:
                                     widget.rideDetails.review.star.toDouble(),

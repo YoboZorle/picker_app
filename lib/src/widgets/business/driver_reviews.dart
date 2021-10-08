@@ -116,8 +116,8 @@ class _DriverReviewsState extends State<DriverReviews> {
                                 fontWeight: FontWeight.w500)),
                         SmoothStarRating(
                           allowHalfRating: true,
-                          onRatingChanged: (value) {
-                          },
+                          // onRatingChanged: (value) {
+                          // },
                           starCount: 5,
                           rating: ride.review.star.toDouble(),
                           size: 11.0,
