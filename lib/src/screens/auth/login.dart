@@ -9,6 +9,7 @@ import 'package:pickrr_app/src/models/user.dart';
 import 'package:pickrr_app/src/services/repositories/user.dart';
 import 'package:pickrr_app/src/utils/alert_bar.dart';
 import 'package:pickrr_app/src/utils/country_code_picker.dart';
+import 'package:spring_button/spring_button.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -73,73 +74,77 @@ class _LoginState extends State<Login> {
               onTap: () {
                 FocusScope.of(context).requestFocus(new FocusNode());
               },
-              child: Column(children: <Widget>[
-                Expanded(
-                  child: new Container(
-                      margin: EdgeInsets.only(top: 5, right: 10, left: 10),
-                      child: Stack(children: <Widget>[
-                        SafeArea(
-                            child: ListView(children: <Widget>[
-                          Row(
-                            children: [
-                              GestureDetector(
-                                child: Container(
-                                  alignment: Alignment.centerLeft,
-                                  padding: const EdgeInsets.only(left: 15.0),
-                                  height: 40,
-                                  width: 100,
-                                  child: Text(
-                                    'Cancel',
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      fontFamily: 'Ubuntu',
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.w500,
+              child: SafeArea(
+                child: Column(children: <Widget>[
+                  Expanded(
+                    child: new Container(
+                        margin: EdgeInsets.only(top: 5, right: 10, left: 10),
+                        child: Stack(children: <Widget>[
+                          SafeArea(
+                              child: ListView(children: <Widget>[
+                            Row(
+                              children: [
+                                GestureDetector(
+                                  child: Container(
+                                    alignment: Alignment.centerLeft,
+                                    padding: const EdgeInsets.only(left: 15.0),
+                                    height: 40,
+                                    width: 100,
+                                    child: Text(
+                                      'Cancel',
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontFamily: 'Ubuntu',
+                                        color: AppColor.appBlack,
+                                        fontWeight: FontWeight.w500,
+                                      ),
                                     ),
                                   ),
+                                  onTap: () {
+                                    Navigator.pop(context);
+                                  },
                                 ),
-                                onTap: () {
-                                  Navigator.pop(context);
-                                },
-                              ),
-                            ],
-                          ),
-                          SizedBox(height: 110),
-                          Hero(
-                            tag: 'input_phon_auth_title',
-                            child: Container(
-                              margin: EdgeInsets.only(left: 22),
-                              child: Text(
-                                'Let\'s Get Started!',
-                                textAlign: TextAlign.left,
-                                style: TextStyle(
-                                  fontSize: 24,
-                                  fontFamily: 'Ubuntu',
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w800,
-                                  height: 1.2,
+                              ],
+                            ),
+                            SizedBox(height: 90),
+                            Hero(
+                              tag: 'input_phon_auth_title',
+                              child: Container(
+                                margin: EdgeInsets.only(left: 22),
+                                child: Text(
+                                  'Let\'s Get Started!',
+                                  textAlign: TextAlign.left,
+                                  style: TextStyle(
+                                    fontSize: 30,
+                                    fontFamily: 'Ubuntu',
+                                    color: AppColor.appBlack,
+                                    letterSpacing: -1,
+                                    fontWeight: FontWeight.w800,
+                                    height: 1.2,
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                          _terms(),
-                          SizedBox(height: 25),
-                          Container(
-                              height: 47,
-                              margin: EdgeInsets.only(
-                                  left: 20, right: 20, bottom: 20),
-                              color: Colors.grey[200],
-                              child: _phoneInput()),
-                          Container(
-                              height: 47,
-                              margin: EdgeInsets.only(left: 20, right: 20),
-                              color: Colors.grey[200],
-                              child: _phoneAgain()),
+                            _terms(),
+                            SizedBox(height: 25),
+                            Container(
+                                height: 55,
+                                margin: EdgeInsets.only(
+                                    left: 20, right: 20, bottom: 20),
+                                color: Colors.blueGrey.withOpacity(0.1),
+                                child: _phoneInput()),
+                            Container(
+                                height: 55,
+                                margin: EdgeInsets.only(left: 20, right: 20),
+                                color: Colors.blueGrey.withOpacity(0.1),
+                                child: _phoneAgain()),
+                          ])),
                         ])),
-                      ])),
-                ),
-                _proceedBtn(),
-              ]),
+                  ),
+                  _proceedBtn(),
+                  SizedBox(height: 15),
+                ]),
+              ),
             )),
       ),
     );
@@ -169,7 +174,7 @@ class _LoginState extends State<Login> {
                   textStyle: TextStyle(
                       fontSize: 18.0,
                       fontFamily: 'Ubuntu',
-                      color: Colors.black,
+                      color: AppColor.appBlack,
                       fontWeight: FontWeight.w400),
                 ),
               ),
@@ -189,14 +194,14 @@ class _LoginState extends State<Login> {
                   style: TextStyle(
                       fontSize: 18.0,
                       fontFamily: 'Ubuntu',
-                      color: Colors.black,
+                      color: AppColor.appBlack,
                       fontWeight: FontWeight.w400),
                   decoration: InputDecoration(
                     hintText: 'Mobile number',
                     hintStyle: TextStyle(
                         fontSize: 18.0,
                         fontFamily: 'Ubuntu',
-                        color: Colors.grey,
+                        color: Colors.blueGrey[300],
                         fontWeight: FontWeight.w400),
                     border: InputBorder.none,
                     focusedBorder: InputBorder.none,
@@ -231,7 +236,7 @@ class _LoginState extends State<Login> {
       );
 
   _terms() => Container(
-        margin: EdgeInsets.only(left: 20, top: 5, right: 25),
+        margin: EdgeInsets.only(left: 22, top: 5, right: 25),
         child: Hero(
           tag: 'body_text_splash',
           child: new RichText(
@@ -243,7 +248,7 @@ class _LoginState extends State<Login> {
                   style: TextStyle(
                     fontSize: 14,
                     fontFamily: 'Ubuntu',
-                    color: Colors.black,
+                    color: AppColor.appBlack,
                     fontWeight: FontWeight.w400,
                     height: 1.27,
                   ),
@@ -253,7 +258,7 @@ class _LoginState extends State<Login> {
                   style: TextStyle(
                     fontSize: 14,
                     fontFamily: 'Ubuntu',
-                    color: Colors.black,
+                    color: AppColor.appBlack,
                     decoration: TextDecoration.underline,
                     fontWeight: FontWeight.w400,
                     height: 1.27,
@@ -266,32 +271,29 @@ class _LoginState extends State<Login> {
         ),
       );
 
-  _proceedBtn() => Container(
-        margin: EdgeInsets.only(top: 7, bottom: 7),
-        child: Column(
-          children: <Widget>[
-            SizedBox(
-              height: 46,
-              width: MediaQuery.of(context).size.width / 1.1,
-              child: FlatButton(
-                splashColor: Colors.grey[200],
-                shape: new RoundedRectangleBorder(
-                  borderRadius: new BorderRadius.circular(25.0),
-                ),
-                onPressed: () => _processLogin(),
-                color: AppColor.primaryText,
-                child: Text("Login",
-                    style: TextStyle(
-                        fontFamily: 'Ubuntu',
-                        fontWeight: FontWeight.w600,
-                        color: Colors.white,
-                        fontSize: 16,
-                        height: 1.4)),
+  _proceedBtn() => SpringButton(
+        SpringButtonType.OnlyScale,
+        Container(
+          height: 54,
+          width: MediaQuery.of(context).size.width / 1.2,
+          decoration: new BoxDecoration(
+            color: AppColor.appYellow,
+            borderRadius: const BorderRadius.all(const Radius.circular(18)),
+          ),
+          child: Center(
+            child: Text(
+              "Login",
+              style: TextStyle(
+                color: AppColor.appBlack,
+                fontSize: 16,
+                fontFamily: 'Ubuntu',
+                fontWeight: FontWeight.w600,
               ),
             ),
-            SizedBox(height: 15),
-          ],
+          ),
         ),
+        useCache: true,
+        onTapUp: (_) => _processLogin(),
       );
 
   _processLogin() async {
@@ -385,14 +387,14 @@ class _LoginState extends State<Login> {
                   style: TextStyle(
                       fontSize: 18.0,
                       fontFamily: 'Ubuntu',
-                      color: Colors.black,
+                      color: AppColor.appBlack,
                       fontWeight: FontWeight.w400),
                   decoration: InputDecoration(
                     hintText: 'Re-enter number',
                     hintStyle: TextStyle(
                         fontSize: 18.0,
                         fontFamily: 'Ubuntu',
-                        color: Colors.grey,
+                        color: Colors.blueGrey[300],
                         fontWeight: FontWeight.w400),
                     border: InputBorder.none,
                     focusedBorder: InputBorder.none,
