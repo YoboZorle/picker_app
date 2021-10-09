@@ -79,26 +79,31 @@ class Routes {
                         ..add(AuthenticationEvent.AUTHENTICATED))
                 ], child: DriverTabs()));
       case "Login":
-        return SlideLeftRoute<bool>(
+        return CustomRoute<bool>(
+            fullscreenDialog: true,
             builder: (BuildContext context) => BlocProvider<AuthenticationBloc>(
                 create: (_) => AuthenticationBloc(), child: Login()));
       case "DriverOnboard":
-        return SlideLeftRoute<bool>(
+        return CustomRoute<bool>(
+            fullscreenDialog: true,
             builder: (BuildContext context) => DriverOnboard());
       case "DriverApplication":
         return CustomRoute<bool>(
             builder: (BuildContext context) => DriverApplication());
       case "CompleteProfileDetails":
-        return SlideLeftRoute<bool>(
+        return CustomRoute<bool>(
+            fullscreenDialog: true,
             builder: (BuildContext context) => CompleteProfileForm());
       case "ProfileDetails":
-        return SlideLeftRoute<bool>(
+        return CustomRoute<bool>(
+            fullscreenDialog: true,
             builder: (BuildContext context) => BlocProvider<AuthenticationBloc>(
                 create: (_) => AuthenticationBloc()
                   ..add(AuthenticationEvent.AUTHENTICATED),
                 child: UserProfile()));
       case "Terms":
-        return SlideLeftRoute<bool>(
+        return CustomRoute<bool>(
+            fullscreenDialog: true,
             builder: (BuildContext context) => BlocProvider<AuthenticationBloc>(
                 create: (_) => AuthenticationBloc()
                   ..add(AuthenticationEvent.AUTHENTICATED),

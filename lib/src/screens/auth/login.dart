@@ -179,8 +179,10 @@ class _LoginState extends State<Login> {
                 width: MediaQuery.of(context).size.width,
                 child: TextFormField(
                   controller: _phoneController,
+                  autofocus: true,
                   keyboardType: TextInputType.number,
                   cursorColor: AppColor.primaryText,
+                  keyboardAppearance: Brightness.light,
                   inputFormatters: <TextInputFormatter>[
                     FilteringTextInputFormatter.digitsOnly
                   ],
@@ -229,7 +231,7 @@ class _LoginState extends State<Login> {
       );
 
   _terms() => Container(
-        margin: EdgeInsets.only(left: 20, top: 5),
+        margin: EdgeInsets.only(left: 20, top: 5, right: 25),
         child: Hero(
           tag: 'body_text_splash',
           child: new RichText(
@@ -237,7 +239,7 @@ class _LoginState extends State<Login> {
             text: new TextSpan(
               children: [
                 new TextSpan(
-                  text: 'By entering your details, you agree to\ Pickrr\'s ',
+                  text: 'By entering your details, you agree to\ SkootEat\'s ',
                   style: TextStyle(
                     fontSize: 14,
                     fontFamily: 'Ubuntu',
@@ -376,6 +378,7 @@ class _LoginState extends State<Login> {
                   controller: _retypePhoneController,
                   keyboardType: TextInputType.number,
                   cursorColor: AppColor.primaryText,
+                  keyboardAppearance: Brightness.light,
                   inputFormatters: <TextInputFormatter>[
                     FilteringTextInputFormatter.digitsOnly
                   ],

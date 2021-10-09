@@ -60,7 +60,7 @@ class Onboard extends StatelessWidget {
                   ),
                 ),
                 ShowUpAnimation(
-                  delayStart: Duration(milliseconds: 700),
+                  delayStart: Duration(milliseconds: 800),
                   animationDuration: Duration(milliseconds: 700),
                   curve: Curves.bounceInOut,
                   direction: Direction.vertical,
@@ -72,25 +72,29 @@ class Onboard extends StatelessWidget {
                       margin: EdgeInsets.only(top: 20, bottom: 20)),
                 ),
                 ShowUpAnimation(
-                  delayStart: Duration(milliseconds: 1000),
+                  delayStart: Duration(milliseconds: 1100),
                   animationDuration: Duration(milliseconds: 1000),
                   curve: Curves.bounceInOut,
                   direction: Direction.vertical,
                   offset: 0.5,
-                  child: Text(
-                    "Find Food Delivery Guys\nNearest To You.",
-                    style: TextStyle(
-                      color: AppColor.appBlack,
-                      fontSize: 18,
-                      height: 1.43,
-                      fontFamily: 'Ubuntu',
-                      fontWeight: FontWeight.w600,
+                  child: Hero(
+                    tag: 'body_text_splash',
+                    flightShuttleBuilder: _flightShuttleBuilder,
+                    child: Text(
+                      "Find Food Delivery Guys\nNearest To You.",
+                      style: TextStyle(
+                        color: AppColor.appBlack,
+                        fontSize: 18,
+                        height: 1.43,
+                        fontFamily: 'Ubuntu',
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ),
                 ),
                 SizedBox(height: 20),
                 ShowUpAnimation(
-                  delayStart: Duration(milliseconds: 1300),
+                  delayStart: Duration(milliseconds: 1400),
                   animationDuration: Duration(milliseconds: 1300),
                   curve: Curves.bounceInOut,
                   direction: Direction.vertical,
