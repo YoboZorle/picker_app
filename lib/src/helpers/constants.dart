@@ -15,6 +15,10 @@ class Borders {
 }
 
 class AppColor {
+  static final Color appBlack = Color(0xFF3B4257);
+  static final Color appYellow = Color(0xFFFFD62C);
+  static final Color appTealBlue = Color(0xFF3EC1F3);
+  static final Color appColor = Color(0xFFEF1D52);
   static final Color primaryBackground = Color.fromARGB(255, 255, 255, 255);
   static final Color secondaryBackground = Color.fromARGB(255, 0, 141, 210);
   static final Color primaryElement = Color.fromARGB(255, 255, 255, 255);

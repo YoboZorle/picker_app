@@ -44,6 +44,15 @@ dependencies:
   smooth_star_rating: ^1.1.1
   list_tile_switch: ^1.0.0
 
+#
+#  https://stackoverflow:
+#    com/a/67776137/13070928
+#
+#  Link to updating old flutter packages "dart pub upgrade --major-versions"
+#
+  show_up_animation: ^2.0.0
+  spring_button: ^2.0.0
+
   google_maps_flutter: ^0.5.30
   geolocator: ^6.1.7
   google_map_polyline: ^0.2.0
