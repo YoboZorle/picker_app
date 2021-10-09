@@ -106,7 +106,7 @@ class _LoginState extends State<Login> {
                                 ),
                               ],
                             ),
-                            SizedBox(height: 90),
+                            SizedBox(height: 80),
                             Hero(
                               tag: 'input_phon_auth_title',
                               child: Container(
@@ -186,7 +186,7 @@ class _LoginState extends State<Login> {
                   controller: _phoneController,
                   autofocus: true,
                   keyboardType: TextInputType.number,
-                  cursorColor: AppColor.primaryText,
+                  cursorColor: AppColor.appColor,
                   keyboardAppearance: Brightness.light,
                   inputFormatters: <TextInputFormatter>[
                     FilteringTextInputFormatter.digitsOnly
@@ -236,7 +236,7 @@ class _LoginState extends State<Login> {
       );
 
   _terms() => Container(
-        margin: EdgeInsets.only(left: 22, top: 5, right: 25),
+        margin: EdgeInsets.only(left: 22, top: 8, right: 25),
         child: Hero(
           tag: 'body_text_splash',
           child: new RichText(
@@ -331,7 +331,7 @@ class _LoginState extends State<Login> {
       return;
     }
 
-    AlertBar.dialog(context, 'Processing login...', AppColor.primaryText,
+    AlertBar.dialog(context, 'Processing login...', AppColor.appColor,
         showProgressIndicator: true, duration: null);
 
     try {
@@ -379,7 +379,7 @@ class _LoginState extends State<Login> {
                   },
                   controller: _retypePhoneController,
                   keyboardType: TextInputType.number,
-                  cursorColor: AppColor.primaryText,
+                  cursorColor: AppColor.appColor,
                   keyboardAppearance: Brightness.light,
                   inputFormatters: <TextInputFormatter>[
                     FilteringTextInputFormatter.digitsOnly
