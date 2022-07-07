@@ -34,7 +34,7 @@ dependencies:
   badges: ^2.0.1
   intl: ^0.16.1
   dotted_line: ^3.0.1
-#  flutter_paystack: ^1.0.4+1
+  #  flutter_paystack: ^1.0.4+1
   url_launcher: ^6.0.5
   circular_profile_avatar: ^2.0.0
   lite_rolling_switch: ^0.1.1
@@ -44,12 +44,12 @@ dependencies:
   smooth_star_rating: ^1.1.1
   list_tile_switch: ^1.0.0
 
-#
-#  https://stackoverflow:
-#    com/a/67776137/13070928
-#
-#  Link to updating old flutter packages "dart pub upgrade --major-versions"
-#
+  #
+  #  https://stackoverflow:
+  #    com/a/67776137/13070928
+  #
+  #  Link to updating old flutter packages "dart pub upgrade --major-versions"
+  #
   show_up_animation: ^2.0.0
   spring_button: ^2.0.0
 
@@ -71,6 +71,8 @@ dependencies:
   flutter_clipboard_manager: ^0.0.2
   web_socket_channel: ^2.1.0
   firebase_messaging: ^7.0.3
+  flutter_polyline_points: ^0.2.3
+
 
 dev_dependencies:
   flutter_test:

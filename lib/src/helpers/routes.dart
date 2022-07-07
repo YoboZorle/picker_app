@@ -28,6 +28,7 @@ import 'package:pickrr_app/src/screens/ride/ride_details.dart';
 import 'package:pickrr_app/src/screens/ride/ride_history.dart';
 import 'package:pickrr_app/src/screens/ride/track_deliveries.dart';
 import 'package:pickrr_app/src/screens/terms.dart';
+import 'package:pickrr_app/src/screens/tried.dart';
 import 'package:pickrr_app/src/screens/user_profile.dart';
 import 'package:pickrr_app/src/widgets/rate_driver.dart';
 
@@ -145,6 +146,12 @@ class Routes {
                 create: (_) => AuthenticationBloc()
                   ..add(AuthenticationEvent.AUTHENTICATED),
                 child: Home(arguments: settings.arguments)));
+      case "Tried":
+        return SlideLeftRoute<bool>(
+            builder: (BuildContext context) => BlocProvider<AuthenticationBloc>(
+                create: (_) => AuthenticationBloc()
+                  ..add(AuthenticationEvent.AUTHENTICATED),
+                child: Tried(arguments: settings.arguments)));
       case "BusinessDetails":
         return SlideLeftRoute<bool>(
             builder: (BuildContext context) => BlocProvider<AuthenticationBloc>(

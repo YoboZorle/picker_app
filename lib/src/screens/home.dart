@@ -184,11 +184,27 @@ class _HomeState extends State<Home> {
     Map<String, dynamic> formDetails = {'price': totalDistance};
     _ridePrice =
         await _coreRepository.getRidePrice(new FormData.fromMap(formDetails));
-
+    print('$_placeTime + wait here fess');
+    print('$_placeTime + wait here fess');
+    print('$_placeTime + wait here fess');
+    print('$_placeTime + wait here fess');
+    print('$_placeTime + wait here fess');
+    print('$_placeTime + wait here fess');
+    print('$_placeTime + wait here fess');
+    print('$_placeTime + wait here fess');
     setState(() {
       _distanceCovered = totalDistance;
       _placeDistance = totalDistance.toStringAsFixed(1);
       _placeTime = totalTime;
+      print('$_placeTime + right here foul');
+      print('$_placeTime + right here foul');
+      print('$_placeTime + right here foul');
+      print('$_placeTime + right here foul');
+      print('$_placeTime + right here foul');
+      print('$_placeTime + right here foul');
+      print('$_placeTime + right here foul');
+      print('$_placeTime + right here foul');
+      print('$_placeTime + right here foul');
 
       polyline.add(Polyline(
           polylineId: PolylineId('iter'),
@@ -333,6 +349,13 @@ class _HomeState extends State<Home> {
                                 color: Colors.grey[300],
                                 borderRadius: BorderRadius.circular(16)),
                           ),
+                          TextButton(onPressed: (){
+                            Navigator.pushNamed(
+                              context,
+                              '/Tried',
+                            );
+                          }, child: Text('Test New Map')),
+                          Text('here:'+'$_placeDistance'+'KM '+' $_placeTime'),
                           _placeDistance != null
                               ? _deliveryDetails()
                               : _bottomTitle(),
