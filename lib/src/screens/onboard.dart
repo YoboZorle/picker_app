@@ -48,7 +48,7 @@ class Onboard extends StatelessWidget {
                     tag: 'input_phon_auth_title',
                     flightShuttleBuilder: _flightShuttleBuilder,
                     child: Text(
-                      "Hi SkootEat,\nBye Stress!",
+                      "Hi Rido,\nBye Stress!",
                       style: TextStyle(
                         color: AppColor.appBlack,
                         fontSize: 32,
@@ -81,7 +81,7 @@ class Onboard extends StatelessWidget {
                     tag: 'body_text_splash',
                     flightShuttleBuilder: _flightShuttleBuilder,
                     child: Text(
-                      "Find Food Delivery Guys\nNearest To You.",
+                      "Find Your Bike Guy\nNearest To You.",
                       style: TextStyle(
                         color: AppColor.appBlack,
                         fontSize: 18,
