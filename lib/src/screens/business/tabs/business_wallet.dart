@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_paystack/flutter_paystack.dart';
+// import 'package:flutter_paystack/flutter_paystack.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pickrr_app/src/blocs/authentication/bloc.dart';
 import 'package:pickrr_app/src/blocs/business/transaction/bloc.dart';
@@ -35,7 +35,7 @@ class _BusinessWalletState extends State<BusinessWallet> {
   @override
   void initState() {
     _walletRepository = WalletRepository();
-    PaystackPlugin.initialize(publicKey: AppData.paystackPublicKey);
+    // PaystackPlugin.initialize(publicKey: AppData.paystackPublicKey);
     _scrollController.addListener(_onScroll);
     _historyBloc = BlocProvider.of<BusinessTransactionBloc>(context);
     super.initState();
@@ -325,20 +325,20 @@ class _BusinessWalletState extends State<BusinessWallet> {
     });
     final int amountInKobo = amount.round() * 100;
 
-    Charge charge = Charge()
-      ..amount = amountInKobo
-      ..accessCode = result["access_code"]
-      ..email = user.email;
-    CheckoutResponse response = await PaystackPlugin.checkout(
-      context,
-      method: CheckoutMethod.selectable,
-      charge: charge,
-    );
-    if (response.status == true) {
-      await _submitPaymentRequest(response.reference);
-    } else {
-      _showErrorDialog();
-    }
+    // Charge charge = Charge()
+    //   ..amount = amountInKobo
+    //   ..accessCode = result["access_code"]
+    //   ..email = user.email;
+    // CheckoutResponse response = await PaystackPlugin.checkout(
+    //   context,
+    //   method: CheckoutMethod.selectable,
+    //   charge: charge,
+    // );
+    // if (response.status == true) {
+    //   await _submitPaymentRequest(response.reference);
+    // } else {
+    //   _showErrorDialog();
+    // }
   }
 
   _submitPaymentRequest(String transactionReference) async {

@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_paystack/flutter_paystack.dart';
+// import 'package:flutter_paystack/flutter_paystack.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 import 'package:pickrr_app/src/blocs/authentication/bloc.dart';
@@ -40,7 +40,7 @@ class _ReviewOrderState extends State<ReviewOrder> {
 
   @override
   void initState() {
-    PaystackPlugin.initialize(publicKey: AppData.paystackPublicKey);
+    // PaystackPlugin.initialize(publicKey: AppData.paystackPublicKey);
     super.initState();
   }
 
@@ -611,20 +611,20 @@ class _ReviewOrderState extends State<ReviewOrder> {
     final int amountInKobo = amount.round() * 100;
     Navigator.pop(context);
 
-    Charge charge = Charge()
-      ..amount = amountInKobo
-      ..accessCode = result["access_code"]
-      ..email = user.email;
-    CheckoutResponse response = await PaystackPlugin.checkout(
-      context,
-      method: CheckoutMethod.selectable,
-      charge: charge,
-    );
-    if (response.status == true) {
-      _processOrder(context, 'CARD', transactionId: response.reference);
-    } else {
-      _showErrorDialog(context);
-    }
+    // Charge charge = Charge()
+    //   ..amount = amountInKobo
+    //   ..accessCode = result["access_code"]
+    //   ..email = user.email;
+    // CheckoutResponse response = await PaystackPlugin.checkout(
+    //   context,
+    //   method: CheckoutMethod.selectable,
+    //   charge: charge,
+    // );
+    // if (response.status == true) {
+    //   _processOrder(context, 'CARD', transactionId: response.reference);
+    // } else {
+    //   _showErrorDialog(context);
+    // }
   }
 
   void _processOrder(BuildContext context, String paymentMethod,
